@@ -1,0 +1,176 @@
+.login{
+    h3{
+        font-size: 24px;
+        padding-bottom: 20px;
+    }
+}
+
+.logo{
+    width: 65px;
+    height: 65px;
+    margin-right: 40px;
+}
+
+.navigation{
+     transform:translateY(24px) ;
+        a{
+        padding-right: 10px;
+        padding-left: 10px;
+        font-weight: 600;
+        cursor: pointer;
+       
+    }
+}
+
+.nav-links{
+ padding: 8px;
+    &:hover{
+    background: #f2f2f2;
+    border-radius: 8px 8px 0px 0px ;
+    color : #5a5a5a;  
+    padding: 7px 15px; 
+
+    }
+}
+.userLogin{
+    padding-left: 20px;
+    h4{
+        font-size: 12px;
+        margin-bottom: 0px;
+    }
+    h5{
+        font-size: 10px;
+        margin-bottom: 0px;
+    }
+}
+
+.navbar {
+    background: #5A5A5A;
+    border-bottom: 1px solid #ffffff;
+
+
+    .active{
+    .nav-links{
+    background: #f2f2f2;
+    border-radius: 8px 8px 0px 0px ;
+    color : #5a5a5a;  
+    padding: 7px 15px;  
+    }
+}
+
+    .nav-link{
+        color: #fff;
+        padding: 7px 28px;
+    }
+    
+    a{
+        label{
+            color: #fff;
+            cursor: pointer;
+            width: fit-content;
+            padding: 7px 7px; 
+        }
+    }
+}
+
+
+
+
+.top-counter{
+    .card-text{
+        font-size: 38px;
+    }
+    .card{
+        padding: 10px;
+        margin-bottom: 10px;
+        a{
+            color: #E31E24;
+            text-decoration: none;
+            border-bottom: 1px solid #E31E24;
+        }
+        h2{
+            margin-bottom: 0px;
+            padding-bottom: 0px;
+            font-size: 18px;
+        }
+    }
+    .page-container{
+        margin-top: 30px;
+    }
+
+
+}
+
+.form-build{
+    padding-top: 20px;
+    h3{
+        font-weight: 600;
+        padding-bottom: 20px;
+        font-size: 18px;
+    }
+    .form-group{
+        padding-bottom: 20px;
+    }
+}
+
+.employee-card{
+    h1{
+      font-weight: 600;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+        font-size: 34px;
+    }
+}
+
+.HeadCounter {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 10px;
+    h3{
+        font-size: 26px;
+    }
+}
+
+.circle{
+        filter:invert(1) brightness(1);
+    }
+.userLogin{
+    color: #fff;
+}
+
+
+article {
+  margin: 0.5em;
+}
+output {
+  display: block;
+}
+.thumbnail {
+  display: inline-block;
+}
+.thumbnail img {
+  height: 100px;
+  margin: 4px;
+  border: 1px solid #444;
+}
+label.caption {
+  display: block;
+  text-align: center;
+  font-style: italic;
+  color: #444;
+}
+.thumb {
+    height: 50px;
+    margin: 0.2em -0.7em 0 0;
+}
+
+
+
+
+
+
+
+
+
+
