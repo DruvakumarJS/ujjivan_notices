@@ -10,22 +10,25 @@ class Devices extends Model
     use HasFactory;
 
     protected $fillable = [
-            'region',
-            'branch',
-            'branch_code',
-            'city',
-            'area',
-            'state',
-            'ifsc',
-            'pincode',
+            'region_id',
+            'branch_id',
+            'bank_id',
             'name',
             'mobile',
-            'device_id',
-            'model',
+            'mac_id',
+            'device_details',
             'status',
             'date_of_install',
             'last_updated_date',
             'apk_version',
             'remote_id'
         ];
+
+    public function bank(){
+        return $this->belongsTo(Bank::class,'bank_id','id');
+    }
+
+    public function branch(){
+        return $this->belongsTo(Branch::class,'branch_id','id');
+    }     
 }

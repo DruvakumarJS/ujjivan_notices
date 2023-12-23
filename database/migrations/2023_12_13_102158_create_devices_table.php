@@ -15,18 +15,13 @@ class CreateDevicesTable extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->string('region')->nullable();
-            $table->string('branch')->nullable();
-            $table->string('branch_code')->nullable();
-            $table->string('city')->nullable();
-            $table->string('area')->nullable();
-            $table->string('state')->nullable();
-            $table->string('ifsc')->nullable();
-            $table->string('pincode')->nullable();
+            $table->integer('region_id');
+            $table->integer('branch_id');
+            $table->integer('bank_id');
             $table->string('name')->nullable();
             $table->string('mobile')->nullable();
-            $table->string('device_id')->nullable();
-            $table->string('model')->nullable();
+            $table->string('mac_id');
+            $table->string('device_details')->nullable();
             $table->string('status')->nullable();
             $table->string('date_of_install')->nullable();
             $table->string('last_updated_date')->nullable();

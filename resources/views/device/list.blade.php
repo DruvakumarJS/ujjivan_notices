@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container-body">
-  <label class="label-bold">Devices list</label>
+ 
 	<div class="container-header">
 		
 		<div id="div2">
@@ -21,7 +21,9 @@
               </div>
            </form>
           </div>
-		
+		<div id="div1">
+      <label class="label-bold">Devices list</label>
+    </div>
 	</div>
 
 	<div class="page-container div-margin">
@@ -30,11 +32,14 @@
 				<thead>
 					<tr>
 						<th>Region</th>
-						<th>Branch</th>
+						<th>Branch Code</th>
+            <th>Bank Name</th>
+            <th>Bank Code</th>
+            <th>IFSC</th>
+            <th>Building</th>
             <th>City</th>
             <th>Area</th>
             <th>State</th>
-            <th>IFSC</th>
             <th>Device Status</th>
             <th>Last updated</th>
             <th></th>
@@ -45,16 +50,44 @@
 				<tbody>
           @foreach($data as $key=>$value)
 					<tr>
-            <td>{{$value->region}}</td>
-            <td>{{$value->branch}}</td>
-            <td>{{$value->city}}</td>
-            <td>{{$value->area}}</td>
-            <td>{{$value->state}}</td>
-            <td>{{$value->ifsc}}</td>
-            <td>{{$value->status}}</td>
+            <td>{{$value->branch->region->name}}</td>
+            <td>{{$value->branch->branch_code}}</td>
+            <td>{{$value->bank->bank_name}}</td>
+            <td>{{$value->bank->bank_code}}</td>
+            <td>{{$value->bank->ifsc}}</td>
+            <td>{{$value->bank->building}}</td>
+            <td>{{$value->bank->branch->city}}</td>
+            <td>{{$value->bank->area}}</td>
+            <td>{{$value->bank->branch->state}}</td>
+            @php
+
+            $last_updated_time = strtotime($value->last_updated_date);
+            $last_updated_date = date('Y-m-d',strtotime($value->last_updated_date));
+            $current_time = strtotime(date('Y-m-d H:i'));
+            $cur_date = (date('Y-m-d'));
+
+            $diffrence_sec = $current_time - $last_updated_time ;
+            $diffrence_minutes = $diffrence_sec/60 ;
+
+            $day_diffrence = strtotime($cur_date) - strtotime($last_updated_date) ;
+            $day_diffrence_minutes = $day_diffrence/60 ;
+
+            if($day_diffrence_minutes !=0 && $diffrence_minutes > 15){ $status='Dead'; }
+
+            elseif($diffrence_minutes > 15){$status='Offline';}
+
+            else {$status='Online';}
+            
+
+            if($status == 'Online')$clor = '#008000';
+            if($status == 'Offline')$clor = '#FFA500';
+            if($status == 'Dead')$clor = '#FF0000';
+             
+            @endphp
+            <td style="color: {{ $clor }} ">{{$status}}</td>
             <td>{{$value->last_updated_date}}</td>
             <td>
-              <a href="{{ route('view_device_datails',$value->id)}}"><button class="btn btn-sm btn-outline-primary">View More</button></a>
+              <a href="{{ route('view_device_datails',$value->id)}}"><button class="btn btn-sm btn-outline-primary">Details</button></a>
               <a href="{{ route('edit_device_datails',$value->id)}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
               <a onclick="return confirm('You are deleting a Device?')" href="{{ route('delete_device_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
             </td>

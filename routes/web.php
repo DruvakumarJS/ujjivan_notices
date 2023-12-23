@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\NoticeController;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,5 +40,19 @@ Route::get('edit-notice-datails/{id}',[NoticeController::class,'edit'])->name('e
 Route::put('update-notice-datails/{id}',[NoticeController::class,'update'])->name('update_notice_datails');
 Route::get('delete-notice-datails/{id}',[NoticeController::class,'destroy'])->name('delete_notice_datails');
 Route::post('search-notice',[NoticeController::class,'search'])->name('search_notice');
+
+Route::get('templates',[NoticeController::class,'templates'])->name('templates');
+
+
+Route::get('settings',[HomeController::class,'settings'])->name('settings');
+Route::get('regions',[HomeController::class,'region'])->name('regions');
+Route::post('save-region',[HomeController::class,'save_region'])->name('save_region');
+Route::get('branches',[HomeController::class,'branches'])->name('branches');
+Route::post('save-branch',[HomeController::class,'save_branch'])->name('save_branch');
+Route::get('banks',[HomeController::class,'banks'])->name('banks');
+Route::post('save-bank',[HomeController::class,'save_bank'])->name('save_bank');
+
+Route::get('get_bank_details',[HomeController::class,'get_bank_details'])->name('get_bank_details');
+
 
 

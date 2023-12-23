@@ -13,7 +13,7 @@
        <h4>Bank Details</h4>
        <form method="POST" action="{{ route('save_device')}}">
         @csrf
-       <div class="row">
+       <!-- <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
                     <span class="" id="basic-addon3">Region * </span>
@@ -45,6 +45,20 @@
                   <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="branch" required>
                 </div>
             </div>   
+       </div> -->
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Search </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text" class="typeahead form-control" id="bank" placeholder="Search by bank name / bank code / ifsc" required>
+                </div>
+            </div>   
        </div>
 
        <div class="row">
@@ -56,7 +70,35 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="branch_code" aria-describedby="basic-addon3" required>
+                  <input type="text" class="form-control" id="branch_code" name="branch_code" aria-describedby="basic-addon3" readonly>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Bank Name *</span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text"  class="form-control" id="bank_name" name="bank_name" readonly>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Bank Code * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text"class="form-control" id="bank_code" name="bank_code" readonly>
                 </div>
             </div>   
        </div>
@@ -70,7 +112,21 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" minlength="11" maxlength="11" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="ifsc" required>
+                  <input type="text" minlength="11" maxlength="11" class="form-control" id="ifsc" name="ifsc" readonly>
+                </div>
+            </div>   
+       </div>
+
+        <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Building * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text" class="form-control" id="building" name="building" readonly>
                 </div>
             </div>   
        </div>
@@ -84,7 +140,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="area" required>
+                  <input type="text" class="form-control" id="area" name="area" readonly>
                 </div>
             </div>   
        </div>
@@ -98,7 +154,21 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="city" aria-describedby="basic-addon3" required>
+                  <input type="text" class="form-control" id="city" name="city"  readonly>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">District * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text" class="form-control" id="dist" name="city"  readonly>
                 </div>
             </div>   
        </div>
@@ -112,7 +182,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="state" required>
+                  <input type="text" class="form-control" id="state" aria-describedby="basic-addon3" name="state" readonly>
                 </div>
             </div>   
        </div>
@@ -126,7 +196,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="pincode" aria-describedby="basic-addon3" required>
+                  <input type="text" class="form-control" id="pincode" name="pincode" aria-describedby="basic-addon3" readonly>
                 </div>
             </div>   
        </div>
@@ -207,6 +277,8 @@
             </div>  
             
        </div>
+       <input type="hidden" name="branch_id" id="branch_id">
+       <input type="hidden" name="bank_id" id="bank_id">
        <div id="div3" class="div-margin">
          <button class="btn btn-success" type="submit">Submit</button> 
        </div>
@@ -215,6 +287,53 @@
     </div>    
     
 </div>
+
+<script type="text/javascript">
+
+$( document ).ready(function() {
+  var path = "{{ route('get_bank_details') }}";
+   let text = "";
+    $( "#bank" ).autocomplete({
+        source: function( request, response ) {
+          $.ajax({
+            url: path,
+            type: 'GET',
+            dataType: "json",
+            data: {
+               search: request.term
+            },
+            success: function( data ) {
+            //  console.log(data);
+               response( data );
+              
+            }
+          });
+        },
+        select: function (event, ui) {
+           $('#bank').val(ui.item.value);
+            $('#branch_code').val(ui.item.branch_code);
+            $('#bank_name').val(ui.item.bank_name);
+            $('#ifsc').val(ui.item.ifsc);
+            $('#bank_code').val(ui.item.bank_code);
+            $('#building').val(ui.item.building);
+            $('#area').val(ui.item.area);
+            $('#city').val(ui.item.city);
+            $('#dist').val(ui.item.district);
+            $('#bank_code').val(ui.item.bank_code);
+            $('#pincode').val(ui.item.pincode);
+            $('#state').val(ui.item.state);
+            $('#branch_id').val(ui.item.id);
+            $('#bank_id').val(ui.item.bankid);
+           
+           console.log(address); 
+
+        }
+        
+      });
+  
+});
+
+</script>
 
     
 @endsection

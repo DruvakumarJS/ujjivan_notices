@@ -2,6 +2,16 @@
 
 @section('content')
 
+<style type="text/css">
+  .textareaElement {
+ 
+  min-height: 200px;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+</style>
 
 
 <div class="container-body">
@@ -85,10 +95,10 @@
           <div class="col-6">
              <div class="input-group mb-3">
              <select class="form-control selectpicker" multiple name="regions[]" id="region_list" >
-                <option value="East">East</option>
-                <option value="West">West</option>
-                <option value="North">north</option>
-                <option value="South">south</option>
+              <option value="">Select Region</option>
+                @foreach($regions as $key=>$value)
+                   <option value="{{$value->name}}">{{$value->name}}</option>
+                @endforeach
               </select>
 
               </div>
@@ -122,10 +132,15 @@
           <div class="col-6">
              <div class="input-group mb-3">
              <select class="form-control selectpicker" multiple search="true" name="states[]" id="state_list" >
-                <option value="Karnataka">Karnataka</option>
+                <!-- <option value="Karnataka">Karnataka</option>
                 <option value="Tamil Nadu">Tamil Nadu</option>
                 <option value="Kerala">Kerala</option>
-                <option value="Telangana">Telangana</option>
+                <option value="Telangana">Telangana</option> -->
+                <option value="">Select Region</option>
+                @foreach($branch as $key=>$value)
+                   <option value="{{$value->state}}">{{$value->state}}</option>
+                @endforeach
+
               </select>
 
               </div>
@@ -141,9 +156,19 @@
           <div class="col-6">
              <div class="input-group mb-3">
              <select class="form-control selectpicker" multiple search="true" name="lang[]" required="" >
-                <option value="Kannada">Kannada</option>
+                <option value="Assamese">Assamese</option>
+                <option value="Bengali">Bengali</option>
                 <option value="English">English</option>
+                <option value="Ghazi">Ghazi</option>
+                <option value="Gujarati">Gujarati</option>
                 <option value="Hindi">Hindi</option>
+                <option value="Kannada">Kannada</option>
+                <option value="Malayalam">Malayalam</option>
+                <option value="Marathi">Marathi</option>
+                <option value="Oriya">Oriya</option>
+                <option value="Punjabi">Punjabi</option>
+                <option value="Tamil">Tamil</option>
+                <option value="Telugu">Telugu</option>
                 <option value="Urdu">Urdu</option>
               </select>
 
@@ -168,7 +193,109 @@
             </div>   
        </div>
 
-    
+       <div class="row" id="state_div">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Template ID</span>
+                  </div>
+            </div> 
+            <div class="col-6" id="state_dropdown">
+                <div class="input-group mb-3">
+                 <input class="form-control" type="number" name="template_id" min="0">
+                </div>
+            </div>   
+       </div>
+
+      
+       @php
+        $data = json_encode($template->details , TRUE);
+       @endphp
+      
+     
+      
+       <div class="row" >
+            <div class="col-8">
+              <div class="card text-white bg-white border border-primary" >
+                <div class="card-header text-muted text-black" style="background-color: white">Ujjivan </div>
+
+                @foreach($arr as $keys=>$values)
+                   <!-- <label style="color: black">{{ $values->coloum }}</label> -->
+                   @php
+                     $data = explode(',',$values->coloum);
+                   @endphp
+                   
+                   
+                   @if(sizeof($data) == 1)
+                    @foreach($data as $views)
+                       
+                       @if($views == 'textarea')
+                         <!-- <textarea class="form-control div-margin" style="height: 250px"></textarea> -->
+                         <div class="textareaElement form-control div-margin" contenteditable></div>
+                       @else
+                         <img class="div-margin" src="{{ url('/')}}/placeholder.jpg" style="height: 200px;display: block;margin-left:auto;margin-right: auto ">
+                       @endif
+
+                   @endforeach
+                    
+                   @elseif(sizeof($data) == 2)
+                   
+                    <div class="row div-margin">
+                       @foreach($data as $views2)
+                      <div class="col-md-6">
+                        @if($views2 == 'textarea')
+                        <textarea class="form-control" style="height: 200px"></textarea>
+                        @else
+                        <img src="{{ url('/')}}/placeholder.jpg" style="height: 200px;display: block;margin-left:auto;margin-right: auto ">
+                        @endif
+                      </div>
+                       @endforeach
+                      
+                      
+                    </div>
+
+                   
+                   @else
+                   
+                    <div class="row div-margin">
+                       @foreach($data as $views2)
+                      <div class="col-md-4">
+                        @if($views2 == 'textarea')
+                        <textarea class="form-control" style="height: 200px"></textarea>
+                        @else
+                       <img src="{{ url('/')}}/placeholder.jpg" style="height: 200px;width:200px;display: block;margin-left:auto;margin-right: auto ">
+                        @endif
+                      </div>
+                       @endforeach
+                      
+                      
+                    </div>
+
+                   @endif
+                  
+                   
+                  
+
+                @endforeach
+
+               
+                <div class="card-footer text-muted text-black bg-white">Powered By : ujjivan.com </div>
+              </div>
+            </div>
+       </div>
+
+       <!-- <div class="row" >
+            <div class="col-8">
+              <div class="card text-white bg-white border border-primary" >
+                <div class="card-header text-muted text-black" style="background-color: white">Ujjivan </div>
+                 <div style="height: 1200px" >
+                     <textarea class="form-control h-100" name="c1" ></textarea>
+                 </div>
+
+                <div class="card-footer text-muted text-black bg-white">Powered By : ujjivan.com </div>
+              </div>
+            </div>
+       </div> -->
+  
        
        <div id="div3" class="div-margin">
          <button class="btn btn-success" type="submit">Submit</button> 
@@ -181,7 +308,8 @@
 
 <script type="text/javascript">
   var mode = document.getElementById("pan").value;
-  //$('#region_list').prop('disabled', true);
+ // $('#region_list').prop('disabled', true);
+ // $('#state_list').prop('disabled', true);
   $('#region_prompt').prop('disabled', true);
   $('#state_prompt').prop('disabled', true);
 

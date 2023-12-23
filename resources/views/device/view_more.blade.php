@@ -6,11 +6,11 @@
   <label class="label-bold">Device Details</label>
     <div class="container-header">
        <div id="div3" class="div-margin">
-         <a href="{{ route('edit_device_datails',$id)}}"><button class="btn btn-sm btn-success" type="submit">Edit</button></a> 
+         <a href="{{ route('edit_device_datails',$id)}}"><button class="btn btn-success" type="submit">Edit</button></a> 
        </div>
 
        <div id="div3" class="div-margin" style="margin-right: 30px">
-         <a href="{{route('devices')}}"><button class="btn btn-sm btn-outline-light" type="submit">Go Back</button> </a>
+         <a href="{{route('devices')}}"><button class="btn btn-outline-secondary" type="submit">Go Back</button> </a>
        </div>
 
     </div>
@@ -22,40 +22,41 @@
        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Region * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-                 <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="branch" value="{{$data->region}}" readonly >
-                </div>
-            </div>   
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Branch * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="branch" value="{{$data->branch}}" readonly >
-                </div>
-            </div>   
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
                     <span class="" id="basic-addon3">Branch Code * </span>
                   </div>
             </div> 
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="branch_code" aria-describedby="basic-addon3" value="{{$data->branch_code}}" readonly>
+                  <input type="text" class="form-control" id="branch_code" name="branch_code" aria-describedby="basic-addon3" value="{{$data->branch->branch_code}}" readonly>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Bank Name *</span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text"  class="form-control" id="bank_name" name="bank_name" value="{{$data->bank->bank_name}}" readonly>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Bank Code * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text"class="form-control" id="bank_code" name="bank_code" value="{{$data->bank->bank_code}}" readonly>
                 </div>
             </div>   
        </div>
@@ -69,7 +70,21 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" minlength="11" maxlength="11" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="ifsc" value="{{$data->ifsc}}" readonly>
+                  <input type="text" minlength="11" maxlength="11" class="form-control" id="ifsc" name="ifsc" value="{{$data->bank->ifsc}}" readonly>
+                </div>
+            </div>   
+       </div>
+
+        <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Building * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text" class="form-control" id="building" name="building" value="{{$data->bank->building}}" readonly>
                 </div>
             </div>   
        </div>
@@ -83,7 +98,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="area" value="{{$data->area}}" readonly>
+                  <input type="text" class="form-control" id="area" name="area" value="{{$data->bank->area}}" readonly>
                 </div>
             </div>   
        </div>
@@ -97,7 +112,21 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="city" aria-describedby="basic-addon3" value="{{$data->city}}" readonly>
+                  <input type="text" class="form-control" id="city" name="city" value="{{$data->bank->branch->city}}" readonly>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">District * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text" class="form-control" id="dist" name="city" value="{{$data->bank->branch->district}}"  readonly>
                 </div>
             </div>   
        </div>
@@ -111,7 +140,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="state" value="{{$data->state}}" readonly>
+                  <input type="text" class="form-control" id="state" aria-describedby="basic-addon3" name="state" value="{{$data->bank->branch->state}}"readonly>
                 </div>
             </div>   
        </div>
@@ -125,7 +154,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="pincode" value="{{$data->pincode}}" aria-describedby="basic-addon3" readonly="">
+                  <input type="text" class="form-control" id="pincode" name="pincode" aria-describedby="basic-addon3" value="{{$data->bank->pincode}}" readonly>
                 </div>
             </div>   
        </div>

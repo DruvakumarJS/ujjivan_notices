@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notice;
+use App\Models\Region;
+use App\Models\Branch;
+use App\Models\Template;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use File;
 
 class NoticeController extends Controller
 {
@@ -18,7 +22,21 @@ class NoticeController extends Controller
     {
         $data = Notice::paginate(50);
         $search = '';
+
+        /*File::put('test.html',
+            view('htmltemplates.html_notices')
+                ->with(["data" => $data , "search" => 'search'])
+                ->render()
+        );*/
+
        return view('notice/list', compact('data','search'));
+    }
+
+     public function templates(){
+      $data = Template::get();
+
+     // print_r(json_encode($data)); die();
+        return view('notice/template',compact('data'));
     }
 
     /**
@@ -28,7 +46,19 @@ class NoticeController extends Controller
      */
     public function create()
     {
-        return view('notice/create');
+      $regions = Region::all();
+      $branch = Branch::select('state')->groupBy('state')->get();
+      $template = Template::select('details')->where('id','4')->first();
+
+      $data = $template->details ;
+
+      $arr = json_decode($data);
+
+
+      //print_r($arr); die();
+
+
+        return view('notice/create',compact('regions','branch','template','arr'));
     }
 
     /**
@@ -97,9 +127,10 @@ class NoticeController extends Controller
      * @param  \App\Models\Notice  $notice
      * @return \Illuminate\Http\Response
      */
-    public function show(Notice $notice)
+    public function show($id)
     {
-        //
+        $data = Notice::where('id',$id)->first();
+        return view('notice/view_more',compact('data','id'));
     }
 
     /**
@@ -108,9 +139,10 @@ class NoticeController extends Controller
      * @param  \App\Models\Notice  $notice
      * @return \Illuminate\Http\Response
      */
-    public function edit(Notice $notice)
+    public function edit($id)
     {
-        //
+        $data = Notice::where('id',$id)->first();
+        return view('notice/edit',compact('data','id'));
     }
 
     /**

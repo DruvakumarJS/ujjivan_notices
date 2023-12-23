@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Devices;
+use App\Models\Branch;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
@@ -18,6 +19,8 @@ class DevicesController extends Controller
     {
          $data = Devices::paginate(50);
          $search = '';
+         $value = Devices::where('id','2')->first();
+
         return view('device/list',compact('data' ,'search'));
     }
 
@@ -42,20 +45,16 @@ class DevicesController extends Controller
     {
       //  print_r($request->Input()); die();
 
+        $branch = Branch::where('id',$request->branch_id)->first();
+
         $store = Devices::create([
-            'region' => $request->region,
-            'branch' => $request->branch,
-            'branch_code' => $request->branch_code,
-            'city' => $request->city,
-            'area' => $request->area,
-            'state' => $request->state,
-            'ifsc' => $request->ifsc,
-            'pincode' => $request->pincode,
+            'region_id' => $branch->region_id,
+            'branch_id' => $request->branch_id,
+            'bank_id' => $request->bank_id,
             'name' => $request->name,
             'mobile' => $request->mobile,
-            'device_id' => $request->device_id,
-            'model' => $request->model,
-            'status' => 'Active',
+            'device_details' => $request->device_id .':'.$request->model,
+            'status' => 'Offline',
             'date_of_install' => $request->date_of_installation
 
         ]);
@@ -100,21 +99,16 @@ class DevicesController extends Controller
     {
        /* print_r($id);
         print_r($request->input()); die();*/
+         $branch = Branch::where('id',$request->branch_id)->first();
 
         $update  = Devices::where('id',$id)->update([
-            'region' => $request->region,
-            'branch' => $request->branch,
-            'branch_code' => $request->branch_code,
-            'city' => $request->city,
-            'area' => $request->area,
-            'state' => $request->state,
-            'ifsc' => $request->ifsc,
-            'pincode' => $request->pincode,
+            'region_id' => $branch->region_id,
+            'branch_id' => $request->branch_id,
+            'bank_id' => $request->bank_id,
             'name' => $request->name,
             'mobile' => $request->mobile,
-            'device_id' => $request->device_id,
-            'model' => $request->model,
-            'status' => 'Active',
+            'device_details' => $request->device_id .':'.$request->model,
+            'status' => $request->status,
             'date_of_install' => $request->date_of_installation,
             'status' => $request->status,
             'remote_id' => $request->remote_id

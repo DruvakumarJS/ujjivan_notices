@@ -1,0 +1,118 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\DeviceData;
+use App\Models\Devices;
+use App\Models\Notice;
+
+class DeviceController extends Controller
+{
+   public function device_data(Request $request){
+   	//print_r($request->input());
+
+   	if(Devices::where('mac_id',$request->mac_id)->exists()){
+
+
+    $device_details = Devices::where('mac_id',$request->mac_id)->first(); 
+    
+    $insert = DeviceData::create([
+    	'mac_id' => $request->mac_id ,
+    	'device_id' => $device_details->id,
+    	'apk_version' => $request->apk_version ,
+    	'last_updated_date' => $request->last_updated_date ,
+    	'last_updated_time' => $request->last_updated_time ]);
+
+    if($insert){
+      $update = Devices::where('id',$device_details->id)->update(['last_updated_date' => $request->last_updated_date." ".$request->last_updated_time , 'apk_version' =>$request->apk_version ]);
+
+    }
+
+    $current_apk_version = '1.1';
+    $min_apk_version = '1.0';
+    $new_apk_available = 'true';
+    $mandatory_apk_update = 'false';
+
+    if($request->apk_version < $min_apk_version){
+      $apk_update_required = 'truee';
+      $message = 'Please update the app to latest version';
+     
+    }
+    else if($request->apk_version < $current_apk_version &&  $request->apk_version >= $min_apk_version && $mandatory_apk_update == 'true'){
+      $apk_update_required = 'true';
+      $message = 'Please update the app to latest version';
+     
+    }
+    else if($request->apk_version < $current_apk_version &&  $request->apk_version >= $min_apk_version &&  $mandatory_apk_update == 'false'){
+    	$apk_update_required = 'false';
+        $message = 'New version available';
+    }
+    else{
+    	$apk_update_required = 'false';
+        $message = 'You are using updated app version.';
+    }
+
+   	return response([
+   		'status'=>'true',
+   		'update_required' => $apk_update_required ,
+   		'message'=> $message 
+   	]);
+   }
+   else{
+   	return response([
+   		'status'=>'false',
+   		'update_required' => 'false' ,
+   		'message'=> 'Device not registered' 
+   		
+   	]);
+
+   }
+
+   }
+
+   public function get_notices(Request $request){
+      
+      $device_id = $request->mac_id ;
+      $data = array();
+
+      if(Devices::where('mac_id',$request->mac_id)->exists()){
+
+
+
+        $notices = Notice::get();
+
+        foreach ($notices as $key => $value) {
+          $data[]=[
+          'name' => $value->name ,
+          'description' => $value->description ,
+          'path' => $value->path ,
+          'filename' => $value->filename,
+          'available_languages' => $value->available_languages,
+          'voiceover' => $value->voiceover 
+          ];
+
+        }
+
+        
+         return response([
+          'status'=>'true',
+          'data' => $data
+          
+        ]);
+
+      }
+      else{
+
+        return response([
+          'status'=>'false',
+          'data' => $data
+          
+        ]);
+
+      }
+
+
+   }
+}

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container-body">
-  <label class="label-bold">Notices </label>
+  
 	<div class="container-header">
 		
 		<div id="div2">
@@ -21,7 +21,9 @@
               </div>
            </form>
           </div>
-		
+		<div id="div1">
+      <label class="label-bold">Notices</label>
+    </div>
 	</div>
 
 	<div class="page-container div-margin">
