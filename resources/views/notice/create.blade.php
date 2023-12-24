@@ -186,8 +186,8 @@
                 <div class="input-group mb-3">
                  <select class="form-control form-select" name="voice_over" required>
                   <option value="">Select</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                  <option value="Y">Yes</option>
+                  <option value="N">No</option>
                  </select>
                 </div>
             </div>   
@@ -226,13 +226,68 @@
                    
                    
                    @if(sizeof($data) == 1)
-                    @foreach($data as $views)
+                    @foreach($data as $key1=>$views)
                        
                        @if($views == 'textarea')
-                         <!-- <textarea class="form-control div-margin" style="height: 250px"></textarea> -->
-                         <div class="textareaElement form-control div-margin" contenteditable></div>
+                         <textarea class="form-control div-margin" style="height: 250px" name="row{{$keys+1}}_{{$key1+1}}"></textarea>
+                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row{{$keys+1}}_{{$key1+1}}"></div> -->
+                        @elseif($views == 'table')
+                          <table class="table table-bordered div-margin" style="height: 200px">
+                            <tr >
+                              <th>Sl.No</th>
+                              <th>Transaction / Service</th>
+                              <th>Time Taken</th>
+                            </tr>
+                            <tbody>
+                              <tr>
+                                <td>1</td>
+                                <td>Cash payment at cash counters</td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+
+                              <tr>
+                                <td>2</td>
+                                <td>Receipt of cash at cash counters</td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+                              <tr>
+                                <td>3</td>
+                                <td>Issuance of statement across counter </td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+
+                              <tr>
+                                <td>4</td>
+                                <td>Updating of pass books</td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+                              <tr>
+                                <td>5</td>
+                                <td>Issuance of demand draft / fixed deposit advice</td>
+                                <td>Within 30 Minutes</td>
+                              </tr>
+
+                              <tr>
+                                <td>6</td>
+                                <td>Payment of fixed deposits</td>
+                                <td>Within 30 Minutes</td>
+                              </tr>
+                               <tr>
+                                <td>7</td>
+                                <td>Collection of cheques (local) </td>
+                                <td>WWithin 4 Days</td>
+                              </tr>
+
+                              <tr>
+                                <td>8</td>
+                                <td>Issuance of statement by post</td>
+                                <td>7 days</td>
+                              </tr>
+                            </tbody>
+                          </table>
                        @else
-                         <img class="div-margin" src="{{ url('/')}}/placeholder.jpg" style="height: 200px;display: block;margin-left:auto;margin-right: auto ">
+                         <img class="card-img-top div-margin" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key1+1}}">
+
                        @endif
 
                    @endforeach
@@ -240,12 +295,12 @@
                    @elseif(sizeof($data) == 2)
                    
                     <div class="row div-margin">
-                       @foreach($data as $views2)
+                       @foreach($data as $key2=>$views2)
                       <div class="col-md-6">
                         @if($views2 == 'textarea')
-                        <textarea class="form-control" style="height: 200px"></textarea>
+                        <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key2+1}}"></textarea>
                         @else
-                        <img src="{{ url('/')}}/placeholder.jpg" style="height: 200px;display: block;margin-left:auto;margin-right: auto ">
+                        <img class="card-img-top" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key2+1}}">
                         @endif
                       </div>
                        @endforeach
@@ -257,12 +312,12 @@
                    @else
                    
                     <div class="row div-margin">
-                       @foreach($data as $views2)
+                       @foreach($data as $key3=>$views3)
                       <div class="col-md-4">
-                        @if($views2 == 'textarea')
-                        <textarea class="form-control" style="height: 200px"></textarea>
+                        @if($views3 == 'textarea')
+                        <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key3+1}}"></textarea>
                         @else
-                       <img src="{{ url('/')}}/placeholder.jpg" style="height: 200px;width:200px;display: block;margin-left:auto;margin-right: auto ">
+                       <img class="card-img-top" src="..." style="height: 200px;width:200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key3+1}}">
                         @endif
                       </div>
                        @endforeach

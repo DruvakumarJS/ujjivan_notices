@@ -84,13 +84,19 @@ class DeviceController extends Controller
         $notices = Notice::get();
 
         foreach ($notices as $key => $value) {
+
+          $voice = $value->voiceover ;
+
+          if($voice == 'Y'){$voicover="YES";}
+          else {$voicover="No";}
+          
           $data[]=[
           'name' => $value->name ,
           'description' => $value->description ,
-          'path' => $value->path ,
+          'path' => url('/').'/' ,
           'filename' => $value->filename,
           'available_languages' => $value->available_languages,
-          'voiceover' => $value->voiceover 
+          'voiceover' => $voicover 
           ];
 
         }

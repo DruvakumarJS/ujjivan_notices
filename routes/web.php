@@ -44,6 +44,7 @@ Route::post('search-notice',[NoticeController::class,'search'])->name('search_no
 Route::get('templates',[NoticeController::class,'templates'])->name('templates');
 
 
+
 Route::get('settings',[HomeController::class,'settings'])->name('settings');
 Route::get('regions',[HomeController::class,'region'])->name('regions');
 Route::post('save-region',[HomeController::class,'save_region'])->name('save_region');

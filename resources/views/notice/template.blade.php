@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<style type="text/css">
+	.table-condensed{
+  font-size: 10px;
+}
+
+tr {
+   line-height: 10px;
+   min-height: 10px;
+   height: 10px;
+}
+</style>
 
 <div class="container-body">
 	<label class="label-bold">Templates</label>
@@ -34,6 +45,43 @@
                        @if($views == 'textarea')
                          <!-- <textarea class="form-control div-margin" style="height: 250px"></textarea> -->
                          <div class="textareaElement form-control div-margin" contenteditable></div>
+                          @elseif($views == 'table')
+                          <table class="table table-condensed" style="height: 200px">
+                          	<tr >
+                          		<th>Reference Number</th>
+                          		<th>Branch Banking</th>
+                          	</tr>
+                          	<tbody>
+                          		<tr>
+                          			<td><label style="">Circular date</label></td>
+                          			<td>31.05.2023</td>
+                          		</tr>
+
+                          		<tr>
+                          			<td>Effective date</td>
+                          			<td>01.06.2023</td>
+                          		</tr>
+                          		<tr>
+                          			<td><label style="">Circular date</label></td>
+                          			<td>31.05.2023</td>
+                          		</tr>
+
+                          		<tr>
+                          			<td>Effective date</td>
+                          			<td>01.06.2023</td>
+                          		</tr>
+                          		<tr>
+                          			<td><label style="">Circular date</label></td>
+                          			<td>31.05.2023</td>
+                          		</tr>
+
+                          		<tr>
+                          			<td>Effective date</td>
+                          			<td>01.06.2023</td>
+                          		</tr>
+                          	</tbody>
+                          </table>
+
                        @else
                          <img class="div-margin" src="{{ url('/')}}/placeholder.jpg" style="height: 50px;display: block;margin-left:auto;margin-right: auto ">
                        @endif
@@ -47,6 +95,7 @@
                       <div class="col-md-6">
                         @if($views2 == 'textarea')
                         <textarea class="form-control" style="height: 50px"></textarea>
+                        
                         @else
                         <img src="{{ url('/')}}/placeholder.jpg" style="height: 50px;display: block;margin-left:auto;margin-right: auto ">
                         @endif
