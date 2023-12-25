@@ -33,6 +33,10 @@ Route::get('delete_device_datails/{id}',[DevicesController::class,'destroy'])->n
 Route::post('search_device',[DevicesController::class,'search'])->name('search_device');
 
 Route::get('notices',[NoticeController::class,'index'])->name('notices');
+
+Route::get('selct_template',[NoticeController::class,'selct_template'])->name('choose_template');
+Route::get('set_template',[NoticeController::class,'set_template'])->name('set_template');
+
 Route::get('create_notice',[NoticeController::class,'create'])->name('create_notice');
 Route::post('save-notice',[NoticeController::class,'store'])->name('save_notice');
 Route::get('view-notice-datails/{id}',[NoticeController::class,'show'])->name('view_notice_datails');

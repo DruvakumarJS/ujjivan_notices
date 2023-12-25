@@ -46,41 +46,7 @@ tr {
                          <!-- <textarea class="form-control div-margin" style="height: 250px"></textarea> -->
                          <div class="textareaElement form-control div-margin" contenteditable></div>
                           @elseif($views == 'table')
-                          <table class="table table-condensed" style="height: 200px">
-                          	<tr >
-                          		<th>Reference Number</th>
-                          		<th>Branch Banking</th>
-                          	</tr>
-                          	<tbody>
-                          		<tr>
-                          			<td><label style="">Circular date</label></td>
-                          			<td>31.05.2023</td>
-                          		</tr>
-
-                          		<tr>
-                          			<td>Effective date</td>
-                          			<td>01.06.2023</td>
-                          		</tr>
-                          		<tr>
-                          			<td><label style="">Circular date</label></td>
-                          			<td>31.05.2023</td>
-                          		</tr>
-
-                          		<tr>
-                          			<td>Effective date</td>
-                          			<td>01.06.2023</td>
-                          		</tr>
-                          		<tr>
-                          			<td><label style="">Circular date</label></td>
-                          			<td>31.05.2023</td>
-                          		</tr>
-
-                          		<tr>
-                          			<td>Effective date</td>
-                          			<td>01.06.2023</td>
-                          		</tr>
-                          	</tbody>
-                          </table>
+                          <input type="button"class="btn btn-dark div-margin" value="Table">
 
                        @else
                          <img class="div-margin" src="{{ url('/')}}/placeholder.jpg" style="height: 50px;display: block;margin-left:auto;margin-right: auto ">
@@ -95,7 +61,9 @@ tr {
                       <div class="col-md-6">
                         @if($views2 == 'textarea')
                         <textarea class="form-control" style="height: 50px"></textarea>
-                        
+                        @elseif($views2 == 'table')
+                          <input type="button"class="btn btn-dark " value="Table">
+
                         @else
                         <img src="{{ url('/')}}/placeholder.jpg" style="height: 50px;display: block;margin-left:auto;margin-right: auto ">
                         @endif
@@ -109,10 +77,13 @@ tr {
                    @else
                    
                     <div class="row div-margin">
-                       @foreach($data as $views2)
+                       @foreach($data as $views3)
                       <div class="col-md-4">
-                        @if($views2 == 'textarea')
+                        @if($views3 == 'textarea')
                         <textarea class="form-control" style="height: 50px"></textarea>
+                        @elseif($views3 == 'table')
+                          <input type="button"class="btn btn-dark " value="Table">
+
                         @else
                        <img  src="{{ url('/')}}/placeholder.jpg" style="height: 50px;width:40px;display: block;margin-left:auto;margin-right: auto ">
                         @endif

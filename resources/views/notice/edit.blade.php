@@ -201,7 +201,7 @@
                      @endphp 
                        
                        @if($views == 'textarea')
-                         <textarea class="form-control div-margin" style="height: 250px" name="row{{$keys+1}}_{{$key1+1}}" > {{$content->$cVal}} </textarea>
+                         <textarea class="form-control div-margin" name="row{{$keys+1}}_{{$key1+1}}" style="min-height: 200px" onfocus="auto_grow(this)">{{$content->$cVal}}</textarea>
                        @elseif($views == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
                             <tr >
@@ -246,7 +246,7 @@
                                <tr>
                                 <td>7</td>
                                 <td>Collection of cheques (local) </td>
-                                <td>WWithin 4 Days</td>
+                                <td>Within 4 Days</td>
                               </tr>
 
                               <tr>
@@ -275,9 +275,46 @@
 
                       <div class="col-md-6">
                         @if($views2 == 'textarea')
-                        <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key2+1}}">
-                          {{$content->$cVal}}
-                        </textarea>
+                        <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key2+1}}">{{$content->$cVal}}</textarea>
+                        @elseif($views2 == 'table')
+                          <table class="table table-bordered div-margin" style="height: 200px">
+                            <tr >
+                              <td colspan="4">Fixed Deposit</td>
+                             
+                            </tr>
+                            <tr >
+                              <th>Tenure</th>
+                              <th>Interest Rate(p.a)</th>
+                            
+                            </tr>
+                            <tbody>
+                              <tr>
+                                <td>7 Days to 29 Days</td>
+                                <td>3.75%</td>
+                              </tr>
+
+                              <tr>
+                                <td>30 Days to 89 Days</td>
+                                <td>4.25%</td>
+                              </tr>
+
+                              <tr>
+                                <td>90 Days to 179 Days</td>
+                                <td>4.75%</td>
+                              </tr>
+
+
+                             <tr>
+                                <td>6 Momths to 9 Months</td>
+                                <td>6.50%</td>
+                              </tr>
+
+                              <tr>
+                                <td>12 Months</td>
+                                <td>8.25%</td>
+                              </tr>
+                            </tbody>
+                          </table>
                         @else
                         <img class="card-img-top" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key2+1}}">
                         @endif
@@ -300,9 +337,61 @@
 
                       <div class="col-md-4">
                         @if($views3 == 'textarea')
-                        <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key3+1}}">
-                          {{$content->$cVal}}
-                        </textarea>
+                        <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key3+1}}">{{$content->$cVal}}</textarea>
+                        @elseif($views3 == 'table')
+                          <table class="table table-bordered div-margin" style="height: 200px">
+                            <tr >
+                              <th>Sl.No</th>
+                              <th>Transaction / Service</th>
+                              <th>Time Taken</th>
+                            </tr>
+                            <tbody>
+                              <tr>
+                                <td>1</td>
+                                <td>Cash payment at cash counters</td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+
+                              <tr>
+                                <td>2</td>
+                                <td>Receipt of cash at cash counters</td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+                              <tr>
+                                <td>3</td>
+                                <td>Issuance of statement across counter </td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+
+                              <tr>
+                                <td>4</td>
+                                <td>Updating of pass books</td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+                              <tr>
+                                <td>5</td>
+                                <td>Issuance of demand draft / fixed deposit advice</td>
+                                <td>Within 30 Minutes</td>
+                              </tr>
+
+                              <tr>
+                                <td>6</td>
+                                <td>Payment of fixed deposits</td>
+                                <td>Within 30 Minutes</td>
+                              </tr>
+                               <tr>
+                                <td>7</td>
+                                <td>Collection of cheques (local) </td>
+                                <td>Within 4 Days</td>
+                              </tr>
+
+                              <tr>
+                                <td>8</td>
+                                <td>Issuance of statement by post</td>
+                                <td>7 days</td>
+                              </tr>
+                            </tbody>
+                          </table>
                         @else
                        <img class="card-img-top" src="..." style="height: 200px;width:200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key3+1}}">
                         @endif
@@ -427,6 +516,11 @@
 
 
   });
+
+   function auto_grow(element) {
+  element.style.height = "250px";
+  element.style.height = (element.scrollHeight) + "px";
+}
  
 </script>
 

@@ -45,12 +45,25 @@ class NoticeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+
+    public function selct_template(){
+        $data = Template::get();
+        return view('notice/choose_template',compact('data'));
+     }
+
+     public function set_template(Request $request){
+       print_r($request->input()); die();
+     }
+
+
+    public function create(Request $request)
     {
+     // print_r($request->template_id); die();
+      $template_id = $request->template_id;
       $regions = Region::all();
       $branch = Branch::select('state')->groupBy('state')->get();
-      $template = Template::select('details')->where('id','4')->first();
-
+      $template = Template::select('details')->where('id',$template_id)->first();
+      
       $data = $template->details ;
 
       $arr = json_decode($data);
@@ -59,7 +72,7 @@ class NoticeController extends Controller
       //print_r($arr); die();
 
 
-        return view('notice/create',compact('regions','branch','template','arr'));
+        return view('notice/create',compact('regions','branch','template','arr','template_id'));
     }
 
     /**

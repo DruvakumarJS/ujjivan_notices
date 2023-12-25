@@ -7,7 +7,7 @@
 	<div class="container-header">
 		
 		<div id="div2">
-			<a href="{{ route('create_notice')}}"><button class="btn btn-outline-primary">Create New Notice</button></a>
+			<a href="{{ route('choose_template')}}"><button class="btn btn-outline-primary">Create New Notice</button></a>
 		</div> 
 
     <div id="div2" style="margin-right: 30px">

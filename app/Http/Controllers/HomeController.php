@@ -29,10 +29,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $today = date('Y-m-d');
+        $current_time = date('Y-m-d H:i');
+        $active_time = date("Y-m-d H:i",strtotime("-15 minutes", strtotime($current_time)));
 
-        $online = Devices::where('status' , 'Online')->count();
-        $offiine = Devices::where('status' , 'Offline')->count();
-        $dead = Devices::where('status' , 'Dead')->count();
+        $online = Devices::where('last_updated_date' , '>=', $active_time)->where('last_updated_date','LIKE',$today.'%')->count();
+        $offiine = Devices::where('last_updated_date' , '<', $active_time)->where('last_updated_date','LIKE',$today.'%')->count();
+        $dead = Devices::where('last_updated_date','not like',$today.'%')->count();
+
+       // print_r($offiine); die();
 
         $regions = Region::get();
 

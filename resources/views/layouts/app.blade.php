@@ -97,10 +97,10 @@
                   @if(Auth::check())
                       <ul class="list-group">
                           <li class="list-group-item d-flex justify-content-between align-items-center">
-                              <a  href="{{ route('home')}}" >Dashboard</a>
+                              <a  href="{{ route('home')}}" > <label>Dashboard</label> </a>
                           </li>
                           <li class="list-group-item d-flex justify-content-between align-items-center">
-                              <a href="{{ route('templates')}}">Templates</a> 
+                              <a href="{{ route('templates')}}"><label>Templates</label> </a> 
                           </li>
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a  href="{{ route('notices')}}" ><label>Notices</label></a>
