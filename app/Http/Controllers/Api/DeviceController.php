@@ -36,7 +36,7 @@ class DeviceController extends Controller
     $mandatory_apk_update = 'false';
 
     if($request->apk_version < $min_apk_version){
-      $apk_update_required = 'truee';
+      $apk_update_required = 'true';
       $message = 'Please update the app to latest version';
      
     }
@@ -61,6 +61,7 @@ class DeviceController extends Controller
    	]);
    }
    else{
+    
    	return response([
    		'status'=>'false',
    		'update_required' => 'false' ,

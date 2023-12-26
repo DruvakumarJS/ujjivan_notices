@@ -91,6 +91,23 @@ class HomeController extends Controller
         }
     }
 
+    public function update_region(Request $request){
+        $update = Region::where('id',$request->id)->update(['name' => $request->name , 'region_code'=> $request->branch_code]);
+
+        if($update){
+            return redirect()->route('regions');
+        }
+    }
+
+    public function delete_region($id){
+        //print_r($id); die();
+        $delete = Region::where('id',$id)->delete();
+
+        if($delete){
+            return redirect()->route('regions');
+        }
+    }
+
     public function branches(){
         $region = Region::get();
         $data = Branch::paginate(25);
@@ -115,6 +132,35 @@ class HomeController extends Controller
         }
     }
 
+    public function update_branch(Request $request){
+
+       // print_r($request->input()); die();
+
+        $save = Branch::where('id',$request->id)->update([
+            'region_id'=>$request->region,
+            'name' => $request->name , 
+            'branch_code'=> $request->branch_code ,
+            'state' => $request->state ,
+            'district' => $request->district ,
+            'city' => $request->city ,
+            'pincode' => $request->pincode]);
+
+        if($save){
+            return redirect()->route('branches');
+        }
+    }
+
+    public function delete_branch($id){
+       // print_r($id); die();
+        $delete = Branch::where('id',$id)->delete();
+
+        if($delete){
+            return redirect()->route('branches');
+        }
+    }
+
+
+
     public function banks(){
         $branch = Branch::get();
         $data = Bank::paginate(25);
@@ -136,6 +182,33 @@ class HomeController extends Controller
             'pincode' => $request->pincode]);
 
         if($save){
+            return redirect()->route('banks');
+        }
+    }
+
+     public function update_bank(Request $request){
+
+        //print_r($request->input()); die();
+
+        $update = Bank::where('id',$request->id)->update([
+            'branch_id'=>$request->branch,
+            'bank_name' => $request->name , 
+            'bank_code'=> $request->bank_code ,
+            'ifsc' => $request->ifsc ,
+            'area' => $request->area ,
+            'building' => $request->building ,
+            'pincode' => $request->pincode]);
+
+        if($update){
+            return redirect()->route('banks');
+        }
+    }
+
+     public function delete_bank($id){
+       // print_r($id); die();
+        $delete = Bank::where('id',$id)->delete();
+
+        if($delete){
             return redirect()->route('banks');
         }
     }

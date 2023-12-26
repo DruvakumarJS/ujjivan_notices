@@ -33,6 +33,7 @@
           <tr>
             <th>Branch Name</th>
             <th>Branch Code</th>
+            <th>Region Name</th>
             <th>Region Code</th>
             <th>State</th>
             <th>District</th>
@@ -48,17 +49,120 @@
           <tr>
             <td>{{$value->name}}</td>
             <td>{{$value->branch_code}}</td>
+            <td>{{$value->region->name}}</td>
             <td>{{$value->region->region_code}}</td>
             <td>{{$value->state}}</td>
             <td>{{$value->district}}</td>
             <td>{{$value->city}}</td>
             <td>{{$value->pincode}}</td>
             <td>
-              <a href=""><button class="btn btn-sm btn-outline-primary">View More</button></a>
-              <a href=""><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
-              <a onclick="return confirm('You are deleting a Device?')" href="{"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
+              <!-- <a href=""><button class="btn btn-sm btn-outline-primary">View More</button></a> -->
+              <a  id="MybtnModal_{{$key}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+              <a onclick="return confirm('You are deleting a Device?')" href="{{ route('delete_branch',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
             </td>
           </tr>
+
+          <!-- Edit modal -->
+
+          <div class="modal" id="modal_{{$key}}" >
+           <div class="modal-dialog modal-xl" role="document">
+           <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Branch</h5>
+             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               
+            </div>
+            <div class="modal-body">
+                 
+             <div class="form-build">
+              <div class="row">
+                <div class="col-6">
+                  <form method="post" action="{{ route('update_branch')}}" enctype="multipart/form-data" >
+                    @method('PUT')
+                    @csrf
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Region*</label>
+                      <div class="col-7">
+                          <select class="form-control form-select" name="region" required>
+                            <option value="">Select Region</option>
+                            @foreach($region as $key2=>$value2)
+                             <option <?php echo ($value2->id == $value->region_id)?'selected':''  ?> value="{{$value2->id}}">{{$value2->name}} - {{$value2->region_code}}</option>
+                            @endforeach
+                          </select>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Branch Name*</label>
+                      <div class="col-7">
+                          <input class="form-control" name="name" type="text" placeholder="Enter Branch Name" required value="{{$value->name}}">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Branch Code *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="branch_code" type="text" placeholder="Enter Branch Code" value="{{$value->branch_code}}"  required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">State *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="state" type="text" placeholder="Enter State Name"  value="{{$value->state}}" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">District *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="district" type="text" placeholder="Enter District Name"  value="{{$value->district}}" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Area *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="city" type="text" placeholder="Enter City Name" value="{{$value->city}}" required>
+                      </div>
+                    </div>
+
+                     <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Pincode *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="pincode" type="text" placeholder="Enter PinCode" minlength="6" maxlength="6" value="{{$value->pincode}}"  required>
+                      </div>
+                    </div>
+                    <input type="hidden" name="id" value="{{$value->id}}">
+                    
+                     <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-outline-success">Update </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"data-bs-dismiss="modal" aria-label="Close">Close</button>
+                      </div>
+                  </form>
+                  
+                </div>
+                
+              </div>
+               
+             </div>
+
+            </div>
+
+           
+          </div>
+        </div>
+      </div>
+
+       <script>
+        $(document).ready(function(){
+          $('#MybtnModal_{{$key}}').click(function(){
+            $('#modal_{{$key}}').modal('show');
+          });
+        });  
+        </script>
+
 
           @endforeach
          
@@ -150,7 +254,7 @@
                     
                      <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-outline-success">Save </button>
-                        <button type="button" class="btn btn-sm btn-outline-primary"data-bs-dismiss="modal" aria-label="Close">Close</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"data-bs-dismiss="modal" aria-label="Close">Close</button>
                       </div>
                   </form>
                   

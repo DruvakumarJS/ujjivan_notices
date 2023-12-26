@@ -48,14 +48,23 @@ Route::post('search-notice',[NoticeController::class,'search'])->name('search_no
 Route::get('templates',[NoticeController::class,'templates'])->name('templates');
 
 
-
 Route::get('settings',[HomeController::class,'settings'])->name('settings');
 Route::get('regions',[HomeController::class,'region'])->name('regions');
 Route::post('save-region',[HomeController::class,'save_region'])->name('save_region');
+Route::put('update-region',[HomeController::class,'update_region'])->name('update_region');
+Route::get('delete-region/{id}',[HomeController::class,'delete_region'])->name('delete_region');
+
 Route::get('branches',[HomeController::class,'branches'])->name('branches');
 Route::post('save-branch',[HomeController::class,'save_branch'])->name('save_branch');
+Route::put('update-branch',[HomeController::class,'update_branch'])->name('update_branch');
+Route::get('delete-branch/{id}',[HomeController::class,'delete_branch'])->name('delete_branch');
+
+
 Route::get('banks',[HomeController::class,'banks'])->name('banks');
 Route::post('save-bank',[HomeController::class,'save_bank'])->name('save_bank');
+Route::put('update-bank',[HomeController::class,'update_bank'])->name('update_bank');
+Route::get('delete-bank/{id}',[HomeController::class,'delete_bank'])->name('delete_bank');
+
 
 Route::get('get_bank_details',[HomeController::class,'get_bank_details'])->name('get_bank_details');
 
