@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor.create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 <style type="text/css">
   .textareaElement {
  
@@ -216,8 +223,9 @@
       
        <div class="row" >
             <div class="col-8">
-              <div class="card text-white bg-white border border-primary" >
-                <div class="card-header text-muted text-black" style="background-color: white">Ujjivan </div>
+              <div class="card text-black bg-white border border-primary" >
+               <div class="card-header text-muted text-black"  style="background-color: white"><img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> </div>
+
 
                 @foreach($arr as $keys=>$values)
                    <!-- <label style="color: black">{{ $values->coloum }}</label> -->
@@ -236,7 +244,9 @@
                        
                        @if($views == 'textarea')
 
-                         <textarea  class="form-control div-margin"  name="row{{$keys+1}}_{{$key1+1}}" id="textarea" input="textAreaAdjust(this)" id="cval" style="height:200px" readonly >{{$content->$cVal}}</textarea>
+                        <!--  <textarea  class="form-control div-margin"  name="row{{$keys+1}}_{{$key1+1}}" id="textarea" input="textAreaAdjust(this)" id="cval" style="height:200px" readonly >{{$content->$cVal}}</textarea> -->
+
+                         <div style="color: ">{!! $content->$cVal !!}</div>
                      
                         <!--  <div class="textareaElement form-control div-margin" contenteditable name="row{{$keys+1}}_{{$key1+1}}">{{$content->$cVal}}</div> -->
                          @elseif($views == 'table')
@@ -313,7 +323,8 @@
 
                       <div class="col-md-6">
                         @if($views2 == 'textarea')
-                        <textarea class="form-control" style="height: 200px;text-align: left" name="row{{$keys+1}}_{{$key2+1}}" readonly>{{$content->$cVal}}</textarea>
+                       <!--  <textarea class="form-control" style="height: 200px;text-align: left" name="row{{$keys+1}}_{{$key2+1}}" readonly>{{$content->$cVal}}</textarea> -->
+                       <div style="color: ">{!! $content->$cVal !!}</div>
                         @elseif($views2 == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
                             <tr >
@@ -375,7 +386,9 @@
 
                       <div class="col-md-4">
                         @if($views3 == 'textarea')
-                        <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key3+1}}" readonly>{{$content->$cVal}}</textarea>
+                        <!-- <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key3+1}}" readonly>{{$content->$cVal}}</textarea> -->
+                        <div style="height: 200px">{!! $content->$cVal !!}</div>
+                        
                         @elseif($views3 == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
                             <tr >
@@ -447,7 +460,13 @@
                 @endforeach
 
                
-                <div class="card-footer text-muted text-black bg-white">Powered By : ujjivan.com </div>
+                <div class="card-footer text-muted text-black bg-white">
+                  <label style="color: black">Version 1</label>
+                  <div id="div3">
+                    <label  style="color: black">{{date('d M Y')}}</label>
+                  </div>
+                </div>
+                
               </div>
             </div>
        </div>

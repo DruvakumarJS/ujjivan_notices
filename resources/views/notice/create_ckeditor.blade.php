@@ -15,9 +15,8 @@
 
 <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 
-
 <div class="container-body">
-  <label class="label-bold">Edit Notice</label>
+  <label class="label-bold">Create New Notice</label>
     <div class="container-header">
         
     </div>
@@ -25,7 +24,7 @@
     <div class="page-container">
        <hr/>
       
-       <form method="POST" action="{{ route('save_notice')}}">
+       <form method="POST" action="{{ route('save_notice')}}" enctype="multipart/form-data">
         @csrf
 
         <div class="row">
@@ -36,7 +35,7 @@
             </div> 
             <div class="col-6">
                 <div class="input-group mb-3">
-                 <input class="form-control" type="text" name="tittle" value="{{$data->name}}" required>
+                 <input class="form-control" type="text" name="tittle" required>
                 </div>
             </div>   
        </div>
@@ -49,7 +48,7 @@
             </div> 
             <div class="col-6">
                 <div class="input-group mb-3">
-                 <input class="form-control" type="text" name="description" value="{{$data->description}}" required>
+                 <input class="form-control" type="text" name="description" required>
                 </div>
             </div>   
        </div>
@@ -64,8 +63,8 @@
                 <div class="input-group mb-3">
                  <select class="form-control form-select" name="is_pan_india" id="pan" required>
                   <option value="">Select</option>
-                  <option <?php echo($data->is_pan_india == 'Yes')?'selected':'' ?> value="Yes">Yes</option>
-                  <option <?php echo($data->is_pan_india == 'No')?'selected':'' ?> value="No">No</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
                  </select>
                 </div>
             </div>   
@@ -81,8 +80,8 @@
                 <div class="input-group mb-3" id="region_dropdown">
                  <select class="form-control form-select" name="is_region_wise" id="region_prompt" >
                   <option value="">Select</option>
-                  <option <?php echo($data->is_region_wise == '1')?'selected':'' ?> value="1">Yes</option>
-                  <option <?php echo($data->is_region_wise == '0')?'selected':'' ?> value="0">No</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
                  </select>
                 </div>
             </div>   
@@ -97,11 +96,10 @@
           <div class="col-6">
              <div class="input-group mb-3">
              <select class="form-control selectpicker" multiple name="regions[]" id="region_list" >
-               @php $region_list = explode(',',$data->regions); @endphp
-                <option <?php echo(in_array('East',$region_list))?'selected':''  ?> value="East">East</option>
-                <option <?php echo(in_array('West',$region_list))?'selected':''  ?> value="West">West</option>
-                <option <?php echo(in_array('North',$region_list))?'selected':''  ?> value="North">north</option>
-                <option <?php echo(in_array('South',$region_list))?'selected':''  ?> value="South">south</option>
+              <option value="">Select Region</option>
+                @foreach($regions as $key=>$value)
+                   <option value="{{$value->name}}">{{$value->name}}</option>
+                @endforeach
               </select>
 
               </div>
@@ -119,8 +117,8 @@
                 <div class="input-group mb-3">
                  <select class="form-control form-select" name="is_state_wise" id="state_prompt" >
                   <option value="">Select</option>
-                  <option <?php echo($data->is_state_wise == 'ya')?'selected':'' ?> value="ya">Yes</option>
-                  <option <?php echo($data->is_state_wise == 'na')?'selected':'' ?> value="na">No</option>
+                  <option value="ya">Yes</option>
+                  <option value="na">No</option>
                  </select>
                 </div>
             </div>   
@@ -135,12 +133,15 @@
           <div class="col-6">
              <div class="input-group mb-3">
              <select class="form-control selectpicker" multiple search="true" name="states[]" id="state_list" >
-                
-                @php $state_list = explode(',',$data->states); @endphp
-                <option <?php echo(in_array('Karnataka',$state_list))?'selected':''  ?> value="Karnataka">Karnataka</option>
-                <option <?php echo(in_array('Tamil Nadu',$state_list))?'selected':''  ?> value="Tamil Nadu">Tamil Nadu</option>
-                <option <?php echo(in_array('Kerala',$state_list))?'selected':''  ?> value="Kerala">Kerala</option>
-                <option <?php echo(in_array('Telangana',$state_list))?'selected':''  ?> value="Telangana">Telangana</option>
+                <!-- <option value="Karnataka">Karnataka</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Telangana">Telangana</option> -->
+                <option value="">Select Region</option>
+                @foreach($branch as $key=>$value)
+                   <option value="{{$value->state}}">{{$value->state}}</option>
+                @endforeach
+
               </select>
 
               </div>
@@ -156,11 +157,20 @@
           <div class="col-6">
              <div class="input-group mb-3">
              <select class="form-control selectpicker" multiple search="true" name="lang[]" required="" >
-                @php $lang_list = explode(',',$data->available_languages); @endphp
-                <option <?php echo(in_array('Kannada',$lang_list))?'selected':''  ?> value="Kannada">Kannada</option>
-                <option <?php echo(in_array('English',$lang_list))?'selected':''  ?> value="English">English</option>
-                <option <?php echo(in_array('Hindi',$lang_list))?'selected':''  ?> value="Hindi">Hindi</option>
-                <option <?php echo(in_array('Urdu',$lang_list))?'selected':''  ?> value="Urdu">Urdu</option>
+                <option value="Assamese">Assamese</option>
+                <option value="Bengali">Bengali</option>
+                <option value="English">English</option>
+                <option value="Ghazi">Ghazi</option>
+                <option value="Gujarati">Gujarati</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Kannada">Kannada</option>
+                <option value="Malayalam">Malayalam</option>
+                <option value="Marathi">Marathi</option>
+                <option value="Oriya">Oriya</option>
+                <option value="Punjabi">Punjabi</option>
+                <option value="Tamil">Tamil</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Urdu">Urdu</option>
               </select>
 
               </div>
@@ -177,16 +187,18 @@
                 <div class="input-group mb-3">
                  <select class="form-control form-select" name="voice_over" required>
                   <option value="">Select</option>
-                  <option <?php echo($data->voiceover == 'Y')?'selected':'' ?> value="Y">Yes</option>
-                  <option <?php echo($data->voiceover == 'N')?'selected':'' ?> value="N">No</option>
+                  <option value="Y">Yes</option>
+                  <option value="N">No</option>
                  </select>
                 </div>
             </div>   
        </div>
 
-       <!-- content -->
 
-        @php
+       <input type="hidden" name="template_id" value="{{$template_id}}">
+
+      
+       @php
         $data = json_encode($template->details , TRUE);
        @endphp
       
@@ -206,16 +218,10 @@
                    
                    @if(sizeof($data) == 1)
                     @foreach($data as $key1=>$views)
-
-                     @php
-                      $rowval = $keys+1;
-                      $colval = $key1+1;
-                      $cVal = 'c'.$rowval.$colval;
-                     @endphp 
                        
                        @if($views == 'textarea')
                        <div class="div-margin">
-                         <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}" oninput="auto_grow(this)">{{$content->$cVal}}</textarea>
+                         <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}" oninput="auto_grow(this)"></textarea>
                         <!--  <div class="textareaElement form-control div-margin" contenteditable name="row{{$keys+1}}_{{$key1+1}}"></div> -->
                         @elseif($views == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
@@ -339,14 +345,9 @@
                    
                     <div class="row div-margin">
                        @foreach($data as $key2=>$views2)
-                       @php
-                        $rowval = $keys+1;
-                        $colval = $key2+1;
-                        $cVal = 'c'.$rowval.$colval;
-                       @endphp
                       <div class="col-md-6">
                         @if($views2 == 'textarea')
-                        <textarea class="form-control div-margin" id="content_{{$keys+1}}_{{$key2+1}}"  name="row{{$keys+1}}_{{$key2+1}}" >{{$content->$cVal}}</textarea>
+                        <textarea class="form-control div-margin" id="content_{{$keys+1}}_{{$key2+1}}"  name="row{{$keys+1}}_{{$key2+1}}" ></textarea>
                         @elseif($views2 == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
                             <tr >
@@ -467,15 +468,9 @@
                    
                     <div class="row div-margin">
                        @foreach($data as $key3=>$views3)
-
-                        @php
-                          $rowval = $keys+1;
-                          $colval = $key3+1;
-                          $cVal = 'c'.$rowval.$colval;
-                       @endphp
                       <div class="col-md-4 div-margin">
                         @if($views3 == 'textarea')
-                        <textarea class="form-control div-margin" id="content_{{$keys+1}}_{{$key3+1}}"  name="row{{$keys+1}}_{{$key3+1}}" style="height: 200px">{{$content->$cVal}}</textarea>
+                        <textarea class="form-control div-margin" id="content_{{$keys+1}}_{{$key3+1}}"  name="row{{$keys+1}}_{{$key3+1}}" style="height: 200px"></textarea>
                         @elseif($views3 == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
                             <tr >
@@ -614,10 +609,19 @@
             </div>
        </div>
 
+       <!-- <div class="row" >
+            <div class="col-8">
+              <div class="card text-white bg-white border border-primary" >
+                <div class="card-header text-muted text-black" style="background-color: white">Ujjivan </div>
+                 <div style="height: 1200px" >
+                     <textarea class="form-control h-100" name="c1" ></textarea>
+                 </div>
 
-       <!-- content -->
-
-    
+                <div class="card-footer text-muted text-black bg-white">Powered By : ujjivan.com </div>
+              </div>
+            </div>
+       </div> -->
+  
        
        <div id="div3" class="div-margin">
          <button class="btn btn-success" type="submit">Submit</button> 
@@ -629,46 +633,13 @@
 </div>
 
 <script type="text/javascript">
- 
-  //$('#region_list').prop('disabled', true);
-  //$('#region_prompt').prop('disabled', true);
- // $('#state_prompt').prop('disabled', true);
-
-  var pan = document.getElementById('pan').value;
-  var region = document.getElementById('region_prompt').value;
-  //alert(region);
-
-    if(pan == 'Yes'){
-     
-         $('#region_prompt').prop('disabled', true);
-         document.getElementById("region_prompt").required = false;
-
-         $('#state_prompt').prop('disabled', true);
-         document.getElementById("state_prompt").required = false;
-    }
-
-    else if(pan == 'No'){
-      $('#region_prompt').prop('disabled', false);
-         document.getElementById("region_prompt").required = true;
-
-    }
-
-    else if(region == 1){
-     // alert(region);
-         
-         $('#state_prompt').prop('disabled', true);
-         document.getElementById("state_prompt").required = false;
-    }
-    else if(region == '0'){
-      alert('ll');
-        $('#state_prompt').prop('disabled', false);
-         document.getElementById("state_prompt").required = true;
-    }
-
-
+  var mode = document.getElementById("pan").value;
+ // $('#region_list').prop('disabled', true);
+ // $('#state_list').prop('disabled', true);
+  $('#region_prompt').prop('disabled', true);
+  $('#state_prompt').prop('disabled', true);
 
    $('select').on('change', function() {
-    //alert(this.value);
      
        if(this.value == "No"){
           
@@ -678,16 +649,12 @@
 
        if(this.value == "Yes"){
           
-           $("#region_prompt").val("0");
-           $("#state_prompt").val("na");
-
            $('#region_prompt').prop('disabled', true);
            document.getElementById("region_prompt").required = false;
 
            $('#state_prompt').prop('disabled', true);
            document.getElementById("state_prompt").required = false;
-         
-          
+ 
        }
 
        if(this.value == "1"){
@@ -723,6 +690,50 @@
 }
  
 </script>
+
+<script>
+    ClassicEditor.create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+<!-- <script type="text/javascript">
+  var imagesArray = [];
+   var filesInput = document.getElementById('myFileInput');
+    
+    filesInput.addEventListener('change', function(e) {
+     // alert('ll');
+      var output = document.getElementById('result');
+       document.getElementById('placeholder').style.display= "none" ;
+      var files = e.target.files; //FileList object
+      
+      for (var i = 0; i < files.length; i++) {
+        var currFile = files[i];
+     
+       imagesArray.push(files[i]);
+
+        displayImages();
+ 
+      }
+
+       function displayImages() {
+
+        let images = ""
+        imagesArray.forEach((image, index) => {
+     
+          images += `<div class="image">
+                <img  src="${URL.createObjectURL(image)}" alt="image">
+                
+              </div>` 
+           })
+         
+        output.innerHTML = images
+
+       }
+
+    });
+</script> -->
 
 
 

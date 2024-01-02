@@ -17,35 +17,35 @@ class CreateNoticeContentsTable extends Migration
             $table->id();
             $table->integer('notice_id');
             $table->integer('template_id');
-            $table->string('c11')->nullable();
-            $table->string('c12')->nullable();
-            $table->string('c13')->nullable();
-            $table->string('c14')->nullable();
+            $table->text('c11')->nullable();
+            $table->text('c12')->nullable();
+            $table->text('c13')->nullable();
+            $table->text('c14')->nullable();
 
-            $table->string('c21')->nullable();
-            $table->string('c22')->nullable();
-            $table->string('c23')->nullable();
-            $table->string('c24')->nullable();
+            $table->text('c21')->nullable();
+            $table->text('c22')->nullable();
+            $table->text('c23')->nullable();
+            $table->text('c24')->nullable();
 
-            $table->string('c31')->nullable();
-            $table->string('c32')->nullable();
-            $table->string('c33')->nullable();
-            $table->string('c34')->nullable();
+            $table->text('c31')->nullable();
+            $table->text('c32')->nullable();
+            $table->text('c33')->nullable();
+            $table->text('c34')->nullable();
 
-            $table->string('c41')->nullable();
-            $table->string('c42')->nullable();
-            $table->string('c43')->nullable();
-            $table->string('c44')->nullable();
+            $table->text('c41')->nullable();
+            $table->text('c42')->nullable();
+            $table->text('c43')->nullable();
+            $table->text('c44')->nullable();
 
-            $table->string('c51')->nullable();
-            $table->string('c52')->nullable();
-            $table->string('c53')->nullable();
-            $table->string('c54')->nullable();
+            $table->text('c51')->nullable();
+            $table->text('c52')->nullable();
+            $table->text('c53')->nullable();
+            $table->text('c54')->nullable();
 
-            $table->string('c61')->nullable();
-            $table->string('c62')->nullable();
-            $table->string('c63')->nullable();
-            $table->string('c64')->nullable();
+            $table->text('c61')->nullable();
+            $table->text('c62')->nullable();
+            $table->text('c63')->nullable();
+            $table->text('c64')->nullable();
             
             $table->timestamps();
         });

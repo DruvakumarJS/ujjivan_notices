@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="jlSoBtUQ4o9ZXNrKLJdCTc6PsAPIVPb7hRrVHHmj">
+    <meta name="csrf-token" content="zzUPH5Lh5uzFvZ5i8X452HC3gLM2fgeufuxqidnh">
 
     <title>Ujjivan</title>
 
@@ -22,33 +22,26 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="http://127.0.0.1:8000">
-                    <img src="/uconnect-logo.png" alt="">Ujjivan
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-               
-            </div>
-        </nav>
-
-
-
-        <main class="py-4">
+        
+        <main class="py-4" >
            <div class="row mx-0 px-0">
                   <div class="col-12">
-                  
+                  <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor.create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
 <div class="container-body">
   
-	       
-      
+	          
        <div class="row" >
-            <div class="col-8">
-              <div class="card text-white bg-white border border-primary" >
-                <div class="card-header text-muted text-black" style="background-color: white">Ujjivan </div>
+            <div class="col-12">
+              <div class="card text-black bg-white border border-primary" >
+               <div class="card-header text-muted text-black"  style="background-color: white"><img src="http://127.0.0.1:8000/images/mainLogo.svg" style="height: 30px;float: right;"> </div>
+
 
                                    <!-- <label style="color: black">textarea</label> -->
                                       
@@ -56,10 +49,11 @@
                                                              
                        
                                                 
-                         <div class="textareaElement form-control div-margin" contenteditable name="row1_1">As per amended Income Tax Regulations (April 01, 2010), TDS (Tax
-deducted at Source) would be deducted at a higher rate than current, in
-case PAN has not been submitted by the deductee to the deductor.</div>
-                       
+                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row1_1">&lt;p&gt;As per amended Income Tax Regulations (April 01, 2010), TDS (Tax deducted at Source) would be deducted at a higher rate than current, in case PAN has not been submitted by the deductee to the deductor.&lt;/p&gt;&lt;p&gt;The new TDS rates are as follows, if PAN number is not mentioned:&amp;nbsp;&lt;/p&gt;</div> -->
+                        <!-- <textarea  class="form-control div-margin" name="row1_1" >&lt;p&gt;As per amended Income Tax Regulations (April 01, 2010), TDS (Tax deducted at Source) would be deducted at a higher rate than current, in case PAN has not been submitted by the deductee to the deductor.&lt;/p&gt;&lt;p&gt;The new TDS rates are as follows, if PAN number is not mentioned:&amp;nbsp;&lt;/p&gt; </textarea> -->
+
+                        <div style="color: "><p>As per amended Income Tax Regulations (April 01, 2010), TDS (Tax deducted at Source) would be deducted at a higher rate than current, in case PAN has not been submitted by the deductee to the deductor.</p><p>The new TDS rates are as follows, if PAN number is not mentioned:&nbsp;</p></div>
+                         
                        
                                        
                                      
@@ -85,12 +79,11 @@ case PAN has not been submitted by the deductee to the deductor.</div>
                                                              
                        
                                                 
-                         <div class="textareaElement form-control div-margin" contenteditable name="row3_1">Further it is also mandatory to furnish PAN on Form no. 15H / 15G
-submitted by the customers.
+                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row3_1">&lt;p&gt;Further it is also mandatory to furnish PAN on Form no. 15H / 15G submitted by the customers.&lt;/p&gt;&lt;p&gt;You are therefore requested to submit your PAN copy for updating Bank Records at the earliest to avoid TDS deduction.&lt;/p&gt;</div> -->
+                        <!-- <textarea  class="form-control div-margin" name="row3_1" >&lt;p&gt;Further it is also mandatory to furnish PAN on Form no. 15H / 15G submitted by the customers.&lt;/p&gt;&lt;p&gt;You are therefore requested to submit your PAN copy for updating Bank Records at the earliest to avoid TDS deduction.&lt;/p&gt; </textarea> -->
 
-You are therefore requested to submit your PAN copy for updating Bank
-Records at the earliest to avoid TDS deduction.</div>
-                       
+                        <div style="color: "><p>Further it is also mandatory to furnish PAN on Form no. 15H / 15G submitted by the customers.</p><p>You are therefore requested to submit your PAN copy for updating Bank Records at the earliest to avoid TDS deduction.</p></div>
+                         
                        
                                        
                                      
@@ -99,7 +92,13 @@ Records at the earliest to avoid TDS deduction.</div>
 
                 
                
-                <div class="card-footer text-muted text-black bg-white">Powered By : ujjivan.com </div>
+                <div class="card-footer text-muted text-black bg-white">
+                  <label style="color: black">Version 1</label>
+                  <div id="div3">
+                    <label  style="color: black">02 Jan 2024</label>
+                  </div>
+                </div>
+                
               </div>
             </div>
        </div>

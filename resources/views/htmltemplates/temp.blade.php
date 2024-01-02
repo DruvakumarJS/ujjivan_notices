@@ -1,18 +1,25 @@
-@extends('layouts.login')
+@extends('layouts.temp')
 
 @section('content')
+<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor.create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 
 <div class="container-body">
   
-	  @php
+	     @php
         $data = json_encode($template->details , TRUE);
        @endphp
      
-      
        <div class="row" >
-            <div class="col-8">
-              <div class="card text-white bg-white border border-primary" >
-                <div class="card-header text-muted text-black" style="background-color: white">Ujjivan </div>
+            <div class="col-12">
+              <div class="card text-black bg-white border border-primary" >
+               <div class="card-header text-muted text-black"  style="background-color: white"><img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> </div>
+
 
                 @foreach($arr as $keys=>$values)
                    <!-- <label style="color: black">{{ $values->coloum }}</label> -->
@@ -32,7 +39,9 @@
                        @if($views == 'textarea')
                          
                         <!--  <div class="textareaElement form-control div-margin" contenteditable name="row{{$keys+1}}_{{$key1+1}}">{{$content->$cVal}}</div> -->
-                        <textarea  class="form-control div-margin" style="height: 250px" name="row{{$keys+1}}_{{$key1+1}}" >{{$content->$cVal}} </textarea>
+                        <!-- <textarea  class="form-control div-margin" name="row{{$keys+1}}_{{$key1+1}}" >{{$content->$cVal}} </textarea> -->
+
+                        <div style="color: ">{!! $content->$cVal !!}</div>
                          
                        @elseif($views == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
@@ -188,7 +197,13 @@
                 @endforeach
 
                
-                <div class="card-footer text-muted text-black bg-white">Powered By : ujjivan.com </div>
+                <div class="card-footer text-muted text-black bg-white">
+                  <label style="color: black">Version 1</label>
+                  <div id="div3">
+                    <label  style="color: black">{{date('d M Y')}}</label>
+                  </div>
+                </div>
+                
               </div>
             </div>
        </div>

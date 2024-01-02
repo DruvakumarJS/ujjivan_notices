@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-3">
             <div class="card shadow-sm border border-primary">
-                <div class="card-header bg-primary text-white">Region</div>
+                <div class="card-header bg-primary text-white"><label style="font-weight: bolder;">Region</label> </div>
 
                 <div class="card-body">
                    <label>Total No. of Regions</label>
@@ -20,7 +20,7 @@
 
         <div class="col-md-3">
             <div class="card shadow-sm border border-primary">
-                <div class="card-header bg-primary text-white">Branches</div>
+                <div class="card-header bg-primary text-white"><label style="font-weight: bolder;">Branches</label></div>
 
                 <div class="card-body">
                    <label>Total No. of Branches</label>
@@ -35,7 +35,7 @@
 
         <div class="col-md-3">
             <div class="card shadow-sm border border-primary">
-                <div class="card-header bg-primary text-white">Banks</div>
+                <div class="card-header bg-primary text-white"><label style="font-weight: bolder;">Banks</label></div>
 
                 <div class="card-body">
                    <label>Total No. of Banks</label>

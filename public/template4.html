@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="6ZS817KUV0ShHzx6HWOWZCInNhfxeRu9HH5aYzuA">
+    <meta name="csrf-token" content="zzUPH5Lh5uzFvZ5i8X452HC3gLM2fgeufuxqidnh">
 
     <title>Ujjivan</title>
 
@@ -22,33 +22,26 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="http://127.0.0.1:8000">
-                    <img src="/uconnect-logo.png" alt="">Ujjivan
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-               
-            </div>
-        </nav>
-
-
-
-        <main class="py-4">
+        
+        <main class="py-4" >
            <div class="row mx-0 px-0">
                   <div class="col-12">
-                  
+                  <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor.create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
 <div class="container-body">
   
-	       
-      
+	          
        <div class="row" >
-            <div class="col-8">
-              <div class="card text-white bg-white border border-primary" >
-                <div class="card-header text-muted text-black" style="background-color: white">Ujjivan </div>
+            <div class="col-12">
+              <div class="card text-black bg-white border border-primary" >
+               <div class="card-header text-muted text-black"  style="background-color: white"><img src="http://127.0.0.1:8000/images/mainLogo.svg" style="height: 30px;float: right;"> </div>
+
 
                                    <!-- <label style="color: black">textarea</label> -->
                                       
@@ -56,8 +49,10 @@
                                                              
                        
                                                 
-                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row1_1">TIME NORMS FOR COMMON TRANSACTIONS</div> -->
-                        <textarea  class="form-control div-margin" style="height: 250px" name="row1_1" >TIME NORMS FOR COMMON TRANSACTIONS </textarea>
+                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row1_1">&lt;p&gt;TIME NORMS FOR COMMON TRANSACTIONS&lt;/p&gt;</div> -->
+                        <!-- <textarea  class="form-control div-margin" name="row1_1" >&lt;p&gt;TIME NORMS FOR COMMON TRANSACTIONS&lt;/p&gt; </textarea> -->
+
+                        <div style="color: "><p>TIME NORMS FOR COMMON TRANSACTIONS</p></div>
                          
                        
                                        
@@ -132,7 +127,13 @@
 
                 
                
-                <div class="card-footer text-muted text-black bg-white">Powered By : ujjivan.com </div>
+                <div class="card-footer text-muted text-black bg-white">
+                  <label style="color: black">Version 1</label>
+                  <div id="div3">
+                    <label  style="color: black">02 Jan 2024</label>
+                  </div>
+                </div>
+                
               </div>
             </div>
        </div>

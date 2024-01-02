@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="6ZS817KUV0ShHzx6HWOWZCInNhfxeRu9HH5aYzuA">
+    <meta name="csrf-token" content="zzUPH5Lh5uzFvZ5i8X452HC3gLM2fgeufuxqidnh">
 
     <title>Ujjivan</title>
 
@@ -22,33 +22,26 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="http://127.0.0.1:8000">
-                    <img src="/uconnect-logo.png" alt="">Ujjivan
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-               
-            </div>
-        </nav>
-
-
-
-        <main class="py-4">
+        
+        <main class="py-4" >
            <div class="row mx-0 px-0">
                   <div class="col-12">
-                  
+                  <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor.create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
 <div class="container-body">
   
-	       
-      
+	          
        <div class="row" >
-            <div class="col-8">
-              <div class="card text-white bg-white border border-primary" >
-                <div class="card-header text-muted text-black" style="background-color: white">Ujjivan </div>
+            <div class="col-12">
+              <div class="card text-black bg-white border border-primary" >
+               <div class="card-header text-muted text-black"  style="background-color: white"><img src="http://127.0.0.1:8000/images/mainLogo.svg" style="height: 30px;float: right;"> </div>
+
 
                                    <!-- <label style="color: black">textarea</label> -->
                                       
@@ -56,8 +49,10 @@
                                                              
                        
                                                 
-                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row1_1">Revision of Interest rates applicable to Term Deposit</div> -->
-                        <textarea  class="form-control div-margin" style="height: 250px" name="row1_1" >Revision of Interest rates applicable to Term Deposit </textarea>
+                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row1_1">&lt;p&gt;Revision of retail term deposit rates with effect from 01st june 2023.&lt;/p&gt;</div> -->
+                        <!-- <textarea  class="form-control div-margin" name="row1_1" >&lt;p&gt;Revision of retail term deposit rates with effect from 01st june 2023.&lt;/p&gt; </textarea> -->
+
+                        <div style="color: "><p>Revision of retail term deposit rates with effect from 01st june 2023.</p></div>
                          
                        
                                        
@@ -232,10 +227,10 @@
                                                              
                        
                                                 
-                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row4_1">Important points on Term Deposit
-1. Resident senior citizen is eligible for an additional 0.05% over regular fixed deposit and recurring deposit.</div> -->
-                        <textarea  class="form-control div-margin" style="height: 250px" name="row4_1" >Important points on Term Deposit
-1. Resident senior citizen is eligible for an additional 0.05% over regular fixed deposit and recurring deposit. </textarea>
+                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row4_1">&lt;p&gt;&lt;strong&gt;Important points on Term Deposit&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Resident Senior citizen is eligible for an additional rate of 0.050% over regular and recurring deposit.&lt;/li&gt;&lt;li&gt;For NRE and NRO deposits senior citizen additional rate is not applicable.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Sumit Thomas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Head of Branch Banking , TASC &amp;amp; TPP&lt;/strong&gt;&lt;/p&gt;</div> -->
+                        <!-- <textarea  class="form-control div-margin" name="row4_1" >&lt;p&gt;&lt;strong&gt;Important points on Term Deposit&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Resident Senior citizen is eligible for an additional rate of 0.050% over regular and recurring deposit.&lt;/li&gt;&lt;li&gt;For NRE and NRO deposits senior citizen additional rate is not applicable.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Sumit Thomas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Head of Branch Banking , TASC &amp;amp; TPP&lt;/strong&gt;&lt;/p&gt; </textarea> -->
+
+                        <div style="color: "><p><strong>Important points on Term Deposit</strong></p><ul><li>Resident Senior citizen is eligible for an additional rate of 0.050% over regular and recurring deposit.</li><li>For NRE and NRO deposits senior citizen additional rate is not applicable.</li></ul><p><strong>Sumit Thomas</strong></p><p><strong>Head of Branch Banking , TASC &amp; TPP</strong></p></div>
                          
                        
                                        
@@ -245,7 +240,13 @@
 
                 
                
-                <div class="card-footer text-muted text-black bg-white">Powered By : ujjivan.com </div>
+                <div class="card-footer text-muted text-black bg-white">
+                  <label style="color: black">Version 1</label>
+                  <div id="div3">
+                    <label  style="color: black">02 Jan 2024</label>
+                  </div>
+                </div>
+                
               </div>
             </div>
        </div>

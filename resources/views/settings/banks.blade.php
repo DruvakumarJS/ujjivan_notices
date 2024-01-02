@@ -56,7 +56,7 @@
             <td>{{$value->pincode}}</td>
             <td>
               <!-- <a href=""><button class="btn btn-sm btn-outline-primary">View More</button></a> -->
-              <a id="MybtnModal_{{$key}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+              <a id="MybtnModal_{{$key}}" ><button class="btn btn-sm btn-outline-primary">Edit</button></a>
               <a onclick="return confirm('You are deleting a Device?')" href="{{ route('delete_bank',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
             </td>
           </tr>

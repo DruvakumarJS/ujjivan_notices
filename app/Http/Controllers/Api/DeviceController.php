@@ -122,4 +122,27 @@ class DeviceController extends Controller
 
 
    }
+
+   public function register(Request $request){
+      $mac_id = $request->mac_id ;
+      
+      if(Devices::where('mac_id',$mac_id)->exists()){
+          $data = Devices::where('mac_id',$mac_id)->first();
+
+          $id = $data->mac_id;
+
+          return response()->json([
+            'status' => 'true',
+            'message' => 'Device data exists',
+            'mac_id' => $data->mac_id]);
+      }
+      else{
+
+          return response()->json([
+            'status' => 'false',
+            'message' => 'Device data exists',
+            'mac_id' => '0']);
+
+      }
+   }
 }

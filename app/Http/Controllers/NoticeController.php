@@ -72,7 +72,8 @@ class NoticeController extends Controller
       //print_r($arr); die();
 
 
-        return view('notice/create',compact('regions','branch','template','arr','template_id'));
+     // return view('notice/create',compact('regions','branch','template','arr','template_id'));
+      return view('notice/create_ckeditor',compact('regions','branch','template','arr','template_id'));
     }
 
     /**
@@ -83,6 +84,10 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
+      /* if($file = $request->hasFile('row2_1')) {
+        print_r("YES");
+       }*/
+
       // print_r(json_encode($request->input()) ); die();
 
        $region_prompt = '0';

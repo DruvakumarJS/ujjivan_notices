@@ -44,7 +44,7 @@
             <td>{{$value->name}}</td>
             <td>{{$value->region_code}}</td>
             <td>
-              <a id="MybtnModal_{{$key}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+              <a id="MybtnModal_{{$key}}" ><button class="btn btn-sm btn-outline-primary">Edit</button></a>
               <a onclick="return confirm('You are deleting a Device?')" href="{{route('delete_region',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
             </td>
           </tr>
