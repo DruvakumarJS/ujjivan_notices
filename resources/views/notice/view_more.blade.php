@@ -17,6 +17,11 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+#over img,output {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
 
 </style>
 
@@ -223,7 +228,7 @@
       
        <div class="row" >
             <div class="col-8">
-              <div class="card text-black bg-white border border-primary" >
+              <div class="card text-black bg-white border border-white" >
                <div class="card-header text-muted text-black"  style="background-color: white"><img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> </div>
 
 
@@ -305,7 +310,11 @@
                           </table>
                        
                        @else
-                         <img class="card-img-top div-margin" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key1+1}}">
+                         <!-- <img class="card-img-top div-margin" src="{{url('/')}}/noticeimages/{{$content->$cVal}}" style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key1+1}}"> -->
+                         <div id="over">
+                           <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}">
+
+                         </div>
 
                        @endif
 
@@ -365,7 +374,9 @@
                             </tbody>
                           </table>
                         @else
-                        <img class="card-img-top" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key2+1}}">
+                       <div id="over">
+                           <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}">
+                        </div>
                         @endif
                       </div>
                        @endforeach
@@ -444,7 +455,9 @@
                             </tbody>
                           </table>
                         @else
-                       <img class="card-img-top" src="..." style="height: 200px;width:200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key3+1}}">
+                       <div id="over">
+                           <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}">
+                        </div>
                         @endif
                       </div>
                        @endforeach

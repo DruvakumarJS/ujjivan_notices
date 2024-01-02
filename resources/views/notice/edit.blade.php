@@ -215,7 +215,7 @@
                        
                        @if($views == 'textarea')
                        <div class="div-margin">
-                         <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}" oninput="auto_grow(this)">{{$content->$cVal}}</textarea>
+                         <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}">{{$content->$cVal}}</textarea>
                         <!--  <div class="textareaElement form-control div-margin" contenteditable name="row{{$keys+1}}_{{$key1+1}}"></div> -->
                         @elseif($views == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
@@ -279,9 +279,9 @@
 
                            <input type="file" id="myFileInput_{{$keys+1}}{{$key1+1}}" name="row{{$keys+1}}_{{$key1+1}}" style="display: none" />
          
-                           <img src="{{url('/')}}/images/placeholder.jpg" id="placeholder_{{$keys+1}}_{{$key1+1}}">
+                           <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}" id="placeholder_{{$keys+1}}_{{$key1+1}}">
 
-                            <output id="result_{{$keys+1}}{{$key1+1}}" name="row{{$keys+1}}_{{$key1+1}}"/>
+                            <output id="result_{{$keys+1}}{{$key1+1}}" name="row{{$keys+1}}_{{$key1+1}}" />
 
                           </div>
                         </div>
@@ -394,7 +394,7 @@
 
                            <input type="file" id="myFileInput_{{$keys+1}}{{$key2+1}}" name="row{{$keys+1}}_{{$key2+1}}" style="display: none" />
          
-                           <img src="{{url('/')}}/images/placeholder.jpg" id="placeholder_{{$keys+1}}_{{$key2+1}}">
+                          <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}" id="placeholder_{{$keys+1}}_{{$key2+1}}">
 
                             <output id="result_{{$keys+1}}{{$key2+1}}" name="row{{$keys+1}}_{{$key2+1}}"/>
 
@@ -537,7 +537,7 @@
 
                            <input type="file" id="myFileInput_{{$keys+1}}{{$key3+1}}" name="row{{$keys+1}}_{{$key3+1}}" style="display: none" />
          
-                           <img src="{{url('/')}}/images/placeholder.jpg" id="placeholder_{{$keys+1}}_{{$key3+1}}">
+                           <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}" id="placeholder_{{$keys+1}}_{{$key3+1}}">
 
                             <output id="result_{{$keys+1}}{{$key3+1}}" name="row{{$keys+1}}_{{$key3+1}}"/>
 

@@ -1,6 +1,14 @@
 @extends('layouts.temp')
 
 @section('content')
+<style type="text/css">
+  #over img,output {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+</style>
 <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 <script>
     ClassicEditor.create( document.querySelector( '#content' ) )
@@ -11,13 +19,17 @@
 
 <div class="container-body">
   
-	     @php
+        <!-- content -->
+
+        @php
         $data = json_encode($template->details , TRUE);
        @endphp
+      
      
+      
        <div class="row" >
-            <div class="col-12">
-              <div class="card text-black bg-white border border-primary" >
+            <div class="col-8">
+              <div class="card text-black bg-white border border-white" >
                <div class="card-header text-muted text-black"  style="background-color: white"><img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> </div>
 
 
@@ -37,13 +49,13 @@
                      @endphp 
                        
                        @if($views == 'textarea')
-                         
-                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row{{$keys+1}}_{{$key1+1}}">{{$content->$cVal}}</div> -->
-                        <!-- <textarea  class="form-control div-margin" name="row{{$keys+1}}_{{$key1+1}}" >{{$content->$cVal}} </textarea> -->
 
-                        <div style="color: ">{!! $content->$cVal !!}</div>
-                         
-                       @elseif($views == 'table')
+                        <!--  <textarea  class="form-control div-margin"  name="row{{$keys+1}}_{{$key1+1}}" id="textarea" input="textAreaAdjust(this)" id="cval" style="height:200px" readonly >{{$content->$cVal}}</textarea> -->
+
+                         <div style="color: ">{!! $content->$cVal !!}</div>
+                     
+                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row{{$keys+1}}_{{$key1+1}}">{{$content->$cVal}}</div> -->
+                         @elseif($views == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
                             <tr >
                               <th>Sl.No</th>
@@ -87,7 +99,7 @@
                                <tr>
                                 <td>7</td>
                                 <td>Collection of cheques (local) </td>
-                                <td>WWithin 4 Days</td>
+                                <td>Within 4 Days</td>
                               </tr>
 
                               <tr>
@@ -96,10 +108,14 @@
                                 <td>7 days</td>
                               </tr>
                             </tbody>
-                          </table>  
+                          </table>
                        
                        @else
-                         <img class="card-img-top div-margin" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key1+1}}">
+                         <!-- <img class="card-img-top div-margin" src="{{url('/')}}/noticeimages/{{$content->$cVal}}" style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key1+1}}"> -->
+                         <div id="over">
+                           <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}">
+
+                         </div>
 
                        @endif
 
@@ -117,7 +133,8 @@
 
                       <div class="col-md-6">
                         @if($views2 == 'textarea')
-                        <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key2+1}}">{{$content->$cVal}}</textarea>
+                       <!--  <textarea class="form-control" style="height: 200px;text-align: left" name="row{{$keys+1}}_{{$key2+1}}" readonly>{{$content->$cVal}}</textarea> -->
+                       <div style="color: ">{!! $content->$cVal !!}</div>
                         @elseif($views2 == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
                             <tr >
@@ -158,7 +175,9 @@
                             </tbody>
                           </table>
                         @else
-                        <img class="card-img-top" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key2+1}}">
+                       <div id="over">
+                           <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}">
+                        </div>
                         @endif
                       </div>
                        @endforeach
@@ -179,9 +198,67 @@
 
                       <div class="col-md-4">
                         @if($views3 == 'textarea')
-                        <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key3+1}}">{{$content->$cVal}}</textarea>
+                        <!-- <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key3+1}}" readonly>{{$content->$cVal}}</textarea> -->
+                        <div style="height: 200px">{!! $content->$cVal !!}</div>
+                        
+                        @elseif($views3 == 'table')
+                          <table class="table table-bordered div-margin" style="height: 200px">
+                            <tr >
+                              <th>Sl.No</th>
+                              <th>Transaction / Service</th>
+                              <th>Time Taken</th>
+                            </tr>
+                            <tbody>
+                              <tr>
+                                <td>1</td>
+                                <td>Cash payment at cash counters</td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+
+                              <tr>
+                                <td>2</td>
+                                <td>Receipt of cash at cash counters</td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+                              <tr>
+                                <td>3</td>
+                                <td>Issuance of statement across counter </td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+
+                              <tr>
+                                <td>4</td>
+                                <td>Updating of pass books</td>
+                                <td>Within 15 Minutes</td>
+                              </tr>
+                              <tr>
+                                <td>5</td>
+                                <td>Issuance of demand draft / fixed deposit advice</td>
+                                <td>Within 30 Minutes</td>
+                              </tr>
+
+                              <tr>
+                                <td>6</td>
+                                <td>Payment of fixed deposits</td>
+                                <td>Within 30 Minutes</td>
+                              </tr>
+                               <tr>
+                                <td>7</td>
+                                <td>Collection of cheques (local) </td>
+                                <td>Within 4 Days</td>
+                              </tr>
+
+                              <tr>
+                                <td>8</td>
+                                <td>Issuance of statement by post</td>
+                                <td>7 days</td>
+                              </tr>
+                            </tbody>
+                          </table>
                         @else
-                       <img class="card-img-top" src="..." style="height: 200px;width:200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key3+1}}">
+                       <div id="over">
+                           <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}">
+                        </div>
                         @endif
                       </div>
                        @endforeach
@@ -207,9 +284,11 @@
               </div>
             </div>
        </div>
+     
+       
 
-	
-	
+  
+  
 </div>
 
     

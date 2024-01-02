@@ -84,11 +84,59 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-      /* if($file = $request->hasFile('row2_1')) {
-        print_r("YES");
-       }*/
+        if($file = $request->hasFile('row2_1')) {
+       
+            $fileName = basename($_FILES['row2_1']['name']); 
+            $temp = explode(".", $fileName);
+                 
+            $fileName21 = 'Notice21_'.date('Y-m-d_H_i_s') . '.' . end($temp);
 
-      // print_r(json_encode($request->input()) ); die();
+            $destinationPath = public_path().'/noticeimages/'.$fileName21 ;
+           
+            move_uploaded_file($_FILES["row2_1"]["tmp_name"], $destinationPath);
+
+        }
+
+        if($file = $request->hasFile('row2_2')) {
+       
+            $fileName = basename($_FILES['row2_2']['name']); 
+            $temp = explode(".", $fileName);
+                 
+            $fileName22 = 'Notice22_'.date('Y-m-d_H_i_s') . '.' . end($temp);
+
+            $destinationPath = public_path().'/noticeimages/'.$fileName22 ;
+           
+            move_uploaded_file($_FILES["row2_2"]["tmp_name"], $destinationPath);
+
+        }
+
+        if($file = $request->hasFile('row3_2')) {
+       
+            $fileName = basename($_FILES['row3_2']['name']); 
+            $temp = explode(".", $fileName);
+                 
+            $fileName32 = 'Notice32_'.date('Y-m-d_H_i_s') . '.' . end($temp);
+
+            $destinationPath = public_path().'/noticeimages/'.$fileName32 ;
+           
+            move_uploaded_file($_FILES["row3_2"]["tmp_name"], $destinationPath);
+
+        }
+
+        if($file = $request->hasFile('row4_1')) {
+       
+            $fileName = basename($_FILES['row4_1']['name']); 
+            $temp = explode(".", $fileName);
+                 
+            $fileName41 = 'Notice41_'.date('Y-m-d_H_i_s') . '.' . end($temp);
+
+            $destinationPath = public_path().'/noticeimages/'.$fileName41 ;
+           
+            move_uploaded_file($_FILES["row4_1"]["tmp_name"], $destinationPath);
+
+        }
+
+     //  print_r(json_encode($request->input()) ); die();
 
        $region_prompt = '0';
        $state_prompt = 'na';
@@ -165,17 +213,38 @@ class NoticeController extends Controller
          $content->notice_id = $noticeID ;
          $content->template_id = $request->template_id;
 
-         $content->c11 = $request->row1_1;
-         $content->c12 = $request->row1_2;
-         $content->c13 = $request->row1_3;
-         $content->c14 = $request->row1_4;
+         if($file = $request->hasFile('row1_1'))$content->c11 = $fileName11;else $content->c11 = $request->row1_1;
+         if($file = $request->hasFile('row1_2'))$content->c12 = $fileName12;else $content->c12 = $request->row1_2;
+         if($file = $request->hasFile('row1_3'))$content->c13 = $fileName13;else $content->c13 = $request->row1_3;
+         if($file = $request->hasFile('row1_4'))$content->c14 = $fileName14;else $content->c14 = $request->row1_4;
+         
+         if($file = $request->hasFile('row2_1'))$content->c21 = $fileName21;else $content->c21 = $request->row2_1;
+         if($file = $request->hasFile('row2_2'))$content->c22 = $fileName22;else $content->c22 = $request->row2_2;
+         if($file = $request->hasFile('row2_3'))$content->c23 = $fileName23;else $content->c23 = $request->row2_3;
+         if($file = $request->hasFile('row2_4'))$content->c24 = $fileName24;else $content->c24 = $request->row2_4;
 
-         $content->c21 = $request->row2_1;
-         $content->c22 = $request->row2_2;
-         $content->c23 = $request->row2_3;
-         $content->c24 = $request->row2_4;
+         if($file = $request->hasFile('row3_1'))$content->c31 = $fileName31;else $content->c31 = $request->row3_1;
+         if($file = $request->hasFile('row3_2'))$content->c32 = $fileName32;else $content->c32 = $request->row3_2;
+         if($file = $request->hasFile('row3_3'))$content->c33 = $fileName33;else $content->c33 = $request->row3_3;
+         if($file = $request->hasFile('row3_4'))$content->c34 = $fileName34;else $content->c34 = $request->row3_4;
 
-         $content->c31 = $request->row3_1;
+         if($file = $request->hasFile('row4_1'))$content->c41 = $fileName41;else $content->c41 = $request->row4_1;
+         if($file = $request->hasFile('row4_2'))$content->c42 = $fileName42;else $content->c42 = $request->row4_2;
+         if($file = $request->hasFile('row4_3'))$content->c43 = $fileName43;else $content->c43 = $request->row4_3;
+         if($file = $request->hasFile('row4_4'))$content->c44 = $fileName44;else $content->c44 = $request->row4_4;
+
+         if($file = $request->hasFile('row5_1'))$content->c51 = $fileName51;else $content->c51 = $request->row5_1;
+         if($file = $request->hasFile('row5_2'))$content->c52 = $fileName52;else $content->c52 = $request->row5_2;
+         if($file = $request->hasFile('row5_3'))$content->c53 = $fileName53;else $content->c53 = $request->row5_3;
+         if($file = $request->hasFile('row5_4'))$content->c54 = $fileName54;else $content->c54 = $request->row5_4;
+
+         if($file = $request->hasFile('row6_1'))$content->c61 = $fileName61;else $content->c61 = $request->row6_1;
+         if($file = $request->hasFile('row6_2'))$content->c62 = $fileName62;else $content->c62 = $request->row6_2;
+         if($file = $request->hasFile('row6_3'))$content->c63 = $fileName63;else $content->c63 = $request->row6_3;
+         if($file = $request->hasFile('row6_4'))$content->c64 = $fileName64;else $content->c64 = $request->row6_4;
+         
+        
+         /*$content->c31 = $request->row3_1;
          $content->c32 = $request->row3_2;
          $content->c33 = $request->row3_3;
          $content->c34 = $request->row3_4;
@@ -194,7 +263,7 @@ class NoticeController extends Controller
          $content->c62 = $request->row6_2;
          $content->c63 = $request->row6_3;
          $content->c64 = $request->row6_4;
-         
+         */
          $content->save();
          $noticeContentID = $content->id;
 
@@ -222,6 +291,7 @@ class NoticeController extends Controller
         // print_r($noticeContentID); die();
 
        }
+       // print_r(json_encode($request->input()) ); die();
 
        return redirect()->route('notices');
     }
