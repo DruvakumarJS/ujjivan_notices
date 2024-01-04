@@ -68,12 +68,9 @@ class NoticeController extends Controller
 
       $arr = json_decode($data);
 
-
-      //print_r($arr); die();
-
-
-     // return view('notice/create',compact('regions','branch','template','arr','template_id'));
       return view('notice/create_ckeditor',compact('regions','branch','template','arr','template_id'));
+       //return view('notice/ckeditor2',compact('regions','branch','template','arr','template_id'));
+      // return view('notice/create_new_notice',compact('regions','branch','template','arr','template_id'));
     }
 
     /**
@@ -184,13 +181,14 @@ class NoticeController extends Controller
            'creator'=>Auth::user()->id ,
            'voiceover' => $request->voice_over
        ]);*/
-
-      $filename = 'template'.$request->template_id.'.html';
+      
+      $current = date('Y-m-d_H_i_s');
+      $filename = 'notice'.$request->template_id.'_'.$current.'.html';
 
        $notice = new Notice;
        $notice->name = $request->tittle ;
        $notice->description = $request->description ;
-       $notice->path = 'notices';
+       $notice->path = 'noticefiles';
        $notice->filename = $filename;
        $notice->is_pan_india = $request->is_pan_india ;
        $notice->is_region_wise = $region_prompt ;
@@ -278,11 +276,20 @@ class NoticeController extends Controller
  
         $arr = json_decode($data2);
 
+        if (file_exists(public_path().'/noticefiles/')) {
+              
+        } else {
+           
+            File::makeDirectory(public_path().'/noticefiles/', $mode = 0777, true, true);
+        }
 
+        $lang = 'en';
+
+        $local_filename = $lang.'_notice'.$request->template_id.'_'.$current.'.html';
 
          
          $noticecontent = 
-         File::put($filename,
+         File::put(public_path().'/noticefiles/'.$local_filename,
             view('htmltemplates.temp')
                 ->with(["content" => $content , "arr" => $arr ,'template' => $template])
                 ->render()
@@ -366,6 +373,22 @@ class NoticeController extends Controller
 
         if($delete){
             return redirect()->route('notices');
+        }
+    }
+
+    public function ck_upload(Request $request){
+
+      if ($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+      
+            $request->file('upload')->move(public_path('uploads'), $fileName);
+      
+            $url = asset('uploads/' . $fileName);
+  
+            return response()->json(['fileName' => $fileName, 'uploaded'=> 1, 'url' => $url]);
         }
     }
 }

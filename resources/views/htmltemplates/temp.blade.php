@@ -6,6 +6,27 @@
   margin-left: auto;
   margin-right: auto;
   display: block;
+  height: 200px;
+  width: auto;
+  align-items: center;
+}
+#over2 img,output {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 80%;
+  max-height: 200px;
+  align-items: center;
+}
+
+#over3 img,output {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 100%;
+  max-height: 200px;
+  align-items: center;
+
 }
 
 </style>
@@ -175,7 +196,7 @@
                             </tbody>
                           </table>
                         @else
-                       <div id="over">
+                       <div id="over2">
                            <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}">
                         </div>
                         @endif
@@ -256,7 +277,7 @@
                             </tbody>
                           </table>
                         @else
-                       <div id="over">
+                       <div id="over3">
                            <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}">
                         </div>
                         @endif

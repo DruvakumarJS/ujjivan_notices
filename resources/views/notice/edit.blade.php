@@ -9,6 +9,27 @@
   margin-left: auto;
   margin-right: auto;
   display: block;
+  height: 200px;
+  width: auto;
+  align-items: center;
+}
+#over2 img,output {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 80%;
+  max-height: 200px;
+  align-items: center;
+}
+
+#over3 img,output {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 100%;
+  max-height: 200px;
+  align-items: center;
+
 }
 
 </style>
@@ -215,7 +236,7 @@
                        
                        @if($views == 'textarea')
                        <div class="div-margin">
-                         <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}">{{$content->$cVal}}</textarea>
+                         <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}" >{{$content->$cVal}}</textarea>
                         <!--  <div class="textareaElement form-control div-margin" contenteditable name="row{{$keys+1}}_{{$key1+1}}"></div> -->
                         @elseif($views == 'table')
                           <table class="table table-bordered div-margin" style="height: 200px">
@@ -390,7 +411,7 @@
                         @else
                         <!-- <img class="card-img-top" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key2+1}}"> -->
 
-                         <div id="over" class="card-img-top div-margin" onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key2+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
+                         <div id="over2" class="card-img-top div-margin" onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key2+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
 
                            <input type="file" id="myFileInput_{{$keys+1}}{{$key2+1}}" name="row{{$keys+1}}_{{$key2+1}}" style="display: none" />
          
@@ -533,7 +554,7 @@
                         @else
                        <!-- <img class="card-img-top" src="..." style="height: 200px;width:200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key3+1}}"> -->
 
-                       <div id="over" class="card-img-top div-margin" onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key3+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
+                       <div id="over3" class="card-img-top div-margin" onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key3+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
 
                            <input type="file" id="myFileInput_{{$keys+1}}{{$key3+1}}" name="row{{$keys+1}}_{{$key3+1}}" style="display: none" />
          

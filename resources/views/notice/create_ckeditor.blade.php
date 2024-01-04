@@ -9,11 +9,35 @@
   margin-left: auto;
   margin-right: auto;
   display: block;
+  height: 200px;
+  width: auto;
+  align-items: center;
 }
+#over2 img,output {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 80%;
+  max-height: 200px;
+  align-items: center;
+}
+
+#over3 img,output {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 100%;
+  max-height: 200px;
+  align-items: center;
+
+}
+.ck-editor__editable_inline {
+        min-height: 300px;
+    }
 
 </style>
 
-<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
 
 <div class="container-body">
   <label class="label-bold">Create New Notice</label>
@@ -156,10 +180,10 @@
             </div> 
           <div class="col-6">
              <div class="input-group mb-3">
-             <select class="form-control selectpicker" multiple search="true" name="lang[]" required="" >
+             <select class="form-control selectpicker" multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()">
                 <option value="Assamese">Assamese</option>
                 <option value="Bengali">Bengali</option>
-                <option value="English">English</option>
+                <option value="English" selected>English</option>
                 <option value="Ghazi">Ghazi</option>
                 <option value="Gujarati">Gujarati</option>
                 <option value="Hindi">Hindi</option>
@@ -197,13 +221,18 @@
 
        <input type="hidden" name="template_id" value="{{$template_id}}">
 
+       <input class="form-control" type="text" name="" id="langs">
+      
       
        @php
         $data = json_encode($template->details , TRUE);
+       
        @endphp
+
       
      
-      
+       <!-- CkEditor --> 
+       <label>English</label>
        <div class="row" >
             <div class="col-8">
               <div class="card text-black bg-white border border-primary" >
@@ -391,11 +420,11 @@
                         @else
                         <!-- <img class="card-img-top" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key2+1}}"> -->
 
-                         <div id="over" class="card-img-top div-margin" onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key2+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
+                         <div id="over2" class="card-img-top div-margin" onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key2+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
 
                            <input type="file" id="myFileInput_{{$keys+1}}{{$key2+1}}" name="row{{$keys+1}}_{{$key2+1}}" style="display: none" />
          
-                           <img src="{{url('/')}}/images/placeholder.jpg" id="placeholder_{{$keys+1}}_{{$key2+1}}">
+                           <img src="https://via.placeholder.com/500x300" id="placeholder_{{$keys+1}}_{{$key2+1}}">
 
                             <output id="result_{{$keys+1}}{{$key2+1}}" name="row{{$keys+1}}_{{$key2+1}}"/>
 
@@ -528,11 +557,11 @@
                         @else
                        <!-- <img class="card-img-top" src="..." style="height: 200px;width:200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key3+1}}"> -->
 
-                       <div id="over" class="card-img-top div-margin" onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key3+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
+                       <div id="over3" class="card-img-top " onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key3+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
 
                            <input type="file" id="myFileInput_{{$keys+1}}{{$key3+1}}" name="row{{$keys+1}}_{{$key3+1}}" style="display: none" />
          
-                           <img src="{{url('/')}}/images/placeholder.jpg" id="placeholder_{{$keys+1}}_{{$key3+1}}">
+                           <img src="https://via.placeholder.com/300x200" id="placeholder_{{$keys+1}}_{{$key3+1}}">
 
                             <output id="result_{{$keys+1}}{{$key3+1}}" name="row{{$keys+1}}_{{$key3+1}}"/>
 
@@ -607,20 +636,10 @@
 
               </div>
             </div>
+          <!-- CkEditor -->  
+
        </div>
 
-       <!-- <div class="row" >
-            <div class="col-8">
-              <div class="card text-white bg-white border border-primary" >
-                <div class="card-header text-muted text-black" style="background-color: white">Ujjivan </div>
-                 <div style="height: 1200px" >
-                     <textarea class="form-control h-100" name="c1" ></textarea>
-                 </div>
-
-                <div class="card-footer text-muted text-black bg-white">Powered By : ujjivan.com </div>
-              </div>
-            </div>
-       </div> -->
   
        
        <div id="div3" class="div-margin">
@@ -634,6 +653,7 @@
 
 <script type="text/javascript">
   var mode = document.getElementById("pan").value;
+   var langArray = [];
  // $('#region_list').prop('disabled', true);
  // $('#state_list').prop('disabled', true);
   $('#region_prompt').prop('disabled', true);
@@ -657,7 +677,7 @@
  
        }
 
-       if(this.value == "1"){
+      if(this.value == "1"){
            $('#region_list').prop('disabled', false);
            document.getElementById("region_list").required = true;
 
@@ -675,10 +695,9 @@
 
        if(this.value == "ya"){
            $('#state_list').prop('disabled', false);
-           document.getElementById("state_list").required = true;
-
-          
+           document.getElementById("state_list").required = true;          
        }
+      
 
 
 
@@ -698,43 +717,20 @@
         } );
 </script>
 
-<!-- <script type="text/javascript">
-  var imagesArray = [];
-   var filesInput = document.getElementById('myFileInput');
-    
-    filesInput.addEventListener('change', function(e) {
-     // alert('ll');
-      var output = document.getElementById('result');
-       document.getElementById('placeholder').style.display= "none" ;
-      var files = e.target.files; //FileList object
-      
-      for (var i = 0; i < files.length; i++) {
-        var currFile = files[i];
-     
-       imagesArray.push(files[i]);
-
-        displayImages();
- 
-      }
-
-       function displayImages() {
-
-        let images = ""
-        imagesArray.forEach((image, index) => {
-     
-          images += `<div class="image">
-                <img  src="${URL.createObjectURL(image)}" alt="image">
-                
-              </div>` 
-           })
-         
-        output.innerHTML = images
-
-       }
-
-    });
-</script> -->
-
+<script type="text/javascript">
+  function selectedValues()
+  {
+    var x=document.getElementById("languages");
+    var selectedValues= '';
+    for (var i = 0; i < x.options.length; i++) {
+       if(x.options[i].selected ==true){
+            selectedValues += x.options[i].value + ", ";
+        }
+    }
+   // alert("You selected: "+ selectedValues.slice(0, -2));
+    document.getElementById('langs').value=selectedValues;
+  }
+</script>
 
 
 

@@ -34,7 +34,7 @@ Route::post('search_device',[DevicesController::class,'search'])->name('search_d
 
 Route::get('notices',[NoticeController::class,'index'])->name('notices');
 
-Route::get('selct_template',[NoticeController::class,'selct_template'])->name('choose_template');
+Route::get('select_template',[NoticeController::class,'selct_template'])->name('choose_template');
 Route::get('set_template',[NoticeController::class,'set_template'])->name('set_template');
 
 Route::get('create_notice',[NoticeController::class,'create'])->name('create_notice');
@@ -46,6 +46,9 @@ Route::get('delete-notice-datails/{id}',[NoticeController::class,'destroy'])->na
 Route::post('search-notice',[NoticeController::class,'search'])->name('search_notice');
 
 Route::get('templates',[NoticeController::class,'templates'])->name('templates');
+
+Route::post('ck_upload',[NoticeController::class,'ck_upload'])->name('ck_upload');
+
 
 
 Route::get('settings',[HomeController::class,'settings'])->name('settings');

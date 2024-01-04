@@ -94,7 +94,7 @@ class DeviceController extends Controller
           $data[]=[
           'name' => $value->name ,
           'description' => $value->description ,
-          'path' => url('/').'/' ,
+          'path' => url('/').'/noticefiles/' ,
           'filename' => $value->filename,
           'available_languages' => $value->available_languages,
           'voiceover' => $voicover 

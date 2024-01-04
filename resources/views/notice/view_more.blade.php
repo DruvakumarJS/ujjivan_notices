@@ -21,6 +21,27 @@
   margin-left: auto;
   margin-right: auto;
   display: block;
+  height: 200px;
+  width: auto;
+  align-items: center;
+}
+#over2 img,output {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 80%;
+  max-height: 200px;
+  align-items: center;
+}
+
+#over3 img,output {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 100%;
+  max-height: 200px;
+  align-items: center;
+
 }
 
 </style>
@@ -249,9 +270,9 @@
                        
                        @if($views == 'textarea')
 
-                        <!--  <textarea  class="form-control div-margin"  name="row{{$keys+1}}_{{$key1+1}}" id="textarea" input="textAreaAdjust(this)" id="cval" style="height:200px" readonly >{{$content->$cVal}}</textarea> -->
+                         <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}" readonly>{{$content->$cVal}}</textarea>
 
-                         <div style="color: ">{!! $content->$cVal !!}</div>
+                         <!-- <div style="color: ">{!! $content->$cVal !!}</div> -->
                      
                         <!--  <div class="textareaElement form-control div-margin" contenteditable name="row{{$keys+1}}_{{$key1+1}}">{{$content->$cVal}}</div> -->
                          @elseif($views == 'table')
@@ -318,6 +339,13 @@
 
                        @endif
 
+                       <script>
+                          ClassicEditor.create( document.querySelector( '#content_{{$keys+1}}_{{$key1+1}}' ) )
+                        .catch( error => {
+                            console.error( error );
+                        } );
+                      </script>
+
                    @endforeach
                     
                    @elseif(sizeof($data) == 2)
@@ -374,7 +402,7 @@
                             </tbody>
                           </table>
                         @else
-                       <div id="over">
+                       <div id="over2">
                            <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}">
                         </div>
                         @endif
@@ -455,7 +483,7 @@
                             </tbody>
                           </table>
                         @else
-                       <div id="over">
+                       <div id="over3">
                            <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}">
                         </div>
                         @endif
