@@ -39,7 +39,7 @@ class HomeController extends Controller
 
        // print_r($offiine); die();
         $regionName= array();
-        $$devicecount=array();
+        $devicecount=array();
 
 
         $regions = Region::get();
