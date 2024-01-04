@@ -38,6 +38,9 @@ class HomeController extends Controller
         $dead = Devices::where('last_updated_date','not like',$today.'%')->count();
 
        // print_r($offiine); die();
+        $regionName= array();
+        $$devicecount=array();
+
 
         $regions = Region::get();
 

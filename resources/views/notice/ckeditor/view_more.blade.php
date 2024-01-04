@@ -244,8 +244,7 @@
         @php
         $data = json_encode($template->details , TRUE);
        @endphp
-      
-     
+          
       
        <div class="row" >
             <div class="col-8">
