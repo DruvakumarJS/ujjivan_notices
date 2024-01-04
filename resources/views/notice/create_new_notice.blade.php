@@ -21,6 +21,184 @@
 	 <label class="label-bold">Create New Notice</label>
 	 <div class="page-container">
 
+	 <hr/>
+      
+       <form method="POST" action="{{ route('save_notice')}}" enctype="multipart/form-data">
+        @csrf 	
+
+	 <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Notice Tittle * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+                 <input class="form-control" type="text" name="tittle" required>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Notice Description * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+                 <input class="form-control" type="text" name="description" required>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Is PAN India Notice ? * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+                 <select class="form-control form-select" name="is_pan_india" id="pan" required>
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                 </select>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row" >
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Is Region Wise Notice ? * </span>
+                  </div>
+            </div> 
+            <div class="col-6" >
+                <div class="input-group mb-3" id="region_dropdown">
+                 <select class="form-control form-select" name="is_region_wise" id="region_prompt" >
+                  <option value="">Select</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                 </select>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row" id="region_dropdown_list" id="region_div">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Select Regions  </span>
+                  </div>
+            </div> 
+          <div class="col-6">
+             <div class="input-group mb-3">
+             <select class="form-control selectpicker" multiple name="regions[]" id="region_list" >
+              <option value="">Select Region</option>
+                @foreach($regions as $key=>$value)
+                   <option value="{{$value->name}}">{{$value->name}}</option>
+                @endforeach
+              </select>
+
+              </div>
+            </div>
+       </div>
+
+
+       <div class="row" id="state_div">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Is State wise Notice ?  </span>
+                  </div>
+            </div> 
+            <div class="col-6" id="state_dropdown">
+                <div class="input-group mb-3">
+                 <select class="form-control form-select" name="is_state_wise" id="state_prompt" >
+                  <option value="">Select</option>
+                  <option value="ya">Yes</option>
+                  <option value="na">No</option>
+                 </select>
+                </div>
+            </div>   
+       </div>
+
+        <div class="row" id="state_dropdown_list">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Select States  </span>
+                  </div>
+            </div> 
+          <div class="col-6">
+             <div class="input-group mb-3">
+             <select class="form-control selectpicker" multiple search="true" name="states[]" id="state_list" >
+                <!-- <option value="Karnataka">Karnataka</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Telangana">Telangana</option> -->
+                <option value="">Select Region</option>
+                @foreach($branch as $key=>$value)
+                   <option value="{{$value->state}}">{{$value->state}}</option>
+                @endforeach
+
+              </select>
+
+              </div>
+            </div>
+       </div>
+
+       <div class="row" id="state_dropdown_list">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Available Languages</span>
+                  </div>
+            </div> 
+          <div class="col-6">
+             <div class="input-group mb-3">
+             <select class="form-control selectpicker" multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()">
+                <option value="Assamese">Assamese</option>
+                <option value="Bengali">Bengali</option>
+                <option value="English" selected>English</option>
+                <option value="Ghazi">Ghazi</option>
+                <option value="Gujarati">Gujarati</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Kannada">Kannada</option>
+                <option value="Malayalam">Malayalam</option>
+                <option value="Marathi">Marathi</option>
+                <option value="Oriya">Oriya</option>
+                <option value="Punjabi">Punjabi</option>
+                <option value="Tamil">Tamil</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Urdu">Urdu</option>
+              </select>
+
+              </div>
+            </div>
+       </div>
+
+       <div class="row" id="state_div">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Voice Over Needed</span>
+                  </div>
+            </div> 
+            <div class="col-6" id="state_dropdown">
+                <div class="input-group mb-3">
+                 <select class="form-control form-select" name="voice_over" required>
+                  <option value="">Select</option>
+                  <option value="Y">Yes</option>
+                  <option value="N">No</option>
+                 </select>
+                </div>
+            </div>   
+       </div>
+
+
+       <input type="hidden" name="template_id" value="{{$template_id}}">
+
+       <input class="form-control" type="text" name="" id="langs">
+      	
+
 	 @php
        $data = json_encode($template->details , TRUE); 	
      @endphp
@@ -1193,7 +1371,11 @@
      	</div>
      	
      </div>
+      <div id="div3" class="div-margin">
+         <button class="btn btn-success" type="submit">Submit</button> 
+      </div>
 
+     </form>
 	 </div>
 </div>
 

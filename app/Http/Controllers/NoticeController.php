@@ -81,6 +81,7 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
+     // print_r($request->Input()); die();
         if($file = $request->hasFile('row2_1')) {
        
             $fileName = basename($_FILES['row2_1']['name']); 
