@@ -70,7 +70,7 @@ class NoticeController extends Controller
 
       return view('notice/create_ckeditor',compact('regions','branch','template','arr','template_id'));
        //return view('notice/ckeditor2',compact('regions','branch','template','arr','template_id'));
-      // return view('notice/create_new_notice',compact('regions','branch','template','arr','template_id'));
+      // return view('notice/ckeditor/create_new_notice',compact('regions','branch','template','arr','template_id'));
     }
 
     /**
@@ -325,6 +325,7 @@ class NoticeController extends Controller
         $arr = json_decode($data2);
 
         return view('notice/view_more',compact('data','id','template' ,'content','arr'));
+       // return view('notice/ckeditor/view_more',compact('data','id','template' ,'content','arr'));
     }
 
     /**
