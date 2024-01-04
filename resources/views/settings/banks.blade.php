@@ -107,7 +107,7 @@
                     <div class="form-group row">
                       <label for="" class="col-4 col-form-label">IFSC *</label>
                       <div class="col-7">
-                          <input class="form-control" name="ifsc" type="text" placeholder="Enter Bank IFSC" minlength="10" maxlength="10" value="{{$value->ifsc}}"  required>
+                          <input class="form-control" name="ifsc" type="text" placeholder="Enter Bank IFSC" minlength="11" maxlength="11" value="{{$value->ifsc}}"  required>
                       </div>
                     </div>
 
@@ -224,7 +224,7 @@
                     <div class="form-group row">
                       <label for="" class="col-4 col-form-label">IFSC *</label>
                       <div class="col-7">
-                          <input class="form-control" name="ifsc" type="text" placeholder="Enter Bank IFSC" minlength="10" maxlength="10"  required>
+                          <input class="form-control" name="ifsc" type="text" placeholder="Enter Bank IFSC" minlength="11" maxlength="11"  required>
                       </div>
                     </div>
 

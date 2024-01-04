@@ -53,6 +53,7 @@ class DevicesController extends Controller
             'bank_id' => $request->bank_id,
             'name' => $request->name,
             'mobile' => $request->mobile,
+            'mac_id' => $request->device_id,
             'device_details' => $request->device_id .':'.$request->model,
             'status' => 'Offline',
             'date_of_install' => $request->date_of_installation

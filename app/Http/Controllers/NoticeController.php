@@ -277,11 +277,11 @@ class NoticeController extends Controller
  
         $arr = json_decode($data2);
 
-        if (file_exists(public_path().'/noticefiles/')) {
+        if (file_exists(public_path().'/noticefiles')) {
               
         } else {
            
-            File::makeDirectory(public_path().'/noticefiles/', $mode = 0777, true, true);
+            File::makeDirectory(public_path().'/noticefiles', $mode = 0777, true, true);
         }
 
         $lang = 'en';
