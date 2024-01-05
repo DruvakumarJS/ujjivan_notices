@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\DeviceData;
 use App\Models\Devices;
 use App\Models\Notice;
+use App\Models\Language;
 
 class DeviceController extends Controller
 {
@@ -133,16 +134,47 @@ class DeviceController extends Controller
 
           return response()->json([
             'status' => 'true',
-            'message' => 'Device data exists',
+            'message' => 'Success',
             'mac_id' => $data->mac_id]);
       }
       else{
 
           return response()->json([
             'status' => 'false',
-            'message' => 'Device data not exists',
+            'message' => 'Device not registered',
             'mac_id' => '0']);
 
       }
+   }
+
+   public function languages(Request $request){
+    $mac_id = $request->mac_id ;
+    $langArray = array();
+
+     if(Devices::where('mac_id',$mac_id)->exists()){
+          $data = Language::get();
+
+          foreach ($data as $key => $value) {
+             $langArray[]= [
+              'language' => $value->lang ,
+              'name' => $value->name,
+              'code' => $value->code,
+              'font' => $value->font ];
+          }
+
+          return response()->json([
+            'status' => 'true',
+            'message' => 'Success',
+            'data' => $langArray]);
+      }
+      else{
+
+          return response()->json([
+            'status' => 'false',
+            'message' => 'Device not registered',
+            'data' => $langArray]);
+
+      }
+
    }
 }

@@ -19,7 +19,7 @@ class DevicesController extends Controller
     {
          $data = Devices::paginate(50);
          $search = '';
-         $value = Devices::where('id','2')->first();
+        
 
         return view('device/list',compact('data' ,'search'));
     }
@@ -50,7 +50,7 @@ class DevicesController extends Controller
         $store = Devices::create([
             'region_id' => $branch->region_id,
             'branch_id' => $request->branch_id,
-            'bank_id' => $request->bank_id,
+            'bank_id' => '0',
             'name' => $request->name,
             'mobile' => $request->mobile,
             'mac_id' => $request->device_id,
@@ -105,13 +105,12 @@ class DevicesController extends Controller
         $update  = Devices::where('id',$id)->update([
             'region_id' => $branch->region_id,
             'branch_id' => $request->branch_id,
-            'bank_id' => $request->bank_id,
+            'bank_id' => '0',
             'name' => $request->name,
             'mobile' => $request->mobile,
+            'mac_id' => $request->device_id,
             'device_details' => $request->device_id .':'.$request->model,
-            'status' => $request->status,
             'date_of_install' => $request->date_of_installation,
-            'status' => $request->status,
             'remote_id' => $request->remote_id
         ]);
 

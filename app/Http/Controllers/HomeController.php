@@ -32,12 +32,13 @@ class HomeController extends Controller
         $today = date('Y-m-d');
         $current_time = date('Y-m-d H:i');
         $active_time = date("Y-m-d H:i",strtotime("-15 minutes", strtotime($current_time)));
+        $inactive_time = date("Y-m-d H:i",strtotime("-2880 minutes", strtotime($current_time)));
 
         $online = Devices::where('last_updated_date' , '>=', $active_time)->where('last_updated_date','LIKE',$today.'%')->count();
-        $offiine = Devices::where('last_updated_date' , '<', $active_time)->where('last_updated_date','LIKE',$today.'%')->count();
-        $dead = Devices::where('last_updated_date','not like',$today.'%')->count();
+        $offiine = Devices::where('last_updated_date' , '<', $active_time)->where('last_updated_date','>=',$inactive_time)->count();
+        $dead = Devices::where('last_updated_date','<',$inactive_time)->count();
 
-       // print_r($offiine); die();
+       // print_r($inactive_time); die();
         $regionName= array();
         $devicecount=array();
 
@@ -125,6 +126,8 @@ class HomeController extends Controller
             'region_id'=>$request->region,
             'name' => $request->name , 
             'branch_code'=> $request->branch_code ,
+            'ifsc' => $request->ifsc,
+            'area' => $request->area ,
             'state' => $request->state ,
             'district' => $request->district ,
             'city' => $request->city ,
@@ -143,6 +146,8 @@ class HomeController extends Controller
             'region_id'=>$request->region,
             'name' => $request->name , 
             'branch_code'=> $request->branch_code ,
+            'ifsc' => $request->ifsc,
+            'area' => $request->area ,
             'state' => $request->state ,
             'district' => $request->district ,
             'city' => $request->city ,
@@ -218,26 +223,23 @@ class HomeController extends Controller
 
     public function get_bank_details(Request $request){
 
-        $data = DB::table('banks')
+        $data = DB::table('branches')
             ->select(
-                    DB::raw("CONCAT(banks.bank_name,' - ',banks.bank_code,' - ',banks.ifsc , ' - ',banks.area ,' - ',banks.building,' - ',banks.pincode) AS value"),
-                    'banks.id as bankid',
-                    'banks.bank_name',
-                    'banks.bank_code',
-                    'banks.ifsc',
-                    'banks.area',
-                    'banks.building',
-                    'banks.pincode',
+                    DB::raw("CONCAT(branches.name,' - ',branches.branch_code,' - ',branches.ifsc , ' - ',branches.area ,' - ',branches.city,' - ',branches.pincode) AS value"),
                     'branches.id',
-                    'branches.city',
-                    'branches.state',
+                    'branches.name',
                     'branches.branch_code',
+                    'branches.ifsc',
+                    'branches.area',
+                    'branches.city',
+                    'branches.pincode',
+                    'branches.state',
                     'branches.district'
                    )
-                    ->join('branches','banks.branch_id','=','branches.id')
-                    ->where('bank_name', 'LIKE', '%'. $request->get('search'). '%')
+                    ->where('name', 'LIKE', '%'. $request->get('search'). '%')
                     ->orWhere('ifsc', 'LIKE', '%'. $request->get('search'). '%')
-                    ->orWhere('bank_code', 'LIKE', '%'. $request->get('search'). '%')
+                    ->orWhere('branch_code', 'LIKE', '%'. $request->get('search'). '%')
+                    ->orWhere('pincode', 'LIKE', '%'. $request->get('search'). '%')
                     ->get();            
     
         return response()->json($data);

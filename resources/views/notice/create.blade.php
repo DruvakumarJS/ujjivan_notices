@@ -159,7 +159,7 @@
                 <option value="Assamese">Assamese</option>
                 <option value="Bengali">Bengali</option>
                 <option value="English">English</option>
-                <option value="Ghazi">Ghazi</option>
+                <option value="Khasi">Khasi</option>
                 <option value="Gujarati">Gujarati</option>
                 <option value="Hindi">Hindi</option>
                 <option value="Kannada">Kannada</option>

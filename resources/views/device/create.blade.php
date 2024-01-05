@@ -64,6 +64,20 @@
        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Branch Name *</span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text"  class="form-control" id="branch_name" name="branch_name" readonly>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
                     <span class="" id="basic-addon3">Branch Code * </span>
                   </div>
             </div> 
@@ -71,34 +85,6 @@
                 <div class="input-group mb-3">
 
                   <input type="text" class="form-control" id="branch_code" name="branch_code" aria-describedby="basic-addon3" readonly>
-                </div>
-            </div>   
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Bank Name *</span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text"  class="form-control" id="bank_name" name="bank_name" readonly>
-                </div>
-            </div>   
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Bank Code * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text"class="form-control" id="bank_code" name="bank_code" readonly>
                 </div>
             </div>   
        </div>
@@ -117,19 +103,6 @@
             </div>   
        </div>
 
-        <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Building * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="building" name="building" readonly>
-                </div>
-            </div>   
-       </div>
 
        <div class="row">
             <div class="col-2">
@@ -278,7 +251,7 @@
             
        </div>
        <input type="hidden" name="branch_id" id="branch_id">
-       <input type="hidden" name="bank_id" id="bank_id">
+      
        <div id="div3" class="div-margin">
          <button class="btn btn-success" type="submit">Submit</button> 
        </div>
@@ -303,7 +276,7 @@ $( document ).ready(function() {
                search: request.term
             },
             success: function( data ) {
-            //  console.log(data);
+              console.log(data);
                response( data );
               
             }
@@ -312,18 +285,14 @@ $( document ).ready(function() {
         select: function (event, ui) {
            $('#bank').val(ui.item.value);
             $('#branch_code').val(ui.item.branch_code);
-            $('#bank_name').val(ui.item.bank_name);
+            $('#branch_name').val(ui.item.name);
             $('#ifsc').val(ui.item.ifsc);
-            $('#bank_code').val(ui.item.bank_code);
-            $('#building').val(ui.item.building);
             $('#area').val(ui.item.area);
             $('#city').val(ui.item.city);
             $('#dist').val(ui.item.district);
-            $('#bank_code').val(ui.item.bank_code);
             $('#pincode').val(ui.item.pincode);
             $('#state').val(ui.item.state);
             $('#branch_id').val(ui.item.id);
-            $('#bank_id').val(ui.item.bankid);
            
            console.log(address); 
 

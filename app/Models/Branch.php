@@ -13,11 +13,15 @@ class Branch extends Model
      	'region_id',
     	'name',
     	'branch_code',
+        'area',
+        'ifsc',
     	'state',
     	'district',
     	'city',
     	'pincode',
-    	'description'];
+    	'description',
+        'lattitude',
+        'longitude'];
 
     public function region(){
         return $this->belongsTo(Region::class,'region_id','id');

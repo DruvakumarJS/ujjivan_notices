@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
@@ -13,6 +15,20 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(AdminSeeder::class);
+        
+         $admin =
+            [
+                [
+                    'name' => 'SuperAdmin',
+                    'email' =>'admin@admin.com',
+                    'password' => Hash::make('admin')
+                ],
+                
+            
+            ];
+
+             foreach ($admin as $key => $value) {
+               $user = User::create($value);
+             }
     }
 }

@@ -22,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register-device',[DeviceController::class,'register']);
 Route::post('/send-device-data',[DeviceController::class,'device_data']);
 Route::post('/get-notices',[DeviceController::class,'get_notices']);
+Route::post('/get-languages',[DeviceController::class,'languages']);
 	

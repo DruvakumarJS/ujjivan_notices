@@ -35,9 +35,11 @@
             <th>Branch Code</th>
             <th>Region Name</th>
             <th>Region Code</th>
-            <th>State</th>
-            <th>District</th>
+            <th>IFSC</th>
+            <th>Area</th>
             <th>City</th>
+            <th>District</th>
+            <th>State</th>
             <th>Pincode</th>
             <th>Action</th>
             
@@ -51,9 +53,11 @@
             <td>{{$value->branch_code}}</td>
             <td>{{$value->region->name}}</td>
             <td>{{$value->region->region_code}}</td>
-            <td>{{$value->state}}</td>
-            <td>{{$value->district}}</td>
+            <td>{{$value->ifsc}}</td>
+            <td>{{$value->area}}</td>
             <td>{{$value->city}}</td>
+            <td>{{$value->district}}</td>
+            <td>{{$value->state}}</td>
             <td>{{$value->pincode}}</td>
             <td>
               <!-- <a href=""><button class="btn btn-sm btn-outline-primary">View More</button></a> -->
@@ -108,9 +112,23 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="" class="col-4 col-form-label">State *</label>
+                      <label for="" class="col-4 col-form-label">IFSC *</label>
                       <div class="col-7">
-                          <input class="form-control" name="state" type="text" placeholder="Enter State Name"  value="{{$value->state}}" required>
+                          <input class="form-control" name="city" type="text" placeholder="Enter IFSC Code" value="{{$value->ifsc}}" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Area *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="area" type="text" placeholder="Enter City Name" value="{{$value->area}}" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">City *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="city" type="text" placeholder="Enter City Name" value="{{$value->city}}" required>
                       </div>
                     </div>
 
@@ -121,10 +139,11 @@
                       </div>
                     </div>
 
+
                     <div class="form-group row">
-                      <label for="" class="col-4 col-form-label">Area *</label>
+                      <label for="" class="col-4 col-form-label">State *</label>
                       <div class="col-7">
-                          <input class="form-control" name="city" type="text" placeholder="Enter City Name" value="{{$value->city}}" required>
+                          <input class="form-control" name="state" type="text" placeholder="Enter State Name"  value="{{$value->state}}" required>
                       </div>
                     </div>
 
@@ -224,9 +243,23 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="" class="col-4 col-form-label">State *</label>
+                      <label for="" class="col-4 col-form-label">IFSC *</label>
                       <div class="col-7">
-                          <input class="form-control" name="state" type="text" placeholder="Enter State Name"  required>
+                          <input class="form-control" name="ifsc" type="text" placeholder="Enter IFSC Code " minlength="11" maxlength="11" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Area *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="area" type="text" placeholder="Enter Area Name"  required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">City *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="city" type="text" placeholder="Enter City Name"  required>
                       </div>
                     </div>
 
@@ -238,9 +271,9 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="" class="col-4 col-form-label">Area *</label>
+                      <label for="" class="col-4 col-form-label">State *</label>
                       <div class="col-7">
-                          <input class="form-control" name="city" type="text" placeholder="Enter City Name"  required>
+                          <input class="form-control" name="state" type="text" placeholder="Enter State Name"  required>
                       </div>
                     </div>
 

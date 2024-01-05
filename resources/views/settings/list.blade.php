@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+       <!--  <div class="col-md-3">
             <div class="card shadow-sm border border-primary">
                 <div class="card-header bg-primary text-white"><label style="font-weight: bolder;">Banks</label></div>
 
@@ -46,7 +46,7 @@
                    <a href="{{ route('banks')}}" class="btn btn-secondary" style="float: right">View More</a>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         
 

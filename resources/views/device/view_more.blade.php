@@ -18,6 +18,20 @@
     <div class="page-container">
        <hr/>
        <h4>Bank Details</h4>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Branch Name *</span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text"  class="form-control" id="bank_name" name="bank_name" value="{{$data->branch->name}}" readonly>
+                </div>
+            </div>   
+       </div>
       
        <div class="row">
             <div class="col-2">
@@ -33,33 +47,7 @@
             </div>   
        </div>
 
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Bank Name *</span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text"  class="form-control" id="bank_name" name="bank_name" value="{{$data->bank->bank_name}}" readonly>
-                </div>
-            </div>   
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Bank Code * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text"class="form-control" id="bank_code" name="bank_code" value="{{$data->bank->bank_code}}" readonly>
-                </div>
-            </div>   
-       </div>
+    
 
        <div class="row">
             <div class="col-2">
@@ -70,26 +58,12 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" minlength="11" maxlength="11" class="form-control" id="ifsc" name="ifsc" value="{{$data->bank->ifsc}}" readonly>
+                  <input type="text" minlength="11" maxlength="11" class="form-control" id="ifsc" name="ifsc" value="{{$data->branch->ifsc}}" readonly>
                 </div>
             </div>   
        </div>
 
         <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Building * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="building" name="building" value="{{$data->bank->building}}" readonly>
-                </div>
-            </div>   
-       </div>
-
-       <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
                     <span class="" id="basic-addon3">Area * </span>
@@ -98,12 +72,12 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="area" name="area" value="{{$data->bank->area}}" readonly>
+                  <input type="text" class="form-control" id="area" name="area" value="{{$data->branch->area}}" readonly>
                 </div>
             </div>   
        </div>
 
-       <div class="row">
+        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
                     <span class="" id="basic-addon3">City * </span>
@@ -112,7 +86,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="city" name="city" value="{{$data->bank->branch->city}}" readonly>
+                  <input type="text" class="form-control" id="building" name="building" value="{{$data->branch->city}}" readonly>
                 </div>
             </div>   
        </div>
@@ -126,7 +100,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="dist" name="city" value="{{$data->bank->branch->district}}"  readonly>
+                  <input type="text" class="form-control" id="dist" name="city" value="{{$data->branch->district}}"  readonly>
                 </div>
             </div>   
        </div>
@@ -140,7 +114,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="state" aria-describedby="basic-addon3" name="state" value="{{$data->bank->branch->state}}"readonly>
+                  <input type="text" class="form-control" id="state" aria-describedby="basic-addon3" name="state" value="{{$data->branch->state}}"readonly>
                 </div>
             </div>   
        </div>
@@ -154,7 +128,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="pincode" name="pincode" aria-describedby="basic-addon3" value="{{$data->bank->pincode}}" readonly>
+                  <input type="text" class="form-control" id="pincode" name="pincode" aria-describedby="basic-addon3" value="{{$data->branch->pincode}}" readonly>
                 </div>
             </div>   
        </div>
@@ -202,7 +176,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="device_id" value="{{$data->device_id}}" readonly>
+                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="device_id" value="{{$data->mac_id}}" readonly>
                 </div>
             </div>   
        </div>
@@ -210,13 +184,13 @@
        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Model * </span>
+                    <span class="" id="basic-addon3">Hardware details * </span>
                   </div>
             </div> 
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="model" value="{{$data->model}}" aria-describedby="basic-addon3" readonly>
+                  <input type="text" class="form-control" id="basic-url" name="model" value="{{$data->device_details}}" aria-describedby="basic-addon3" readonly>
                 </div>
             </div>   
        </div>
@@ -277,21 +251,6 @@
                 <div class="input-group mb-3">
 
                   <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="date_of_installation" value="{{$data->remote_id}}" readonly>
-                </div>
-            </div>  
-            
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Device Status</span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"  value="{{$data->status}}" readonly>
                 </div>
             </div>  
             

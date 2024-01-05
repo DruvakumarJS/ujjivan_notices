@@ -32,14 +32,13 @@
 				<thead>
 					<tr>
 						<th>Region</th>
-						<th>Branch Code</th>
-            <th>Bank Name</th>
-            <th>Bank Code</th>
+						<th>Branch Name</th>
+            <th>Branch Code</th>
             <th>IFSC</th>
-            <th>Building</th>
-            <th>City</th>
             <th>Area</th>
+            <th>City</th>
             <th>State</th>
+            <th>Pincode</th>
             <th>Device Status</th>
             <th>Last updated</th>
             <th></th>
@@ -51,14 +50,13 @@
           @foreach($data as $key=>$value)
 					<tr>
             <td>{{$value->branch->region->name}}</td>
+            <td>{{$value->branch->name}}</td>
             <td>{{$value->branch->branch_code}}</td>
-            <td>{{$value->bank->bank_name}}</td>
-            <td>{{$value->bank->bank_code}}</td>
-            <td>{{$value->bank->ifsc}}</td>
-            <td>{{$value->bank->building}}</td>
-            <td>{{$value->bank->branch->city}}</td>
-            <td>{{$value->bank->area}}</td>
-            <td>{{$value->bank->branch->state}}</td>
+            <td>{{$value->branch->ifsc}}</td>
+            <td>{{$value->branch->area}}</td>
+            <td>{{$value->branch->city}}</td>
+            <td>{{$value->branch->state}}</td>
+            <td>{{$value->branch->pincode}}</td>
             @php
 
             $last_updated_time = strtotime($value->last_updated_date);
