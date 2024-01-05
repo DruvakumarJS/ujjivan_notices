@@ -53,7 +53,7 @@
 		             <td>{{($value->is_region_wise == '1')?'Yes':'No'}}</td>
 		             <td>{{($value->is_state_wise == 'ya')?'Yes':'No'}}</td> 
 		             <td>{{$value->available_languages}}</td>
-		             <td>{{$value->voiceover}}</td> 
+		             <td>{{ ($value->voiceover == 'Y')?'Yes':'No'}}</td> 
 		             <td>{{$value->status}}</td>
 		             <td>
 		             	 <a href="{{ route('view_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-primary">View More</button></a>

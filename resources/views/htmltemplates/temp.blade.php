@@ -49,7 +49,7 @@
      
       
        <div class="row" >
-            <div class="col-8">
+            <div class="col-12">
               <div class="card text-black bg-white border border-white" >
                <div class="card-header text-muted text-black"  style="background-color: white"><img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> </div>
 

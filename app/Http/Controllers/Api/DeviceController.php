@@ -140,7 +140,7 @@ class DeviceController extends Controller
 
           return response()->json([
             'status' => 'false',
-            'message' => 'Device data exists',
+            'message' => 'Device data not exists',
             'mac_id' => '0']);
 
       }
