@@ -1,41 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>
+
 <style type="text/css">
-  #myFileInput {
-    display:none;
+  .ck-editor__editable[role="textbox"] {
+    /* editing area */
+    min-height: 200px;
 }
-#over img,output {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  height: 200px;
-  width: auto;
-  align-items: center;
-}
-#over2 img,output {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  width: 80%;
-  max-height: 200px;
-  align-items: center;
-}
-
-#over3 img,output {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  width: 100%;
-  max-height: 200px;
-  align-items: center;
-
+.ck-content .image {
+    /* block images */
+    max-width: 80%;
+    margin: 20px auto;
 }
 
 </style>
 
-<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
-
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+ -->
 
 <div class="container-body">
   <label class="label-bold">Edit Notice</label>
@@ -46,7 +28,8 @@
     <div class="page-container">
        <hr/>
       
-       <form method="POST" action="{{ route('save_notice')}}">
+       <form method="POST" action="{{ route('update_notice_datails',$id)}}">
+        @method('PUT')
         @csrf
 
         <div class="row">
@@ -233,126 +216,380 @@
                       $colval = $key1+1;
                       $cVal = 'c'.$rowval.$colval;
                      @endphp 
-                       
-                       @if($views == 'textarea')
-                       <div class="div-margin">
-                         <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}" >{{$content->$cVal}}</textarea>
-                        <!--  <div class="textareaElement form-control div-margin" contenteditable name="row{{$keys+1}}_{{$key1+1}}"></div> -->
-                        @elseif($views == 'table')
-                          <table class="table table-bordered div-margin" style="height: 200px">
-                            <tr >
-                              <th>Sl.No</th>
-                              <th>Transaction / Service</th>
-                              <th>Time Taken</th>
-                            </tr>
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>Cash payment at cash counters</td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
+                     @if($views == 'textarea')
+                     <div class="div-margin">
+                     </div>
+                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}" >{{$content->$cVal}}</textarea>  
 
-                              <tr>
-                                <td>2</td>
-                                <td>Receipt of cash at cash counters</td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td>Issuance of statement across counter </td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
-
-                              <tr>
-                                <td>4</td>
-                                <td>Updating of pass books</td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
-                              <tr>
-                                <td>5</td>
-                                <td>Issuance of demand draft / fixed deposit advice</td>
-                                <td>Within 30 Minutes</td>
-                              </tr>
-
-                              <tr>
-                                <td>6</td>
-                                <td>Payment of fixed deposits</td>
-                                <td>Within 30 Minutes</td>
-                              </tr>
-                               <tr>
-                                <td>7</td>
-                                <td>Collection of cheques (local) </td>
-                                <td>Within 4 Days</td>
-                              </tr>
-
-                              <tr>
-                                <td>8</td>
-                                <td>Issuance of statement by post</td>
-                                <td>7 days</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                       @else
-                         <!-- <img class="card-img-top div-margin" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key1+1}}">
- -->
-
-                          <div id="over" class="card-img-top div-margin" onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key1+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
-
-                           <input type="file" id="myFileInput_{{$keys+1}}{{$key1+1}}" name="row{{$keys+1}}_{{$key1+1}}" style="display: none" />
-         
-                           <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}" id="placeholder_{{$keys+1}}_{{$key1+1}}">
-
-                            <output id="result_{{$keys+1}}{{$key1+1}}" name="row{{$keys+1}}_{{$key1+1}}" />
-
-                          </div>
-                        </div>
-
-                       
-                       @endif
-
-                       <script>
-                          ClassicEditor.create( document.querySelector( '#content_{{$keys+1}}_{{$key1+1}}' ) )
-                        .catch( error => {
-                            console.error( error );
-                        } );
-                      </script>
-
-                      <script type="text/javascript">
-                        
-                         var filesInput = document.getElementById('myFileInput_{{$keys+1}}{{$key1+1}}');
-                          
-                          filesInput.addEventListener('change', function(e) {
-                           var imagesArray = [];
-                            var output = document.getElementById('result_{{$keys+1}}{{$key1+1}}');
-                             document.getElementById('placeholder_{{$keys+1}}_{{$key1+1}}').style.display= "none" ;
-                            var files = e.target.files; //FileList object
+                     <script>
+                       CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}"), {
+                            toolbar: {
+                               items: [
+                                     'selectAll', '|',
+                                    'heading', '|',
+                                    'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                                    'bulletedList', 'numberedList', 'todoList', '|',
+                                    'outdent', 'indent', '|',
+                                    'undo', 'redo',
+                                    '-',
+                                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                                    'alignment', '|',
+                                    
+                                    'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                                    'textPartLanguage', '|',
+                                    'sourceEditing'
+                                ],
+                                shouldNotGroupWhenFull: true
+                            },
+                            list: {
+                                properties: {
+                                    styles: true,
+                                    startIndex: true,
+                                    reversed: true
+                                }
+                            },
+                            heading: {
+                                options: [
+                                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                                ]
+                            },
+                            placeholder: '',
+                            fontFamily: {
+                                options: [
+                                    'default',
+                                    'Arial, Helvetica, sans-serif',
+                                    'Courier New, Courier, monospace',
+                                    'Georgia, serif',
+                                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                                    'Tahoma, Geneva, sans-serif',
+                                    'Times New Roman, Times, serif',
+                                    'Trebuchet MS, Helvetica, sans-serif',
+                                    'Verdana, Geneva, sans-serif'
+                                ],
+                                supportAllValues: true
+                            },
+                            fontSize: {
+                                options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                                supportAllValues: true
+                            },
+                            htmlSupport: {
+                                allow: [
+                                    {
+                                        name: /.*/,
+                                        attributes: true,
+                                        classes: true,
+                                        styles: true
+                                    }
+                                ]
+                            },
+                            htmlEmbed: {
+                                showPreviews: true
+                            },
+                            link: {
+                                decorators: {
+                                    addTargetToExternalLinks: true,
+                                    defaultProtocol: 'https://',
+                                    toggleDownloadable: {
+                                        mode: 'manual',
+                                        label: 'Downloadable',
+                                        attributes: {
+                                            download: 'file'
+                                        }
+                                    }
+                                }
+                            },
                             
-                            for (var i = 0; i < files.length; i++) {
-                              var currFile = files[i];
-                           // alert(files[i]);
-                             imagesArray.push(files[i]);
+                            mention: {
+                                feeds: [
+                                    {
+                                        marker: '@',
+                                        feed: [
+                                            '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                            '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                            '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                            '@sugar', '@sweet', '@topping', '@wafer'
+                                        ],
+                                        minimumCharacters: 1
+                                    }
+                                ]
+                            },
+                            
+                            removePlugins: [
+                                'AIAssistant',
+                                'CKBox',
+                                'CKFinder',
+                                'EasyImage',
+                                'RealTimeCollaborativeComments',
+                                'RealTimeCollaborativeTrackChanges',
+                                'RealTimeCollaborativeRevisionHistory',
+                                'PresenceList',
+                                'Comments',
+                                'TrackChanges',
+                                'TrackChangesData',
+                                'RevisionHistory',
+                                'Pagination',
+                                'WProofreader',
+                                'MathType',
+                                'SlashCommand',
+                                'Template',
+                                'DocumentOutline',
+                                'FormatPainter',
+                                'TableOfContents',
+                                'PasteFromOfficeEnhanced'
+                            ]
+                        });
+                    </script>
+                    @elseif($views == 'table')
+                    <div class="div-margin">
+                    </div>
+                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}" >{{$content->$cVal}}</textarea>  
 
-                              displayImages();
+                               <script>
+                       CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}"), {
+                            toolbar: {
+                               items: [
+                                    'insertTable',
+                                    '|',
+                                    'heading', '|',
+                                    'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight'
+                                ],
+                                shouldNotGroupWhenFull: true
+                            },
+                            list: {
+                                properties: {
+                                    styles: true,
+                                    startIndex: true,
+                                    reversed: true
+                                }
+                            },
+                            heading: {
+                                options: [
+                                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                                ]
+                            },
+                            placeholder: '',
+                            fontFamily: {
+                                options: [
+                                    'default',
+                                    'Arial, Helvetica, sans-serif',
+                                    'Courier New, Courier, monospace',
+                                    'Georgia, serif',
+                                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                                    'Tahoma, Geneva, sans-serif',
+                                    'Times New Roman, Times, serif',
+                                    'Trebuchet MS, Helvetica, sans-serif',
+                                    'Verdana, Geneva, sans-serif'
+                                ],
+                                supportAllValues: true
+                            },
+                            fontSize: {
+                                options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                                supportAllValues: true
+                            },
+                            htmlSupport: {
+                                allow: [
+                                    {
+                                        name: /.*/,
+                                        attributes: true,
+                                        classes: true,
+                                        styles: true
+                                    }
+                                ]
+                            },
+                            htmlEmbed: {
+                                showPreviews: true
+                            },
+                            link: {
+                                decorators: {
+                                    addTargetToExternalLinks: true,
+                                    defaultProtocol: 'https://',
+                                    toggleDownloadable: {
+                                        mode: 'manual',
+                                        label: 'Downloadable',
+                                        attributes: {
+                                            download: 'file'
+                                        }
+                                    }
+                                }
+                            },
+                            
+                            mention: {
+                                feeds: [
+                                    {
+                                        marker: '@',
+                                        feed: [
+                                            '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                            '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                            '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                            '@sugar', '@sweet', '@topping', '@wafer'
+                                        ],
+                                        minimumCharacters: 1
+                                    }
+                                ]
+                            },
+                            
+                            removePlugins: [
+                                'AIAssistant',
+                                'CKBox',
+                                'CKFinder',
+                                'EasyImage',
+                                'RealTimeCollaborativeComments',
+                                'RealTimeCollaborativeTrackChanges',
+                                'RealTimeCollaborativeRevisionHistory',
+                                'PresenceList',
+                                'Comments',
+                                'TrackChanges',
+                                'TrackChangesData',
+                                'RevisionHistory',
+                                'Pagination',
+                                'WProofreader',
+                                'MathType',
+                                'SlashCommand',
+                                'Template',
+                                'DocumentOutline',
+                                'FormatPainter',
+                                'TableOfContents',
+                                'PasteFromOfficeEnhanced'
+                            ]
+                        });
+                    </script>
+                    @elseif($views == 'img')
+                    <div class="div-margin">
+                    </div>
+                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}" >{{$content->$cVal}}</textarea>  
+
+                               <script>
+                       CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}"), {
+                            toolbar: {
+                               items: [
+                                    'uploadImage',
+                                    '|',
+                                    'heading', '|',
+                                    'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight'
+                                ],
+                                shouldNotGroupWhenFull: true
+                            },
+                            list: {
+                                properties: {
+                                    styles: true,
+                                    startIndex: true,
+                                    reversed: true
+                                }
+                            },
+                            heading: {
+                                options: [
+                                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                                ]
+                            },
+                            placeholder: '',
+                            fontFamily: {
+                                options: [
+                                    'default',
+                                    'Arial, Helvetica, sans-serif',
+                                    'Courier New, Courier, monospace',
+                                    'Georgia, serif',
+                                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                                    'Tahoma, Geneva, sans-serif',
+                                    'Times New Roman, Times, serif',
+                                    'Trebuchet MS, Helvetica, sans-serif',
+                                    'Verdana, Geneva, sans-serif'
+                                ],
+                                supportAllValues: true
+                            },
+                            fontSize: {
+                                options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                                supportAllValues: true
+                            },
+                            htmlSupport: {
+                                allow: [
+                                    {
+                                        name: /.*/,
+                                        attributes: true,
+                                        classes: true,
+                                        styles: true
+                                    }
+                                ]
+                            },
+                            htmlEmbed: {
+                                showPreviews: true
+                            },
+                            link: {
+                                decorators: {
+                                    addTargetToExternalLinks: true,
+                                    defaultProtocol: 'https://',
+                                    toggleDownloadable: {
+                                        mode: 'manual',
+                                        label: 'Downloadable',
+                                        attributes: {
+                                            download: 'file'
+                                        }
+                                    }
+                                }
+                            },
+                            
+                            mention: {
+                                feeds: [
+                                    {
+                                        marker: '@',
+                                        feed: [
+                                            '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                            '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                            '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                            '@sugar', '@sweet', '@topping', '@wafer'
+                                        ],
+                                        minimumCharacters: 1
+                                    }
+                                ]
+                            },
+                            
+                            removePlugins: [
+                                'AIAssistant',
+                                'CKBox',
+                                'CKFinder',
+                                'EasyImage',
+                                'RealTimeCollaborativeComments',
+                                'RealTimeCollaborativeTrackChanges',
+                                'RealTimeCollaborativeRevisionHistory',
+                                'PresenceList',
+                                'Comments',
+                                'TrackChanges',
+                                'TrackChangesData',
+                                'RevisionHistory',
+                                'Pagination',
+                                'WProofreader',
+                                'MathType',
+                                'SlashCommand',
+                                'Template',
+                                'DocumentOutline',
+                                'FormatPainter',
+                                'TableOfContents',
+                                'PasteFromOfficeEnhanced'
+                            ]
+                        });
+                    </script>
+                    @endif
+                      
                        
-                            }
-
-                             function displayImages() {
-                              
-                              let images = ""
-                              imagesArray.forEach((image, index) => {
-                           
-                                images += `<div class="image">
-                                      <img  src="${URL.createObjectURL(image)}" alt="image">
-                                      
-                                    </div>` 
-                                 })
-                               
-                              output.innerHTML = images
-
-                             }
-
-                          });
-                      </script>
 
                    @endforeach
                     
@@ -366,118 +603,379 @@
                         $cVal = 'c'.$rowval.$colval;
                        @endphp
                       <div class="col-md-6">
-                        @if($views2 == 'textarea')
-                        <textarea class="form-control div-margin" id="content_{{$keys+1}}_{{$key2+1}}"  name="row{{$keys+1}}_{{$key2+1}}" >{{$content->$cVal}}</textarea>
-                        @elseif($views2 == 'table')
-                          <table class="table table-bordered div-margin" style="height: 200px">
-                            <tr >
-                              <td colspan="4">Fixed Deposit</td>
-                             
-                            </tr>
-                            <tr >
-                              <th>Tenure</th>
-                              <th>Interest Rate(p.a)</th>
-                            
-                            </tr>
-                            <tbody>
-                              <tr>
-                                <td>7 Days to 29 Days</td>
-                                <td>3.75%</td>
-                              </tr>
+                        @if($views == 'textarea')
+                     <div class="div-margin">
+                     </div>
+                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}"  name="row{{$keys+1}}_{{$key2+1}}" >{{$content->$cVal}}</textarea>  
 
-                              <tr>
-                                <td>30 Days to 89 Days</td>
-                                <td>4.25%</td>
-                              </tr>
-
-                              <tr>
-                                <td>90 Days to 179 Days</td>
-                                <td>4.75%</td>
-                              </tr>
-
-
-                             <tr>
-                                <td>6 Momths to 9 Months</td>
-                                <td>6.50%</td>
-                              </tr>
-
-                              <tr>
-                                <td>12 Months</td>
-                                <td>8.25%</td>
-                              </tr>
-
-                            </tbody>
-                          </table>
-                        @else
-                        <!-- <img class="card-img-top" src="..." style="height: 200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key2+1}}"> -->
-
-                         <div id="over2" class="card-img-top div-margin" onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key2+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
-
-                           <input type="file" id="myFileInput_{{$keys+1}}{{$key2+1}}" name="row{{$keys+1}}_{{$key2+1}}" style="display: none" />
-         
-                          <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}" id="placeholder_{{$keys+1}}_{{$key2+1}}">
-
-                            <output id="result_{{$keys+1}}{{$key2+1}}" name="row{{$keys+1}}_{{$key2+1}}"/>
-
-                         </div>
-                         
-                         </div>
-        
-                      
-                        @endif
-                      </div>
-
-                      <script>
-                          ClassicEditor.create( document.querySelector( '#content_{{$keys+1}}_{{$key2+1}}' ) )
-                        .catch( error => {
-                            console.error( error );
-                        } );
-
-                      </script>
-                      <style type="text/css">
-                        .ck-editor__editable {
-                            min-height: 200px;
-                             max-height: 200px;
-                          }
-                      </style>
-
-                      <script type="text/javascript">
-                       
-                         var filesInput2 = document.getElementById('myFileInput_{{$keys+1}}{{$key2+1}}');
-                          
-                          filesInput2.addEventListener('change', function(e) {
-                            var imagesArray2 = [];
-                            var output2 = document.getElementById('result_{{$keys+1}}{{$key2+1}}');
-                             document.getElementById('placeholder_{{$keys+1}}_{{$key2+1}}').style.display= "none" ;
-                            var files2 = e.target.files; //FileList object
-                            
-                            for (var i = 0; i < files2.length; i++) {
-                              var currFile = files2[i];
-                           
-                             imagesArray2.push(files2[i]);
-
-                              displayImages2();
-                       
-                            }
-
-                             function displayImages2() {
-
-                              let images = ""
-                              imagesArray2.forEach((image, index) => {
-                           
-                                images += `<div class="image">
-                                      <img  src="${URL.createObjectURL(image)}" alt="image">
+                       <script>
+                         CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}"), {
+                              toolbar: {
+                                 items: [
+                                       'selectAll', '|',
+                                      'heading', '|',
+                                      'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                                      'bulletedList', 'numberedList', 'todoList', '|',
+                                      'outdent', 'indent', '|',
+                                      'undo', 'redo',
+                                      '-',
+                                      'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                                      'alignment', '|',
                                       
-                                    </div>` 
-                                 })
-                               
-                              output2.innerHTML = images
-
-                             }
-
+                                      'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                                      'textPartLanguage', '|',
+                                      'sourceEditing'
+                                  ],
+                                  shouldNotGroupWhenFull: false
+                              },
+                              list: {
+                                  properties: {
+                                      styles: true,
+                                      startIndex: true,
+                                      reversed: true
+                                  }
+                              },
+                              heading: {
+                                  options: [
+                                      { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                      { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                      { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                      { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                      { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                                      { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                                      { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                                  ]
+                              },
+                              placeholder: '',
+                              fontFamily: {
+                                  options: [
+                                      'default',
+                                      'Arial, Helvetica, sans-serif',
+                                      'Courier New, Courier, monospace',
+                                      'Georgia, serif',
+                                      'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                                      'Tahoma, Geneva, sans-serif',
+                                      'Times New Roman, Times, serif',
+                                      'Trebuchet MS, Helvetica, sans-serif',
+                                      'Verdana, Geneva, sans-serif'
+                                  ],
+                                  supportAllValues: true
+                              },
+                              fontSize: {
+                                  options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                                  supportAllValues: true
+                              },
+                              htmlSupport: {
+                                  allow: [
+                                      {
+                                          name: /.*/,
+                                          attributes: true,
+                                          classes: true,
+                                          styles: true
+                                      }
+                                  ]
+                              },
+                              htmlEmbed: {
+                                  showPreviews: true
+                              },
+                              link: {
+                                  decorators: {
+                                      addTargetToExternalLinks: true,
+                                      defaultProtocol: 'https://',
+                                      toggleDownloadable: {
+                                          mode: 'manual',
+                                          label: 'Downloadable',
+                                          attributes: {
+                                              download: 'file'
+                                          }
+                                      }
+                                  }
+                              },
+                              
+                              mention: {
+                                  feeds: [
+                                      {
+                                          marker: '@',
+                                          feed: [
+                                              '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                              '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                              '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                              '@sugar', '@sweet', '@topping', '@wafer'
+                                          ],
+                                          minimumCharacters: 1
+                                      }
+                                  ]
+                              },
+                              
+                              removePlugins: [
+                                  'AIAssistant',
+                                  'CKBox',
+                                  'CKFinder',
+                                  'EasyImage',
+                                  'RealTimeCollaborativeComments',
+                                  'RealTimeCollaborativeTrackChanges',
+                                  'RealTimeCollaborativeRevisionHistory',
+                                  'PresenceList',
+                                  'Comments',
+                                  'TrackChanges',
+                                  'TrackChangesData',
+                                  'RevisionHistory',
+                                  'Pagination',
+                                  'WProofreader',
+                                  'MathType',
+                                  'SlashCommand',
+                                  'Template',
+                                  'DocumentOutline',
+                                  'FormatPainter',
+                                  'TableOfContents',
+                                  'PasteFromOfficeEnhanced'
+                              ]
                           });
                       </script>
+                      @elseif($views == 'table')
+                      <div class="div-margin">
+                      </div>
+                        <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}"  name="row{{$keys+1}}_{{$key2+1}}" >{{$content->$cVal}}</textarea>  
 
+                                 <script>
+                         CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}"), {
+                              toolbar: {
+                                 items: [
+                                      'insertTable',
+                                      '|',
+                                      'heading', '|',
+                                      'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                                      'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight'
+                                  ],
+                                  shouldNotGroupWhenFull: false
+                              },
+                              list: {
+                                  properties: {
+                                      styles: true,
+                                      startIndex: true,
+                                      reversed: true
+                                  }
+                              },
+                              heading: {
+                                  options: [
+                                      { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                      { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                      { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                      { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                      { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                                      { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                                      { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                                  ]
+                              },
+                              placeholder: '',
+                              fontFamily: {
+                                  options: [
+                                      'default',
+                                      'Arial, Helvetica, sans-serif',
+                                      'Courier New, Courier, monospace',
+                                      'Georgia, serif',
+                                      'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                                      'Tahoma, Geneva, sans-serif',
+                                      'Times New Roman, Times, serif',
+                                      'Trebuchet MS, Helvetica, sans-serif',
+                                      'Verdana, Geneva, sans-serif'
+                                  ],
+                                  supportAllValues: true
+                              },
+                              fontSize: {
+                                  options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                                  supportAllValues: true
+                              },
+                              htmlSupport: {
+                                  allow: [
+                                      {
+                                          name: /.*/,
+                                          attributes: true,
+                                          classes: true,
+                                          styles: true
+                                      }
+                                  ]
+                              },
+                              htmlEmbed: {
+                                  showPreviews: true
+                              },
+                              link: {
+                                  decorators: {
+                                      addTargetToExternalLinks: true,
+                                      defaultProtocol: 'https://',
+                                      toggleDownloadable: {
+                                          mode: 'manual',
+                                          label: 'Downloadable',
+                                          attributes: {
+                                              download: 'file'
+                                          }
+                                      }
+                                  }
+                              },
+                              
+                              mention: {
+                                  feeds: [
+                                      {
+                                          marker: '@',
+                                          feed: [
+                                              '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                              '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                              '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                              '@sugar', '@sweet', '@topping', '@wafer'
+                                          ],
+                                          minimumCharacters: 1
+                                      }
+                                  ]
+                              },
+                              
+                              removePlugins: [
+                                  'AIAssistant',
+                                  'CKBox',
+                                  'CKFinder',
+                                  'EasyImage',
+                                  'RealTimeCollaborativeComments',
+                                  'RealTimeCollaborativeTrackChanges',
+                                  'RealTimeCollaborativeRevisionHistory',
+                                  'PresenceList',
+                                  'Comments',
+                                  'TrackChanges',
+                                  'TrackChangesData',
+                                  'RevisionHistory',
+                                  'Pagination',
+                                  'WProofreader',
+                                  'MathType',
+                                  'SlashCommand',
+                                  'Template',
+                                  'DocumentOutline',
+                                  'FormatPainter',
+                                  'TableOfContents',
+                                  'PasteFromOfficeEnhanced'
+                              ]
+                          });
+                      </script>
+                      @elseif($views == 'img')
+                      <div class="div-margin">
+                      </div>
+                        <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}"  name="row{{$keys+1}}_{{$key2+1}}" >{{$content->$cVal}}</textarea>  
+
+                                 <script>
+                         CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}"), {
+                              toolbar: {
+                                 items: [
+                                      'uploadImage',
+                                      '|',
+                                      'heading', '|',
+                                      'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                                      'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight'
+                                  ],
+                                  shouldNotGroupWhenFull: false
+                              },
+                              list: {
+                                  properties: {
+                                      styles: true,
+                                      startIndex: true,
+                                      reversed: true
+                                  }
+                              },
+                              heading: {
+                                  options: [
+                                      { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                      { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                      { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                      { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                      { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                                      { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                                      { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                                  ]
+                              },
+                              placeholder: '',
+                              fontFamily: {
+                                  options: [
+                                      'default',
+                                      'Arial, Helvetica, sans-serif',
+                                      'Courier New, Courier, monospace',
+                                      'Georgia, serif',
+                                      'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                                      'Tahoma, Geneva, sans-serif',
+                                      'Times New Roman, Times, serif',
+                                      'Trebuchet MS, Helvetica, sans-serif',
+                                      'Verdana, Geneva, sans-serif'
+                                  ],
+                                  supportAllValues: true
+                              },
+                              fontSize: {
+                                  options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                                  supportAllValues: true
+                              },
+                              htmlSupport: {
+                                  allow: [
+                                      {
+                                          name: /.*/,
+                                          attributes: true,
+                                          classes: true,
+                                          styles: true
+                                      }
+                                  ]
+                              },
+                              htmlEmbed: {
+                                  showPreviews: true
+                              },
+                              link: {
+                                  decorators: {
+                                      addTargetToExternalLinks: true,
+                                      defaultProtocol: 'https://',
+                                      toggleDownloadable: {
+                                          mode: 'manual',
+                                          label: 'Downloadable',
+                                          attributes: {
+                                              download: 'file'
+                                          }
+                                      }
+                                  }
+                              },
+                              
+                              mention: {
+                                  feeds: [
+                                      {
+                                          marker: '@',
+                                          feed: [
+                                              '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                              '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                              '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                              '@sugar', '@sweet', '@topping', '@wafer'
+                                          ],
+                                          minimumCharacters: 1
+                                      }
+                                  ]
+                              },
+                              
+                              removePlugins: [
+                                  'AIAssistant',
+                                  'CKBox',
+                                  'CKFinder',
+                                  'EasyImage',
+                                  'RealTimeCollaborativeComments',
+                                  'RealTimeCollaborativeTrackChanges',
+                                  'RealTimeCollaborativeRevisionHistory',
+                                  'PresenceList',
+                                  'Comments',
+                                  'TrackChanges',
+                                  'TrackChangesData',
+                                  'RevisionHistory',
+                                  'Pagination',
+                                  'WProofreader',
+                                  'MathType',
+                                  'SlashCommand',
+                                  'Template',
+                                  'DocumentOutline',
+                                  'FormatPainter',
+                                  'TableOfContents',
+                                  'PasteFromOfficeEnhanced'
+                              ]
+                          });
+                      </script>
+                      @endif
+                        </div>
                        @endforeach
                       
                       
@@ -495,121 +993,379 @@
                           $cVal = 'c'.$rowval.$colval;
                        @endphp
                       <div class="col-md-4 div-margin">
-                        @if($views3 == 'textarea')
-                        <textarea class="form-control div-margin" id="content_{{$keys+1}}_{{$key3+1}}"  name="row{{$keys+1}}_{{$key3+1}}" style="height: 200px">{{$content->$cVal}}</textarea>
-                        @elseif($views3 == 'table')
-                          <table class="table table-bordered div-margin" style="height: 200px">
-                            <tr >
-                              <th>Sl.No</th>
-                              <th>Transaction / Service</th>
-                              <th>Time Taken</th>
-                            </tr>
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>Cash payment at cash counters</td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
+                        @if($views == 'textarea')
+                     <div class="div-margin">
+                     </div>
+                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}"  name="row{{$keys+1}}_{{$key3+1}}" >{{$content->$cVal}}</textarea>  
 
-                              <tr>
-                                <td>2</td>
-                                <td>Receipt of cash at cash counters</td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td>Issuance of statement across counter </td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
-
-                              <tr>
-                                <td>4</td>
-                                <td>Updating of pass books</td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
-                              <tr>
-                                <td>5</td>
-                                <td>Issuance of demand draft / fixed deposit advice</td>
-                                <td>Within 30 Minutes</td>
-                              </tr>
-
-                              <tr>
-                                <td>6</td>
-                                <td>Payment of fixed deposits</td>
-                                <td>Within 30 Minutes</td>
-                              </tr>
-                               <tr>
-                                <td>7</td>
-                                <td>Collection of cheques (local) </td>
-                                <td>Within 4 Days</td>
-                              </tr>
-
-                              <tr>
-                                <td>8</td>
-                                <td>Issuance of statement by post</td>
-                                <td>7 days</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        @else
-                       <!-- <img class="card-img-top" src="..." style="height: 200px;width:200px;display: block;margin-left:auto;margin-right: auto " name="row{{$keys+1}}_{{$key3+1}}"> -->
-
-                       <div id="over3" class="card-img-top div-margin" onclick="document.getElementById('myFileInput_{{$keys+1}}{{$key3+1}}').click()" value="Select a File" style="height: 200px;align-items: center;">
-
-                           <input type="file" id="myFileInput_{{$keys+1}}{{$key3+1}}" name="row{{$keys+1}}_{{$key3+1}}" style="display: none" />
-         
-                           <img src="{{url('/')}}/noticeimages/{{$content->$cVal}}" id="placeholder_{{$keys+1}}_{{$key3+1}}">
-
-                            <output id="result_{{$keys+1}}{{$key3+1}}" name="row{{$keys+1}}_{{$key3+1}}"/>
-
-                         </div>
-
-                        @endif
-                      </div>
-
-                      <script>
-                          ClassicEditor.create( document.querySelector( '#content_{{$keys+1}}_{{$key3+1}}' ) )
-                        .catch( error => {
-                            console.error( error );
-                        } );
-                      </script>
-
-                      <script type="text/javascript">
-                        
-                         var filesInput3 = document.getElementById('myFileInput_{{$keys+1}}{{$key3+1}}');
-                          
-                          filesInput3.addEventListener('change', function(e) {
-                           var imagesArray3 = [];
-                            var output3 = document.getElementById('result_{{$keys+1}}{{$key3+1}}');
-                             document.getElementById('placeholder_{{$keys+1}}_{{$key3+1}}').style.display= "none" ;
-                            var files3 = e.target.files; //FileList object
+                     <script>
+                       CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}"), {
+                            toolbar: {
+                               items: [
+                                     'selectAll', '|',
+                                    'heading', '|',
+                                    'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                                    'bulletedList', 'numberedList', 'todoList', '|',
+                                    'outdent', 'indent', '|',
+                                    'undo', 'redo',
+                                    '-',
+                                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                                    'alignment', '|',
+                                    
+                                    'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                                    'textPartLanguage', '|',
+                                    'sourceEditing'
+                                ],
+                                shouldNotGroupWhenFull: false
+                            },
+                            list: {
+                                properties: {
+                                    styles: true,
+                                    startIndex: true,
+                                    reversed: true
+                                }
+                            },
+                            heading: {
+                                options: [
+                                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                                ]
+                            },
+                            placeholder: '',
+                            fontFamily: {
+                                options: [
+                                    'default',
+                                    'Arial, Helvetica, sans-serif',
+                                    'Courier New, Courier, monospace',
+                                    'Georgia, serif',
+                                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                                    'Tahoma, Geneva, sans-serif',
+                                    'Times New Roman, Times, serif',
+                                    'Trebuchet MS, Helvetica, sans-serif',
+                                    'Verdana, Geneva, sans-serif'
+                                ],
+                                supportAllValues: true
+                            },
+                            fontSize: {
+                                options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                                supportAllValues: true
+                            },
+                            htmlSupport: {
+                                allow: [
+                                    {
+                                        name: /.*/,
+                                        attributes: true,
+                                        classes: true,
+                                        styles: true
+                                    }
+                                ]
+                            },
+                            htmlEmbed: {
+                                showPreviews: true
+                            },
+                            link: {
+                                decorators: {
+                                    addTargetToExternalLinks: true,
+                                    defaultProtocol: 'https://',
+                                    toggleDownloadable: {
+                                        mode: 'manual',
+                                        label: 'Downloadable',
+                                        attributes: {
+                                            download: 'file'
+                                        }
+                                    }
+                                }
+                            },
                             
-                            for (var i = 0; i < files3.length; i++) {
-                              var currFile = files3[i];
-                           
-                             imagesArray3.push(files3[i]);
+                            mention: {
+                                feeds: [
+                                    {
+                                        marker: '@',
+                                        feed: [
+                                            '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                            '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                            '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                            '@sugar', '@sweet', '@topping', '@wafer'
+                                        ],
+                                        minimumCharacters: 1
+                                    }
+                                ]
+                            },
+                            
+                            removePlugins: [
+                                'AIAssistant',
+                                'CKBox',
+                                'CKFinder',
+                                'EasyImage',
+                                'RealTimeCollaborativeComments',
+                                'RealTimeCollaborativeTrackChanges',
+                                'RealTimeCollaborativeRevisionHistory',
+                                'PresenceList',
+                                'Comments',
+                                'TrackChanges',
+                                'TrackChangesData',
+                                'RevisionHistory',
+                                'Pagination',
+                                'WProofreader',
+                                'MathType',
+                                'SlashCommand',
+                                'Template',
+                                'DocumentOutline',
+                                'FormatPainter',
+                                'TableOfContents',
+                                'PasteFromOfficeEnhanced'
+                            ]
+                        });
+                    </script>
+                    @elseif($views == 'table')
+                    <div class="div-margin">
+                    </div>
+                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}"  name="row{{$keys+1}}_{{$key3+1}}" >{{$content->$cVal}}</textarea>  
 
-                              displayImages3();
-                       
-                            }
+                               <script>
+                       CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}"), {
+                            toolbar: {
+                               items: [
+                                    'insertTable',
+                                    '|',
+                                    'heading', '|',
+                                    'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight'
+                                ],
+                                shouldNotGroupWhenFull: false
+                            },
+                            list: {
+                                properties: {
+                                    styles: true,
+                                    startIndex: true,
+                                    reversed: true
+                                }
+                            },
+                            heading: {
+                                options: [
+                                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                                ]
+                            },
+                            placeholder: '',
+                            fontFamily: {
+                                options: [
+                                    'default',
+                                    'Arial, Helvetica, sans-serif',
+                                    'Courier New, Courier, monospace',
+                                    'Georgia, serif',
+                                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                                    'Tahoma, Geneva, sans-serif',
+                                    'Times New Roman, Times, serif',
+                                    'Trebuchet MS, Helvetica, sans-serif',
+                                    'Verdana, Geneva, sans-serif'
+                                ],
+                                supportAllValues: true
+                            },
+                            fontSize: {
+                                options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                                supportAllValues: true
+                            },
+                            htmlSupport: {
+                                allow: [
+                                    {
+                                        name: /.*/,
+                                        attributes: true,
+                                        classes: true,
+                                        styles: true
+                                    }
+                                ]
+                            },
+                            htmlEmbed: {
+                                showPreviews: true
+                            },
+                            link: {
+                                decorators: {
+                                    addTargetToExternalLinks: true,
+                                    defaultProtocol: 'https://',
+                                    toggleDownloadable: {
+                                        mode: 'manual',
+                                        label: 'Downloadable',
+                                        attributes: {
+                                            download: 'file'
+                                        }
+                                    }
+                                }
+                            },
+                            
+                            mention: {
+                                feeds: [
+                                    {
+                                        marker: '@',
+                                        feed: [
+                                            '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                            '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                            '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                            '@sugar', '@sweet', '@topping', '@wafer'
+                                        ],
+                                        minimumCharacters: 1
+                                    }
+                                ]
+                            },
+                            
+                            removePlugins: [
+                                'AIAssistant',
+                                'CKBox',
+                                'CKFinder',
+                                'EasyImage',
+                                'RealTimeCollaborativeComments',
+                                'RealTimeCollaborativeTrackChanges',
+                                'RealTimeCollaborativeRevisionHistory',
+                                'PresenceList',
+                                'Comments',
+                                'TrackChanges',
+                                'TrackChangesData',
+                                'RevisionHistory',
+                                'Pagination',
+                                'WProofreader',
+                                'MathType',
+                                'SlashCommand',
+                                'Template',
+                                'DocumentOutline',
+                                'FormatPainter',
+                                'TableOfContents',
+                                'PasteFromOfficeEnhanced'
+                            ]
+                        });
+                    </script>
+                    @elseif($views == 'img')
+                    <div class="div-margin">
+                    </div>
+                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}"  name="row{{$keys+1}}_{{$key3+1}}" >{{$content->$cVal}}</textarea>  
 
-                             function displayImages3() {
-
-                              let images = ""
-                              imagesArray3.forEach((image, index) => {
-                           
-                                images += `<div class="image">
-                                      <img  src="${URL.createObjectURL(image)}" alt="image">
-                                      
-                                    </div>` 
-                                 })
-                               
-                              output3.innerHTML = images
-
-                             }
-
-                          });
-                      </script>
+                               <script>
+                       CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}"), {
+                            toolbar: {
+                               items: [
+                                    'uploadImage',
+                                    '|',
+                                    'heading', '|',
+                                    'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight'
+                                ],
+                                shouldNotGroupWhenFull: false
+                            },
+                            list: {
+                                properties: {
+                                    styles: true,
+                                    startIndex: true,
+                                    reversed: true
+                                }
+                            },
+                            heading: {
+                                options: [
+                                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                                ]
+                            },
+                            placeholder: '',
+                            fontFamily: {
+                                options: [
+                                    'default',
+                                    'Arial, Helvetica, sans-serif',
+                                    'Courier New, Courier, monospace',
+                                    'Georgia, serif',
+                                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                                    'Tahoma, Geneva, sans-serif',
+                                    'Times New Roman, Times, serif',
+                                    'Trebuchet MS, Helvetica, sans-serif',
+                                    'Verdana, Geneva, sans-serif'
+                                ],
+                                supportAllValues: true
+                            },
+                            fontSize: {
+                                options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                                supportAllValues: true
+                            },
+                            htmlSupport: {
+                                allow: [
+                                    {
+                                        name: /.*/,
+                                        attributes: true,
+                                        classes: true,
+                                        styles: true
+                                    }
+                                ]
+                            },
+                            htmlEmbed: {
+                                showPreviews: true
+                            },
+                            link: {
+                                decorators: {
+                                    addTargetToExternalLinks: true,
+                                    defaultProtocol: 'https://',
+                                    toggleDownloadable: {
+                                        mode: 'manual',
+                                        label: 'Downloadable',
+                                        attributes: {
+                                            download: 'file'
+                                        }
+                                    }
+                                }
+                            },
+                            
+                            mention: {
+                                feeds: [
+                                    {
+                                        marker: '@',
+                                        feed: [
+                                            '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                            '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                            '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                            '@sugar', '@sweet', '@topping', '@wafer'
+                                        ],
+                                        minimumCharacters: 1
+                                    }
+                                ]
+                            },
+                            
+                            removePlugins: [
+                                'AIAssistant',
+                                'CKBox',
+                                'CKFinder',
+                                'EasyImage',
+                                'RealTimeCollaborativeComments',
+                                'RealTimeCollaborativeTrackChanges',
+                                'RealTimeCollaborativeRevisionHistory',
+                                'PresenceList',
+                                'Comments',
+                                'TrackChanges',
+                                'TrackChangesData',
+                                'RevisionHistory',
+                                'Pagination',
+                                'WProofreader',
+                                'MathType',
+                                'SlashCommand',
+                                'Template',
+                                'DocumentOutline',
+                                'FormatPainter',
+                                'TableOfContents',
+                                'PasteFromOfficeEnhanced'
+                            ]
+                        });
+                    </script>
+                    @endif
+                   </div>
                        @endforeach
                       
                       
@@ -638,7 +1394,8 @@
 
        <!-- content -->
 
-    
+       <input type="hidden" name="id" value="{{$id}}">
+       <input type="hidden" name="template_id" value="{{$content->template_id}}">
        
        <div id="div3" class="div-margin">
          <button class="btn btn-success" type="submit">Submit</button> 

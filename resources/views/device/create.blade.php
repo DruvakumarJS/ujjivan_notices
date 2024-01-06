@@ -276,7 +276,7 @@ $( document ).ready(function() {
                search: request.term
             },
             success: function( data ) {
-              console.log(data);
+             // console.log(data);
                response( data );
               
             }
@@ -294,7 +294,7 @@ $( document ).ready(function() {
             $('#state').val(ui.item.state);
             $('#branch_id').val(ui.item.id);
            
-           console.log(address); 
+          // console.log(address); 
 
         }
         

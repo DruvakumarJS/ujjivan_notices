@@ -38,7 +38,6 @@
 			            <th>State Specific</th>
 			            <th>Available Languages</th>
 			            <th>Voice over</th>
-			            <th>Status</th>
 			            <th></th>
             
 					</tr>
@@ -54,9 +53,9 @@
 		             <td>{{($value->is_state_wise == 'ya')?'Yes':'No'}}</td> 
 		             <td>{{$value->available_languages}}</td>
 		             <td>{{ ($value->voiceover == 'Y')?'Yes':'No'}}</td> 
-		             <td>{{$value->status}}</td>
+		             <!-- <td>{{$value->status}}</td> -->
 		             <td>
-		             	 <a href="{{ route('view_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-primary">View More</button></a>
+		             	 <a target="_blank" href="{{ URL::to('/') }}/noticefiles/en_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View Notice</button></a>
 			             <a href="{{ route('edit_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
 			             <a onclick="return confirm('You are deleting a Notice?')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
 		             </td>

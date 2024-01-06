@@ -7,6 +7,7 @@ use App\Models\Region;
 use App\Models\Branch;
 use App\Models\Template;
 use App\Models\NoticeContent;
+use App\Models\Language;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
@@ -48,7 +49,8 @@ class NoticeController extends Controller
 
     public function selct_template(){
         $data = Template::get();
-        return view('notice/choose_template',compact('data'));
+        $languages = Language::get();
+        return view('notice/choose_template',compact('data','languages'));
      }
 
      public function set_template(Request $request){
@@ -58,19 +60,24 @@ class NoticeController extends Controller
 
     public function create(Request $request)
     {
-     // print_r($request->template_id); die();
+      //print_r($request->Input()); die();
       $template_id = $request->template_id;
       $regions = Region::all();
       $branch = Branch::select('state')->groupBy('state')->get();
       $template = Template::select('details')->where('id',$template_id)->first();
+      $languages = Language::get();
+      $selected_languages = Language::whereIn('code',$request->lang)->get();
+
+     // print_r($lang); die();
       
       $data = $template->details ;
 
       $arr = json_decode($data);
 
-      return view('notice/create_ckeditor',compact('regions','branch','template','arr','template_id'));
+     // return view('notice/create_ckeditor',compact('regions','branch','template','arr','template_id'));
        //return view('notice/ckeditor2',compact('regions','branch','template','arr','template_id'));
-      // return view('notice/ckeditor/create_new_notice',compact('regions','branch','template','arr','template_id'));
+      // return view('notice/ckeditor/create_new_notice',compact('regions','branch','template','arr','template_id','languages'));
+       return view('notice/ckeditor/create_multilingual_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages'));
     }
 
     /**
@@ -81,8 +88,8 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-     // print_r($request->Input()); die();
-        if($file = $request->hasFile('row2_1')) {
+     // print_r(($request->Input()) ); die();
+       /* if($file = $request->hasFile('row2_1')) {
        
             $fileName = basename($_FILES['row2_1']['name']); 
             $temp = explode(".", $fileName);
@@ -132,9 +139,21 @@ class NoticeController extends Controller
            
             move_uploaded_file($_FILES["row4_1"]["tmp_name"], $destinationPath);
 
-        }
+        }*/
 
      //  print_r(json_encode($request->input()) ); die();
+        $languages = Language::get();
+
+       foreach($languages as $key=>$lang) {
+        $code = $lang->code ;
+
+        if(isset($request->$code)){
+          print_r($request->$code['tittle']);
+          print_r($request->$code['row1_1']);
+        }
+       }
+
+       die();
 
        $region_prompt = '0';
        $state_prompt = 'na';
@@ -212,7 +231,7 @@ class NoticeController extends Controller
          $content->notice_id = $noticeID ;
          $content->template_id = $request->template_id;
 
-         if($file = $request->hasFile('row1_1'))$content->c11 = $fileName11;else $content->c11 = $request->row1_1;
+         /*if($file = $request->hasFile('row1_1'))$content->c11 = $fileName11;else $content->c11 = $request->row1_1;
          if($file = $request->hasFile('row1_2'))$content->c12 = $fileName12;else $content->c12 = $request->row1_2;
          if($file = $request->hasFile('row1_3'))$content->c13 = $fileName13;else $content->c13 = $request->row1_3;
          if($file = $request->hasFile('row1_4'))$content->c14 = $fileName14;else $content->c14 = $request->row1_4;
@@ -240,10 +259,18 @@ class NoticeController extends Controller
          if($file = $request->hasFile('row6_1'))$content->c61 = $fileName61;else $content->c61 = $request->row6_1;
          if($file = $request->hasFile('row6_2'))$content->c62 = $fileName62;else $content->c62 = $request->row6_2;
          if($file = $request->hasFile('row6_3'))$content->c63 = $fileName63;else $content->c63 = $request->row6_3;
-         if($file = $request->hasFile('row6_4'))$content->c64 = $fileName64;else $content->c64 = $request->row6_4;
-         
+         if($file = $request->hasFile('row6_4'))$content->c64 = $fileName64;else $content->c64 = $request->row6_4;*/
+         $content->c11 = $request->row1_1;
+         $content->c12 = $request->row1_2;
+         $content->c13 = $request->row1_3;
+         $content->c14 = $request->row1_4;
+
+         $content->c21 = $request->row2_1;
+         $content->c22 = $request->row2_2;
+         $content->c23 = $request->row2_3;
+         $content->c24 = $request->row2_4;
         
-         /*$content->c31 = $request->row3_1;
+         $content->c31 = $request->row3_1;
          $content->c32 = $request->row3_2;
          $content->c33 = $request->row3_3;
          $content->c34 = $request->row3_4;
@@ -262,7 +289,7 @@ class NoticeController extends Controller
          $content->c62 = $request->row6_2;
          $content->c63 = $request->row6_3;
          $content->c64 = $request->row6_4;
-         */
+         
          $content->save();
          $noticeContentID = $content->id;
 
@@ -291,7 +318,7 @@ class NoticeController extends Controller
          
          $noticecontent = 
          File::put(public_path().'/noticefiles/'.$local_filename,
-            view('htmltemplates.temp')
+            view('htmltemplates.cktemp')
                 ->with(["content" => $content , "arr" => $arr ,'template' => $template])
                 ->render()
         );
@@ -324,8 +351,8 @@ class NoticeController extends Controller
  
         $arr = json_decode($data2);
 
-        return view('notice/view_more',compact('data','id','template' ,'content','arr'));
-       // return view('notice/ckeditor/view_more',compact('data','id','template' ,'content','arr'));
+       // return view('notice/view_more',compact('data','id','template' ,'content','arr'));
+        return view('notice/ckeditor/view_more',compact('data','id','template' ,'content','arr'));
     }
 
     /**
@@ -348,7 +375,8 @@ class NoticeController extends Controller
  
         $arr = json_decode($data2);
 
-        return view('notice/edit',compact('data','id','template','arr' ,'content'));
+        //return view('notice/edit',compact('data','id','template','arr' ,'content'));
+        return view('notice/ckeditor/edit',compact('data','id','template','arr' ,'content'));
     }
 
     /**
@@ -358,9 +386,155 @@ class NoticeController extends Controller
      * @param  \App\Models\Notice  $notice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Notice $notice)
+    public function update(Request $request, $id)
     {
-        //
+        print_r($request->Input()); die();
+
+        $region_prompt = '0';
+       $state_prompt = 'na';
+
+       $region_list = '';
+       $state_list = '';
+       $branchcodes = '';
+       $languages = implode(',' , $request->lang);
+
+      
+
+       if($request->is_pan_india == 'Yes'){
+           $region_list = '';
+           $state_list = '';
+       }
+       else if(isset($request->regions)){
+           $region_prompt = '1';
+           $region_list = implode(',' , $request->regions);
+
+
+       }
+       else{
+           $state_prompt = 'ya';
+
+           $state_list = implode(',' , $request->states);
+       }
+
+      $current = date('Y-m-d_H_i_s');
+      $filename = 'notice'.$request->template_id.'_'.$current.'.html';
+
+      $notice = Notice::where('id',$request->id)->first();
+      $filepath = public_path().'/noticefiles/en_'.$notice->filename;
+
+       $update = Notice::where('id',$request->id)->update([
+           'name' => $request->tittle ,
+           'description' => $request->description ,
+           'path' => 'noticefiles',
+           'filename' => $filename,
+           'is_pan_india'=> $request->is_pan_india ,
+           'is_region_wise' => $region_prompt ,
+           'regions' => $region_list ,
+           'is_state_wise' => $state_prompt ,
+           'states'=> $state_list ,
+           'branch_code'=> $branchcodes ,
+           'available_languages'=> $languages ,
+           'template_id'=>$request->template_id,
+           'creator'=>Auth::user()->id ,
+           'voiceover' => $request->voice_over
+       ]);
+
+       $noticeID = $request->id;
+
+      // print_r($noticeID); die();
+
+       if($noticeID != 0 AND $noticeID!=''){
+       
+        if (File::exists($filepath)) {
+        //File::delete($image_path);
+        unlink($filepath);
+          //print_r("yes".$filepath);
+        }
+        else{
+           print_r("no".$filepath);
+        }
+
+      // die();
+
+        $delete = NoticeContent::where('notice_id',$noticeID)->delete();
+       // die();
+        if($delete){
+          
+          $content = new NoticeContent;
+         $content->notice_id = $noticeID ;
+         $content->template_id = $request->template_id;
+
+        
+         $content->c11 = $request->row1_1;
+         $content->c12 = $request->row1_2;
+         $content->c13 = $request->row1_3;
+         $content->c14 = $request->row1_4;
+
+         $content->c21 = $request->row2_1;
+         $content->c22 = $request->row2_2;
+         $content->c23 = $request->row2_3;
+         $content->c24 = $request->row2_4;
+        
+         $content->c31 = $request->row3_1;
+         $content->c32 = $request->row3_2;
+         $content->c33 = $request->row3_3;
+         $content->c34 = $request->row3_4;
+
+         $content->c41 = $request->row4_1;
+         $content->c42 = $request->row4_2;
+         $content->c43 = $request->row4_3;
+         $content->c44 = $request->row4_4;
+
+         $content->c51 = $request->row5_1;
+         $content->c52 = $request->row5_2;
+         $content->c53 = $request->row5_3;
+         $content->c54 = $request->row5_4;
+
+         $content->c61 = $request->row6_1;
+         $content->c62 = $request->row6_2;
+         $content->c63 = $request->row6_3;
+         $content->c64 = $request->row6_4;
+         
+         $content->save();
+         $noticeContentID = $content->id;
+
+         
+        $template = Template::select('details')->where('id',$request->template_id)->first();
+
+       
+        $content = NoticeContent::where('template_id',$request->template_id)->where('notice_id',$request->id)->first();
+
+        //print_r(json_encode($content)); die();
+        $data2 = $template->details ;
+ 
+        $arr = json_decode($data2);
+
+        if (file_exists(public_path().'/noticefiles')) {
+              
+        } else {
+           
+            File::makeDirectory(public_path().'/noticefiles', $mode = 0777, true, true);
+        }
+
+        $lang = 'en';
+
+        $local_filename = $lang.'_notice'.$request->template_id.'_'.$current.'.html';
+        
+       // print_r($local_filename);die();
+         
+         $noticecontent = 
+         File::put(public_path().'/noticefiles/'.$local_filename,
+            view('htmltemplates.cktemp')
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template])
+                ->render()
+        );
+
+        }
+        } 
+
+       return redirect()->route('notices');
+
+       
     }
 
     /**

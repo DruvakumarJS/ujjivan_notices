@@ -55,7 +55,7 @@
        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Is PAN India Notice ? * </span>
+                    <span class="" id="basic-addon3">PAN India * </span>
                   </div>
             </div> 
             <div class="col-6">
@@ -72,7 +72,7 @@
        <div class="row" >
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Is Region Wise Notice ? * </span>
+                    <span class="" id="basic-addon3">Region-wise  </span>
                   </div>
             </div> 
             <div class="col-6" >
@@ -89,7 +89,7 @@
        <div class="row" id="region_dropdown_list" id="region_div">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Select Regions  </span>
+                    <span class="" id="basic-addon3">Select Region(s)  </span>
                   </div>
             </div> 
           <div class="col-6">
@@ -109,7 +109,7 @@
        <div class="row" id="state_div">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Is State wise Notice ?  </span>
+                    <span class="" id="basic-addon3">State-wise </span>
                   </div>
             </div> 
             <div class="col-6" id="state_dropdown">
@@ -126,7 +126,7 @@
         <div class="row" id="state_dropdown_list">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Select States  </span>
+                    <span class="" id="basic-addon3">Select State(s)  </span>
                   </div>
             </div> 
           <div class="col-6">
@@ -150,12 +150,12 @@
        <div class="row" id="state_dropdown_list">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Available Languages</span>
+                    <span class="" id="basic-addon3">Select Languages</span>
                   </div>
             </div> 
           <div class="col-6">
              <div class="input-group mb-3">
-             <select class="form-control selectpicker" multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()">
+             <!-- <select class="form-control selectpicker" multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()">
                 <option value="Assamese">Assamese</option>
                 <option value="Bengali">Bengali</option>
                 <option value="English" selected>English</option>
@@ -170,6 +170,14 @@
                 <option value="Tamil">Tamil</option>
                 <option value="Telugu">Telugu</option>
                 <option value="Urdu">Urdu</option>
+              </select> -->
+
+              <select class="form-control selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()">
+              	@foreach($languages as $key=>$value)
+              	<option value="{{$value->code}}">{{$value->name}}</option>
+
+              	@endforeach
+              	
               </select>
 
               </div>
@@ -179,7 +187,7 @@
        <div class="row" id="state_div">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Voice Over Needed</span>
+                    <span class="" id="basic-addon3">Voice Over Required</span>
                   </div>
             </div> 
             <div class="col-6" id="state_dropdown">
@@ -196,7 +204,7 @@
 
        <input type="hidden" name="template_id" value="{{$template_id}}">
 
-       <input class="form-control" type="text" name="" id="langs">
+       <input class="form-control" type="hidden" name="" id="langs">
       	
 
 	 @php
@@ -204,7 +212,7 @@
      @endphp
 
      <div class="row">
-     	<div class="col-md-10">
+     	<div class="col-md-8">
      		
      		<div class="card text-black bg-white border border-primary">
      			<!-- header -->

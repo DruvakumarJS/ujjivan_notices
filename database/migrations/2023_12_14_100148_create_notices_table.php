@@ -25,10 +25,10 @@ class CreateNoticesTable extends Migration
             $table->string('is_state_wise')->nullable();
             $table->string('states')->nullable();
             $table->string('branch_code')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->string('published_date')->nullable();
             $table->string('expiry_date')->nullable();
-            $table->string('available_languages');
+            $table->string('available_languages')->nullable();
             $table->string('template_id')->nullable();
             $table->string('creator');
             $table->string('voiceover');

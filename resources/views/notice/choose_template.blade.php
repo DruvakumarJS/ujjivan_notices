@@ -110,6 +110,26 @@ tr {
 			@endforeach
 			
 		</div>
+
+     <div class="text-sm-start" >
+      <span class="" id="basic-addon3">Select Languages for creating Notice</span>
+    </div>
+   <div class="row" id="state_dropdown_list">
+      
+          <div class="col-10">
+             <div class="input-group mb-3">
+            
+              <select class="form-control selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()">
+                @foreach($languages as $key=>$value)
+                <option value="{{$value->code}}">{{$value->name}}</option>
+
+                @endforeach
+                
+              </select>
+
+              </div>
+            </div>
+       </div>
        <div id="div3">
        	<button class="btn btn-primary">Proceed</button>
        </div>

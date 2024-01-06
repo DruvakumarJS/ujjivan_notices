@@ -42,6 +42,8 @@ Route::post('save-notice',[NoticeController::class,'store'])->name('save_notice'
 Route::get('view-notice-datails/{id}',[NoticeController::class,'show'])->name('view_notice_datails');
 Route::get('edit-notice-datails/{id}',[NoticeController::class,'edit'])->name('edit_notice_datails');
 Route::put('update-notice-datails/{id}',[NoticeController::class,'update'])->name('update_notice_datails');
+//Route::post('update-notice',[NoticeController::class,'store'])->name('update_notice');
+
 Route::get('delete-notice-datails/{id}',[NoticeController::class,'destroy'])->name('delete_notice_datails');
 Route::post('search-notice',[NoticeController::class,'search'])->name('search_notice');
 
