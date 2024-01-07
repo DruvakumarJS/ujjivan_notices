@@ -77,13 +77,14 @@ class DeviceController extends Controller
    public function get_notices(Request $request){
       
       $device_id = $request->mac_id ;
+      $lang = $request->lang ;
       $data = array();
 
       if(Devices::where('mac_id',$request->mac_id)->exists()){
 
 
 
-        $notices = Notice::get();
+        $notices = Notice::where('lang_code',$lang)->get();
 
         foreach ($notices as $key => $value) {
 

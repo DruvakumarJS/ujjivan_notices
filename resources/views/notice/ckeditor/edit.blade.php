@@ -151,25 +151,7 @@
             </div>
        </div>
 
-       <div class="row" id="state_dropdown_list">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Available Languages</span>
-                  </div>
-            </div> 
-          <div class="col-6">
-             <div class="input-group mb-3">
-             <select class="form-control selectpicker" multiple search="true" name="lang[]" required="" >
-                @php $lang_list = explode(',',$data->available_languages); @endphp
-                <option <?php echo(in_array('Kannada',$lang_list))?'selected':''  ?> value="Kannada">Kannada</option>
-                <option <?php echo(in_array('English',$lang_list))?'selected':''  ?> value="English">English</option>
-                <option <?php echo(in_array('Hindi',$lang_list))?'selected':''  ?> value="Hindi">Hindi</option>
-                <option <?php echo(in_array('Urdu',$lang_list))?'selected':''  ?> value="Urdu">Urdu</option>
-              </select>
-
-              </div>
-            </div>
-       </div>
+      
 
        <div class="row" id="state_div">
             <div class="col-2">
@@ -187,6 +169,8 @@
                 </div>
             </div>   
        </div>
+        <input type="hidden" name="lang" value="{{$data->lang_code}}">
+
 
        <!-- content -->
 
@@ -194,10 +178,8 @@
         $data = json_encode($template->details , TRUE);
        @endphp
       
-     
-      
        <div class="row" >
-            <div class="col-8">
+            <div style="width: 1000px">
               <div class="card text-black bg-white border border-primary" >
                 <div class="card-header text-muted text-black"  style="background-color: white"><img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> </div>
 
@@ -1394,6 +1376,7 @@
 
        <!-- content -->
 
+      
        <input type="hidden" name="id" value="{{$id}}">
        <input type="hidden" name="template_id" value="{{$content->template_id}}">
        

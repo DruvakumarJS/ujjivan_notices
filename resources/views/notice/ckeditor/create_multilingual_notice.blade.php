@@ -140,8 +140,9 @@
        <input type="hidden" name="template_id" value="{{$template_id}}">
       
       @foreach($selected_languages as $keyl=>$lang)
+      <hr/>
        <div class="row">
-        <div class="col-md-10">
+        <div style="width: 1000px" >
           <div class="card">
             <h5 class="card-header">
                 <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
@@ -174,7 +175,7 @@
                         </div> 
                         <div class="col-6">
                             <div class="input-group mb-3">
-                             <input class="form-control" type="text" name="{{$lang->code}}[tittle]" required>
+                             <input class="form-control" type="text" name="notice[{{$keyl}}][tittle]" required>
                             </div>
                         </div>   
                    </div>
@@ -200,11 +201,11 @@
                         </div> 
                         <div class="col-6">
                             <div class="input-group mb-3">
-                             <input class="form-control" type="text" name="{{$lang->code}}[description]" required>
+                             <input class="form-control" type="text" name="notice[{{$keyl}}][description]" required>
                             </div>
                         </div>   
                    </div>
-                   <input type="hidden" name="{{$lang->code}}[langauge]" value="{{$lang->code}}">
+                   <input type="hidden" name="notice[{{$keyl}}][langauge]" value="{{$lang->code}}">
                    <!-- ckEditor -->
 
                    <div class="row">
@@ -226,7 +227,7 @@
                                    @if($views == 'textarea')
                                    <div class="div-margin">
                                    </div>
-                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="{{$lang->code}}[row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
+                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
@@ -355,7 +356,7 @@
                           @elseif($views == 'table')
                           <div class="div-margin">
                                    </div>
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="{{$lang->code}}[row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
@@ -476,7 +477,7 @@
                           @elseif($views == 'img')
                           <div class="div-margin">
                                    </div>
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="{{$lang->code}}[row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
@@ -605,7 +606,7 @@
                                  @foreach($data as $key2=>$views2)
                                   <div class="col-md-6">
                                      @if($views2 == 'textarea')
-                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="{{$lang->code}}[row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
+                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
@@ -732,7 +733,7 @@
                               });
                           </script>
                           @elseif($views2 == 'table')
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="{{$lang->code}}[row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
@@ -851,7 +852,7 @@
                               });
                           </script>
                           @elseif($views2 == 'img')
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="{{$lang->code}}[row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
@@ -985,7 +986,7 @@
                                  @foreach($data as $key3=>$views3)
                                   <div class="col-md-4">
                                      @if($views3 == 'textarea')
-                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="{{$lang->code}}[row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
+                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
@@ -1112,7 +1113,7 @@
                               });
                           </script>
                           @elseif($views3 == 'table')
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="{{$lang->code}}[row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
@@ -1231,7 +1232,7 @@
                               });
                           </script>
                           @elseif($views3 == 'img')
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="{{$lang->code}}[row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {

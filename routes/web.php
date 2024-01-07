@@ -50,6 +50,8 @@ Route::post('search-notice',[NoticeController::class,'search'])->name('search_no
 Route::get('templates',[NoticeController::class,'templates'])->name('templates');
 
 Route::post('ck_upload',[NoticeController::class,'ck_upload'])->name('ck_upload');
+Route::post('filter_notice',[NoticeController::class,'filter'])->name('filter_notice');
+
 
 
 

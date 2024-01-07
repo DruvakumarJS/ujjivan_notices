@@ -26,5 +26,8 @@ class Notice extends Model
             'available_languages',
             'template_id',
             'creator',
-            'voiceover'];
+            'voiceover',
+            'lang_code',
+            'lang_name',
+            'notice_group'];
 }

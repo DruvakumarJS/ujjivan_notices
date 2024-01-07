@@ -12,6 +12,9 @@ class NoticeContent extends Model
     protected $fillable = [
     	'notice_id',
     	'template_id',
+        'lang_code',
+        'lang_name',
+        'notice_group',
         'c11',
         'c12',
         'c13',
