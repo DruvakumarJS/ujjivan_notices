@@ -76,7 +76,7 @@
 		             <td>{{ ($value->voiceover == 'Y')?'Yes':'No'}}</td> 
 		             <!-- <td>{{$value->status}}</td> -->
 		             <td>
-		             	 <a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View Notice</button></a>
+		             	 <a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View Notice</button></a>
 			             <a href="{{ route('edit_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
 			             <a onclick="return confirm('You are deleting a Notice?')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
 		             </td>

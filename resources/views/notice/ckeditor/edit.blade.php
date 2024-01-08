@@ -585,7 +585,7 @@
                         $cVal = 'c'.$rowval.$colval;
                        @endphp
                       <div class="col-md-6">
-                        @if($views == 'textarea')
+                        @if($views2 == 'textarea')
                      <div class="div-margin">
                      </div>
                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}"  name="row{{$keys+1}}_{{$key2+1}}" >{{$content->$cVal}}</textarea>  
@@ -714,7 +714,7 @@
                               ]
                           });
                       </script>
-                      @elseif($views == 'table')
+                      @elseif($views2 == 'table')
                       <div class="div-margin">
                       </div>
                         <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}"  name="row{{$keys+1}}_{{$key2+1}}" >{{$content->$cVal}}</textarea>  
@@ -835,7 +835,7 @@
                               ]
                           });
                       </script>
-                      @elseif($views == 'img')
+                      @elseif($views2 == 'img')
                       <div class="div-margin">
                       </div>
                         <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}"  name="row{{$keys+1}}_{{$key2+1}}" >{{$content->$cVal}}</textarea>  
@@ -975,7 +975,7 @@
                           $cVal = 'c'.$rowval.$colval;
                        @endphp
                       <div class="col-md-4 div-margin">
-                        @if($views == 'textarea')
+                        @if($views3 == 'textarea')
                      <div class="div-margin">
                      </div>
                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}"  name="row{{$keys+1}}_{{$key3+1}}" >{{$content->$cVal}}</textarea>  
@@ -1104,7 +1104,7 @@
                             ]
                         });
                     </script>
-                    @elseif($views == 'table')
+                    @elseif($views3 == 'table')
                     <div class="div-margin">
                     </div>
                       <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}"  name="row{{$keys+1}}_{{$key3+1}}" >{{$content->$cVal}}</textarea>  
@@ -1225,7 +1225,7 @@
                             ]
                         });
                     </script>
-                    @elseif($views == 'img')
+                    @elseif($views3 == 'img')
                     <div class="div-margin">
                     </div>
                       <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}"  name="row{{$keys+1}}_{{$key3+1}}" >{{$content->$cVal}}</textarea>  

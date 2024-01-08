@@ -14,7 +14,7 @@
   margin-left: auto;
   margin-right: auto;
   display: block;
-  width: 80%;
+  width: 100%;
   max-height: 200px;
   align-items: center;
 }
@@ -74,59 +74,7 @@
                          <div style="color: ">{!! $content->$cVal !!}</div>
                      
                          @elseif($views == 'table')
-                          <table class="table table-bordered div-margin" style="height: 200px">
-                            <tr >
-                              <th>Sl.No</th>
-                              <th>Transaction / Service</th>
-                              <th>Time Taken</th>
-                            </tr>
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>Cash payment at cash counters</td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
-
-                              <tr>
-                                <td>2</td>
-                                <td>Receipt of cash at cash counters</td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td>Issuance of statement across counter </td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
-
-                              <tr>
-                                <td>4</td>
-                                <td>Updating of pass books</td>
-                                <td>Within 15 Minutes</td>
-                              </tr>
-                              <tr>
-                                <td>5</td>
-                                <td>Issuance of demand draft / fixed deposit advice</td>
-                                <td>Within 30 Minutes</td>
-                              </tr>
-
-                              <tr>
-                                <td>6</td>
-                                <td>Payment of fixed deposits</td>
-                                <td>Within 30 Minutes</td>
-                              </tr>
-                               <tr>
-                                <td>7</td>
-                                <td>Collection of cheques (local) </td>
-                                <td>Within 4 Days</td>
-                              </tr>
-
-                              <tr>
-                                <td>8</td>
-                                <td>Issuance of statement by post</td>
-                                <td>7 days</td>
-                              </tr>
-                            </tbody>
-                          </table>
+                         <textarea>{!! $content->$cVal !!}</textarea>
                        
                        @else
                          

@@ -138,6 +138,7 @@
        </div>
 
        <input type="hidden" name="template_id" value="{{$template_id}}">
+       <input type="hidden" name="selected_lang_code" value="{{$selected_lang_code}}">
       
       @foreach($selected_languages as $keyl=>$lang)
       <hr/>

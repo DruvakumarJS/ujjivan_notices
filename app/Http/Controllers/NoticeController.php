@@ -56,7 +56,10 @@ class NoticeController extends Controller
 
     public function create(Request $request)
     {
-      //print_r($request->Input()); die();
+      //print_r($request->lang); die();
+      $langarray=$request->lang ;
+      $selected_lang_code = implode(',', $langarray);
+      //print_r($langs); die();
       $template_id = $request->template_id;
       $regions = Region::all();
       $branch = Branch::select('state')->groupBy('state')->get();
@@ -73,7 +76,7 @@ class NoticeController extends Controller
      // return view('notice/create_ckeditor',compact('regions','branch','template','arr','template_id'));
        //return view('notice/ckeditor2',compact('regions','branch','template','arr','template_id'));
       // return view('notice/ckeditor/create_new_notice',compact('regions','branch','template','arr','template_id','languages'));
-       return view('notice/ckeditor/create_multilingual_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages'));
+       return view('notice/ckeditor/create_multilingual_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code'));
     }
 
     /**
@@ -84,7 +87,7 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-     // print_r(($request->Input()) );die();
+      //print_r(($request->Input()) );die();
       
      //  print_r(json_encode($request->input()) ); die();
        
@@ -116,7 +119,7 @@ class NoticeController extends Controller
        foreach($request->notice as $key=>$value) {
        
         $current = date('Y-m-d_H_i_s');
-        $filename = $value['langauge'].'_notice'.$request->template_id.'_'.$current.'.html';
+        $filename = 'notice'.$request->template_id.'_'.$current.'.html';
 
         $langaugedata = Language::where('code',$value['langauge'])->first();
 
@@ -132,7 +135,7 @@ class NoticeController extends Controller
          $notice->states = $state_list ;
          $notice->branch_code = $branchcodes ;
          $notice->status = 'Draft';
-         $notice->available_languages =$value['langauge'] ;
+         $notice->available_languages =$request->selected_lang_code ;
          $notice->template_id = $request->template_id;
          $notice->creator = Auth::user()->id ;
          $notice->voiceover = $request->voice_over;
