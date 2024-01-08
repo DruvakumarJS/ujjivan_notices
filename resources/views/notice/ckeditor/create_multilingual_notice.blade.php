@@ -18,7 +18,7 @@
 </style>
 
 <div class="container-body">
-	 <label class="label-bold">Create New Notice</label>
+	 <label class="label-bold">Create New Notice 1</label>
 	 <div class="page-container">
 
 	 <hr/>
