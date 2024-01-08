@@ -115,12 +115,14 @@ class NoticeController extends Controller
        }
 
        $group_id = rand('000000','999999');
-       
+
+       $current = date('Y-m-d_H_i_s');
+       $c_time = $request->template_id.'_'.$current.'.html';
+       $filename = 'notice'.$c_time;
+
        foreach($request->notice as $key=>$value) {
        
-        $current = date('Y-m-d_H_i_s');
-        $filename = 'notice'.$request->template_id.'_'.$current.'.html';
-
+        
         $langaugedata = Language::where('code',$value['langauge'])->first();
 
          $notice = new Notice;
@@ -207,7 +209,7 @@ class NoticeController extends Controller
             File::makeDirectory(public_path().'/noticefiles', $mode = 0777, true, true);
         }
 
-        $local_filename = $value['langauge'].'_notice'.$request->template_id.'_'.$current.'.html';
+        $local_filename = $value['langauge'].'_notice'.$c_time;
 
          $noticecontent = 
          File::put(public_path().'/noticefiles/'.$local_filename,
@@ -310,8 +312,8 @@ class NoticeController extends Controller
            $state_list = implode(',' , $request->states);
        }
 
-      $current = date('Y-m-d_H_i_s');
-      $filename = $request->lang.'_notice'.$request->template_id.'_'.$current.'.html';
+      /*$current = date('Y-m-d_H_i_s');
+      $filename = 'notice'.$request->template_id.'_'.$current.'.html';*/
 
       $notice = Notice::where('id',$request->id)->first();
       $filepath = public_path().'/noticefiles/'.$notice->filename;
@@ -319,8 +321,6 @@ class NoticeController extends Controller
        $update = Notice::where('id',$request->id)->update([
            'name' => $request->tittle ,
            'description' => $request->description ,
-           'path' => 'noticefiles',
-           'filename' => $filename,
            'is_pan_india'=> $request->is_pan_india ,
            'is_region_wise' => $region_prompt ,
            'regions' => $region_list ,
@@ -415,7 +415,7 @@ class NoticeController extends Controller
 
        // $lang = 'en';
 
-        $local_filename = $request->lang.'_notice'.$request->template_id.'_'.$current.'.html';
+        $local_filename = $request->lang.'_'.$notice->filename;
         
        // print_r($local_filename);die();
          
