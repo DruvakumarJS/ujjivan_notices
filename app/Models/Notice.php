@@ -29,5 +29,7 @@ class Notice extends Model
             'voiceover',
             'lang_code',
             'lang_name',
-            'notice_group'];
+            'notice_group',
+            'notice_type',
+            'version'];
 }

@@ -52,6 +52,8 @@ Route::get('templates',[NoticeController::class,'templates'])->name('templates')
 Route::post('ck_upload',[NoticeController::class,'ck_upload'])->name('ck_upload');
 Route::post('filter_notice',[NoticeController::class,'filter'])->name('filter_notice');
 
+Route::post('save-rbi-notice',[NoticeController::class,'store_rbi_notice'])->name('save_rbi_notice');
+
 
 
 

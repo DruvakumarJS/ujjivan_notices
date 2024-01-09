@@ -20,14 +20,26 @@ tr {
 	</div>
 
 	<div class="page-container">
+   
      <form method="GET" action="{{route('create_notice')}}">
      	@csrf
 		<div class="row div-margin">
+       <p>Please select type of Notice you want to create</p>
+        <div class="div-margin">
+           <input type="radio" id="ujjivan" name="notice_type" value="ujjivan" onchange="handleChange(this);" checked >
+           <label for="html">Ujjivan Notice</label>
+           <input type="radio" id="rbi" name="notice_type" value="rbi" style="margin-left: 30px;" onchange="handleChange(this);">
+           <label for="html">RBI Notice</label><notice_type>
+        </div>
+
+         
+     <div id="templates" class="d-flex">
+    
 			@foreach($data as $key=>$value)
 
-				<div class="col-md-2 col-lg-2 col-sm-2">
+				<div class="col-md-2 col-lg-2 col-sm-2 ms-1" >
 					 <label>
-          <input class="div-margin" type="radio" name="template_id" value="{{$value->id}}" selected required class="card-input-element" style="margin-left: 30px" /><span style="margin-left: 10px">{{ $value->name}}</span>
+          <input class="div-margin radioInput" type="radio" name="template_id" value="{{$value->id}}" selected required class="card-input-element" style="margin-left: 30px" /><span style="margin-left: 10px">{{ $value->name}}</span>
 
 				  <div class="card border border-primary" style="height: 400px">
 
@@ -108,20 +120,19 @@ tr {
 				</div>
 
 			@endforeach
-			
+			 </div>
 		</div>
 
-     <div class="text-sm-start" >
-      <span class="" id="basic-addon3">Select Languages for creating Notice</span>
-    </div>
-   <div class="row" id="state_dropdown_list">
-      
+    <div class="text-sm-start div-margin" >
+          <span class="" id="basic-addon3">Select Languages for creating Notice</span>
+        </div>
+        <div class="row" id="state_dropdown_list">
           <div class="col-10">
              <div class="input-group mb-3">
-            
+
               <select class="form-control selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()">
                 @foreach($languages as $key=>$value)
-                <option value="{{$value->code}}">{{$value->name}}</option>
+                <option value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
 
                 @endforeach
                 
@@ -129,7 +140,8 @@ tr {
 
               </div>
             </div>
-       </div>
+        </div>
+
        <div id="div3">
        	<button class="btn btn-primary">Proceed</button>
        </div>
@@ -137,5 +149,22 @@ tr {
 	</form>	
 	
 </div>
+
+<script type="text/javascript">
+   function handleChange(src) {
+  var x = document.getElementById("templates");
+  if(src.value == 'ujjivan'){
+  
+    $('#templates').removeClass('d-none');
+    $(".radioInput").prop("required", true);
+    
+  }
+  else{
+     $('#templates').addClass('d-none');
+     $(".radioInput").removeAttr("required");
+    
+  }
+  }
+</script>
 
 @endsection
