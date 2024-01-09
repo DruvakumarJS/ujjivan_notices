@@ -246,7 +246,7 @@
                                           
                                           'specialCharacters', 'horizontalLine', 'pageBreak', '|',
                                           'textPartLanguage', '|',
-                                          'sourceEditing'
+                                          'uploadImage','insertTable'
                                       ],
                                       shouldNotGroupWhenFull: true
                                   },
