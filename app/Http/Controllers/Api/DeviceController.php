@@ -83,8 +83,7 @@ class DeviceController extends Controller
       if(Devices::where('mac_id',$request->mac_id)->exists()){
 
 
-
-        $notices = Notice::where('lang_code',$lang)->get();
+        $notices = Notice::where('lang_code',$lang)->where('notice_type','ujjivan')->get();
 
         foreach ($notices as $key => $value) {
 
