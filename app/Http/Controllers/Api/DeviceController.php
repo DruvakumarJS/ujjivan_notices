@@ -98,7 +98,8 @@ class DeviceController extends Controller
           'path' => url('/').'/noticefiles/' ,
           'filename' => $value->filename,
           'available_languages' => $value->available_languages,
-          'voiceover' => $voicover 
+          'voiceover' => $voicover ,
+          'notice_group' => $value->notice_group
           ];
 
         }
@@ -177,4 +178,44 @@ class DeviceController extends Controller
       }
 
    }
+
+   public function get_notice_tittle(Request $request){
+      
+
+      if(isset($request->lang) && isset($request->notice_group))
+      {
+         $lang = $request->lang;
+         $group_id = $request->notice_group;
+
+         if(Notice::where('notice_group' , $group_id)->where('lang_code' , $lang)->exists()){
+         
+          $notice = Notice::where('notice_group' , $group_id)->where('lang_code' , $lang)->first();
+
+          return response()->json([
+            'status' => 'true',
+            'message' => 'Success',
+            'tittle' => $notice->name]);
+         }
+         else{
+            return response()->json([
+              'status' => 'false',
+              'message' => 'Does not exists',
+              'tittle' => '']);
+
+         }
+        
+
+      }
+      else{
+        return response()->json([
+            'status' => 'false',
+            'message' => 'Insifficient Data',
+            'tittle' => '']);
+
+      }
+
+     
+
+   }  
+
 }
