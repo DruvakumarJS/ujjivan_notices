@@ -53,6 +53,9 @@ Route::post('ck_upload',[NoticeController::class,'ck_upload'])->name('ck_upload'
 Route::post('filter_notice',[NoticeController::class,'filter'])->name('filter_notice');
 
 Route::post('save-rbi-notice',[NoticeController::class,'store_rbi_notice'])->name('save_rbi_notice');
+Route::get('edit-rbi-notice/{id}',[NoticeController::class,'edit_rbi_notice'])->name('edit_rbi_notice');
+Route::put('update-rbi_notice-datails/{id}',[NoticeController::class,'update_rbi_notice'])->name('update_rbi_notice_datails');
+
 
 
 

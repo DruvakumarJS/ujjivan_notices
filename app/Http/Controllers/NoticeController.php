@@ -162,6 +162,7 @@ class NoticeController extends Controller
          $notice->lang_name = $langaugedata->name;
          $notice->notice_group = $group_id;
          $notice->notice_type = 'ujjivan';
+         $notice->document_id = $request->document_id;
 
 
          $notice->save();
@@ -335,7 +336,7 @@ class NoticeController extends Controller
       $filename = 'notice'.$request->template_id.'_'.$current.'.html';*/
 
       $notice = Notice::where('id',$request->id)->first();
-      $filepath = public_path().'/noticefiles/'.$notice->filename;
+      $filepath = public_path().'/noticefiles/'.$request->lang.'_'.$notice->filename;
 
        $update = Notice::where('id',$request->id)->update([
            'name' => $request->tittle ,
@@ -348,22 +349,23 @@ class NoticeController extends Controller
            'branch_code'=> $branchcodes ,
            'template_id'=>$request->template_id,
            'creator'=>Auth::user()->id ,
-           'voiceover' => $request->voice_over
+           'voiceover' => $request->voice_over,
+           'document_id' => $request->document_id
        ]);
 
        $noticeID = $request->id;
 
-      // print_r($noticeID); die();
+       //print_r($noticeID); die();
 
        if($noticeID != 0 AND $noticeID!=''){
        
         if (File::exists($filepath)) {
         //File::delete($image_path);
         unlink($filepath);
-          //print_r("yes".$filepath);
+         // print_r("yes".$filepath);
         }
         else{
-           print_r("no".$filepath);
+         //  print_r("no".$filepath);
         }
 
       // die();
@@ -527,7 +529,7 @@ class NoticeController extends Controller
 
      
 
-      $region_prompt = '0';
+       $region_prompt = '0';
        $state_prompt = 'na';
 
        $region_list = '';
@@ -586,11 +588,12 @@ class NoticeController extends Controller
          $notice->available_languages =$request->selected_lang_code ;
          $notice->template_id = '0';
          $notice->creator = Auth::user()->id ;
-         $notice->voiceover = $request->voice_over;
+         $notice->voiceover = 'N';
          $notice->lang_code = $langaugedata->code;
          $notice->lang_name = $langaugedata->name;
          $notice->notice_group = $group_id;
          $notice->notice_type = 'rbi';
+         $notice->document_id = $request->document_id;
 
          $notice->save();
 
@@ -599,5 +602,80 @@ class NoticeController extends Controller
        }
 
         return redirect()->route('notices');
+    }
+
+     public function edit_rbi_notice($id){
+        $data = Notice::where('id',$id)->first();
+
+        return view('notice/ckeditor/edit_rbi',compact('data','id'));
+    }
+
+    public function update_rbi_notice(Request $request){
+     // print_r($request->Input()); die();
+
+      $region_prompt = '0';
+       $state_prompt = 'na';
+
+       $region_list = '';
+       $state_list = '';
+       $branchcodes = '';
+      
+       if($request->is_pan_india == 'Yes'){
+           $region_list = '';
+           $state_list = '';
+       }
+       else if(isset($request->regions)){
+           $region_prompt = '1';
+           $region_list = implode(',' , $request->regions);
+
+
+       }
+       else{
+           $state_prompt = 'ya';
+
+           $state_list = implode(',' , $request->states);
+       }
+
+      $notice = Notice::where('id',$request->id)->first();
+      $filepath = public_path().'/noticefiles/'.$request->lang.'_'.$notice->filename;
+
+       $update = Notice::where('id',$request->id)->update([
+           'name' => $request->tittle ,
+           'description' => $request->description ,
+           'is_pan_india'=> $request->is_pan_india ,
+           'is_region_wise' => $region_prompt ,
+           'regions' => $region_list ,
+           'is_state_wise' => $state_prompt ,
+           'states'=> $state_list ,
+           'branch_code'=> $branchcodes ,
+           'creator'=>Auth::user()->id ,
+           'document_id' => $request->document_id
+       ]);
+
+       $noticeID = $request->id;
+
+
+       if($noticeID != 0 AND $noticeID!=''){
+      
+         if($file = $request->hasFile('rbi_file')) {
+
+             if (File::exists($filepath)) {
+               unlink($filepath);
+             }
+
+            $file = $request->file('rbi_file') ;
+            $fileName = $request->lang.'_'.$notice->filename;;
+
+            $destinationPath = public_path().'/noticefiles';
+            $file->move($destinationPath,$fileName);
+            
+         }
+         
+
+
+      }
+
+      return redirect()->route('notices');
+
     }
 }

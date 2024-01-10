@@ -120,19 +120,17 @@
               </div>
             </div>
        </div>
+       
+
        <div class="row" id="state_div">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Voice Over Required</span>
+                    <span class="" id="basic-addon3">NB ID</span>
                   </div>
             </div> 
             <div class="col-6" id="state_dropdown">
                 <div class="input-group mb-3">
-                 <select class="form-control form-select" name="voice_over" required>
-                  <option value="">Select</option>
-                  <option value="Y">Yes</option>
-                  <option value="N">No</option>
-                 </select>
+                 <input class="form-control" type="text" name="document_id" required>
                 </div>
             </div>   
        </div>
@@ -236,7 +234,7 @@
                         </div>   
                    </div>
 
-                   <input type="hidden" name="notice[{{$keyl}}][langauge]" value="{{$lang->code}}">
+                   <input class="form-control" type="hidden" name="notice[{{$keyl}}][langauge]" value="{{$lang->code}}">
                    
                 </div>
             </div>
@@ -255,6 +253,72 @@
      </form>
 	 </div>
 </div>
+
+<script type="text/javascript">
+  var mode = document.getElementById("pan").value;
+   var langArray = [];
+ // $('#region_list').prop('disabled', true);
+ // $('#state_list').prop('disabled', true);
+  $('#region_prompt').prop('disabled', true);
+  $('#state_prompt').prop('disabled', true);
+
+   $('select').on('change', function() {
+     
+       if(this.value == "No"){
+          
+           $('#region_prompt').prop('disabled', false);
+           document.getElementById("region_prompt").required = true;
+       }
+
+       if(this.value == "Yes"){
+          
+           $('#region_prompt').prop('disabled', true);
+           document.getElementById("region_prompt").required = false;
+
+           $('#state_prompt').prop('disabled', true);
+           document.getElementById("state_prompt").required = false;
+ 
+       }
+
+      if(this.value == "1"){
+           $('#region_list').prop('disabled', false);
+           document.getElementById("region_list").required = true;
+
+           $('#state_prompt').prop('disabled', true);
+           document.getElementById("state_prompt").required = false;
+       }
+
+       if(this.value == "0"){
+           $('#region_list').prop('disabled', true);
+           document.getElementById("region_list").required = false;
+
+           $('#state_prompt').prop('disabled', false);
+           document.getElementById("state_prompt").required = true;
+       }
+
+       if(this.value == "ya"){
+           $('#state_list').prop('disabled', false);
+           document.getElementById("state_list").required = true;          
+       }
+      
+
+
+
+  });
+
+   function auto_grow(element) {
+  element.style.height = "250px";
+  element.style.height = (element.scrollHeight) + "px";
+}
+ 
+</script>
+
+<script>
+    ClassicEditor.create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 
 
 @endsection

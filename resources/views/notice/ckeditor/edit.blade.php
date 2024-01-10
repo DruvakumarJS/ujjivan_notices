@@ -61,7 +61,7 @@
        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Is PAN India Notice ? * </span>
+                    <span class="" id="basic-addon3">PAN India * </span>
                   </div>
             </div> 
             <div class="col-6">
@@ -78,7 +78,7 @@
        <div class="row" >
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Is Region Wise Notice ? * </span>
+                    <span class="" id="basic-addon3">Region-wise </span>
                   </div>
             </div> 
             <div class="col-6" >
@@ -95,7 +95,7 @@
        <div class="row" id="region_dropdown_list" id="region_div">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Select Regions  </span>
+                    <span class="" id="basic-addon3">Select Region(s) </span>
                   </div>
             </div> 
           <div class="col-6">
@@ -116,7 +116,7 @@
        <div class="row" id="state_div">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Is State wise Notice ?  </span>
+                    <span class="" id="basic-addon3">State-wise</span>
                   </div>
             </div> 
             <div class="col-6" id="state_dropdown">
@@ -133,7 +133,7 @@
         <div class="row" id="state_dropdown_list">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Select States  </span>
+                    <span class="" id="basic-addon3">Select State(s) </span>
                   </div>
             </div> 
           <div class="col-6">
@@ -166,6 +166,19 @@
                   <option <?php echo($data->voiceover == 'Y')?'selected':'' ?> value="Y">Yes</option>
                   <option <?php echo($data->voiceover == 'N')?'selected':'' ?> value="N">No</option>
                  </select>
+                </div>
+            </div>   
+       </div>
+
+        <div class="row" id="state_div">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">NB ID</span>
+                  </div>
+            </div> 
+            <div class="col-6" id="state_dropdown">
+                <div class="input-group mb-3">
+                 <input class="form-control" type="text" name="document_id" value="{{$data->document_id}}" required>
                 </div>
             </div>   
        </div>

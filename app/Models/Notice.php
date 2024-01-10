@@ -31,5 +31,6 @@ class Notice extends Model
             'lang_name',
             'notice_group',
             'notice_type',
-            'version'];
+            'version',
+            'document_id'];
 }

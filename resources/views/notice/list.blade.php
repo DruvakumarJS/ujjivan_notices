@@ -52,6 +52,7 @@
 			<table class="table table-responsive table-stripped">
 				<thead>
 					<tr>
+						<th>NB ID</th>
 						<th>Name</th>
                         <th>Description</th>
 						<th>PAN India</th>
@@ -67,6 +68,8 @@
 				<tbody>
 		          @foreach($data as $key=>$value)
 		          <tr>
+		          	<td>{{$value->document_id}}</td>
+		          	<td>{{$value->name}}</td>
 		             <td>{{$value->name}}</td>
 		             <td>{{$value->description}}</td>
 		             <td>{{$value->is_pan_india}}</td>
@@ -80,7 +83,7 @@
 		             	 @if($value->notice_type == 'ujjivan')
 			             <a href="{{ route('edit_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
 			             @else
-			             <a ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+			             <a href="{{ route('edit_rbi_notice',$value->id)}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
 			             @endif
 			             <a onclick="return confirm('You are deleting a Notice?')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
 		             </td>
