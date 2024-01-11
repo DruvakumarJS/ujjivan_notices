@@ -218,4 +218,55 @@ class DeviceController extends Controller
 
    }  
 
+    public function get_all_notices(Request $request){
+      
+      $device_id = $request->mac_id ;
+      
+      $data = array();
+
+      if(Devices::where('mac_id',$request->mac_id)->exists()){
+
+
+        $notices = Notice::where('notice_type','ujjivan')->get();
+
+        foreach ($notices as $key => $value) {
+
+          $voice = $value->voiceover ;
+
+          if($voice == 'Y'){$voicover="YES";}
+          else {$voicover="No";}
+          
+          $data[]=[
+          'name' => $value->name ,
+          'description' => $value->description ,
+          'path' => url('/').'/noticefiles/' ,
+          'filename' => $value->filename,
+          'available_languages' => $value->available_languages,
+          'voiceover' => $voicover ,
+          'notice_group' => $value->notice_group
+          ];
+
+        }
+
+        
+         return response([
+          'status'=>'true',
+          'data' => $data
+          
+        ]);
+
+      }
+      else{
+
+        return response([
+          'status'=>'false',
+          'data' => $data
+          
+        ]);
+
+      }
+
+
+   }
+
 }
