@@ -99,7 +99,8 @@ class DeviceController extends Controller
           'filename' => $value->filename,
           'available_languages' => $value->available_languages,
           'voiceover' => $voicover ,
-          'notice_group' => $value->notice_group
+          'notice_group' => $value->notice_group,
+          'lang' => $value->lang_code
           ];
 
         }
@@ -243,7 +244,8 @@ class DeviceController extends Controller
           'filename' => $value->filename,
           'available_languages' => $value->available_languages,
           'voiceover' => $voicover ,
-          'notice_group' => $value->notice_group
+          'notice_group' => $value->notice_group,
+          'lang' => $value->lang_code
           ];
 
         }
