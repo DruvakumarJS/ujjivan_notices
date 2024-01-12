@@ -32,7 +32,7 @@ Route::put('update_device_datails/{id}',[DevicesController::class,'update'])->na
 Route::get('delete_device_datails/{id}',[DevicesController::class,'destroy'])->name('delete_device_datails');
 Route::post('search_device',[DevicesController::class,'search'])->name('search_device');
 
-Route::get('notices',[NoticeController::class,'index'])->name('notices');
+Route::get('notices/{lang}',[NoticeController::class,'index'])->name('notices');
 
 Route::get('select_template',[NoticeController::class,'selct_template'])->name('choose_template');
 Route::get('set_template',[NoticeController::class,'set_template'])->name('set_template');
@@ -45,12 +45,12 @@ Route::put('update-notice-datails/{id}',[NoticeController::class,'update'])->nam
 //Route::post('update-notice',[NoticeController::class,'store'])->name('update_notice');
 
 Route::get('delete-notice-datails/{id}',[NoticeController::class,'destroy'])->name('delete_notice_datails');
-Route::post('search-notice',[NoticeController::class,'search'])->name('search_notice');
+Route::get('search-notice',[NoticeController::class,'search'])->name('search_notice');
 
 Route::get('templates',[NoticeController::class,'templates'])->name('templates');
 
 Route::post('ck_upload',[NoticeController::class,'ck_upload'])->name('ck_upload');
-Route::post('filter_notice',[NoticeController::class,'filter'])->name('filter_notice');
+Route::get('filter_notice/{lang}',[NoticeController::class,'filter'])->name('filter_notice');
 
 Route::post('save-rbi-notice',[NoticeController::class,'store_rbi_notice'])->name('save_rbi_notice');
 Route::get('edit-rbi-notice/{id}',[NoticeController::class,'edit_rbi_notice'])->name('edit_rbi_notice');

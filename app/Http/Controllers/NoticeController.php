@@ -22,11 +22,16 @@ class NoticeController extends Controller
      */
     public function index(Request $request)
     {
-     
-        $data = Notice::where('lang_code','en')->paginate(50);
+     if(isset($request->search)){
+       print_r("yes"); die();
+     }
+     else{
+      $data = Notice::where('lang_code',$request->lang)->paginate(25);
         $search = '';
-        $lang = 'en';
+        $lang = $request->lang;
         $languages = Language::get();
+     }
+        
        return view('notice/list', compact('data','search','languages','lang'));
     }
 
@@ -163,6 +168,8 @@ class NoticeController extends Controller
          $notice->notice_group = $group_id;
          $notice->notice_type = 'ujjivan';
          $notice->document_id = $request->document_id;
+         $notice->published_date = $request->publish_date;
+         $notice->version = $request->version;
 
 
          $notice->save();
@@ -212,7 +219,7 @@ class NoticeController extends Controller
          $content->save();
          $noticeContentID = $content->id;
 
-         print_r($noticeContentID);
+        // print_r($noticeContentID);
         $template = Template::select('details')->where('id',$request->template_id)->first();
 
        
@@ -230,11 +237,13 @@ class NoticeController extends Controller
         }
 
         $local_filename = $value['langauge'].'_notice'.$c_time;
+        $version = $request->version;
+        $published = $request->publish_date;
 
          $noticecontent = 
          File::put(public_path().'/noticefiles/'.$local_filename,
             view('htmltemplates.cktemp')
-                ->with(["content" => $content , "arr" => $arr ,'template' => $template])
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published])
                 ->render()
         );
 
@@ -247,7 +256,7 @@ class NoticeController extends Controller
       // die();
 
 
-       return redirect()->route('notices');
+       return redirect()->route('notices',$langaugedata->code);
     }
 
     /**
@@ -345,12 +354,14 @@ class NoticeController extends Controller
            'is_region_wise' => $region_prompt ,
            'regions' => $region_list ,
            'is_state_wise' => $state_prompt ,
-           'states'=> $state_list ,
-           'branch_code'=> $branchcodes ,
-           'template_id'=>$request->template_id,
-           'creator'=>Auth::user()->id ,
+           'states' => $state_list ,
+           'branch_code' => $branchcodes ,
+           'template_id' => $request->template_id,
+           'creator' =>Auth::user()->id ,
            'voiceover' => $request->voice_over,
-           'document_id' => $request->document_id
+           'document_id' => $request->document_id,
+           'published_date' => $request->publish_date ,
+           'version' => $request->version
        ]);
 
        $noticeID = $request->id;
@@ -440,19 +451,23 @@ class NoticeController extends Controller
         
        // print_r($local_filename);die();
          
+        $version = $request->version;
+        $published = $request->publish_date;
+
          $noticecontent = 
          File::put(public_path().'/noticefiles/'.$local_filename,
             view('htmltemplates.cktemp')
-                ->with(["content" => $content , "arr" => $arr ,'template' => $template])
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published])
                 ->render()
         );
 
         }
+
         } 
 
         //die();
 
-       return redirect()->route('notices');
+       return redirect()->route('notices',$request->lang);
 
        
     }
@@ -466,6 +481,10 @@ class NoticeController extends Controller
     public function destroy($id)
     {
         $notice = Notice::where('id', $id)->first();
+        $lang = $notice->lang_code;
+        $groupID = $notice->notice_group;
+
+      //  print_r($lang); die();
         $filepath = public_path().'/noticefiles/'.$notice->filename;
 
         if (File::exists($filepath)) {
@@ -476,7 +495,19 @@ class NoticeController extends Controller
 
         if($delete){
           $delete_content = NoticeContent::where('notice_id',$id)->delete();
-            return redirect()->route('notices');
+          $group_notices=Notice::where('notice_group',$groupID)->get();
+
+          foreach ($group_notices as $key => $value) {
+             $languages = $value->available_languages;
+
+             $langArray = explode(',', $languages);
+             $updatedArray = array_diff($langArray, [$lang]);
+
+             $new_languages = implode(',', $updatedArray);
+
+             $update = Notice::where('notice_group',$groupID)->update(['available_languages' => $new_languages ]);
+          }
+            return redirect()->route('notices',$lang);
         }
     }
 
@@ -503,8 +534,9 @@ class NoticeController extends Controller
        ->where(function($query)use($search){
          $query->where('name','LIKE','%'.$search.'%');
          $query->orWhere('description','LIKE','%'.$search.'%');
+         $query->orWhere('document_id','LIKE','%'.$search.'%');
        })
-       ->paginate(50);
+       ->paginate(25)->withQueryString();
        
         $lang = $request->lang;
         $languages = Language::get();
@@ -514,7 +546,7 @@ class NoticeController extends Controller
 
     public function filter(Request $request){
      // print_r($request->Input()); die();
-       $data = Notice::where('lang_code',$request->lang)->paginate(50);
+       $data = Notice::where('lang_code',$request->lang)->paginate(25);
         $search = '';
         $lang = $request->lang;
         $languages = Language::get();
@@ -594,6 +626,8 @@ class NoticeController extends Controller
          $notice->notice_group = $group_id;
          $notice->notice_type = 'rbi';
          $notice->document_id = $request->document_id;
+         $notice->published_date = $request->publish_date;
+         $notice->version = $request->version;
 
          $notice->save();
 
@@ -601,7 +635,7 @@ class NoticeController extends Controller
 
        }
 
-        return redirect()->route('notices');
+        return redirect()->route('notices',$langaugedata->code);
     }
 
      public function edit_rbi_notice($id){
@@ -649,7 +683,11 @@ class NoticeController extends Controller
            'states'=> $state_list ,
            'branch_code'=> $branchcodes ,
            'creator'=>Auth::user()->id ,
-           'document_id' => $request->document_id
+           'document_id' => $request->document_id,
+           'published_date' => $request->publish_date ,
+           'version'=> $request->version
+
+         
        ]);
 
        $noticeID = $request->id;
@@ -675,7 +713,7 @@ class NoticeController extends Controller
 
       }
 
-      return redirect()->route('notices');
+      return redirect()->route('notices',$request->lang);
 
     }
 }

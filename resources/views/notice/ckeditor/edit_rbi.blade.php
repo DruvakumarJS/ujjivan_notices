@@ -167,6 +167,32 @@
        <div class="row" id="state_div">
             <div class="col-2">
                   <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Notice Version *</span>
+                  </div>
+            </div> 
+            <div class="col-6" id="state_dropdown">
+                <div class="input-group mb-3">
+                 <input class="form-control" type="text" name="version" value="{{$data->version}}" required>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row" id="state_div">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Publishing Date *</span>
+                  </div>
+            </div> 
+            <div class="col-6" id="state_dropdown">
+                <div class="input-group mb-3">
+                 <input class="form-control" type="text" name="publish_date" id="publish_date" value="{{$data->published_date}}" autocomplete="off"  required>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row" id="state_div">
+            <div class="col-2">
+                  <div class="text-sm-end" >
                     <span  id="basic-addon3">Repalce File </span>
                   </div>
             </div> 
@@ -290,7 +316,17 @@
  
 </script>
 
-
+<script type="text/javascript">
+   $( "#publish_date" ).datepicker({
+        //minDate:0,
+        dateFormat: 'yy-mm-dd',
+        onSelect: function(dateText, $el) {
+         // alert(dateText);
+          
+          
+        }
+      });
+</script>
 
 
 @endsection

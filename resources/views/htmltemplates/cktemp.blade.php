@@ -15,7 +15,9 @@
        <div class="row">
             <div style="width: 1000px">
               <div class="card text-black bg-white border border-white" >
-               <div class="card-header text-muted text-black"  style="background-color: white"><img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> </div>
+               <div class="card-header text-muted text-black"  style="background-color: white;border: none;">
+                 <img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> 
+               </div>
 
 
                 @foreach($arr as $keys=>$values)
@@ -108,10 +110,10 @@
                 @endforeach
 
                
-                <div class="card-footer text-muted text-black bg-white">
-                  <label style="color: black">Version 1</label>
+                <div class="card-footer text-muted text-black bg-white" style="border: none;">
+                  <label style="color: black">Version {{$version}}</label>
                   <div id="div3">
-                    <label  style="color: black">{{date('d M Y')}}</label>
+                    <label  style="color: black">Published on {{$published}}</label>
                   </div>
                 </div>
                 

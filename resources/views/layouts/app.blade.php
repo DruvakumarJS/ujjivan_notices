@@ -103,7 +103,7 @@
                               <a href="{{ route('templates')}}"><label>Templates</label> </a> 
                           </li>
                           <li class="list-group-item d-flex justify-content-between align-items-center">
-                              <a  href="{{ route('notices')}}" ><label>Notices</label></a>
+                              <a  href="{{ route('notices','en')}}" ><label>Notices</label></a>
                           </li>
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a href="{{ route('devices')}}">
