@@ -271,4 +271,35 @@ class DeviceController extends Controller
 
    }
 
+    public function get_notices_for_db(Request $request){
+      
+      $device_id = $request->mac_id ;
+      
+      $data = array();
+
+      if(Devices::where('mac_id',$request->mac_id)->exists()){
+
+
+        $data = Notice::get();
+
+         return response([
+          'status'=>'true',
+          'data' => $data
+          
+        ]);
+
+      }
+      else{
+
+        return response([
+          'status'=>'false',
+          'data' => $data
+          
+        ]);
+
+      }
+
+
+   }
+
 }

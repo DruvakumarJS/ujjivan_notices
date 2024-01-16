@@ -25,5 +25,6 @@ Route::post('/get-notices',[DeviceController::class,'get_notices']);
 Route::post('/get-languages',[DeviceController::class,'languages']);
 Route::post('/get-notice-name',[DeviceController::class,'get_notice_tittle']);
 Route::post('/get-all-notices',[DeviceController::class,'get_all_notices']);
+Route::post('/get-all-notices-for-db',[DeviceController::class,'get_notices_for_db']);
 
 	
