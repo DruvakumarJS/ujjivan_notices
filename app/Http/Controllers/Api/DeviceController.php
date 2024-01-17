@@ -280,7 +280,7 @@ class DeviceController extends Controller
       if(Devices::where('mac_id',$request->mac_id)->exists()){
 
 
-        $data = Notice::get();
+        $data = Notice::where('notice_type','ujjivan')->get();
 
          return response([
           'status'=>'true',
