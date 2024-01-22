@@ -105,6 +105,7 @@
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a  href="{{ route('notices','en')}}" ><label>Notices</label></a>
                           </li>
+                          @if(auth::user()->role == 'admin')
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a href="{{ route('devices')}}">
                                   <label>Devices</label>
@@ -114,6 +115,7 @@
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                             <a href="{{ route('settings')}}"> <label>Settings</label> </a>
                           </li>
+                          @endif
                       </ul>
                     @endif
                   </div>

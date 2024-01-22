@@ -140,7 +140,7 @@
        <div class="row" id="state_div">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">NB ID *</span>
+                    <span class="" id="basic-addon3">N ID *</span>
                   </div>
             </div> 
             <div class="col-6" id="state_dropdown">
@@ -271,6 +271,7 @@
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
                                   toolbar: {
+                                     viewportTopOffset : 70, 
                                      items: [
                                            'selectAll', '|',
                                           'heading', '|',
@@ -284,7 +285,7 @@
                                           
                                           'specialCharacters', 'horizontalLine', 'pageBreak', '|',
                                           'textPartLanguage', '|',
-                                          'uploadImage','insertTable'
+                                          'uploadImage','insertTable','|','sourceEditing'
                                       ],
                                       shouldNotGroupWhenFull: true
                                   },
@@ -400,6 +401,7 @@
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
                                   toolbar: {
+                                     viewportTopOffset : 70, 
                                      items: [
                                           'insertTable',
                                           '|',
@@ -521,6 +523,7 @@
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
                                   toolbar: {
+                                     viewportTopOffset : 70, 
                                      items: [
                                           'uploadImage',
                                           '|',
@@ -650,6 +653,7 @@
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
                                   toolbar: {
+                                     viewportTopOffset : 70, 
                                      items: [
                                            'selectAll', '|',
                                           'heading', '|',
@@ -777,6 +781,7 @@
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
                                   toolbar: {
+                                     viewportTopOffset : 70, 
                                      items: [
                                           'insertTable','|',
                                           'undo', 'redo','|',
@@ -896,6 +901,7 @@
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
                                   toolbar: {
+                                     viewportTopOffset : 70, 
                                      items: [
                                           'uploadImage','|',
                                           'undo', 'redo','|',
@@ -1030,6 +1036,7 @@
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
                                   toolbar: {
+                                     viewportTopOffset : 70, 
                                      items: [
                                            'selectAll', '|',
                                           'heading', '|',
@@ -1157,6 +1164,7 @@
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
                                   toolbar: {
+                                     viewportTopOffset : 70, 
                                      items: [
                                           'insertTable','|',
                                           'undo', 'redo','|',
@@ -1276,6 +1284,7 @@
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
                                   toolbar: {
+                                     viewportTopOffset : 70, 
                                      items: [
                                           'uploadImage','|',
                                           'undo', 'redo','|',

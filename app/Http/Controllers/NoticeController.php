@@ -22,15 +22,13 @@ class NoticeController extends Controller
      */
     public function index(Request $request)
     {
-     if(isset($request->search)){
-       print_r("yes"); die();
-     }
-     else{
-      $data = Notice::where('lang_code',$request->lang)->paginate(25);
+    
+     // print_r($request->lang); die();
+      $data = Notice::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);
         $search = '';
         $lang = $request->lang;
         $languages = Language::get();
-     }
+     
         
        return view('notice/list', compact('data','search','languages','lang'));
     }
@@ -546,7 +544,7 @@ class NoticeController extends Controller
 
     public function filter(Request $request){
      // print_r($request->Input()); die();
-       $data = Notice::where('lang_code',$request->lang)->paginate(25);
+       $data = Notice::where('lang_code',$request->lang)->paginate(2);
         $search = '';
         $lang = $request->lang;
         $languages = Language::get();

@@ -173,7 +173,7 @@
         <div class="row" id="state_div">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">NB ID</span>
+                    <span class="" id="basic-addon3">N ID *</span>
                   </div>
             </div> 
             <div class="col-6" id="state_dropdown">

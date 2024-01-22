@@ -24,8 +24,8 @@
            </form>
         </div>
 
-        <div id="div2" style="margin-right: 30px">
-           <form method="GET" action="{{route('filter_notice',$lang)}}">
+        <!-- <div id="div2" style="margin-right: 30px">
+           <form method="GET" action="{{route('notices',$lang)}}">
             @csrf
              <div class="input-group mb-3">
                 <select class="form-control form-select" id="languages" name="lang" onchange="if(this.value != 0) { this.form.submit(); }">
@@ -36,11 +36,24 @@
                 
               </select>
 
-                <!-- <div class="input-group-prepend">
-                   <button class="btn btn-outline-secondary rounded-0" type="submit" id="btnSubmit" >Search</button>
-                </div> -->
+              
               </div>
            </form>
+        </div> -->
+
+        <div id="div2" style="margin-right: 30px">
+           
+             <div class="input-group mb-3">
+                <select class="form-control form-select" id="languages" name="lang" >
+                @foreach($languages as $key=>$value)
+                <option {{ ( $value->code == $lang )?'selected':'' }} value="{{$value->code}}">{{$value->name}}</option>
+
+                @endforeach
+                
+              </select>
+
+              </div>
+          
         </div>
 
 	<div id="div1">
@@ -111,6 +124,18 @@
 	</div>
 	
 </div>
+
+<script type="text/javascript">
+	$("[name='lang']").on("change", function (e) {
+		//alert( window.location.origin);
+     let edit_id = $(this).val();
+    
+     var href = window.location.origin + '/notices/' + edit_id ;
+    // alert(href);
+
+     window.location=href;
+})
+</script>
 
 
 
