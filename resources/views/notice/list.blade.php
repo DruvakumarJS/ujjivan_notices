@@ -67,12 +67,12 @@
 			<table class="table table-responsive table-stripped">
 				<thead>
 					<tr>
-						<th>NB ID</th>
+						<th>N ID</th>
 						<th>Name</th>
                         <th>Description</th>
 						<th>PAN India</th>
-			            <th>Region Specific</th>
-			            <th>State Specific</th>
+			            <th>Notice Type</th>
+
 			            <th>Published Date</th>
 			            <th>Version</th>
 			            <th></th>
@@ -87,25 +87,25 @@
 		          <tr>
 		          	<td>{{$value->document_id}}</td>
 		          	
-		             <td width="180px">{{$value->name}}</td>
-		             <td width="300px">{{$value->description}}</td>
+		             <td >{{$value->name}}</td>
+		             <td >{{$value->description}}</td>
 		             <td>{{$value->is_pan_india}}</td>
-		             <td>{{($value->is_region_wise == '1')?'Yes':'No'}}</td>
-		             <td>{{($value->is_state_wise == 'ya')?'Yes':'No'}}</td> 
+		             <td>{{$value->notice_type}}</td>
 		             <td>{{$value->published_date}}</td>
 		             <td>{{$value->version}}</td> 
 		             <!-- <td>{{$value->status}}</td> -->
 		             <td>
-		             	 <a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View Notice</button></a>
+		             	 <a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
 		             	
 		             </td>
 		             <td>
 		             	@if($value->notice_type == 'ujjivan')
-			             <a href="{{ route('edit_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+			             <a href="{{ route('edit_multi_notice_datails',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
 			             @else
-			             <a href="{{ route('edit_rbi_notice',$value->id)}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+			             <a href="{{ route('edit_multi_rbi_notice_datails',[$value->notice_group,$lang])}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
 			             @endif
 		             </td>
+		           
 		             <td>
 		             	 <a onclick="return confirm('You are deleting a Notice?')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
 		             </td>

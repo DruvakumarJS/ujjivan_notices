@@ -42,6 +42,11 @@ Route::post('save-notice',[NoticeController::class,'store'])->name('save_notice'
 Route::get('view-notice-datails/{id}',[NoticeController::class,'show'])->name('view_notice_datails');
 Route::get('edit-notice-datails/{id}',[NoticeController::class,'edit'])->name('edit_notice_datails');
 Route::put('update-notice-datails/{id}',[NoticeController::class,'update'])->name('update_notice_datails');
+
+Route::get('edit-notices-datail/{id}/{lang}',[NoticeController::class,'edit_multilingual'])->name('edit_multi_notice_datails');
+Route::put('update-multilang-notice-datails',[NoticeController::class,'update_multilang_notice'])->name('update_multilang_notice');
+
+
 //Route::post('update-notice',[NoticeController::class,'store'])->name('update_notice');
 
 Route::get('delete-notice-datails/{id}',[NoticeController::class,'destroy'])->name('delete_notice_datails');
@@ -50,11 +55,14 @@ Route::get('search-notice',[NoticeController::class,'search'])->name('search_not
 Route::get('templates',[NoticeController::class,'templates'])->name('templates');
 
 Route::post('ck_upload',[NoticeController::class,'ck_upload'])->name('ck_upload');
-Route::get('filter_notice/{lang}',[NoticeController::class,'filter'])->name('filter_notice');
+//Route::get('filter_notice/{lang}',[NoticeController::class,'filter'])->name('filter_notice');
 
 Route::post('save-rbi-notice',[NoticeController::class,'store_rbi_notice'])->name('save_rbi_notice');
 Route::get('edit-rbi-notice/{id}',[NoticeController::class,'edit_rbi_notice'])->name('edit_rbi_notice');
 Route::put('update-rbi_notice-datails/{id}',[NoticeController::class,'update_rbi_notice'])->name('update_rbi_notice_datails');
+
+Route::get('edit-rbi-notice-datails/{id}/{lang}',[NoticeController::class,'edit_multi_rbi_notice'])->name('edit_multi_rbi_notice_datails');
+Route::put('update-multi-rbi_notice-datails',[NoticeController::class,'update_multi_rbi_notice'])->name('update_multi_rbi_notice_datails');
 
 
 

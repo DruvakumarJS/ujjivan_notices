@@ -45,4 +45,8 @@ class NoticeContent extends Model
         'c63',
         'c64',
     ];
+
+    public function noticeContent(){
+        return $this->brlongsTo(Notice::class,'notice_group','notice_group');
+    } 
 }

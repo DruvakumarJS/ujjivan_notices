@@ -13,7 +13,7 @@
        @endphp
      
        <div class="row">
-            <div style="width: 800px">
+            <div style="width: 1000px">
               <div class="card text-black bg-white border border-white" >
                <div class="card-header text-muted text-black"  style="background-color: white;border: none;">
                  <img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> 

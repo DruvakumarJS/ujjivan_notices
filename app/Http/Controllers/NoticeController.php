@@ -65,7 +65,7 @@ class NoticeController extends Controller
       if($notice_type == 'ujjivan'){
       $langarray=$request->lang ;
       $selected_lang_code = implode(',', $langarray);
-      //print_r($langs); die();
+    //  print_r($langarray); die();
       $template_id = $request->template_id;
       $regions = Region::all();
       $branch = Branch::select('state')->groupBy('state')->get();
@@ -305,6 +305,209 @@ class NoticeController extends Controller
         return view('notice/ckeditor/edit',compact('data','id','template','arr' ,'content'));
     }
 
+    public function edit_multilingual($id,$lang){
+ 
+      $notice = Notice::where('notice_group' , $id)->first();
+      $langarray=$notice->available_languages ;
+      $selected_lang_code = explode(',', $langarray);
+    //  print_r($langarray); die();
+      $template_id = $notice->template_id;
+      $regions = Region::all();
+      $branch = Branch::select('state')->groupBy('state')->get();
+
+      $data = Notice::where('notice_group',$id)->first();
+      $template = Template::select('details')->where('id',$data->template_id)->first();
+
+      $languages = Language::get();
+      $selected_languages = Language::whereIn('code',$selected_lang_code)->get();
+
+      $data2 = $template->details ;
+      $arr = json_decode($data2);
+      //$content = NoticeContent::where('template_id',$data->template_id)->where('notice_group',$id)->get();
+     // $content = Notice::with('noticeContent')->where('notice_group',$id)->get();
+      $noticeDetails = array();
+      $multinotice = Notice::where('notice_group' , $id)->get();
+      foreach ($multinotice as $key => $value) {
+          $noticename = $value->name;
+          $noticedesc = $value->description;
+          $notice_content = NoticeContent::where('notice_group',$value->notice_group)->where('lang_code',$value->lang_code)->first();
+
+          $noticeDetails[]=['name' => $noticename , 'desc' =>$noticedesc ,'language' => $value->lang_name , 'notice_content' => $notice_content ];
+
+      }
+
+     // print_r(json_encode($noticeDetails)); die();
+
+   
+      return view('notice/ckeditor/edit_multilingual',compact('regions','branch','data','id','template','arr' ,'noticeDetails','languages','selected_languages','langarray','lang'));
+
+    }
+
+    public function update_multilang_notice(Request $request){
+     // print_r($request->Input() ) ; die();
+
+      $region_prompt = '0';
+       $state_prompt = 'na';
+
+       $region_list = '';
+       $state_list = '';
+       $branchcodes = '';
+      
+       if($request->is_pan_india == 'Yes'){
+           $region_list = '';
+           $state_list = '';
+       }
+       else if(isset($request->regions)){
+           $region_prompt = '1';
+           $region_list = implode(',' , $request->regions);
+
+
+       }
+       else{
+           $state_prompt = 'ya';
+
+           $state_list = implode(',' , $request->states);
+       }
+
+      /*$current = date('Y-m-d_H_i_s');
+      $filename = 'notice'.$request->template_id.'_'.$current.'.html';*/
+
+      $notice = Notice::where('notice_group',$request->notice_group)->first();
+     
+     $update = Notice::where('notice_group',$request->notice_group)->update([
+           'is_pan_india'=> $request->is_pan_india ,
+           'is_region_wise' => $region_prompt ,
+           'regions' => $region_list ,
+           'is_state_wise' => $state_prompt ,
+           'states' => $state_list ,
+           'branch_code' => $branchcodes ,
+           'template_id' => $request->template_id,
+           'creator' =>Auth::user()->id ,
+           'voiceover' => $request->voice_over,
+           'document_id' => $request->document_id,
+           'published_date' => $request->publish_date ,
+           'version' => $request->version
+       ]);
+
+       $noticeID = $request->id;
+
+      // die();
+       if($update){
+
+           
+        foreach ($request->notice as $key => $value) {
+
+         // print_r($value->langauge); die();
+  
+           $updateNotice = Notice::where('notice_group',$request->notice_group)->where('lang_code',$value['langauge'])->update([ 'name' => $value['tittle'] , 'description' => $value['description'] ]);
+
+            $filepath = public_path().'/noticefiles/'.$value['langauge'].'_'.$notice->filename;
+
+            
+
+              if (File::exists($filepath)) {
+                unlink($filepath);
+               // print_r("yes".$filepath);
+              }
+              else{
+              
+              }
+             // print_r($value->id);die();
+
+              $delete = NoticeContent::where('id',$value['id'])->delete();
+             // die();
+              if($delete){
+                $langaugedata = Language::where('code',$value['langauge'])->first();
+                
+               $content = new NoticeContent;
+               $content->notice_id = $value['notice_id'] ;
+               $content->template_id = $request->template_id;
+               $content->lang_code = $langaugedata->code;
+               $content->lang_name = $langaugedata->name;
+               $content->notice_group = $request->notice_group;
+
+
+               if(isset($value['row1_1']))$content->c11 = $value['row1_1'];
+               if(isset($value['row1_2']))$content->c12 = $value['row1_2'];
+               if(isset($value['row1_3']))$content->c13 = $value['row1_3'];
+               if(isset($value['row1_4']))$content->c14 = $value['row1_4'];
+
+               if(isset($value['row2_1']))$content->c21 = $value['row2_1'];
+               if(isset($value['row2_2']))$content->c22 = $value['row2_2'];
+               if(isset($value['row2_3']))$content->c23 = $value['row2_3'];
+               if(isset($value['row2_4']))$content->c24 = $value['row2_4'];
+              
+               if(isset($value['row3_1']))$content->c31 = $value['row3_1'];
+               if(isset($value['row3_2']))$content->c32 = $value['row3_2'];
+               if(isset($value['row3_3']))$content->c33 = $value['row3_3'];
+               if(isset($value['row3_4']))$content->c34 = $value['row3_4'];
+
+               if(isset($value['row4_1']))$content->c41 = $value['row4_1'];
+               if(isset($value['row4_2']))$content->c42 = $value['row4_2'];
+               if(isset($value['row4_3']))$content->c43 = $value['row4_3'];
+               if(isset($value['row4_4']))$content->c44 = $value['row4_4'];
+
+               if(isset($value['row5_1']))$content->c51 = $value['row5_1'];
+               if(isset($value['row5_2']))$content->c52 = $value['row5_2'];
+               if(isset($value['row5_3']))$content->c53 = $value['row5_3'];
+               if(isset($value['row5_4']))$content->c54 = $value['row5_4'];
+
+               if(isset($value['row6_1']))$content->c61 = $value['row6_1'];
+               if(isset($value['row6_2']))$content->c62 = $value['row6_2'];
+               if(isset($value['row6_3']))$content->c63 = $value['row6_3'];
+               if(isset($value['row6_4']))$content->c64 = $value['row6_4'];
+               
+               $content->save();
+               $noticeContentID = $content->id;
+
+               $template = Template::select('details')->where('id',$request->template_id)->first();
+
+                $content = NoticeContent::where('id',$noticeContentID)->first();
+
+                //print_r(json_encode($content)); die();
+                $data2 = $template->details ;
+         
+                $arr = json_decode($data2);
+
+                if (file_exists(public_path().'/noticefiles')) {
+                      
+                } else {
+                   
+                    File::makeDirectory(public_path().'/noticefiles', $mode = 0777, true, true);
+                }
+
+               // $lang = 'en';
+
+                $local_filename = $value['langauge'].'_'.$notice->filename;
+                
+               
+                $version = $request->version;
+                $published = $request->publish_date;
+
+                 $noticecontent = 
+                 File::put(public_path().'/noticefiles/'.$local_filename,
+                    view('htmltemplates.cktemp')
+                        ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published])
+                        ->render()
+                );
+
+                 // print_r($local_filename);die();
+                 
+
+             }
+
+
+
+
+        }
+
+       }
+
+       return redirect()->route('notices',$request->default_lang);
+// die();
+
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -533,6 +736,7 @@ class NoticeController extends Controller
          $query->where('name','LIKE','%'.$search.'%');
          $query->orWhere('description','LIKE','%'.$search.'%');
          $query->orWhere('document_id','LIKE','%'.$search.'%');
+         $query->orWhere('notice_type','LIKE','%'.$search.'%');
        })
        ->paginate(25)->withQueryString();
        
@@ -598,7 +802,7 @@ class NoticeController extends Controller
            
             move_uploaded_file($imageFiles['tmp_name'][$key]["rbi_file"], $destinationPath);
            
-            print_r($local_filename);
+            //print_r($local_filename);
       
 
         $langaugedata = Language::where('code',$value['langauge'])->first();
@@ -642,10 +846,11 @@ class NoticeController extends Controller
         return view('notice/ckeditor/edit_rbi',compact('data','id'));
     }
 
+  
     public function update_rbi_notice(Request $request){
      // print_r($request->Input()); die();
 
-      $region_prompt = '0';
+       $region_prompt = '0';
        $state_prompt = 'na';
 
        $region_list = '';
@@ -712,6 +917,105 @@ class NoticeController extends Controller
       }
 
       return redirect()->route('notices',$request->lang);
+
+    }
+
+     public function edit_multi_rbi_notice($id,$lang){
+     // print_r($lang); die();
+      $notice = Notice::where('notice_group' , $id)->first();
+      $langarray=$notice->available_languages ;
+      $selected_lang_code = explode(',', $langarray);
+    //  print_r($langarray); die();
+      $template_id = $notice->template_id;
+      $regions = Region::all();
+      $branch = Branch::select('state')->groupBy('state')->get();
+
+      $data = Notice::where('notice_group',$id)->first();
+     
+      $languages = Language::get();
+      $selected_languages = Language::whereIn('code',$selected_lang_code)->get();
+
+      $rbi_data = Notice::where('notice_group',$id)->get();
+
+     
+      return view('notice/ckeditor/edit_multilingual_rbi',compact('regions','branch','data','id' ,'languages','selected_languages','langarray', 'rbi_data' ,'lang'));
+
+    }
+
+    public function update_multi_rbi_notice(Request $request){
+     // print_r(json_encode($request->Input()) ); die();
+      $imageFiles = $_FILES['notice'];
+
+      foreach ($request->notice as $key => $value) {
+
+       $region_prompt = '0';
+       $state_prompt = 'na';
+
+       $region_list = '';
+       $state_list = '';
+       $branchcodes = '';
+      
+       if($request->is_pan_india == 'Yes'){
+           $region_list = '';
+           $state_list = '';
+       }
+       else if(isset($request->regions)){
+           $region_prompt = '1';
+           $region_list = implode(',' , $request->regions);
+
+
+       }
+       else{
+           $state_prompt = 'ya';
+
+           $state_list = implode(',' , $request->states);
+       }
+
+      $notice = Notice::where('id',$value['id'])->first();
+      $filepath = public_path().'/noticefiles/'.$value['langauge'].'_'.$notice->filename;
+
+       $update = Notice::where('id',$value['id'])->update([
+           'name' => $value['tittle'] ,
+           'description' => $value['description'] ,
+           'is_pan_india'=> $request->is_pan_india ,
+           'is_region_wise' => $region_prompt ,
+           'regions' => $region_list ,
+           'is_state_wise' => $state_prompt ,
+           'states'=> $state_list ,
+           'branch_code'=> $branchcodes ,
+           'creator'=>Auth::user()->id ,
+           'document_id' => $request->document_id,
+           'published_date' => $request->publish_date ,
+           'version'=> $request->version
+
+         
+       ]);
+
+       $noticeID = $value['id'];
+
+
+       if($noticeID != 0 AND $noticeID!=''){
+
+       
+        if($file = ($imageFiles['name'][$key]['rbi_file']) ){
+         
+           if (File::exists($filepath)) {
+               unlink($filepath);
+             }
+
+           $fileName = $imageFiles['name'][$key]['rbi_file'];
+            $temp = explode(".", $fileName);
+            $local_filename = $value['langauge'].'_'.$notice->filename;
+
+            $destinationPath = public_path().'/noticefiles/'.$local_filename ;
+           
+            move_uploaded_file($imageFiles['tmp_name'][$key]["rbi_file"], $destinationPath);
+        }
+      }
+        
+      }
+     
+      return redirect()->route('notices',$request->default_lang);
 
     }
 }

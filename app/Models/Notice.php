@@ -33,4 +33,8 @@ class Notice extends Model
             'notice_type',
             'version',
             'document_id'];
+
+      public function noticeContent(){
+        return $this->hasMany(NoticeContent::class,'notice_group','notice_group');
+    }      
 }
