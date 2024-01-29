@@ -107,7 +107,7 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-      //print_r(($request->Input()) );die();
+     // print_r(($request->Input()) );die();
       
      //  print_r(json_encode($request->input()) ); die();
        
@@ -237,11 +237,12 @@ class NoticeController extends Controller
         $local_filename = $value['langauge'].'_notice'.$c_time;
         $version = $request->version;
         $published = $request->publish_date;
+         $qrcode_data = url('/').'/noticefiles/'.$local_filename;
 
          $noticecontent = 
          File::put(public_path().'/noticefiles/'.$local_filename,
             view('htmltemplates.cktemp')
-                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published])
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data])
                 ->render()
         );
 
@@ -478,7 +479,8 @@ class NoticeController extends Controller
 
                // $lang = 'en';
 
-                $local_filename = $value['langauge'].'_'.$notice->filename;
+                $local_filename = $value['langauge'].'_'.$notice->filename; 
+                $qrcode_data = url('/').'/noticefiles/'.$local_filename;
                 
                
                 $version = $request->version;
@@ -487,7 +489,7 @@ class NoticeController extends Controller
                  $noticecontent = 
                  File::put(public_path().'/noticefiles/'.$local_filename,
                     view('htmltemplates.cktemp')
-                        ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published])
+                        ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data' => $qrcode_data])
                         ->render()
                 );
 
@@ -649,6 +651,7 @@ class NoticeController extends Controller
        // $lang = 'en';
 
         $local_filename = $request->lang.'_'.$notice->filename;
+        $qrcode_data = url('/').'/noticefiles/'.$local_filename;
         
        // print_r($local_filename);die();
          
@@ -658,7 +661,7 @@ class NoticeController extends Controller
          $noticecontent = 
          File::put(public_path().'/noticefiles/'.$local_filename,
             view('htmltemplates.cktemp')
-                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published])
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published , 'qrcode_data' => $qrcode_data])
                 ->render()
         );
 
@@ -738,6 +741,7 @@ class NoticeController extends Controller
          $query->orWhere('document_id','LIKE','%'.$search.'%');
          $query->orWhere('notice_type','LIKE','%'.$search.'%');
        })
+       ->orderBy('id', 'DESC')
        ->paginate(25)->withQueryString();
        
         $lang = $request->lang;

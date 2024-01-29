@@ -46,4 +46,56 @@
         </main>
     </div>
 </body>
+
+<script>
+ var elements = "";
+function createHashMap() {
+    elements = document.getElementById('test').children;
+    var hashMap = {};
+
+    for (var i = 0; i < elements.length; i++) {
+        var currentElement = elements[i];
+
+              console.log('elements2', currentElement.innerText.trim());
+
+
+        // Use content-based identifier for figure tags
+        var id;
+        if (currentElement.tagName.toLowerCase() === 'figure') {
+            // Generate an ID for figure elements
+            id = 'table_' + i;
+            var value = currentElement.innerText.trim();
+            // Add the dynamically generated id to the HashMap
+            hashMap[id] = value;
+        } else {
+            // Generate a default ID for other elements
+            id = 'element_' + i;
+            var value = currentElement.innerText.trim();
+            // Add the dynamically generated id to the HashMap
+            hashMap[id] = value;
+        }
+    }
+
+    Android.onReceiveHashMap(JSON.stringify(hashMap));
+}
+
+function highlightElement(index) {
+
+    console.log('elements', elements.innerText);
+
+    // Reset the style of all elements
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].style.backgroundColor = '';
+    }
+
+    // Highlight the specified element in yellow
+    var elementToHighlight = elements[index];
+    if (elementToHighlight) {
+        elementToHighlight.style.backgroundColor = 'yellow';
+                          elementToHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      }
+}
+</script>
+
 </html>

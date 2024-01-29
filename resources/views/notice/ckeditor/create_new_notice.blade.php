@@ -233,7 +233,7 @@
                    	 <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}"  name="row{{$keys+1}}_{{$key1+1}}" ></textarea>  
 
                    	 <script>
-					   CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}"), {
+					   var editor =  CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}"), {
 					        toolbar: {
 					           items: [
 					                 'selectAll', '|',
@@ -355,6 +355,18 @@
 					            'PasteFromOfficeEnhanced'
 					        ]
 					    });
+ function assignIDsToElements() {
+            var editableElements = editor.editable().$;
+            var allElements = editableElements.getElementsByTagName('*');
+
+            for (var i = 0; i < allElements.length; i++) {
+                var element = allElements[i];
+                element.setAttribute('id', 'ckeditor_' + i);
+            }
+        }
+
+        // Assign IDs after a delay to ensure CKEditor is fully loaded.
+        setTimeout(assignIDsToElements, 1000);
 					</script>
 					@elseif($views == 'table')
 					<div class="div-margin">

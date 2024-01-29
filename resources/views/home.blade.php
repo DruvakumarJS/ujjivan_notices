@@ -71,13 +71,20 @@ new Chart("myChart", {
  <script>
 
 Chart.defaults.global.defaultFontStyle = 'bold';
+var lineColors = [
+  "#52D3D8",
+  "#3887BE",
+  "#38419D",
+  "#200E3A",
+ 
+];
 
 new Chart("mydeviceChart", {
   type: "bar",
   data: {
     labels: @json($line_data['labels']),
     datasets: [{
-      backgroundColor: getRandomColor(),
+      backgroundColor: lineColors,
       borderWidth: 0, 
       data: @json($line_data['data'])
     }]

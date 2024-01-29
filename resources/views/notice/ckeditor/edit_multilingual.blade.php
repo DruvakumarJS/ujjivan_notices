@@ -202,7 +202,21 @@
                     <div class="row">
                         <div class="col-2">
                           <div class="text-sm-end" >
-                           <span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @if($lang['notice_content']['lang_code'] == 'as')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'bn')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'en')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'gu')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'hi')<span class="" id="basic-addon3">{{ __('सूचना टुकड़ी *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'kn')<span class="" id="basic-addon3">{{ __('ಸೂಚನೆ ಶೀರ್ಷಿಕೆ *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'kh')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'ml')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'mr')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'or')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'pa')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'ta')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'te')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'ur')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @endif
 
                           </div>
                         </div> 
@@ -216,7 +230,20 @@
                    <div class="row">
                         <div class="col-2">
                           <div class="text-sm-end" >
-                            <span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @if($lang['notice_content']['lang_code'] == 'as')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'bn')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'en')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'gu')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'hi')<span class="" id="basic-addon3">{{ __('सूचना विवरण *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'kn')<span class="" id="basic-addon3">{{ __('ಸೂಚನೆ ವಿವರಣೆ *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'kh')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'ml')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'mr')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'or')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'pa')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'ta')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'te')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
+                            @elseif($lang['notice_content']['lang_code'] == 'ur')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>@endif
                           </div>
                         </div> 
                         <div class="col-6">

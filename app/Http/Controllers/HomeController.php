@@ -9,6 +9,9 @@ use App\Models\Region;
 use App\Models\Branch;
 use App\Models\Bank;
 use DB;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\LabelAlignment;
 
 class HomeController extends Controller
 {
@@ -244,6 +247,10 @@ class HomeController extends Controller
     
         return response()->json($data);
 
+    }
+
+    public function showqrcode(){
+        return view('qrcode/index');
     }
 
    
