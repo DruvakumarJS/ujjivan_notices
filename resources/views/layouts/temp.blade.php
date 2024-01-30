@@ -48,16 +48,27 @@
 </body>
 
 <script>
- var elements = "";
+ var data = [];
 function createHashMap() {
-    elements = document.getElementById('test').children;
+   const parent = document.getElementById('test').children;
+
+   for (var i = 0; i < parent.length; i++) {
+   var childre = parent[i].id;
+   var child_data = document.getElementById(childre).children;
+
+   for(var j=0 ; j<child_data.length ; j++){
+    data.push(child_data[j]);
+   }
+   console.log('child are ', i+" : "+ data);
+
+    }
+
     var hashMap = {};
 
-    for (var i = 0; i < elements.length; i++) {
-        var currentElement = elements[i];
+    for (var i = 0; i < data.length; i++) {
+        var currentElement = data[i];
 
-              console.log('elements2', currentElement.innerText.trim());
-
+         console.log('elements2', currentElement.innerText.trim());
 
         // Use content-based identifier for figure tags
         var id;
@@ -81,18 +92,19 @@ function createHashMap() {
 
 function highlightElement(index) {
 
-    console.log('elements', elements.innerText);
+    console.log('elements', data.innerText);
 
     // Reset the style of all elements
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].style.backgroundColor = '';
+    for (var i = 0; i < data.length; i++) {
+        data[i].style.backgroundColor = '';
     }
 
     // Highlight the specified element in yellow
-    var elementToHighlight = elements[index];
+    var elementToHighlight = data[index];
     if (elementToHighlight) {
         elementToHighlight.style.backgroundColor = 'yellow';
-                          elementToHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        elementToHighlight.style.padding = "5px 5px 5px 5px";
+        elementToHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
       }
 }

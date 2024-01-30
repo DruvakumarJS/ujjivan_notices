@@ -413,10 +413,10 @@
                           @elseif($views == 'table')
                           <div class="div-margin">
                                    </div>
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
                                      <script>
-                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
+                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"), {
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -535,10 +535,10 @@
                           @elseif($views == 'img')
                           <div class="div-margin">
                                    </div>
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
                                      <script>
-                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
+                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"), {
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -665,10 +665,10 @@
                                  @foreach($data as $key2=>$views2)
                                   <div class="col-md-6">
                                      @if($views2 == 'textarea')
-                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
+                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
 
                                      <script>
-                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
+                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"), {
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -793,10 +793,10 @@
                               });
                           </script>
                           @elseif($views2 == 'table')
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
 
                                      <script>
-                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
+                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"), {
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -913,10 +913,10 @@
                               });
                           </script>
                           @elseif($views2 == 'img')
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
 
                                      <script>
-                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
+                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"), {
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -1048,10 +1048,10 @@
                                  @foreach($data as $key3=>$views3)
                                   <div class="col-md-4">
                                      @if($views3 == 'textarea')
-                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
+                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
                                      <script>
-                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
+                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"), {
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -1176,10 +1176,10 @@
                               });
                           </script>
                           @elseif($views3 == 'table')
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
                                      <script>
-                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
+                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"), {
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -1296,10 +1296,10 @@
                               });
                           </script>
                           @elseif($views3 == 'img')
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
                                      <script>
-                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
+                             CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"), {
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
