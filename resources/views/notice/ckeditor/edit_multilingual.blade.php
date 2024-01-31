@@ -1459,7 +1459,7 @@
 
       <input type="hidden" name="selected_languages" value="{{$selected_languages}}">
       <div id="div3" class="div-margin">
-         <button class="btn btn-success" type="submit">Submit</button> 
+         <button class="btn btn-success" type="submit">Update</button> 
       </div>
 
      </form>
