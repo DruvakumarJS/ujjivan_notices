@@ -10,6 +10,7 @@
              <div>
                <canvas id="myChart" ></canvas>
              </div>
+             <
                  
           </div>
       </div>

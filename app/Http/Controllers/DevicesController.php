@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Devices;
+use App\Models\DeviceData;
 use App\Models\Branch;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -180,5 +181,20 @@ class DevicesController extends Controller
 
         $data = $dvices->paginate(50);
         return view('device/list',compact('data','search'));
+    }
+
+    public function analytics($id){
+
+        $data = Devices::where('id', $id)->first();
+        $date = date('Y-m-d');
+
+        $api_data = DeviceData::where('last_updated_date',$date)->where('device_id', $id)->get();
+
+        return view('device/analytics', compact('data' , 'date' , 'api_data'));
+    }
+
+    public function get_device_health_data(Request $request){
+        print_r($request->search_date); die();
+
     }
 }

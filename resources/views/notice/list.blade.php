@@ -78,6 +78,7 @@
 			            <th></th>
 			            <th></th>
 			            <th></th>
+			            <th></th>
             
 					</tr>
 				</thead>
@@ -95,8 +96,7 @@
 		             <td>{{$value->version}}</td> 
 		             <!-- <td>{{$value->status}}</td> -->
 		             <td>
-		             	 <a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
-		             	
+		             	 <a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>	
 		             </td>
 		             <td>
 		             	@if($value->notice_type == 'ujjivan')
@@ -104,6 +104,14 @@
 			             @else
 			             <a href="{{ route('edit_multi_rbi_notice_datails',[$value->notice_group,$lang])}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
 			             @endif
+		             </td>
+		             <td>
+		             	@if($value->status == 'Draft')
+		             	<a href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-dark">Publish</button></a>
+		             	@else
+		             	<a  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-info text-white" >Un-Publish</button></a>
+		             	@endif
+
 		             </td>
 		           
 		             <td>

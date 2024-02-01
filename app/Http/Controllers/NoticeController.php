@@ -1022,4 +1022,23 @@ class NoticeController extends Controller
       return redirect()->route('notices',$request->default_lang);
 
     }
+
+    public function modify_status($id){
+      //print_r($id); die();
+
+      $noticedata = Notice::where('id',$id)->first();
+      $status = $noticedata->status ;
+
+      if($status == 'Published'){
+        $update = Notice::where('id',$id)->update(['status' => 'Draft']);
+      }
+      else {
+        $update = Notice::where('id',$id)->update(['status' => 'Published']);
+      }
+
+      if($update){
+        return redirect()->back();
+      }
+
+    }
 }

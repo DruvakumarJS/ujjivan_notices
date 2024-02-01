@@ -32,8 +32,13 @@ Route::put('update_device_datails/{id}',[DevicesController::class,'update'])->na
 Route::get('delete_device_datails/{id}',[DevicesController::class,'destroy'])->name('delete_device_datails');
 Route::post('search_device',[DevicesController::class,'search'])->name('search_device');
 
-Route::get('notices/{lang}',[NoticeController::class,'index'])->name('notices');
 
+Route::get('analytics/{id}',[DevicesController::class,'analytics'])->name('analytics');
+Route::post('get_device_health_data',[DevicesController::class,'get_device_health_data'])->name('get_device_health_data');
+
+
+
+Route::get('notices/{lang}',[NoticeController::class,'index'])->name('notices');
 Route::get('select_template',[NoticeController::class,'selct_template'])->name('choose_template');
 Route::get('set_template',[NoticeController::class,'set_template'])->name('set_template');
 
@@ -64,6 +69,7 @@ Route::put('update-rbi_notice-datails/{id}',[NoticeController::class,'update_rbi
 Route::get('edit-rbi-notice-datails/{id}/{lang}',[NoticeController::class,'edit_multi_rbi_notice'])->name('edit_multi_rbi_notice_datails');
 Route::put('update-multi-rbi_notice-datails',[NoticeController::class,'update_multi_rbi_notice'])->name('update_multi_rbi_notice_datails');
 
+Route::get('modify-status/{id}',[NoticeController::class,'modify_status'])->name('modify_notice_status');
 
 
 

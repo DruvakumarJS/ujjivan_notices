@@ -280,8 +280,11 @@ class DeviceController extends Controller
       if(Devices::where('mac_id',$request->mac_id)->exists()){
         $lastdate = $request->lastupdatedate;
 
-        $data = Notice::where('published_date','<=',date('Y-m-d'))
-         ->where(function($query)use($lastdate){
+        $data = Notice::where(function($query){
+           $query->where('published_date','<=',date('Y-m-d'));
+        })
+        
+         ->where(function($query)use($lastdate){  
            $query->where('created_at' ,'>',$lastdate);
            $query->orWhere('updated_at','>=',$lastdate);
         })
