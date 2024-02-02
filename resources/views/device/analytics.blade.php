@@ -139,7 +139,7 @@ $(function() {
     var today = <?php echo date('d');  ?>;
     var dd= today-1;
     var start = moment().subtract(dd, 'days');
-    var end = moment().subtract(dd, 'days');
+    var end = moment();
 
  /**/
 
