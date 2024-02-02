@@ -29,7 +29,7 @@
 	</div>
 
   <div class="container-body">
-    <div class="card">
+    <div class="card bg-primary text-white">
       <div class="row">
         <div class="col-md-6">
           <label class="label-bold">Branch Name : </label> <label>{{$data->branch->name}} , {{$data->branch->branch_code}},{{$data->branch->ifsc}}</label>
