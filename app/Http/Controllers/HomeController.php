@@ -51,7 +51,7 @@ class HomeController extends Controller
         foreach ($regions as $key => $value) {
             $regionName[] = $value->name;
 
-            $branc = Branch::where('region_id' , $value->id)->get();
+            /*$branc = Branch::where('region_id' , $value->id)->get();
 
             foreach ($branc as $key2 => $value2) {
 
@@ -59,7 +59,12 @@ class HomeController extends Controller
 
                 $devicecount[] =  $device->count();
                 
-            }
+            }*/
+
+            $device = Devices::where('region_id' , $value->id)->get();
+
+            $devicecount[] =  $device->count();
+
         }
 
         //print_r($regionName);
