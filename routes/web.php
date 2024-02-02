@@ -35,7 +35,7 @@ Route::post('search_device',[DevicesController::class,'search'])->name('search_d
 
 Route::get('analytics/{id}',[DevicesController::class,'analytics'])->name('analytics');
 Route::post('get_device_health_data',[DevicesController::class,'get_device_health_data'])->name('get_device_health_data');
-
+Route::post('fetch_analytics_data',[DevicesController::class,'fetch_analytics_data'])->name('fetch_analytics_data');
 
 
 Route::get('notices/{lang}',[NoticeController::class,'index'])->name('notices');

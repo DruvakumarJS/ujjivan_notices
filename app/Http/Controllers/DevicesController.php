@@ -185,16 +185,244 @@ class DevicesController extends Controller
 
     public function analytics($id){
 
-        $data = Devices::where('id', $id)->first();
+         $data = Devices::where('id', $id)->first();
         $date = date('Y-m-d');
 
         $api_data = DeviceData::where('last_updated_date',$date)->where('device_id', $id)->get();
 
         return view('device/analytics', compact('data' , 'date' , 'api_data'));
+       
+        /* $from = "2024-02-01";
+        $to = "2024-02-02";
+        $deviceID = "1";
+
+      
+        if($from != '' && $to != '')
+          {
+
+              $data = array();
+              $now = strtotime($from);
+              $last = strtotime($to);
+             // $data= array();
+              //$data = "123";
+             
+              while($now <= $last ) {
+
+                if(DeviceData::where('device_id', $deviceID)->where('last_updated_date',date('Y-m-d' , $now))->exists()){
+                    $firstdata = DeviceData::where('device_id', $deviceID)->where('last_updated_date',date('Y-m-d' , $now))->first();
+                    $lastdata = DeviceData::where('device_id', $deviceID)->where('last_updated_date',date('Y-m-d' , $now))->orderBy('id','DESC')->first();
+
+                    $details = DeviceData::where('device_id', $deviceID)->where('last_updated_date',date('Y-m-d' , $now))->get();
+
+
+                    foreach ($details as $key => $value) {
+                        if($key == 0){
+                            $d1 = date('Y-m-d' , $now).' '.$value->last_updated_time;
+                            $running_minutes = 0;
+                            $idle_minutes = 0;
+                        }
+                        else{
+                            $d2 = date('Y-m-d' , $now).' '.$value->last_updated_time;
+                            $diff = strtotime($d2) - strtotime($d1) ;
+                            $minutes = $diff/60;
+
+                            if($minutes <= 20 ){
+                               $running_minutes = intval($running_minutes)+intval($minutes);
+                            }
+                            else{
+                                $idle_minutes = intval($idle_minutes)+intval($minutes);
+                            }
+                             print_r(" from time: ".$d1." to time: ".$d2); 
+                             print_r(" time diff: ".$minutes); 
+                             print_r(" running: ".$running_minutes); 
+                             print_r(" --idle: ".$idle_minutes);
+                             print_r("<br>");
+                            
+                            $d1 = date('Y-m-d' , $now).' '.$value->last_updated_time;
+
+                        }
+                        
+                    }
+                             
+
+                   // die();
+
+                    
+                    $date = date('Y-m-d' , $now);
+                    $boot_on = $firstdata->last_updated_time;
+                    $boot_off  = $lastdata->last_updated_time;
+                    $total_running = $running_minutes;
+                    $total_idle = $idle_minutes;
+
+
+                }
+                else{
+                    $date = date('Y-m-d' , $now);
+                    $boot_on = '--';
+                    $boot_off  = '--';
+                    $total_running = '--';
+                    $total_idle = '--';
+
+                }
+
+                 $res = [
+                    'date' => $date,
+                    'boot_on_time' => $boot_on,
+                    'boot_off_time' => $boot_off,
+                    'total_running_hours' => $total_running,
+                    'total_idle_hours' => $total_idle,
+
+                    ];
+
+                array_push($data, $res);
+
+               
+ 
+                 
+               $now = strtotime('+1 day', $now);
+              }
+           
+           }
+         
+          echo json_encode($data);*/
+
+
+
+       
     }
 
     public function get_device_health_data(Request $request){
         print_r($request->search_date); die();
 
     }
+
+    public function fetch_analytics_data(Request $request){
+        $from = $request->from_date;
+        $to = $request->to_date;
+        $deviceID = $request->device_id;
+
+        if($request->ajax())
+        {
+         if($request->from_date != '' && $request->to_date != '')
+          {
+
+              $data = array();
+              $now = strtotime($request->from_date);
+              $last = strtotime($request->to_date);
+             // $data= array();
+              //$data = "123";
+             
+              while($now <= $last ) {
+
+                if(DeviceData::where('device_id', $deviceID)->where('last_updated_date',date('Y-m-d' , $now))->exists()){
+                    $firstdata = DeviceData::where('device_id', $deviceID)->where('last_updated_date',date('Y-m-d' , $now))->first();
+                    $lastdata = DeviceData::where('device_id', $deviceID)->where('last_updated_date',date('Y-m-d' , $now))->orderBy('id','DESC')->first();
+
+                    $details = DeviceData::where('device_id', $deviceID)->where('last_updated_date',date('Y-m-d' , $now))->get();
+
+
+                     foreach ($details as $key => $value) {
+                        if($key == 0){
+                            $d1 = date('Y-m-d' , $now).' '.$value->last_updated_time;
+                            $running_minutes = 0;
+                            $idle_minutes = 0;
+                        }
+                        else{
+                            $d2 = date('Y-m-d' , $now).' '.$value->last_updated_time;
+                            $diff = strtotime($d2) - strtotime($d1) ;
+                            $minutes = $diff/60;
+
+                            if($minutes <= 20 ){
+                               $running_minutes = intval($running_minutes)+intval($minutes);
+                            }
+                            else{
+                                $idle_minutes = intval($idle_minutes)+intval($minutes);
+                            }
+                             /*print_r(" from time: ".$d1." to time: ".$d2); 
+                             print_r(" time diff: ".$minutes); 
+                             print_r(" running: ".$running_minutes); 
+                             print_r(" --idle: ".$idle_minutes);
+                             print_r("<br>");*/
+                            
+                            $d1 = date('Y-m-d' , $now).' '.$value->last_updated_time;
+
+                        }
+                        
+                    }
+                             
+                    if($running_minutes != '0'){
+                    
+                        if($running_minutes%60 > '0'){
+                             $running_minutes = floor($running_minutes/60) ."Hr : " . $running_minutes%60 ."Min";
+                        }
+                        else {
+                            $running_minutes = $running_minutes/60 ."Hr";
+                        }
+                    }
+                    else {
+                        $running_minutes = '0 Min'; 
+                    }
+
+                     if($idle_minutes != '0'){
+                    
+                        if($idle_minutes%60 > '0'){
+                             $idle_minutes = floor($idle_minutes/60) ."Hr : " . $idle_minutes%60 ."Min";
+                        }
+                        else {
+                            $idle_minutes = $idle_minutes/60 ."Hr";
+                        }
+                    }
+                    else {
+                        $idle_minutes = '0 Min'; 
+                    }
+
+                    
+                    $date = date('Y-m-d' , $now);
+                    $boot_on = $firstdata->last_updated_time;
+                    $boot_off  = $lastdata->last_updated_time;
+                    $total_running = $running_minutes;
+                    $total_idle = $idle_minutes;
+                    $sync_data =  json_encode($details);
+
+
+                }
+                else{
+                    $date = date('Y-m-d' , $now);
+                    $boot_on = '--';
+                    $boot_off  = '--';
+                    $total_running = '--';
+                    $total_idle = '--';
+                    $sync_data =  [];
+
+                }
+
+                 $res = [
+                    'date' => $date,
+                    'boot_on_time' => $boot_on,
+                    'boot_off_time' => $boot_off,
+                    'total_running_hours' => $total_running,
+                    'total_idle_hours' => $total_idle,
+                    'sync_data' => $sync_data,
+
+                    ];
+
+                array_push($data, $res);
+
+               
+ 
+                 
+               $now = strtotime('+1 day', $now);
+              }
+           
+           }
+          }
+          else
+          {
+           $data = 'mnm';
+          }
+         // echo json_encode($data);
+          echo json_encode($data);
+         }
+
+    
 }
