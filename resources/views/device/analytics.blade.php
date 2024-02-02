@@ -63,8 +63,8 @@
                 <thead>
                 <tr>
                     <th scope="col">Date</th>
-                    <th scope="col">Device Boot On</th>
-                    <th scope="col">Decice Boot Off</th>
+                    <th scope="col">Device Boot On Time</th>
+                    <th scope="col">Device Boot Off Time</th>
                     <th scope="col">Total running hours</th>
                     <th scope="col">Total idle hours</th>
                     <th scope="col">View details</th>

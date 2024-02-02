@@ -84,7 +84,7 @@
             @endphp
             <td style="color: {{ $clor }} ">{{$status}}</td>
             <td>{{$value->last_updated_date}}</td>
-            <td>
+            <td width="250px">
               <a href="{{ route('view_device_datails',$value->id)}}"><button class="btn btn-sm btn-outline-primary">Details</button></a>
               <a href="{{ route('edit_device_datails',$value->id)}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
               <a onclick="return confirm('You are deleting a Device?')" href="{{ route('delete_device_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>

@@ -109,7 +109,7 @@
 		             	@if($value->status == 'Draft')
 		             	<a href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-dark">Publish</button></a>
 		             	@else
-		             	<a  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-info text-white" >Un-Publish</button></a>
+		             	<a  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-info text-white" >UnPublish</button></a>
 		             	@endif
 
 		             </td>
