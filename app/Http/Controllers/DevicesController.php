@@ -185,7 +185,7 @@ class DevicesController extends Controller
 
     public function analytics($id){
 
-         $data = Devices::where('id', $id)->first();
+        $data = Devices::where('id', $id)->first();
         $date = date('Y-m-d');
 
         $api_data = DeviceData::where('last_updated_date',$date)->where('device_id', $id)->get();
@@ -349,6 +349,9 @@ class DevicesController extends Controller
                         }
                         
                     }
+
+                    $minutes_running = $running_minutes;
+                    $minutes_idle = $idle_minutes;
                              
                     if($running_minutes != '0'){
                     
@@ -385,8 +388,12 @@ class DevicesController extends Controller
                     $sync_data =  json_encode($details);
 
 
+
                 }
                 else{
+                    $minutes_running = '0';
+                    $minutes_idle = '0';
+
                     $date = date('Y-m-d' , $now);
                     $boot_on = '--';
                     $boot_off  = '--';
@@ -403,6 +410,8 @@ class DevicesController extends Controller
                     'total_running_hours' => $total_running,
                     'total_idle_hours' => $total_idle,
                     'sync_data' => $sync_data,
+                    'minutes_running' => $minutes_running,
+                    'minutes_idle' => $minutes_idle
 
                     ];
 

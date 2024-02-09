@@ -17,7 +17,7 @@
 
       <div class="col-md-6 col-sm-6">
         <div class="card shadow-sm border border-primary" >
-             <label class="label-bold">Installed Devices</label>
+             <label class="label-bold">Devices Count</label>
                        
              <div>
                <canvas id="mydeviceChart" ></canvas>
@@ -25,9 +25,33 @@
                  
           </div>
       </div>
+   
+    </div>
 
-      
-         
+    <div class="row justify-content-between">
+      <div class="col-md-6 col-sm-6">
+        <div class="card shadow-sm border" >
+             <label class="label-bold">Overall Devices Running Duration</label>
+                       
+             <div>
+               <canvas id="runningChart" ></canvas>
+             </div>
+             
+                 
+          </div>
+      </div>
+
+      <div class="col-md-6 col-sm-6">
+        <div class="card shadow-sm border " >
+             <label class="label-bold">Overall Devices Idle Duration</label>
+                       
+             <div>
+               <canvas id="idleChart" ></canvas>
+             </div>
+                 
+          </div>
+      </div>
+   
     </div>
 </div>
 
@@ -62,6 +86,28 @@ new Chart("myChart", {
     title: {
       display: true
      
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+          var label = data.labels[tooltipItem.index];
+          var value = data.datasets[0].data[tooltipItem.index];
+          var rule = '';
+          if(label == 'Dead'){
+            rule = 'Devices that have not sent data over 48 hours'
+
+          }
+          if(label == 'Online'){
+            rule = 'Devices that are active and sending data to server every 15 minutes '
+
+          }
+          if(label == 'Offline'){
+            rule = 'Devices that are active but not sending data every 15 minutes '
+
+          }
+          return label + ': ' + value + ' units ( '+rule+')' ; // Customize this line as needed
+        }
+      }
     }
   }
 });
@@ -69,7 +115,7 @@ new Chart("myChart", {
 </script>
 
 <!-- PIE CHART -->
- <script>
+<script>
 
 Chart.defaults.global.defaultFontStyle = 'bold';
 var lineColors = [
@@ -119,7 +165,15 @@ new Chart("mydeviceChart", {
              
             }
         }]
-    }
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+          var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+          return 'In ' + tooltipItem.xLabel + ' Region totally '+tooltipItem.yLabel+' devices are installed' ; // Customize this line as needed
+        }
+      }
+    },
   }
 });
 
@@ -136,6 +190,91 @@ function getRandomColor() { //generates random colours and puts them in string
   }
   return colors;
 }
+
+Chart.defaults.global.defaultFontStyle = 'bold';
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const d = new Date();
+let name = month[d.getMonth()];
+
+new Chart("runningChart", {
+  type: "line",
+  data: {
+    labels: @json($monthdata['date']),
+    datasets: [{
+      fill:true,
+      lineTension: 0,
+      backgroundColor: "#008000",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: @json($monthdata['running'])
+    }]
+  },
+  options: {
+    legend: {display: false},
+     scales: {
+      yAxes: [
+            { gridLines: {
+                display:false
+            },
+            ticks: {min: 0}}],
+      xAxes: [
+            { gridLines: {
+                display:false
+            },
+            ticks: {min: 0}}],      
+
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+          var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+          return 'Running duration : ' + tooltipItem.yLabel + ' Hours on '+name + ' '+tooltipItem.xLabel; // Customize this line as needed
+        }
+      }
+    },
+  }
+  
+});
+
+
+// idle chart
+new Chart("idleChart", {
+  type: "line",
+  data: {
+    labels: @json($monthdata['date']),
+    datasets: [{
+      fill: true,
+      lineTension: 0,
+      backgroundColor: "#FF0000",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: @json($monthdata['idle'])
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      yAxes: [
+            { gridLines: {
+                display:false
+            },
+            ticks: {min: 0}}],
+      xAxes: [
+            { gridLines: {
+                display:false
+            },
+            ticks: {min: 0}}],      
+
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+          var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+          return 'Idle duration : ' + tooltipItem.yLabel + ' Hours on '+name + ' '+tooltipItem.xLabel; // Customize this line as needed
+        }
+      }
+    },
+
+  }
+});
 
 </script>
 @endsection

@@ -7,7 +7,7 @@ use App\Models\Devices;
 use App\Models\Notice;
 use App\Models\Region;
 use App\Models\Branch;
-use App\Models\Bank;
+use App\Models\DeviceData;
 use DB;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -51,32 +51,82 @@ class HomeController extends Controller
         foreach ($regions as $key => $value) {
             $regionName[] = $value->name;
 
-            /*$branc = Branch::where('region_id' , $value->id)->get();
-
-            foreach ($branc as $key2 => $value2) {
-
-                $device = Devices::where('branch_id' , $value2->id)->get();
-
-                $devicecount[] =  $device->count();
-                
-            }*/
-
             $device = Devices::where('region_id' , $value->id)->get();
 
             $devicecount[] =  $device->count();
 
         }
 
-        //print_r($regionName);
-        //print_r($devicecount); die();
-
-        $pie_data = ['labels' => ['Online' ,  'offiine' , 'Dead'],
+        $pie_data = ['labels' => ['Online' ,  'Offline' , 'Dead'],
             'data' => [ $online ,  $offiine , $dead],
         ];
 
         $line_data =['labels' => $regionName,'data' => $devicecount ];
+
+        //running and idle timings
         
-        return view('home',compact('pie_data' , 'line_data'));
+        $from = date('Y-m-01');
+        $to = date('Y-m-t');
+        $data = array();
+        $now = strtotime($from);
+        $last = strtotime($to);
+
+       
+        while($now <= $last ) {
+            $running_minutes = 0;
+            $idle_minutes = 0;
+
+            if(DeviceData::where('last_updated_date',date('Y-m-d' , $now))->exists()){
+
+                $devices = Devices::select('id')->get();
+
+                foreach ($devices as $key0 => $devices) {
+                     $details = DeviceData::where('device_id' ,$devices->id)->where('last_updated_date',date('Y-m-d' , $now))->get();
+             
+                     foreach ($details as $key => $value) {
+                        if($key == 0){
+                            $d1 = date('Y-m-d' , $now).' '.$value->last_updated_time;
+                            
+                        }
+                        else{
+                            $d2 = date('Y-m-d' , $now).' '.$value->last_updated_time;
+                            $diff = strtotime($d2) - strtotime($d1) ;
+                            $minutes = $diff/60;
+
+                            if($minutes <= 20 ){
+                               $running_minutes = intval($running_minutes)+intval($minutes);
+                            }
+                            else{
+                                $idle_minutes = intval($idle_minutes)+intval($minutes);
+                            }
+                            
+                            $d1 = date('Y-m-d' , $now).' '.$value->last_updated_time;
+
+                        }
+                        
+                    }
+                }
+                
+            
+             }
+
+             $analytic_date[] = date('d' , $now);
+             $analytic_running[] = floor($running_minutes/60).".".floor($running_minutes%60);
+             $analytic_idle[] = floor($idle_minutes/60).".".floor($idle_minutes%60);
+             
+             $now = strtotime('+1 day', $now);
+            }
+
+            /*print_r(json_encode($analytic_date));print_r("---");
+            print_r(json_encode($analytic_running));print_r("---");
+            print_r(json_encode($analytic_idle));print_r("---");*/
+
+            $monthdata = ['date' => $analytic_date , 'running' => $analytic_running , 'idle' => $analytic_idle];
+
+           // print_r(($monthdata)) ; die();  
+
+        
+           return view('home',compact('pie_data' , 'line_data' , 'monthdata'));
     }
 
     public function settings(){

@@ -31,11 +31,14 @@
   <div class="container-body">
     <div class="card bg-primary text-white">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label class="label-bold">Branch Name : </label> <label>{{$data->branch->name}} , {{$data->branch->branch_code}},{{$data->branch->ifsc}}</label>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label class="label-bold">Device ID : </label> <label>{{$data->mac_id}} </label>
+        </div>
+        <div class="col-md-4">
+          <label class="label-bold" id="running">Total Running time : </label> 
         </div>
        
         
@@ -43,12 +46,15 @@
 
       <div class="row">
         
-         <div class="col-md-6">
+         <div class="col-md-4">
           <label  class="label-bold">Area : </label> <label>{{$data->branch->area}}, {{$data->branch->city}},
           {{$data->branch->state}}, {{$data->branch->pincode}}</label>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label  class="label-bold">last updated date: </label> <label>{{$data->last_updated_date}}</label>
+        </div>
+        <div class="col-md-4">
+          <label  class="label-bold" id="idle">Total Idle Time : </label> 
         </div>
          
         
@@ -168,12 +174,16 @@ $(function() {
             console.log(data);
 
             var output = '';
+            var minutes_running = 0;
+            var minutes_idle = 0;
 
            
             for(var count = 0; count < data.length; count++){
              // alert( data.length);
               var api_data = data[count].sync_data;
-               //var dates = data[count].date ;
+              minutes_running = parseInt(minutes_running) + parseInt(data[count].minutes_running);
+              minutes_idle = parseInt(minutes_idle) + parseInt(data[count].minutes_idle);
+              
                output += '<tr>';
                output += '<td>' + data[count].date + '</td>';
                output += '<td>' + data[count].boot_on_time + '</td>';
@@ -184,6 +194,11 @@ $(function() {
                output += '<td>' + '<button type="button" value='+ api_data +' id="editdate'+count+'" data-date="'+api_data+'" class="btn btn-sm btn-light btn-outline-secondary" onclick="displayArrayInModal('+ count +')" >View Details</button>'+'</td></tr>';
               
             }
+           // alert(minutes_running);
+
+           
+           document.getElementById('running').innerHTML ='Total Running Time : '+ Math.floor(minutes_running / 60) + 'Hr : ' + minutes_running % 60 + 'Min';
+           document.getElementById('idle').innerHTML ='Total Idle Time : '+ Math.floor(minutes_idle / 60) + 'Hr : ' + minutes_idle % 60 +'Min ' ;
 
             $('tbody').html(output);
            
