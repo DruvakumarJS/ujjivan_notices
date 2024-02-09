@@ -7,6 +7,7 @@ use App\Models\Devices;
 use App\Models\Notice;
 use App\Models\Region;
 use App\Models\Branch;
+use App\Models\Bank;
 use App\Models\DeviceData;
 use DB;
 use Endroid\QrCode\QrCode;
