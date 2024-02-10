@@ -13,7 +13,8 @@
        @endphp
      
        <div class="row">
-            <div style="width: 1000px">
+        <div class="col-md-12">
+            <div style="width: 900px">
               <div class="card text-black bg-white border border-white" >
                <div class="card-header text-muted text-black"  style="background-color: white;border: none;">
                 
@@ -23,7 +24,7 @@
                  <img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> 
                </div>
 
-               <div id="test">
+               <div id="test" class="div-margin">
                  
               
                 @foreach($arr as $keys=>$values)
@@ -123,7 +124,7 @@
               </div>
             </div>
        </div>
-     
+     </div>
       
   
 </div>

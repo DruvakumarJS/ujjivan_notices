@@ -1536,12 +1536,12 @@
 
                             @endforeach
                                 <!-- Footer -->
-                          <div class="card-footer text-muted text-black bg-white">
+                         <!--  <div class="card-footer text-muted text-black bg-white">
                               <label style="color: black">Version 1</label>
                                <div id="div3">
                                  <label  style="color: black">{{date('d M Y')}}</label>
                                </div>
-                            </div>
+                            </div> -->
                             <!-- Footer -->
                         </div>
                         
