@@ -3,6 +3,7 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>
 <!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script> -->
 
+
 <style type="text/css">
 	
 .ck-editor__editable[role="textbox"] {
@@ -183,13 +184,14 @@
        <div class="row">
         <div style="width: 1000px" >
           <div class="card">
-            <h5 class="card-header">
+            <label class="card-header text-primary font-bolder" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" >{{$lang->name}}</label>
+            <!-- <h5 class="card-header">
                 <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
                     <i class="fa fa-chevron-down pull-right"></i>
                     {{$lang->name}}
                 </a>
-            </h5>
-            <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
+            </h5> -->
+            <div id="collapse-example" class="collapse show" aria-labelledby="heading-example" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-2">
@@ -207,14 +209,15 @@
                             @elseif($lang->code == 'pa')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
                             @elseif($lang->code == 'ta')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
                             @elseif($lang->code == 'te')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'ur')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
+                            @elseif($lang->code == 'ar')<span class="" id="basic-addon3">{{ __('نوٹس ٹائٹل
+ *') }}</span>
                             @endif
 
                           </div>
                         </div> 
                         <div class="col-6">
                             <div class="input-group mb-3">
-                             <input class="form-control" type="text" name="notice[{{$keyl}}][tittle]" required>
+                             <input class="form-control" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" type="text" name="notice[{{$keyl}}][tittle]" required>
                             </div>
                         </div>   
                    </div>
@@ -235,12 +238,13 @@
                             @elseif($lang->code == 'pa')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
                             @elseif($lang->code == 'ta')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
                             @elseif($lang->code == 'te')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'ur')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>@endif
+                            @elseif($lang->code == 'ar')<span class="" id="basic-addon3">{{ __('نوٹس کی تفصیل
+ *') }}</span>@endif
                           </div>
                         </div> 
                         <div class="col-6">
                             <div class="input-group mb-3">
-                             <input class="form-control" type="text" name="notice[{{$keyl}}][description]" required>
+                             <input class="form-control" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" type="text" name="notice[{{$keyl}}][description]" required >
                             </div>
                         </div>   
                    </div>
@@ -268,8 +272,23 @@
                                    </div>
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
+                                     @php
+                                     $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                                     @endphp
+
+                                     <script src="{{$script_src}}"></script>
+
                                      <script>
+
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
+                                  language: {
+                                    // The UI will be English.
+                                    ui: '{{$lang->code}}',
+
+                                    // But the content will be edited in Arabic.
+                                    content: '{{$lang->code}}'
+                                   },
+                                  
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -396,10 +415,24 @@
                           @elseif($views == 'table')
                           <div class="div-margin">
                                    </div>
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea> 
+
+                            @php
+                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                            @endphp
+
+                            <script src="{{$script_src}}"></script> 
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
+                                  language: {
+                                    // The UI will be English.
+                                    ui: '{{$lang->code}}',
+
+                                    // But the content will be edited in Arabic.
+                                    content: '{{$lang->code}}'
+                                   },
+                                  
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -520,8 +553,21 @@
                                    </div>
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
+                            @php
+                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                            @endphp
+
+                            <script src="{{$script_src}}"></script> 
+
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
+                                  language: {
+                                    // The UI will be English.
+                                    ui: '{{$lang->code}}',
+
+                                    // But the content will be edited in Arabic.
+                                    content: '{{$lang->code}}'
+                                   },
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -648,10 +694,24 @@
                                  @foreach($data as $key2=>$views2)
                                   <div class="col-md-6">
                                      @if($views2 == 'textarea')
-                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
+                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea> 
+
+                                     @php
+                                     $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                                    @endphp
+
+                                    <script src="{{$script_src}}"></script>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
+                                  language: {
+                                    // The UI will be English.
+                                    ui: '{{$lang->code}}',
+
+                                    // But the content will be edited in Arabic.
+                                    content: '{{$lang->code}}'
+                                   },
+
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -776,10 +836,23 @@
                               });
                           </script>
                           @elseif($views2 == 'table')
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>
+
+                            @php
+                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                            @endphp
+
+                            <script src="{{$script_src}}"></script>   
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
+                                  language: {
+                                    // The UI will be English.
+                                    ui: '{{$lang->code}}',
+
+                                    // But the content will be edited in Arabic.
+                                    content: '{{$lang->code}}'
+                                   },
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -898,8 +971,21 @@
                           @elseif($views2 == 'img')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
 
+                            @php
+                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                            @endphp
+
+                            <script src="{{$script_src}}"></script> 
+
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
+                                  language: {
+                                    // The UI will be English.
+                                    ui: '{{$lang->code}}',
+
+                                    // But the content will be edited in Arabic.
+                                    content: '{{$lang->code}}'
+                                   },
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -1031,10 +1117,24 @@
                                  @foreach($data as $key3=>$views3)
                                   <div class="col-md-4">
                                      @if($views3 == 'textarea')
-                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
+                                     <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea> 
+
+                                     @php
+                                     $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                                    @endphp
+
+                            <script src="{{$script_src}}"></script>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
+                                  language: {
+                                    // The UI will be English.
+                                    ui: '{{$lang->code}}',
+
+                                    // But the content will be edited in Arabic.
+                                    content: '{{$lang->code}}'
+                                   },
+
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -1159,10 +1259,22 @@
                               });
                           </script>
                           @elseif($views3 == 'table')
-                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
+                            <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea> 
+                            @php
+                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                            @endphp
+
+                            <script src="{{$script_src}}"></script>  
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
+                                  language: {
+                                    // The UI will be English.
+                                    ui: '{{$lang->code}}',
+
+                                    // But the content will be edited in Arabic.
+                                    content: '{{$lang->code}}'
+                                   },
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [
@@ -1281,8 +1393,21 @@
                           @elseif($views3 == 'img')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
+                            @php
+                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                            @endphp
+
+                            <script src="{{$script_src}}"></script> 
+
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
+                                  language: {
+                                    // The UI will be English.
+                                    ui: '{{$lang->code}}',
+
+                                    // But the content will be edited in Arabic.
+                                    content: '{{$lang->code}}'
+                                   },
                                   toolbar: {
                                      viewportTopOffset : 70, 
                                      items: [

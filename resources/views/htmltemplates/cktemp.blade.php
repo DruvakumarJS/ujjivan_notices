@@ -4,9 +4,6 @@
 
 <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>
 
-
-
-
 <div class="container-body">
   
         <!-- content -->
@@ -45,15 +42,15 @@
                        
                        @if($views == 'textarea')
 
-                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}">{!! $content->$cVal !!}</div>
+                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}" dir="{{ $lang_code == 'ar' ? 'rtl' : 'ltr' }}">{!! $content->$cVal !!}</div>
                      
                          @elseif($views == 'table')
                          <!-- <textarea>{!! $content->$cVal !!}</textarea> -->
-                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}">{!! $content->$cVal !!}</div>
+                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}" dir="{{ $lang_code == 'ar' ? 'rtl' : 'ltr' }}">{!! $content->$cVal !!}</div>
                        
                        @else
                          
-                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}">{!! $content->$cVal !!}</div>
+                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}" dir="{{ $lang_code == 'ar' ? 'rtl' : 'ltr' }}">{!! $content->$cVal !!}</div>
 
                        @endif
 
@@ -71,11 +68,11 @@
 
                       <div class="col-md-6">
                         @if($views2 == 'textarea')
-                       <div class="ck-content" id="test_{{$keys}}_{{$key2}}">{!! $content->$cVal !!}</div>
+                       <div class="ck-content" id="test_{{$keys}}_{{$key2}}" dir="{{ $lang_code == 'ar' ? 'rtl' : 'ltr' }}">{!! $content->$cVal !!}</div>
                         @elseif($views2 == 'table')
-                          <div class="ck-content" id="test_{{$keys}}_{{$key2}}">{!! $content->$cVal !!}</div>
+                          <div class="ck-content" id="test_{{$keys}}_{{$key2}}" dir="{{ $lang_code == 'ar' ? 'rtl' : 'ltr' }}">{!! $content->$cVal !!}</div>
                         @else
-                       <div class="ck-content" id="test_{{$keys}}_{{$key2}}">{!! $content->$cVal !!}</div>
+                       <div class="ck-content" id="test_{{$keys}}_{{$key2}}" dir="{{ $lang_code == 'ar' ? 'rtl' : 'ltr' }}">{!! $content->$cVal !!}</div>
                         @endif
                       </div>
                        @endforeach
@@ -97,12 +94,12 @@
                       <div class="col-md-4">
                         @if($views3 == 'textarea')
                         <!-- <textarea class="form-control" style="height: 200px" name="row{{$keys+1}}_{{$key3+1}}" readonly>{{$content->$cVal}}</textarea> -->
-                       <div class="ck-content" id="test_{{$keys}}_{{$key3}}">{!! $content->$cVal !!}</div>
+                       <div class="ck-content" id="test_{{$keys}}_{{$key3}}" dir="{{ $lang_code == 'ar' ? 'rtl' : 'ltr' }}">{!! $content->$cVal !!}</div>
                         
                         @elseif($views3 == 'table')
-                          <div class="ck-content" id="test_{{$keys}}_{{$key3}}">{!! $content->$cVal !!}</div>
+                          <div class="ck-content" id="test_{{$keys}}_{{$key3}}" dir="{{ $lang_code == 'ar' ? 'rtl' : 'ltr' }}">{!! $content->$cVal !!}</div>
                         @else
-                       <div class="ck-content" id="test_{{$keys}}_{{$key3}}">{!! $content->$cVal !!}</div>
+                       <div class="ck-content" id="test_{{$keys}}_{{$key3}}" dir="{{ $lang_code == 'ar' ? 'rtl' : 'ltr' }}">{!! $content->$cVal !!}</div>
                         @endif
                       </div>
                        @endforeach

@@ -276,8 +276,10 @@ class DeviceController extends Controller
       $device_id = $request->mac_id ;
       
       $data = array();
+      $old_data = array();
 
       if(Devices::where('mac_id',$request->mac_id)->exists()){
+       
         $lastdate = $request->lastupdatedate;
 
         $data = Notice::where(function($query){
@@ -290,9 +292,27 @@ class DeviceController extends Controller
         })
         ->get();
 
+        /*old notice*/
+        $old = Notice::where(function($query){
+           $query->where('published_date','<=',date('Y-m-d'));
+        })
+        
+         ->where(function($query)use($lastdate){  
+           $query->where('created_at' ,'<',$lastdate);
+           $query->orWhere('updated_at','<',$lastdate);
+        })
+        ->get();
+
+        foreach ($old as $key => $value) {
+            $old_data[]=$value->id;
+        }
+       
+        /*old notice*/
+
          return response([
           'status'=>'true',
-          'data' => $data
+          'data' => $data,
+          'old_notice_ids' => $old_data
           
         ]);
 
@@ -301,12 +321,83 @@ class DeviceController extends Controller
 
         return response([
           'status'=>'false',
-          'data' => $data
+          'data' => $data,
+          'old_notice_ids' => $old_data
           
         ]);
 
       }
 
+
+   }
+
+   public function insert_roomdb_data(Request $request){
+    $data = $request->data;
+
+    if(Devices::where('mac_id',$request->mac_id)->exists()){
+
+      $device_details = Devices::where('mac_id',$request->mac_id)->first(); 
+
+
+      if(sizeof($data) > 0){
+        foreach ($data as $key => $value) {
+        $insert = DeviceData::create([
+          'mac_id' => $request->mac_id ,
+          'device_id' => $device_details->id,
+          'apk_version' => $value['apk_version'] ,
+          'last_updated_date' => $value['last_updated_date'] ,
+          'last_updated_time' => $value['last_updated_time'] 
+        ]);
+
+        $l_data = $value['last_updated_date'];
+        $l_time = $value['last_updated_time'] ;
+        $version = $value['apk_version'] ;
+      }
+
+      $update = Devices::where('id',$device_details->id)->update(['last_updated_date' => $l_data." ".$l_time , 'apk_version' =>$version ]);
+
+      }
+     
+      $current_apk_version = '1.1';
+      $min_apk_version = '1.0';
+      $new_apk_available = 'true';
+      $mandatory_apk_update = 'false';
+
+      if($request->apk_version < $min_apk_version){
+        $apk_update_required = 'true';
+        $message = 'Please update the app to latest version';
+       
+      }
+      else if($request->apk_version < $current_apk_version &&  $request->apk_version >= $min_apk_version && $mandatory_apk_update == 'true'){
+        $apk_update_required = 'true';
+        $message = 'Please update the app to latest version';
+       
+      }
+      else if($request->apk_version < $current_apk_version &&  $request->apk_version >= $min_apk_version &&  $mandatory_apk_update == 'false'){
+        $apk_update_required = 'false';
+          $message = 'New version available';
+      }
+      else{
+        $apk_update_required = 'false';
+          $message = 'You are using updated app version.';
+      }
+
+      return response([
+        'status'=>'true',
+        'update_required' => $apk_update_required ,
+        'message'=> $message 
+      ]);
+     }
+     else{
+      
+      return response([
+        'status'=>'false',
+        'update_required' => 'false' ,
+        'message'=> 'Device not registered' 
+        
+      ]);
+
+     }
 
    }
 

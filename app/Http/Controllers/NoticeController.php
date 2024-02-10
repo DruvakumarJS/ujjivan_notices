@@ -242,7 +242,7 @@ class NoticeController extends Controller
          $noticecontent = 
          File::put(public_path().'/noticefiles/'.$local_filename,
             view('htmltemplates.cktemp')
-                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data])
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ])
                 ->render()
         );
 
@@ -333,7 +333,7 @@ class NoticeController extends Controller
           $noticedesc = $value->description;
           $notice_content = NoticeContent::where('notice_group',$value->notice_group)->where('lang_code',$value->lang_code)->first();
 
-          $noticeDetails[]=['name' => $noticename , 'desc' =>$noticedesc ,'language' => $value->lang_name , 'notice_content' => $notice_content ];
+          $noticeDetails[]=['name' => $noticename , 'desc' =>$noticedesc ,'language' => $value->lang_name , 'notice_content' => $notice_content , 'lang_code' => $value->lang_code];
 
       }
 
