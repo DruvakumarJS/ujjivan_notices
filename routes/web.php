@@ -42,6 +42,11 @@ Route::get('notices/{lang}',[NoticeController::class,'index'])->name('notices');
 Route::get('select_template',[NoticeController::class,'selct_template'])->name('choose_template');
 Route::get('set_template',[NoticeController::class,'set_template'])->name('set_template');
 
+Route::get('select_language/{id}',[NoticeController::class,'select_language'])->name('select_language');
+Route::post('add_notices',[NoticeController::class,'add_notices'])->name('add_notices');
+Route::post('add_rbi_notice',[NoticeController::class,'add_rbi_notice'])->name('add_rbi_notice');
+
+
 Route::get('create_notice',[NoticeController::class,'create'])->name('create_notice');
 Route::post('save-notice',[NoticeController::class,'store'])->name('save_notice');
 Route::get('view-notice-datails/{id}',[NoticeController::class,'show'])->name('view_notice_datails');

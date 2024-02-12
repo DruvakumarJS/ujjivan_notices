@@ -88,8 +88,8 @@
 		          <tr>
 		          	<td>{{$value->document_id}}</td>
 		          	
-		             <td >{{$value->name}}</td>
-		             <td >{{$value->description}}</td>
+		             <td>{{$value->name}}</td>
+		             <td>{{$value->description}}</td>
 		             <td>{{$value->is_pan_india}}</td>
 		             <td>{{$value->notice_type}}</td>
 		             <td>{{$value->published_date}}</td>
@@ -106,10 +106,13 @@
 			             @endif
 		             </td>
 		             <td>
+		             	 <a href="{{ route('select_language',$value->id)}}"  ><button class="btn btn-sm btn-outline-info">Add</button></a>	
+		             </td>
+		             <td>
 		             	@if($value->status == 'Draft')
 		             	<a href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-dark">Publish</button></a>
 		             	@else
-		             	<a  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-info text-white" >UnPublish</button></a>
+		             	<a  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-warning" >UnPublish</button></a>
 		             	@endif
 
 		             </td>
@@ -117,7 +120,8 @@
 		             <td>
 		             	 <a onclick="return confirm('You are deleting a Notice?')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
 		             </td>
-				  </tr>		
+				  </tr>	
+
 		          @endforeach
 				</tbody>
 			</table>
@@ -132,6 +136,8 @@
 	</div>
 	
 </div>
+
+
 
 <script type="text/javascript">
 	$("[name='lang']").on("change", function (e) {

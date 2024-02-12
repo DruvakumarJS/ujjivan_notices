@@ -13,7 +13,7 @@
                        <label class="label-bold curved-text"></label>
                    </div>
                    <label class="label-bold curved-text">{{$region}}</label>
-                   <a href="{{ route('regions')}}" class="btn btn-secondary" style="float: right">View More</a>
+                   <a href="{{ route('regions')}}" class="btn btn-warning" style="float: right">View More</a>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
                        <label class="label-bold curved-text"></label>
                    </div>
                    <label class="label-bold curved-text">{{$branch}}</label>
-                   <a href="{{ route('branches')}}" class="btn btn-secondary" style="float: right">View More</a>
+                   <a href="{{ route('branches')}}" class="btn btn-warning" style="float: right">View More</a>
                 </div>
             </div>
         </div>

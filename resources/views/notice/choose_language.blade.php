@@ -13,8 +13,9 @@ tr {
 }
 .dropdown-menu{
     transform: translate3d(0px, 35px, 0px)!important;
-    
+
 }
+
 </style>
 
 <div class="container-body">
@@ -28,11 +29,11 @@ tr {
      <form method="GET" action="{{route('create_notice')}}">
      	@csrf
 		<div class="row div-margin">
-       <p>Please select type of Notice you want to create</p>
+       <p>Type of Notice you want to create</p>
         <div class="div-margin">
-           <input type="radio" id="ujjivan" name="notice_type" value="ujjivan" onchange="handleChange(this);" checked >
+           <input type="radio" id="ujjivan" name="notice_type" value="ujjivan" onchange="handleChange(this);" <?php echo($notice_type == 'ujjivan')? 'checked' : 'disabled'  ?> >
            <label for="html">Ujjivan Notice</label>
-           <input type="radio" id="rbi" name="notice_type" value="rbi" style="margin-left: 30px;" onchange="handleChange(this);">
+           <input type="radio" id="rbi" name="notice_type" value="rbi" style="margin-left: 30px;" onchange="handleChange(this);" <?php echo($notice_type == 'rbi')? 'checked' : 'disabled'  ?> >
            <label for="html">RBI Notice</label><notice_type>
         </div>
 
@@ -43,7 +44,7 @@ tr {
 
 				<div class="col-md-2 col-lg-2 col-sm-2 ms-1" >
 					 <label>
-          <input class="div-margin radioInput" type="radio" name="template_id" value="{{$value->id}}" selected required class="card-input-element" style="margin-left: 30px" /><span style="margin-left: 10px">{{ $value->name}}</span>
+          <input class="div-margin radioInput" type="radio" name="template_id" value="{{$value->id}}" <?php echo($value->id == $template_id)?'checked':''  ?> disabled required  class="card-input-element" style="margin-left: 30px" /><span style="margin-left: 10px">{{ $value->name}}</span>
 
 				  <div class="card border border-primary" style="height: 400px">
 
@@ -134,7 +135,7 @@ tr {
           <div class="col-10">
              <div class="input-group mb-3">
 
-              <select class="form-control selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()">
+              <select class="form-control selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @foreach($languages as $key=>$value)
                 <option value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
 
@@ -145,6 +146,8 @@ tr {
               </div>
             </div>
         </div>
+        <input type="hidden" name="noticeid" value="{{$id}}">
+        <input type="hidden" name="template_id" value="{{$template_id}}">
 
        <div id="div3">
        	<button class="btn btn-primary">Proceed</button>
@@ -155,6 +158,21 @@ tr {
 </div>
 
 <script type="text/javascript">
+
+  var notice ='<?php echo $notice_type  ?>' ;
+  //alert(notice);
+  if(notice == 'ujjivan'){
+  
+    $('#templates').removeClass('d-none');
+    $(".radioInput").prop("required", true);
+    
+  }
+  else{
+     $('#templates').addClass('d-none');
+     $(".radioInput").removeAttr("required");
+    
+  }
+
    function handleChange(src) {
   var x = document.getElementById("templates");
   if(src.value == 'ujjivan'){
