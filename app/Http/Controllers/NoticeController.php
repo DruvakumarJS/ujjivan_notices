@@ -33,11 +33,11 @@ class NoticeController extends Controller
        return view('notice/list', compact('data','search','languages','lang'));
     }
 
-     public function templates($noticegroup){
+     public function templates(){
       $data = Template::get();
 
      // print_r(json_encode($data)); die();
-        return view('notice/template',compact('data','noticegroup'));
+        return view('notice/template',compact('data'));
     }
 
     /**
