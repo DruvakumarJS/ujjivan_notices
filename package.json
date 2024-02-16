@@ -21,7 +21,9 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-language": "^41.1.0",
         "@ckeditor/ckeditor5-source-editing": "^40.2.0",
+        "@ckeditor/ckeditor5-typing": "^41.1.0",
         "autosize": "^6.0.1",
         "ckeditor5-build-full-plugins": "^12.0.7"
     }

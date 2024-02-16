@@ -163,6 +163,7 @@
 
        <input type="hidden" name="selected_lang_code" value="{{$selected_lang_code}}">
        <input type="hidden" name="notice_type" value="{{$notice_type}}">
+       <input type="hidden" name="dropdown_lang" value="{{$dropdown_lang}}">
       
       @foreach($selected_languages as $keyl=>$lang)
       <hr/>

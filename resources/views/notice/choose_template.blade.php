@@ -146,6 +146,8 @@ tr {
             </div>
         </div>
 
+        <input type="hidden" name="dropdown_lang" value="{{$lang}}">
+
        <div id="div3">
        	<button class="btn btn-primary">Proceed</button>
        </div>

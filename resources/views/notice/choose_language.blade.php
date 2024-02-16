@@ -148,6 +148,7 @@ tr {
         </div>
         <input type="hidden" name="noticeid" value="{{$id}}">
         <input type="hidden" name="template_id" value="{{$template_id}}">
+        <input type="hidden" name="dropdown_lang" value="{{$lang}}">
 
        <div id="div3">
        	<button class="btn btn-primary">Proceed</button>

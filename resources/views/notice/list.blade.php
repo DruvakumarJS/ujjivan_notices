@@ -7,7 +7,7 @@
 	<div class="container-header">
 		
 		<div id="div2">
-			<a href="{{ route('choose_template')}}"><button class="btn btn-outline-primary">Create New Notice</button></a>
+			<a href="{{ route('choose_template',$lang)}}"><button class="btn btn-outline-primary">Create New Notice</button></a>
 		</div> 
 
         <div id="div2" style="margin-right: 30px">
@@ -106,7 +106,7 @@
 			             @endif
 		             </td>
 		             <td>
-		             	 <a href="{{ route('select_language',$value->id)}}"  ><button class="btn btn-sm btn-outline-info">Add</button></a>	
+		             	 <a href="{{ route('select_language',[$lang,$value->id])}}"  ><button class="btn btn-sm btn-outline-info">Add</button></a>	
 		             </td>
 		             <td>
 		             	@if($value->status == 'Draft')

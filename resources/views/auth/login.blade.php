@@ -7,6 +7,13 @@
             <div class="card shadow-sm" style="background-color: #056262">
                 <div class="card-header" style="color: white"><img src="/uconnect-logo.png"><label style="font-size: 18px;font-weight: bolder;">Ujjivan Notices</label></div>
 
+                @if(Session::has('message'))
+                    
+                    <script type="text/javascript">
+                        alert('{{ Session::get('message') }}');
+                    </script>
+                @endif  
+
                 <div class="card-body" >
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

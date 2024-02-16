@@ -46,17 +46,17 @@ class NoticeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function selct_template(){
+    public function selct_template($lang){
         $data = Template::get();
         $languages = Language::get();
-        return view('notice/choose_template',compact('data','languages'));
+        return view('notice/choose_template',compact('data','languages','lang'));
      }
 
      public function set_template(Request $request){
        print_r($request->input()); die();
      }
 
-      public function select_language($id){
+      public function select_language($lang,$id){
       //print_r($id); die();
       $notice = Notice::where('id', $id)->first();
       $lang_array = explode(',', $notice->available_languages);
@@ -68,7 +68,7 @@ class NoticeController extends Controller
       $languages = Language::whereNotIn('code',$lang_array)->get();
       //print_r(json_encode($languages) ); die();
 
-      return view('notice/choose_language',compact('data','languages','template_id','notice_type','id'));
+      return view('notice/choose_language',compact('data','languages','template_id','notice_type','id','lang'));
 
      }
 
@@ -97,8 +97,9 @@ class NoticeController extends Controller
 
         $arr = json_decode($data);
         $notice_id = $request->noticeid;
+        $dropdown_lang =$request->dropdown_lang; 
 
-        return view('notice/ckeditor/add_multilingual_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code','notice_type' , 'group_id', 'notice_id','notice'));
+        return view('notice/ckeditor/add_multilingual_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code','notice_type' , 'group_id', 'notice_id','notice','dropdown_lang'));
 
       } 
       else{
@@ -117,8 +118,9 @@ class NoticeController extends Controller
         $data = $template->details ;
 
         $arr = json_decode($data);
+        $dropdown_lang =$request->dropdown_lang; 
 
-        return view('notice/ckeditor/create_multilingual_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code','notice_type'));
+        return view('notice/ckeditor/create_multilingual_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code','notice_type','dropdown_lang'));
 
       } 
       
@@ -135,7 +137,9 @@ class NoticeController extends Controller
           $languages = Language::get();
           $selected_languages = Language::whereIn('code',$request->lang)->get();
 
-          return view('notice/ckeditor/add_multilingual_rbi_notice',compact('regions','branch','languages','selected_languages','selected_lang_code','notice_type' ,'notice'));
+          $dropdown_lang =$request->dropdown_lang; 
+
+          return view('notice/ckeditor/add_multilingual_rbi_notice',compact('regions','branch','languages','selected_languages','selected_lang_code','notice_type' ,'notice','dropdown_lang'));
         }
         else{
           $langarray=$request->lang ;
@@ -146,7 +150,9 @@ class NoticeController extends Controller
           $languages = Language::get();
           $selected_languages = Language::whereIn('code',$request->lang)->get();
 
-          return view('notice/ckeditor/create_multilingual_rbi_notice',compact('regions','branch','languages','selected_languages','selected_lang_code','notice_type'));
+          $dropdown_lang =$request->dropdown_lang; 
+
+          return view('notice/ckeditor/create_multilingual_rbi_notice',compact('regions','branch','languages','selected_languages','selected_lang_code','notice_type', 'dropdown_lang'));
 
         }
 
@@ -314,7 +320,7 @@ class NoticeController extends Controller
       // die();
 
 
-       return redirect()->route('notices',$langaugedata->code);
+       return redirect()->route('notices',$request->dropdown_lang);
     }
 
     public function add_notices(Request $request){
@@ -435,7 +441,7 @@ class NoticeController extends Controller
      }
      $update = Notice::where('notice_group',$noticedetails->notice_group)->update(['available_languages'=> $langs.','.$new_langs]);
 
-      return redirect()->route('notices',$langaugedata->code);
+      return redirect()->route('notices',$request->dropdown_lang);
     }
 
     /**
@@ -1021,7 +1027,7 @@ class NoticeController extends Controller
 
        }
 
-        return redirect()->route('notices',$langaugedata->code);
+        return redirect()->route('notices',$request->dropdown_lang);
     }
 
     public function add_rbi_notice(Request $request){
@@ -1076,7 +1082,8 @@ class NoticeController extends Controller
          $noticeID = $notice->id;
 
        }
-        return redirect()->route('notices',$langaugedata->code);
+       $update = Notice::where('notice_group',$noticedetails->notice_group)->update(['available_languages'=> $langs.','.$new_langs]);
+        return redirect()->route('notices',$request->dropdown_lang);
     }
 
      public function edit_rbi_notice($id){

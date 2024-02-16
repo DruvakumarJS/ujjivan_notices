@@ -178,6 +178,8 @@
 
        <input type="hidden" name="template_id" value="{{$template_id}}">
        <input type="hidden" name="selected_lang_code" value="{{$selected_lang_code}}">
+       <input type="hidden" name="dropdown_lang" value="{{$dropdown_lang}}">
+
       
       @foreach($selected_languages as $keyl=>$lang)
       <hr/>
@@ -283,6 +285,7 @@
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
                                   language: {
                                     // The UI will be English.
+                                   
                                     ui: '{{$lang->code}}',
 
                                     // But the content will be edited in Arabic.
