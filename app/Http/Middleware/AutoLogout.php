@@ -18,7 +18,7 @@ class AutoLogout
      */
 
     protected $session;
-    protected $timeout = 900;
+    protected $timeout = 3600;
 
     public function __construct(Store $session)
     {
