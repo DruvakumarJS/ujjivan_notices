@@ -1283,4 +1283,32 @@ class NoticeController extends Controller
       }
 
     }
+
+    public function AllNotices(Request $request){
+
+      $data = Notice::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);
+      $lang = $request->lang;
+      $languages = Language::get();
+      $search = '';
+       
+      return view('notice/allnotices', compact('data','languages','lang' ,'search'));
+    }
+
+    public function search_public_notice(Request $request){
+       $search = $request->search;
+       $data = Notice::where('lang_code',$request->lang)
+       ->where(function($query)use($search){
+         $query->where('name','LIKE','%'.$search.'%');
+         $query->orWhere('description','LIKE','%'.$search.'%');
+         $query->orWhere('document_id','LIKE','%'.$search.'%');
+         $query->orWhere('notice_type','LIKE','%'.$search.'%');
+       })
+       ->orderBy('id', 'DESC')
+       ->paginate(25)->withQueryString();
+       
+        $lang = $request->lang;
+        $languages = Language::get();
+
+       return view('notice/allnotices', compact('data','search','languages','lang'));
+    }
 }

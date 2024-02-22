@@ -20,6 +20,12 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('ujjivan_notices/{lang}',[NoticeController::class,'AllNotices'])->name('ujjivan_notices');
+Route::get('search_notice',[NoticeController::class,'search_public_notice'])->name('search_public_notice');
+
+
+Route::group(['middleware' => 'auth'], function () {
+    // Your protected routes go here
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -100,5 +106,9 @@ Route::get('delete-bank/{id}',[HomeController::class,'delete_bank'])->name('dele
 Route::get('get_bank_details',[HomeController::class,'get_bank_details'])->name('get_bank_details');
 
 Route::get('/qrcode', [HomeController::class, 'showqrcode'])->name('qrcode');
+
+});
+
+
 
 

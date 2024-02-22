@@ -13,6 +13,8 @@ use DB;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\LabelAlignment;
+use PDF;
+
 
 class HomeController extends Controller
 {
@@ -310,6 +312,47 @@ class HomeController extends Controller
     }
 
    
+    public function pdf(){
+
+     $html = '<h1 >Hello, world!</h1>';
+
+
+        // Specify the font file path
+        //$fontPath = storage_path('fonts/calibril.ttf');
+
+        // Configure the options for PDF generation
+      /*  $options = [
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => true,
+            'isPhpDebug' => true,
+            'isHtml5ParserEnabled' => true,
+            'isFontSubsettingEnabled' => true,
+            'font-family' =>$fontPath,
+            
+            'font' => 'calibril', // Font alias
+        ];
+*/
+        // Generate the PDF using Dompdf
+        //$pdf = PDF::loadHTML($html)->setOptions($options);
+
+        // Download the PDF file
+       // return $pdf->download('example.pdf');
+
+        /*$filename = 'indent.pdf';
+        $indent_details = ['content' => "Hello"];
+        $pdf = PDF::loadView('template');
+    
+        $savepdf = $pdf->save(public_path($filename));*/
+
+
+         $pdf = PDF::loadView('template');
+
+    /*$pdf->setOption('encoding', 'UTF-8');
+    $pdf->setOption('no-collate', true);
+    $pdf->setOption('header-font-name', 'Verdana');*/
+    return $pdf->stream('document.pdf');
+
+    }
 
 
 }
