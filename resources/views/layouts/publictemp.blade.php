@@ -38,6 +38,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 
+
+
 </head>
 <body>
     <div id="app">
@@ -62,4 +64,43 @@
         </main>
     </div>
 </body>
+
+<script>
+        const paragraphsContainer = document.getElementById('paragraphs');
+        const speechSynthesis = window.speechSynthesis;
+        let currentParagraphIndex = 0;
+        let utterance;
+
+        function speak() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
+
+            const allParagraphs = Array.from(paragraphsContainer.children);
+            const currentParagraph = allParagraphs[currentParagraphIndex];
+            const currentText = currentParagraph.textContent;
+
+            utterance = new SpeechSynthesisUtterance(currentText);
+            utterance.addEventListener('start', () => highlightParagraph(currentParagraph));
+            utterance.addEventListener('end', () => {
+                removeHighlight(currentParagraph);
+                currentParagraphIndex++;
+                if (currentParagraphIndex < allParagraphs.length) {
+                    speak();
+                } else {
+                    currentParagraphIndex = 0; // Reset index for future readings
+                }
+            });
+
+            speechSynthesis.speak(utterance);
+        }
+
+        function highlightParagraph(paragraph) {
+            paragraph.classList.add('highlight');
+        }
+
+        function removeHighlight(paragraph) {
+            paragraph.classList.remove('highlight');
+        }
+    </script>
 </html>
