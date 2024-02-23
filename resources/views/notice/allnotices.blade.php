@@ -66,7 +66,7 @@
 	
 	</div> 
 
-	<div class="page-container div-margin">
+	<div class="page-container ">
 
 	    <label class="label-bold">Notices</label>
 	   
