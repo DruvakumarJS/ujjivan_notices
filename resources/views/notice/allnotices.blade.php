@@ -73,7 +73,11 @@
 		<div class="row" >
 			@foreach($data as $key=>$value)
 				<div class="col-6">
-					<a href="{{ URL::to('/') }}/noticefiles/{{$value->lang_code}}_{{$value->filename}}" style="text-decoration:none" >
+					@if($value->notice_type == 'ujjivan')
+					 <a href="{{ URL::to('/') }}/noticefilesforweb/{{$value->lang_code}}_{{$value->filename}}" style="text-decoration:none" >
+                    @else
+                     <a href="{{ URL::to('/') }}/noticefiles/{{$value->lang_code}}_{{$value->filename}}" style="text-decoration:none" >
+                    @endif
 					<div class="card shadow-sm border border-grey " >
 						<div class="card-title-bg label-bold" style="background-color: primary;font-size: 12px">{{ $data->firstItem() + $key }}</div>
 						<h6 class="div-margin label-bold" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 12px" >{{$value->name}}</h6>
