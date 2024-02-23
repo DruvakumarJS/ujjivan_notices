@@ -1316,7 +1316,7 @@ class NoticeController extends Controller
 
     public function search_public_notice($lang,$id){
        $data = Notice::where('id',$id)->first();
-       $url =  url('/').'/noticefiles/'.$lang.'_'.$data->filename ; 
+       $url =  url('/').'/noticefilesforweb/'.$lang.'_'.$data->filename ; 
 
        return redirect()->to($url);
 
