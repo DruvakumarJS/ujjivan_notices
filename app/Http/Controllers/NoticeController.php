@@ -1304,7 +1304,9 @@ class NoticeController extends Controller
 
     public function AllNotices(Request $request){
 
-      $data = Notice::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);
+      $data = Notice::where('lang_code',$request->lang)
+              ->where('status','Published')
+              ->orderBy('id','DESC')->paginate(25);
       $lang = $request->lang;
       $languages = Language::get();
       $search = '';
@@ -1313,25 +1315,10 @@ class NoticeController extends Controller
     }
 
     public function search_public_notice($lang,$id){
-      
-      // print_r($search . $lang); die();
-       /*$data = Notice::where('lang_code',$lang)
-       ->where(function($query)use($search){
-         $query->where('name','LIKE','%'.$search.'%');
-       })
-       ->orderBy('id', 'DESC')
-       ->paginate(25)->withQueryString();
-       
-        $languages = Language::get();
-
-       return view('notice/allnotices', compact('data','search','languages','lang'));*/
-
        $data = Notice::where('id',$id)->first();
        $url =  url('/').'/noticefiles/'.$lang.'_'.$data->filename ; 
 
        return redirect()->to($url);
-
-      // print_r($url); die();
 
     }
 }
