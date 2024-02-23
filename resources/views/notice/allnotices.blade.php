@@ -4,8 +4,10 @@
  <style>
         /* Override Bootstrap card padding */
         .card {
-            padding: 10; /* Set padding to 0 or adjust as needed */
-            
+            padding-left: 10px; /* Set padding to 0 or adjust as needed */
+            padding-right: 10px;
+            padding-bottom: 10px;
+            padding-top: 0px;
             border-radius: 10px; 
         }
         .card-title-bg {
