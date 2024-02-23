@@ -9,6 +9,7 @@
             padding-bottom: 10px;
             padding-top: 0px;
             border-radius: 10px; 
+            margin-bottom: 10px;
         }
         .card-title-bg {
             background-color: #088672; /* Set your desired background color */
