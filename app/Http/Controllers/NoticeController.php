@@ -311,6 +311,12 @@ class NoticeController extends Controller
                 ->render()
         );
 
+         File::put(public_path().'/noticefilesforweb/'.$local_filename,
+            view('htmltemplates.cktempforweb')
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ])
+                ->render()
+        );
+
 
        }
 
@@ -435,6 +441,12 @@ class NoticeController extends Controller
                 ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ])
                 ->render()
         );
+
+        File::put(public_path().'/noticefilesforweb/'.$local_filename,
+            view('htmltemplates.cktempforweb')
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ])
+                ->render()
+        ); 
 
 
        }
@@ -678,6 +690,12 @@ class NoticeController extends Controller
                         ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data' => $qrcode_data , 'lang_code' => $langaugedata->code])
                         ->render()
                 );
+
+                 File::put(public_path().'/noticefilesforweb/'.$local_filename,
+                    view('htmltemplates.cktempforweb')
+                        ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ])
+                        ->render()
+                ); 
 
                  // print_r($local_filename);die();
                  
@@ -1294,21 +1312,26 @@ class NoticeController extends Controller
       return view('notice/allnotices', compact('data','languages','lang' ,'search'));
     }
 
-    public function search_public_notice(Request $request){
-       $search = $request->search;
-       $data = Notice::where('lang_code',$request->lang)
+    public function search_public_notice($lang,$id){
+      
+      // print_r($search . $lang); die();
+       /*$data = Notice::where('lang_code',$lang)
        ->where(function($query)use($search){
          $query->where('name','LIKE','%'.$search.'%');
-         $query->orWhere('description','LIKE','%'.$search.'%');
-         $query->orWhere('document_id','LIKE','%'.$search.'%');
-         $query->orWhere('notice_type','LIKE','%'.$search.'%');
        })
        ->orderBy('id', 'DESC')
        ->paginate(25)->withQueryString();
        
-        $lang = $request->lang;
         $languages = Language::get();
 
-       return view('notice/allnotices', compact('data','search','languages','lang'));
+       return view('notice/allnotices', compact('data','search','languages','lang'));*/
+
+       $data = Notice::where('id',$id)->first();
+       $url =  url('/').'/noticefiles/'.$lang.'_'.$data->filename ; 
+
+       return redirect()->to($url);
+
+      // print_r($url); die();
+
     }
 }

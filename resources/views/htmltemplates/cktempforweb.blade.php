@@ -1,11 +1,8 @@
-@extends('layouts.publictemp')
+@extends('layouts.temp')
 
 @section('content')
 
 <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>
-
-
-
 
 <div class="container-body">
   
@@ -22,11 +19,6 @@
                 
                  <img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> 
                </div>
-               
-               <button class="btn btn-sm btn-success" onclick="speak()">PLAY</button>
-
-              
-                 
               
                 @foreach($arr as $keys=>$values)
                    <!-- <label style="color: black">{{ $values->coloum }}</label> -->

@@ -46,7 +46,7 @@
         <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('ujjivan_notices','en') }}">
-                    <img src="/uconnect-logo.png" alt=""><label style="color:#056262;font-size: 18px;font-weight: bolder;">{{ config('app.name', 'Laravel') }}</label>
+                    <img src="/ujjivan.svg" alt="" style="height: 30px;">
                 </a>
                
             </div>

@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('ujjivan_notices/{lang}',[NoticeController::class,'AllNotices'])->name('ujjivan_notices');
-Route::get('search_notice',[NoticeController::class,'search_public_notice'])->name('search_public_notice');
+Route::get('search_notice/{lang}/{id}',[NoticeController::class,'search_public_notice'])->name('search_public_notice');
 
 
 Route::group(['middleware' => 'auth'], function () {

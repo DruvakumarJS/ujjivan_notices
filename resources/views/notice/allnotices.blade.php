@@ -4,9 +4,8 @@
  <style>
         /* Override Bootstrap card padding */
         .card {
-            padding: 0; /* Set padding to 0 or adjust as needed */
-            padding-left: 20px;
-            padding-bottom: 10px;
+            padding: 10; /* Set padding to 0 or adjust as needed */
+            
             border-radius: 10px; 
         }
         .card-title-bg {
@@ -24,37 +23,7 @@
   
 	<div class="container-header">
 
-		<!-- <div class="row">
-			  <div class="input-group mb-3">
-	                <select class="form-control form-select" id="languages" name="lang" >
-	                @foreach($languages as $key=>$value)
-	                <option {{ ( $value->code == $lang )?'selected':'' }} value="{{$value->code}}">{{$value->name}}</option>
-
-	                @endforeach
-	                
-	              </select>
-
-              </div>
-
-
-
-              <div >
-	           <form method="GET" action="{{route('search_public_notice')}}"  >
-	            @csrf
-	             <div class="input-group mb-3">
-	                <input class="form-control" type="text" name="search" placeholder="Search here" value="{{$search}}">
-
-	                 <input type="hidden" name="lang" value="{{$lang}}">
-	                <div class="input-group-prepend">
-	                   <button class="btn btn-outline-secondary rounded-0" type="submit" >Search</button>
-	                </div>
-	              </div>
-	           </form>
-        </div> 
-	
-			
-		</div> -->
-
+		
 		<div class="row">
 			<div class="col-6">
 				<div class="input-group mb-3">
@@ -71,18 +40,20 @@
 			</div>
 			
 			<div class="col-6">
-				<form method="GET" action="{{route('search_public_notice')}}"  >
-	            @csrf
-	             <div class="input-group mb-3">
-	                <input class="form-control" type="text" name="search" placeholder="Search here" value="{{$search}}">
-
-	                 <input type="hidden" name="lang" value="{{$lang}}">
-	                <div class="input-group-prepend">
-	                   <button class="btn btn-outline-secondary rounded-0" type="submit" >Search</button>
-	                </div>
-	              </div>
-	           </form>
 				
+	             <div class="input-group mb-3">
+	               
+	                <select class="form-control form-select" id="notice" name="notice">
+	                 <option value="">Select Notice</option>	
+	                 @foreach($data as $keys=>$values)
+	                <option value="{{$values->id}}">{{$values->name}}</option>
+
+	                @endforeach
+	                </select>
+
+	              
+	              </div>
+	          
 			</div>
 			
 		</div>
@@ -132,6 +103,23 @@
     // alert(href);
 
      window.location=href;
+})
+</script>
+
+<script type="text/javascript">
+	$("[name='notice']").on("change", function (e) {
+		//alert( window.location.origin);
+     let edit_id = $(this).val();
+     let lang = '{{ $lang }}';
+    // alert(lang);
+
+    if(edit_id != ""){
+
+      var href = window.location.origin + '/search_notice/' + lang + '/' +edit_id ;
+      $("#notice").val("");
+      window.location=href;
+    }    
+    
 })
 </script>
 
