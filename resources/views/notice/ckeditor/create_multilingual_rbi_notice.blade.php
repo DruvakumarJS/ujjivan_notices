@@ -282,18 +282,25 @@
 </div>
 
 <script type="text/javascript">
+  $(document).ready(function() {
+      $('#region_list').prop('disabled', true);
+      $('#state_list').prop('disabled', true);
+      $('#region_prompt').prop('disabled', true);
+      $('#state_prompt').prop('disabled', true);
+    });
+</script>
+
+<script type="text/javascript">
   var mode = document.getElementById("pan").value;
    var langArray = [];
- // $('#region_list').prop('disabled', true);
- // $('#state_list').prop('disabled', true);
-  $('#region_prompt').prop('disabled', true);
-  $('#state_prompt').prop('disabled', true);
+  //$('#region_list').prop('disabled', true);
 
    $('select').on('change', function() {
      
        if(this.value == "No"){
           
            $('#region_prompt').prop('disabled', false);
+
            document.getElementById("region_prompt").required = true;
        }
 
@@ -308,7 +315,9 @@
        }
 
       if(this.value == "1"){
+        
            $('#region_list').prop('disabled', false);
+           $('#region_list').selectpicker('refresh');
            document.getElementById("region_list").required = true;
 
            $('#state_prompt').prop('disabled', true);
@@ -317,6 +326,7 @@
 
        if(this.value == "0"){
            $('#region_list').prop('disabled', true);
+           $('#region_list').selectpicker('refresh');
            document.getElementById("region_list").required = false;
 
            $('#state_prompt').prop('disabled', false);
@@ -325,10 +335,16 @@
 
        if(this.value == "ya"){
            $('#state_list').prop('disabled', false);
+           $('#state_list').selectpicker('refresh');
            document.getElementById("state_list").required = true;          
        }
-      
 
+       if(this.value == "na"){
+           $('#state_list').prop('disabled', true);
+           $('#state_list').selectpicker('refresh');
+           document.getElementById("state_list").required = false;          
+       }
+      
 
 
   });
