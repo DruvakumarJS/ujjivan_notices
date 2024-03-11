@@ -47,7 +47,7 @@
              <div class="input-group mb-3">
                 <select class="form-control form-select" id="languages" name="lang" >
                 @foreach($languages as $key=>$value)
-                <option {{ ( $value->code == $lang )?'selected':'' }} value="{{$value->code}}">{{$value->name}}</option>
+                <option {{ ( $value->code == $lang )?'selected':'' }} value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
 
                 @endforeach
                 
@@ -70,7 +70,7 @@
 					<tr>
 						<th>N ID</th>
 						<th>Name</th>
-                        <th>Description</th>
+						<th>Available Languages</th>
 						<th>PAN India</th>
 			            <th>Notice Type</th>
 
@@ -88,9 +88,33 @@
 		          @foreach($data as $key=>$value)
 		          <tr>
 		          	<td>{{$value->document_id}}</td>
-		          	
 		             <td>{{$value->name}}</td>
-		             <td>{{$value->description}}</td>
+		             @php
+                       $languages = $value->available_languages;
+                       $langarray = array();
+                       $split = explode(',',$languages);
+                       foreach($split as $code){
+                          $language = $code ; 
+                          if($language == 'as')$langarray[]='Assamese';
+                          if($language == 'bn')$langarray[]='Bengali';
+                          if($language == 'en')$langarray[]='English';
+                          if($language == 'gu')$langarray[]='Gujarati';
+                          if($language == 'hi')$langarray[]='Hindi';
+                          if($language == 'kn')$langarray[]='Kannada';
+                          if($language == 'kh')$langarray[]='Khasi';
+                          if($language == 'ml')$langarray[]='Malayalam';
+                          if($language == 'mr')$langarray[]='Marathi';
+                          if($language == 'or')$langarray[]='Oriya/Odia';
+                          if($language == 'pa')$langarray[]='Punjabi';
+                          if($language == 'ta')$langarray[]='Tamil';
+                          if($language == 'te')$langarray[]='Telugu';
+                          if($language == 'ar')$langarray[]='Urdu';
+
+                       }
+                       $langlist = implode(',',$langarray);
+
+		             @endphp
+		             <td>{{$langlist}}</td>
 		             <td>{{$value->is_pan_india}}</td>
 		             <td>{{$value->notice_type}}</td>
 		             <td>{{$value->published_date}}</td>
@@ -111,9 +135,9 @@
 		             </td>
 		             <td>
 		             	@if($value->status == 'Draft')
-		             	<a href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-dark">Publish</button></a>
+		             	<a onclick="return confirm('You are Publishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-dark">Publish</button></a>
 		             	@else
-		             	<a  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-warning" >UnPublish</button></a>
+		             	<a  onclick="return confirm('You are UnPublishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-warning" >UnPublish</button></a>
 		             	@endif
 
 		             </td>

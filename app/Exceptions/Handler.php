@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +39,15 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        // Custom error pages for specific HTTP error codes
+        if ($exception instanceof QueryException && strpos($exception->getMessage(), 'No connection could be made') !== false) {
+            return response()->view('errors.database', [], 500);
+        }
+
+        return parent::render($request, $exception);
     }
 }

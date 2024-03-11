@@ -47,6 +47,10 @@ class NoticeContent extends Model
     ];
 
     public function noticeContent(){
-        return $this->brlongsTo(Notice::class,'notice_group','notice_group');
+        return $this->belongsTo(Notice::class,'notice_group','notice_group');
+    }
+
+     public function langauge(){
+        return $this->belongsTo(Language::class,'notice_group','notice_group');
     } 
 }

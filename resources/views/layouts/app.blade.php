@@ -101,9 +101,9 @@
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a  href="{{ route('home')}}" > <label>Dashboard</label> </a>
                           </li>
-                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                          <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a href="{{ route('templates')}}"><label>Templates</label> </a> 
-                          </li>
+                          </li> -->
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a  href="{{ route('notices','en')}}" ><label>Notices</label></a>
                           </li>

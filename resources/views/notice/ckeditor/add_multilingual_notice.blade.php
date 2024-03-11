@@ -96,7 +96,7 @@
        <div class="row">
         <div style="width: 1000px" >
           <div class="card">
-            <label class="card-header text-primary font-bolder" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" >{{$lang->name}}</label>
+            <label class="card-header text-primary font-bolder" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" >{{$lang->lang}} - {{$lang->name}}</label>
             <!-- <h5 class="card-header">
                 <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
                     <i class="fa fa-chevron-down pull-right"></i>

@@ -173,7 +173,7 @@
             <h5 class="card-header">
                 <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
                     <i class="fa fa-chevron-down pull-right"></i>
-                    {{$lang->name}}
+                    {{$lang->lang}} - {{$lang->name}}
                 </a>
             </h5>
             <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">

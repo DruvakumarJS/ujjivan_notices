@@ -530,8 +530,9 @@ class NoticeController extends Controller
           $noticename = $value->name;
           $noticedesc = $value->description;
           $notice_content = NoticeContent::where('notice_group',$value->notice_group)->where('lang_code',$value->lang_code)->first();
+          $eng_lang = Language::where('code',$value->lang_code)->first();
 
-          $noticeDetails[]=['name' => $noticename , 'desc' =>$noticedesc ,'language' => $value->lang_name , 'notice_content' => $notice_content ];
+          $noticeDetails[]=['name' => $noticename , 'desc' =>$noticedesc ,'language' =>$eng_lang->lang.' - '.$value->lang_name , 'notice_content' => $notice_content ];
 
       }
 

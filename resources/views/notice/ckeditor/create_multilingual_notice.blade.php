@@ -1,4 +1,4 @@
-@extends('layouts.app')
+  @extends('layouts.app')
 @section('content')
 <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>
 <!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script> -->
@@ -186,7 +186,7 @@
        <div class="row">
         <div style="width: 1000px" >
           <div class="card">
-            <label class="card-header text-primary font-bolder" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" >{{$lang->name}}</label>
+            <label class="card-header text-primary font-bolder" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" >{{$lang->lang}} - {{$lang->name}}</label>
             <!-- <h5 class="card-header">
                 <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
                     <i class="fa fa-chevron-down pull-right"></i>
@@ -280,6 +280,7 @@
 
                                      <script src="{{$script_src}}"></script>
 
+
                                      <script>
 
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
@@ -330,21 +331,56 @@
                                   },
                                   placeholder: '',
                                   fontFamily: {
-                                      options: [
-                                          'default',
-                                          'Arial, Helvetica, sans-serif',
-                                          'Courier New, Courier, monospace',
-                                          'Georgia, serif',
-                                          'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                                          'Tahoma, Geneva, sans-serif',
-                                          'Times New Roman, Times, serif',
-                                          'Trebuchet MS, Helvetica, sans-serif',
-                                          'Verdana, Geneva, sans-serif',
-                                          'Noori Nastaleeq, Urdu, Nastaleeq, sans-serif',
-                                          'Noto Sans Telugu, sans-serif',
-                                      ],
-                                      supportAllValues: true
-                                  },
+                                    @php 
+                                    if($lang->code == 'as'){
+                                     echo" options: ['Shree Ass 001, monospace', 'Shree Bold, monospace', 'Shree Italic, monospace',]";
+                                    }
+                                    elseif($lang->code == 'bn') { 
+                                     echo" options: ['SHREE-BAN-0560E, monospace', 'Shree Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } 
+                                    elseif($lang->code == 'en') { 
+                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'gu') { 
+                                     echo" options: ['SHREE-GUJ-0768, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'hi') { 
+                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'kn') { 
+                                      echo" options: ['Verdana, monospace', 'Verdana Bold, monospace', 'Verdana Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'kh') { 
+                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ml') { 
+                                     echo" options: ['SHREE-MAL-0501, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'mr') { 
+                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'or') { 
+                                     echo" options: ['SHREE-ORI-0611, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'pa') { 
+                                     echo" options: ['Shree-Pun-002, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ta') { 
+                                     echo" options: ['TAM-Shree802, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'te') { 
+                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ar') { 
+                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                    
+                                    } 
+
+                                    @endphp 
+                                      ,
+                                      supportAllValues: true 
+                                    },
                                   fontSize: {
                                       options: [ 10, 12, 14, 'default', 18, 20, 22 ],
                                       supportAllValues: true

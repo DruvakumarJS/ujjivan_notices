@@ -13,8 +13,13 @@ tr {
 }
 .dropdown-menu{
     transform: translate3d(0px, 35px, 0px)!important;
-    
+
 }
+
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
+
 </style>
 
 <div class="container-body">
@@ -36,6 +41,26 @@ tr {
            <label for="html">RBI Notice</label><notice_type>
         </div>
 
+        <div class="text-sm-start div-margin" >
+          <span class="" id="basic-addon3">Select Languages for creating Notice</span>
+        </div>
+        
+        <div class="row" id="state_dropdown_list" >
+          <div class="col-10">
+             <div class="input-group mb-3">
+
+              <select class="selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()" style="height: 100%;">
+                @foreach($languages as $key=>$value)
+                <option value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
+
+                @endforeach
+                
+              </select>
+
+              </div>
+            </div>
+        </div>
+
          
      <div id="templates" class="d-flex">
     
@@ -45,7 +70,7 @@ tr {
 					 <label>
           <input class="div-margin radioInput" type="radio" name="template_id" value="{{$value->id}}" selected required class="card-input-element" style="margin-left: 30px" /><span style="margin-left: 10px">{{ $value->name}}</span>
 
-				  <div class="card border border-primary" style="height: 400px">
+				  <div class="card border border-primary" style="height: 250px">
 
 				  	
 
@@ -65,7 +90,7 @@ tr {
                     @foreach($data as $views)
                        
                        @if($views == 'textarea')
-                         <textarea class="form-control div-margin" style="height: 50px" placeholder="your text" readonly></textarea>
+                         <textarea class="form-control div-margin" style="height: 20px" placeholder="your text" disabled="disabled"></textarea>
                          <!-- <div class="textareaElement form-control div-margin" contenteditable dis></div> -->
                           @elseif($views == 'table')
                           <input type="button"class="btn btn-dark div-margin" value="Table">
@@ -125,9 +150,9 @@ tr {
 
 			@endforeach
 			 </div>
-		</div>
+		
 
-    <div class="text-sm-start div-margin" >
+    <!-- <div class="text-sm-start div-margin" >
           <span class="" id="basic-addon3">Select Languages for creating Notice</span>
         </div>
         <div class="row" id="state_dropdown_list" >
@@ -144,14 +169,15 @@ tr {
 
               </div>
             </div>
-        </div>
+        </div> -->
 
         <input type="hidden" name="dropdown_lang" value="{{$lang}}">
 
-       <div id="div3">
-       	<button class="btn btn-primary">Proceed</button>
+       <div id="div">
+       	 <button class="btn btn-primary" id="fixedbutton">Proceed</button>
        </div>
-		
+
+		</div>
 	</form>	
 	
 </div>
@@ -161,13 +187,16 @@ tr {
   var x = document.getElementById("templates");
   if(src.value == 'ujjivan'){
   
-    $('#templates').removeClass('d-none');
+   // $('#templates').removeClass('d-none');
     $(".radioInput").prop("required", true);
+    $(".radioInput").prop("disabled", false);
     
   }
   else{
-     $('#templates').addClass('d-none');
+    // $('#templates').addClass('d-none');
      $(".radioInput").removeAttr("required");
+     $(".radioInput").prop("disabled", true);
+     $(".radioInput").prop("checked", false);
     
   }
   }
