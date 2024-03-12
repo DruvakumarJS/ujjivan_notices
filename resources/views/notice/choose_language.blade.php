@@ -15,6 +15,9 @@ tr {
     transform: translate3d(0px, 35px, 0px)!important;
 
 }
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
 
 </style>
 
@@ -37,6 +40,26 @@ tr {
            <label for="html">RBI Notice</label><notice_type>
         </div>
 
+        <div class="text-sm-start div-margin" >
+          <span class="" id="basic-addon3">Select Languages for creating Notice</span>
+        </div>
+
+        <div class="row" id="state_dropdown_list" >
+          <div class="col-10">
+             <div class="input-group mb-3">
+
+              <select class="selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()"  style="height: 100%;">
+                @foreach($languages as $key=>$value)
+                <option value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
+
+                @endforeach
+                
+              </select>
+
+              </div>
+            </div>
+        </div>
+
          
      <div id="templates" class="d-flex">
     
@@ -46,7 +69,7 @@ tr {
 					 <label>
           <input class="div-margin radioInput" type="radio" name="template_id" value="{{$value->id}}" <?php echo($value->id == $template_id)?'checked':''  ?> disabled required  class="card-input-element" style="margin-left: 30px" /><span style="margin-left: 10px">{{ $value->name}}</span>
 
-				  <div class="card border border-primary" style="height: 400px">
+				  <div class="card border border-primary" style="height: 250px">
 
 				  	
 
@@ -126,26 +149,9 @@ tr {
 
 			@endforeach
 			 </div>
-		</div>
+		
 
-    <div class="text-sm-start div-margin" >
-          <span class="" id="basic-addon3">Select Languages for creating Notice</span>
-        </div>
-        <div class="row" id="state_dropdown_list" >
-          <div class="col-10">
-             <div class="input-group mb-3">
-
-              <select class="form-control selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                @foreach($languages as $key=>$value)
-                <option value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
-
-                @endforeach
-                
-              </select>
-
-              </div>
-            </div>
-        </div>
+    
         <input type="hidden" name="noticeid" value="{{$id}}">
         <input type="hidden" name="template_id" value="{{$template_id}}">
         <input type="hidden" name="dropdown_lang" value="{{$lang}}">
@@ -162,7 +168,7 @@ tr {
 
   var notice ='<?php echo $notice_type  ?>' ;
   //alert(notice);
-  if(notice == 'ujjivan'){
+  /*if(notice == 'ujjivan'){
   
     $('#templates').removeClass('d-none');
     $(".radioInput").prop("required", true);
@@ -172,7 +178,7 @@ tr {
      $('#templates').addClass('d-none');
      $(".radioInput").removeAttr("required");
     
-  }
+  }*/
 
    function handleChange(src) {
   var x = document.getElementById("templates");

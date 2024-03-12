@@ -139,7 +139,7 @@
 <script type="text/javascript">
   function requestpassword(){
    swal({
-  title: 'Authorize yourself',
+  title: 'Authorize Yourself',
   html: '',
   content: {
     element: "input",
@@ -198,7 +198,7 @@
 <script type="text/javascript">
   function settingspassword(){
    swal({
-  title: 'Authorize yourself',
+  title: 'Authorize Yourself',
   html: '',
   content: {
     element: "input",
