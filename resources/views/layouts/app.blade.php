@@ -31,6 +31,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -109,13 +111,16 @@
                           </li>
                           @if(auth::user()->role == 'admin')
                           <li class="list-group-item d-flex justify-content-between align-items-center">
-                              <a href="{{ route('devices')}}">
+                              <!-- <a href="{{ route('devices')}}">
+                                  <label>Devices</label>
+                              </a> -->
+                              <a onclick="requestpassword()" href="#">
                                   <label>Devices</label>
                               </a>
                           </li>
                           
                           <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="{{ route('settings')}}"> <label>Settings</label> </a>
+                            <a onclick="settingspassword()" href="#"> <label>Settings</label> </a>
                           </li>
                           @endif
                       </ul>
@@ -130,4 +135,123 @@
         </main>
     </div>
 </body>
+
+<script type="text/javascript">
+  function requestpassword(){
+   swal({
+  title: 'Authorize yourself',
+  html: '',
+  content: {
+    element: "input",
+    attributes: {
+      placeholder: "Enter Password",
+      type: "text",
+      id: "input-field",
+      className: "form-control",
+      type:"password"
+    },
+  },
+  buttons: {
+   /* cancel: {
+      visible: true,
+      className: 'btn btn-danger'
+    },*/
+    confirm: {
+      className : 'btn btn-success'
+    }
+  },
+ }).then(
+ 
+ function() {
+   var input = $('#input-field').val();
+   var _token = $('input[name="_token"]').val();
+   var response = ""
+
+   if(input != ''){
+    $.ajax({
+     url:"{{ route('authenticate') }}",
+     method:"POST",
+     data:{input:input, _token:_token },
+     dataType:"json",
+     success:function(data)
+     {
+      console.log(data)
+
+      if(data == 'Authorized'){
+        swal("", data, "success");
+        window.location.href = "{{ route('devices')}}";
+      }
+      else{
+        swal("", data, "error");
+      }
+
+
+     }
+    })
+   }
+ }
+ );
+}
+
+</script>
+
+<script type="text/javascript">
+  function settingspassword(){
+   swal({
+  title: 'Authorize yourself',
+  html: '',
+  content: {
+    element: "input",
+    attributes: {
+      placeholder: "Enter Password",
+      type: "text",
+      id: "input-field",
+      className: "form-control",
+      type:"password"
+    },
+  },
+  buttons: {
+   /* cancel: {
+      visible: true,
+      className: 'btn btn-danger'
+    },*/
+    confirm: {
+      className : 'btn btn-success'
+    }
+  },
+ }).then(
+ 
+ function() {
+   var input = $('#input-field').val();
+   var _token = $('input[name="_token"]').val();
+   var response = ""
+
+   if(input != ''){
+    $.ajax({
+     url:"{{ route('authenticate') }}",
+     method:"POST",
+     data:{input:input, _token:_token },
+     dataType:"json",
+     success:function(data)
+     {
+      console.log(data)
+
+      if(data == 'Authorized'){
+        swal("", data, "success");
+        window.location.href = "{{ route('settings')}}";
+      }
+      else{
+        swal("", data, "error");
+      }
+
+
+     }
+    })
+   }
+ }
+ );
+}
+
+</script>
+
 </html>

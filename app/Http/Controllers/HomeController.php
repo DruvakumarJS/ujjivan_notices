@@ -8,6 +8,8 @@ use App\Models\Notice;
 use App\Models\Region;
 use App\Models\Branch;
 use App\Models\Bank;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use App\Models\DeviceData;
 use DB;
 use Endroid\QrCode\QrCode;
@@ -352,6 +354,18 @@ class HomeController extends Controller
     $pdf->setOption('header-font-name', 'Verdana');*/
     return $pdf->stream('document.pdf');
 
+    }
+
+    public function authenticate(Request $request){
+        $pass = Hash::make('admin');
+       
+        if($request->input == 'Admin'){
+           echo json_encode("Authorized");
+        }
+        else{
+           echo json_encode("UnAuthorized");
+        }
+        
     }
 
 

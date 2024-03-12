@@ -106,6 +106,7 @@ Route::get('delete-bank/{id}',[HomeController::class,'delete_bank'])->name('dele
 Route::get('get_bank_details',[HomeController::class,'get_bank_details'])->name('get_bank_details');
 
 Route::get('/qrcode', [HomeController::class, 'showqrcode'])->name('qrcode');
+Route::post('/authenticate', [HomeController::class, 'authenticate'])->name('authenticate');
 
 });
 
