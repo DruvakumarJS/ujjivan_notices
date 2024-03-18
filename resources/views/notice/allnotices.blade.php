@@ -32,7 +32,7 @@
 				<div class="input-group mb-3">
 	                <select class="form-control form-select" id="languages" name="lang" >
 	                @foreach($languages as $key=>$value)
-	                <option {{ ( $value->code == $lang )?'selected':'' }} value="{{$value->code}}">{{$value->name}}</option>
+	                <option {{ ( $value->code == $lang )?'selected':'' }} value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
 
 	                @endforeach
 	                

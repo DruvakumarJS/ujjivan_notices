@@ -287,7 +287,7 @@
                                   language: {
                                     // The UI will be English.
                                    
-                                    ui: '{{$lang->code}}',
+                                    ui: 'en',
 
                                     // But the content will be edited in Arabic.
                                     content: '{{$lang->code}}'
@@ -333,7 +333,7 @@
                                   fontFamily: {
                                     @php 
                                     if($lang->code == 'as'){
-                                     echo" options: ['Shree Ass 001, monospace', 'Shree Bold, monospace', 'Shree Italic, monospace',]";
+                                     echo" options: ['Shree-Ass-002, monospace', 'Shree Bold, monospace', 'Shree Italic, monospace',]";
                                     }
                                     elseif($lang->code == 'bn') { 
                                      echo" options: ['SHREE-BAN-0560E, monospace', 'Shree Bold, monospace', 'Courier Italic, monospace',]";
@@ -355,19 +355,19 @@
                                      echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
                                     
                                     } elseif($lang->code == 'ml') { 
-                                     echo" options: ['SHREE-MAL-0501, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                     echo" options: ['SHREE-MAL-0501, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace', ]";
                                     
                                     } elseif($lang->code == 'mr') { 
-                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                     echo" options: ['SHREE-DEV-0708, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace', 'SHREE-DEV-0709, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
                                     
                                     } elseif($lang->code == 'or') { 
-                                     echo" options: ['SHREE-ORI-0611, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                     echo" options: ['SHREE-ORI-0601M, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
                                     
                                     } elseif($lang->code == 'pa') { 
                                      echo" options: ['Shree-Pun-002, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
                                     
                                     } elseif($lang->code == 'ta') { 
-                                     echo" options: ['TAM-Shree802, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                     echo" options: ['TAM-Shree803, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace', ]";
                                     
                                     } elseif($lang->code == 'te') { 
                                      echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
