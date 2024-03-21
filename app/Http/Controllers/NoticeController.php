@@ -233,6 +233,7 @@ class NoticeController extends Controller
          $notice->document_id = $request->document_id;
          $notice->published_date = $request->publish_date;
          $notice->version = $request->version;
+         $notice->expiry_date = '2024-12-12';
 
 
          $notice->save();
@@ -365,6 +366,8 @@ class NoticeController extends Controller
          $notice->document_id = $noticedetails->document_id;
          $notice->published_date = $request->publish_date;
          $notice->version = $request->version;
+         $notice->expiry_date = '2024-12-12';
+
 
 
          $notice->save();

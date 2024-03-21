@@ -363,7 +363,7 @@
                                     } elseif($lang->code == 'or') { 
                                      echo" options: ['SHREE-ORI-0601M, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
                                     
-                                    } elseif($lang->code == 'pa') { 
+                                      } elseif($lang->code == 'pa') { 
                                      echo" options: ['Shree-Pun-002, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
                                     
                                     } elseif($lang->code == 'ta') { 

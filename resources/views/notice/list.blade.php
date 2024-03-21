@@ -114,7 +114,18 @@
                        $langlist = implode(',',$langarray);
 
 		             @endphp
-		             <td>{{$langlist}}</td>
+		             <!-- <td>{{$langlist}}</td> -->
+		             <td style="max-height: 200px">
+		             	<table>
+		             	@foreach($langarray as $val)
+		             	
+		             	<tr>
+		             		<td>{{$val}}</td>
+		             	</tr>
+
+		             	@endforeach
+		             	</table>
+		             </td>
 		             <td>{{$value->is_pan_india}}</td>
 		             <td>{{$value->notice_type}}</td>
 		             <td>{{$value->published_date}}</td>

@@ -4,9 +4,6 @@
 
 <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>
 
-
-
-
 <div class="container-body">
   
         <!-- content -->
@@ -17,10 +14,10 @@
      
        <div class="row">
             <div style="width: 1000px">
-              <div class="card text-black bg-white border border-white" >
+              <div class="card text-black bg-white border border-white" style="padding: 0px;">
                <div class="card-header text-muted text-black"  style="background-color: white;border: none;">
                 
-                 <div class="card-body" style="height: 50px;float: start;">
+                 <div style="height: 30px;float: start;">
                 {!! QrCode::size(50)->generate($qrcode_data) !!}
                 </div>
                  <img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> 

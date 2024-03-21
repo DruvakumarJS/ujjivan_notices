@@ -46,6 +46,10 @@ class DevicesController extends Controller
     {
       //  print_r($request->Input()); die();
 
+        if(Devices::where('mac_id',$request->device_id)->exists()){
+            return redirect()->back()->withMessage('Duplicate device ID . Please re-check the device ID ')->withInput();
+        }
+
         $branch = Branch::where('id',$request->branch_id)->first();
 
         $store = Devices::create([

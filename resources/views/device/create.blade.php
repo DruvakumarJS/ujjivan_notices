@@ -5,6 +5,10 @@
 <div class="container-body">
   <label class="label-bold">Add New Device</label>
     <div class="container-header">
+
+       @if(Session::has('message'))
+            <p id="mydiv" class="text-danger text-center">{{ Session::get('message') }}</p>
+        @endif      
         
     </div>
 
