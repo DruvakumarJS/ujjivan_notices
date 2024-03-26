@@ -573,7 +573,7 @@ margin-left: -15px;
 /*Kannada*/
 @font-face {
     font-family: 'Shree-Kan-001';
-    src: url('../fonts/WKAN001.ttf') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('/fonts/WKAN001.TTF') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*Malayalm*/
