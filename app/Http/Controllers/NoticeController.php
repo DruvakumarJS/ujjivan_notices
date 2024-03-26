@@ -255,12 +255,7 @@ class NoticeController extends Controller
                   if (strpos($decodedValue, '<script') !== false) {
                       $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
                   }
-
-                  if (strlen($attributeText) > 255) { // Change 255 to your desired maximum length
-                      // Handle the error, perhaps by redirecting back with an error message
-                      return redirect()->back()->withErrors(['attribute_name' => 'The attribute text is too long.']);
-                  }
-                  
+ 
               },
           ],
           'notice.*.row2_1' => [

@@ -544,3 +544,41 @@ margin-left: -15px;
         display: none;
     }
 }
+
+/*custom fonts*/
+/*Assam*/
+@font-face {
+    font-family: 'Shree-Ass-002';
+    src: url('/fonts/WASS002.ttf') format('truetype'); /* adjust the path and format based on your font file */
+}
+
+/*Bengali*/
+@font-face {
+    font-family: 'SHREE-BAN-0560E';
+    src: url('/fonts/S05600F0_1.ttf') format('truetype'); /* adjust the path and format based on your font file */
+}
+
+/*Gujarathi*/
+@font-face {
+    font-family: 'SHREE-GUJ-0768';
+    src: url('/fonts/S07630F2_3.ttf') format('truetype'); /* adjust the path and format based on your font file */
+}
+
+/*Hindi*/
+@font-face {
+    font-family: 'SHREE-DEV-0715E';
+    src: url('/fonts/S07150F0_0.ttf') format('truetype'); /* adjust the path and format based on your font file */
+}
+
+
+/*tamil*/
+@font-face {
+    font-family: 'TAM-Shree803';
+    src: url('/fonts/TAM802.TTF') format('truetype'); /* adjust the path and format based on your font file */
+}
+/*Malayalam*/
+
+@font-face {
+    font-family: 'SHREE-MAL-0501';
+    src: url('/fonts/.TTF') format('truetype'); /* adjust the path and format based on your font file */
+}
