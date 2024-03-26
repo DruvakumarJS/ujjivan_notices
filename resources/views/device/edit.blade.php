@@ -4,8 +4,21 @@
 
 <div class="container-body">
   <label class="label-bold">Edit Device Details</label>
-    <div class="container-header">
-        
+    <div>
+         @if(Session::has('message'))
+            <p id="mydiv" class="text-danger text-center">{{ Session::get('message') }}</p>
+        @endif 
+     
+         @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      
+                  @endforeach
+                  <li>{{ $error }}</li>
+              </ul>
+          </div>
+        @endif   
     </div>
 
     <div class="page-container">

@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Validator;
 
 class DevicesController extends Controller
 {
@@ -44,7 +45,119 @@ class DevicesController extends Controller
      */
     public function store(Request $request)
     {
-      //  print_r($request->Input()); die();
+       // print_r($request->Input()); die();
+
+        $validator = Validator::make($request->all(), [
+
+        'branch_name' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+           'name' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+          'mobile' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+        'device_id' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+          'model' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+
+          'date_of_installation' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+          'branch_id' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+          '_token' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+      ]);
+
+      if ($validator->fails()) {
+        
+          return redirect()->back()->withErrors($validator)->withInput();
+      }
+
+    
 
         if(Devices::where('mac_id',$request->device_id)->exists()){
             return redirect()->back()->withMessage('Duplicate device ID . Please re-check the device ID ')->withInput();
@@ -105,7 +218,118 @@ class DevicesController extends Controller
     {
        /* print_r($id);
         print_r($request->input()); die();*/
-         $branch = Branch::where('id',$request->branch_id)->first();
+
+        $validator = Validator::make($request->all(), [
+
+        'branch_name' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+           'name' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+          'mobile' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+        'device_id' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+          'model' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+
+          'date_of_installation' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+          'branch_id' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+          '_token' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+      ]);
+
+      if ($validator->fails()) {
+        
+          return redirect()->back()->withErrors($validator)->withInput();
+      }
+
+        $branch = Branch::where('id',$request->branch_id)->first();
 
         $update  = Devices::where('id',$id)->update([
             'region_id' => $branch->region_id,

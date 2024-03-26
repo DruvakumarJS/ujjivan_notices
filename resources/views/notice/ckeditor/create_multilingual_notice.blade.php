@@ -1,9 +1,5 @@
-  @extends('layouts.app')
+@extends('layouts.app')
 @section('content')
-<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>
-<!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script> -->
-
-
 <style type="text/css">
 	
 .ck-editor__editable[role="textbox"] {
@@ -21,6 +17,17 @@
 <div class="container-body">
 	 <label class="label-bold">Create New Notice</label>
 	 <div class="page-container">
+
+    @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  
+              @endforeach
+              <li>{{ $error }}</li>
+          </ul>
+      </div>
+    @endif
 
 	 <hr/>
       
@@ -146,7 +153,7 @@
             </div> 
             <div class="col-6" id="state_dropdown">
                 <div class="input-group mb-3">
-                 <input class="form-control" type="text" name="document_id" required>
+                 <input class="form-control" type="text" name="document_id" maxlength="10" required>
                 </div>
             </div>   
        </div>
@@ -158,7 +165,7 @@
             </div> 
             <div class="col-6" id="state_dropdown">
                 <div class="input-group mb-3">
-                 <input class="form-control" type="text" name="version"  required>
+                 <input class="form-control" type="text" name="version" maxlength="10"  required>
                 </div>
             </div>   
        </div>
@@ -219,7 +226,7 @@
                         </div> 
                         <div class="col-6">
                             <div class="input-group mb-3">
-                             <input class="form-control" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" type="text" name="notice[{{$keyl}}][tittle]" required>
+                             <input class="form-control" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" type="text" name="notice[{{$keyl}}][tittle]" maxlength="250" required>
                             </div>
                         </div>   
                    </div>
@@ -246,7 +253,7 @@
                         </div> 
                         <div class="col-6">
                             <div class="input-group mb-3">
-                             <input class="form-control" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" type="text" name="notice[{{$keyl}}][description]" required >
+                             <input class="form-control" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" type="text" name="notice[{{$keyl}}][description]" maxlength="250" required >
                             </div>
                         </div>   
                    </div>
@@ -284,6 +291,7 @@
                                      <script>
 
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
+
                                   language: {
                                     // The UI will be English.
                                    

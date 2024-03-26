@@ -4,11 +4,22 @@
 
 <div class="container-body">
   <label class="label-bold">Add New Device</label>
-    <div class="container-header">
+    <div >
 
        @if(Session::has('message'))
             <p id="mydiv" class="text-danger text-center">{{ Session::get('message') }}</p>
-        @endif      
+        @endif 
+     
+         @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      
+                  @endforeach
+                  <li>{{ $error }}</li>
+              </ul>
+          </div>
+        @endif     
         
     </div>
 
@@ -190,7 +201,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="name" required>
+                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="name" maxlength="10" required>
                 </div>
             </div>   
        </div>
@@ -204,7 +215,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input  type="number" minlength="10" maxlength="10" class="form-control" id="basic-url" name="mobile" aria-describedby="basic-addon3" required>
+                  <input  type="text" minlength="10" maxlength="10" class="form-control" id="basic-url" name="mobile" aria-describedby="basic-addon3" required >
                 </div>
             </div>   
        </div>
@@ -221,7 +232,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="device_id" required>
+                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="device_id" maxlength="20" required>
                 </div>
             </div>   
        </div>
@@ -235,7 +246,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="model" aria-describedby="basic-addon3">
+                  <input type="text" class="form-control" id="basic-url" name="model" aria-describedby="basic-addon3" maxlength="200">
                 </div>
             </div>   
        </div>

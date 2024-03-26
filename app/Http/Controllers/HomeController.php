@@ -16,6 +16,7 @@ use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\LabelAlignment;
 use PDF;
+use Illuminate\Support\Facades\Validator;
 
 
 class HomeController extends Controller
@@ -151,6 +152,41 @@ class HomeController extends Controller
 
        // print_r($request->input()); die();
 
+         $validator = Validator::make($request->all(), [
+
+        'name' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+           'branch_code' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+        
+      ]);
+
+      if ($validator->fails()) {
+        
+          return redirect()->back()->withErrors($validator)->withInput();
+      }
+
         $save = Region::create(['name' => $request->name , 'region_code'=> $request->branch_code]);
 
         if($save){
@@ -159,6 +195,41 @@ class HomeController extends Controller
     }
 
     public function update_region(Request $request){
+         $validator = Validator::make($request->all(), [
+
+        'name' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+           'branch_code' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+        
+      ]);
+
+      if ($validator->fails()) {
+        
+          return redirect()->back()->withErrors($validator)->withInput();
+      }
+
         $update = Region::where('id',$request->id)->update(['name' => $request->name , 'region_code'=> $request->branch_code]);
 
         if($update){
@@ -185,6 +256,128 @@ class HomeController extends Controller
 
        // print_r($request->input()); die();
 
+        $validator = Validator::make($request->all(), [
+
+        'region' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+           'name' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+          'branch_code' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+        'ifsc' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+          'area' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+
+          'state' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+          'district' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+          'city' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+          'pincode' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+      ]);
+
+      if ($validator->fails()) {
+        
+          return redirect()->back()->withErrors($validator)->withInput();
+      }
+
         $save = Branch::create([
             'region_id'=>$request->region,
             'name' => $request->name , 
@@ -204,6 +397,140 @@ class HomeController extends Controller
     public function update_branch(Request $request){
 
        // print_r($request->input()); die();
+         $validator = Validator::make($request->all(), [
+
+         'id' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],   
+
+        'region' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+           'name' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+          'branch_code' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+        'ifsc' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+          'area' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+
+          'state' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+          'district' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+          'city' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+          'pincode' => [
+              '',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = html_entity_decode($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+      ]);
+
+      if ($validator->fails()) {
+        
+          return redirect()->back()->withErrors($validator)->withInput();
+      }
 
         $save = Branch::where('id',$request->id)->update([
             'region_id'=>$request->region,

@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('content')
-<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>
-<!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script> -->
 
 <style type="text/css">
   
@@ -20,6 +18,16 @@
 <div class="container-body">
    <label class="label-bold">Create New Notice</label>
    <div class="page-container">
+     @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  
+              @endforeach
+              <li>{{ $error }}</li>
+          </ul>
+      </div>
+     @endif
 
    <hr/>
       
@@ -147,7 +155,7 @@
             </div> 
             <div class="col-6" id="state_dropdown">
                 <div class="input-group mb-3">
-                 <input class="form-control" type="text" name="document_id" value="{{$data->document_id}}" required>
+                 <input class="form-control" type="text" name="document_id" value="{{$data->document_id}}" maxlength="10" required>
                 </div>
             </div>   
        </div>
@@ -160,7 +168,7 @@
             </div> 
             <div class="col-6" id="state_dropdown">
                 <div class="input-group mb-3">
-                 <input class="form-control" type="text" name="version" value="{{$data->version}}"  required>
+                 <input class="form-control" type="text" name="version" value="{{$data->version}}" maxlength="10" required>
                 </div>
             </div>   
        </div>
@@ -201,7 +209,7 @@
                             </div> 
                             <div class="col-6">
                                 <div class="input-group mb-3">
-                                 <input class="form-control" type="text" name="notice[{{$keyl}}][tittle]" value="{{$value->name}}" required>
+                                 <input class="form-control" type="text" name="notice[{{$keyl}}][tittle]" value="{{$value->name}}" maxlength="250" required>
                                 </div>
                             </div>   
                        </div>
@@ -214,7 +222,7 @@
                             </div> 
                             <div class="col-6">
                                 <div class="input-group mb-3">
-                                 <input class="form-control" type="text" name="notice[{{$keyl}}][description]" value="{{$value->description}}" required>
+                                 <input class="form-control" type="text" name="notice[{{$keyl}}][description]" value="{{$value->description}}" maxlength="250" required>
                                 </div>
                             </div>   
                        </div>

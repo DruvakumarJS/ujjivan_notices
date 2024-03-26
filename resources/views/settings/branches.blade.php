@@ -9,6 +9,16 @@
     <div id="div2">
       <a data-bs-toggle="modal" data-bs-target="#mymodal" ><button class="btn btn-outline-primary">Add New Branch</button></a>
     </div> 
+     @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      
+                  @endforeach
+                  <li>{{ $error }}</li>
+              </ul>
+          </div>
+        @endif  
 
     <div id="div2" style="margin-right: 30px">
            <form method="POST" action="{{route('search_device')}}">
