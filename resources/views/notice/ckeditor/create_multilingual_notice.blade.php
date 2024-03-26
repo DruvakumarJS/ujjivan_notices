@@ -291,6 +291,7 @@
                                      <script>
 
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
+                                   contentsCss: '/css/contents-styles.css', 
 
                                   language: {
                                     // The UI will be English.
@@ -354,10 +355,10 @@
                                      echo" options: ['SHREE-GUJ-0768, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
                                     
                                     } elseif($lang->code == 'hi') { 
-                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
+                                     echo" options: ['SHREE-DEV-0715E, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";
                                     
                                     } elseif($lang->code == 'kn') { 
-                                      echo" options: ['Verdana, monospace', 'Verdana Bold, monospace', 'Verdana Italic, monospace',]";
+                                      echo" options: ['Shree-Kan-001, monospace', 'Verdana Bold, monospace', 'Verdana Italic, monospace',]";
                                     
                                     } elseif($lang->code == 'kh') { 
                                      echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Courier Italic, monospace',]";

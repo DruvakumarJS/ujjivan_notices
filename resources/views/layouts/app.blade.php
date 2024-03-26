@@ -19,6 +19,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/content-styles.css') }}" rel="stylesheet" type="text/css">
+
     <!-- ckEditor -->
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     
