@@ -1,5 +1,9 @@
 body{
-    font-family: 'Calibri';
+   /* font-family: 'Calibri';*/
+   font-family: 'Shree-Kan-001';
+    font-weight: normal;
+    font-style: normal;
+
 }
 .card {
     padding: 15px;

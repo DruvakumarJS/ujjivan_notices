@@ -571,13 +571,9 @@ margin-left: -15px;
 }
 
 /*Kannada*/
- @font-face {
+@font-face {
     font-family: 'Shree-Kan-001';
-    src: url('/fonts/Shree-Kan-001.woff2') format('woff2'),
-        url('/fonts/Shree-Kan-001.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+    src: url('../../public/fonts/WKAN001.TTF') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*Malayalm*/
