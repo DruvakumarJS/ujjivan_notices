@@ -549,66 +549,66 @@ margin-left: -15px;
 /*Assam*/
 @font-face {
     font-family: 'Shree-Ass-002';
-    src: url('/fonts/WASS002.ttf') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/WASS002.ttf') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*Bengali*/
 @font-face {
     font-family: 'SHREE-BAN-0560E';
-    src: url('/fonts/S05600F0_1.ttf') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/S05600F0_1.ttf') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*Gujarathi*/
 @font-face {
     font-family: 'SHREE-GUJ-0768';
-    src: url('/fonts/S07630F2_3.ttf') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/S07630F2_3.ttf') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*Hindi*/
 @font-face {
     font-family: 'SHREE-DEV-0715E';
-    src: url('/fonts/S07150F0_0.ttf') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/S07150F0_0.ttf') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*Kannada*/
 @font-face {
     font-family: 'Shree-Kan-001';
-    src: url('/fonts/WKAN001.ttf') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/WKAN001.ttf') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*Malayalm*/
 @font-face {
     font-family: 'SHREE-MAL-0502';
-    src: url('/fonts/S05020F0_0.ttf') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/S05020F0_0.ttf') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*Marathi*/
 @font-face {
     font-family: 'SHREE-DEV-0708';
-    src: url('/fonts/SHRE708.ttf') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/SHRE708.ttf') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*Oriya*/
 @font-face {
     font-family: 'SHREE-ORI-0601M';
-    src: url('/fonts/SHREM601.ttf') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/SHREM601.ttf') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*Punjabi*/
 @font-face {
     font-family: 'SHREE-PUN-0952';
-    src: url('/fonts/S09520F2.ttf') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/S09520F2.ttf') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*tamil*/
 @font-face {
     font-family: 'TAM-Shree803';
-    src: url('/fonts/TAM802.TTF') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/TAM802.TTF') format('truetype'); /* adjust the path and format based on your font file */
 }
 
 /*telugu*/
 
 @font-face {
     font-family: 'SHREE-TEL-1642';
-    src: url('/fonts/S16420F0.TTF') format('truetype'); /* adjust the path and format based on your font file */
+    src: url('../fonts/S16420F0.TTF') format('truetype'); /* adjust the path and format based on your font file */
 }
