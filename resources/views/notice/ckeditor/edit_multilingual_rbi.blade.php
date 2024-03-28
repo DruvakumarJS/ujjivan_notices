@@ -235,7 +235,7 @@
                           </div> 
                           <div class="col-6" id="state_dropdown">
                               <div class="input-group mb-3">
-                                 <input type="file" name="notice[{{$keyl}}][rbi_file]" >
+                                 <input type="file" name="notice[{{$keyl}}][rbi_file]" accept="application/pdf">
                               </div>
                           </div>   
                        </div>

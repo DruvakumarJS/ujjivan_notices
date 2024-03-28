@@ -291,8 +291,7 @@
                                      <script>
 
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
-                                   contentsCss: '/css/contents-styles.css', 
-
+                                  
                                   language: {
                                     // The UI will be English.
                                    

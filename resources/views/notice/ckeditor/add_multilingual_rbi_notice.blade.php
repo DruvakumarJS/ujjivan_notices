@@ -171,7 +171,7 @@
                         </div> 
                         <div class="col-6">
                             <div class="input-group mb-3">
-                              <input type="file" name="notice[{{$keyl}}][rbi_file]" required>
+                              <input type="file" name="notice[{{$keyl}}][rbi_file]" accept="application/pdf" required>
                             </div>
                         </div>   
                    </div>
