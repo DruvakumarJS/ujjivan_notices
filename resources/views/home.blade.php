@@ -53,6 +53,20 @@
       </div>
    
     </div>
+
+    <div class="row justify-content-between">
+      <div class="col-md-12">
+        <div class="card shadow-sm border" >
+             <label class="label-bold">Number of Notices Published and Draft</label>
+                       
+             <div>
+               <canvas id="noticesChart" height="100px"></canvas>
+             </div>
+             
+                 
+          </div>
+      </div>
+    </div>
 </div>
 
 <!-- PIE CHART -->
@@ -274,6 +288,53 @@ new Chart("idleChart", {
     },
 
   }
+});
+
+//Notices Chart
+
+new Chart("noticesChart", {
+  type: "bar",
+  data: {
+    labels: @json($noticeArray['languages']),
+    datasets: [{
+      fill: true,
+      lineTension: 0,
+      backgroundColor: "#FEB834",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: @json($noticeArray['published']),
+      label: "Published"
+    },
+    {
+      fill: true,
+      lineTension: 0,
+      backgroundColor: "#0496C7",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: @json($noticeArray['draft']),
+      label: "Draft"
+    }]
+  },
+  options: {
+      responsive: true,
+      legend: {
+        display: true,
+         position: 'top' // place legend on the right side of chart
+      },
+      scales: {
+         xAxes: [{
+            stacked: true ,// this should be set to make the bars stacked
+            gridLines: {
+                display:false
+            },
+         }],
+         yAxes: [{
+            stacked: true ,// this also..
+
+         }]
+      }
+   }
+    ,
+  
+  
 });
 
 </script>

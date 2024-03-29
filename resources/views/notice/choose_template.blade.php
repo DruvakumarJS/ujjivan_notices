@@ -20,6 +20,7 @@ body {
   overflow: hidden; /* Hide scrollbars */
 }
 
+
 </style>
 
 <div class="container-body">
@@ -33,7 +34,7 @@ body {
      <form method="GET" action="{{route('create_notice')}}">
      	@csrf
 		<div class="row div-margin">
-       <p> * Please select type of Notice you want to create</p>
+       <p class="label-bold"> * Please select type of Notice you want to create</p>
         <div class="div-margin">
            <input type="radio" id="ujjivan" name="notice_type" value="ujjivan" onchange="handleChange(this);" checked >
            <label for="html">Ujjivan Notice</label>
@@ -42,14 +43,14 @@ body {
         </div>
 
         <div class="text-sm-start div-margin" >
-          <span class="" id="basic-addon3"> * Select Languages for creating Notice</span>
+          <span class="label-bold" id="basic-addon3"> * Select Languages for creating Notice</span>
         </div>
         
         <div class="row" id="state_dropdown_list" >
           <div class="col-10">
              <div class="input-group mb-3">
 
-              <select class="selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()" style="height: 100%;">
+              <select class="selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()" style="height: 100%;border-color: red">
                 @foreach($languages as $key=>$value)
                 <option value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
 

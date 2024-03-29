@@ -9,6 +9,7 @@ use App\Models\Region;
 use App\Models\Branch;
 use App\Models\Bank;
 use App\Models\User;
+use App\Models\Language;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DeviceData;
 use DB;
@@ -131,8 +132,29 @@ class HomeController extends Controller
 
            // print_r(($monthdata)) ; die();  
 
+            $languages = Language::get();
+             $publishedarray=array();
+             $draftarray=array();
+
+            foreach ($languages as $key => $lng) {
+               $langugaearray[]=$lng->lang;
+               $published = Notice::where('lang_code',$lng->code)->where('status','Published')->count();
+               $publishedarray[]=$published;
+              
+               $Draft = Notice::where('lang_code',$lng->code)->where('status','Draft')->count();
+               $draftarray[]=$Draft;
+
+
+            }
+
+           /* print_r($langugaearray); print_r("</br>");
+            print_r($publishedarray); print_r("</br>");
+            print_r($draftarray); print_r("</br>");die();
+         */
+            $noticeArray=['languages'=> $langugaearray , 'published' => $publishedarray , 'draft' => $draftarray];
+
         
-           return view('home',compact('pie_data' , 'line_data' , 'monthdata'));
+           return view('home',compact('pie_data' , 'line_data' , 'monthdata' , 'noticeArray'));
     }
 
     public function settings(){

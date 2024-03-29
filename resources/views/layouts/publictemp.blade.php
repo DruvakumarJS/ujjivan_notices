@@ -13,31 +13,38 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> -->
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ 'resources/saas/content-styles.css' }}" rel="stylesheet" type="text/css">
+
     <!-- ckEditor -->
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="noreferrer"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-
     
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+     <script rel="stylesheet" src="{{ asset('jquery/jquery.min.js') }}"></script>
+
+  <!-- multiselect -->
+ 
+    <link rel="stylesheet" href="{{ asset('multiselect/bootstrap-select.css') }}"></script>
+    <script  src="{{ asset('multiselect/bootstrap.bundle.min.js') }}"></script>
+    <script  src="{{ asset('multiselect/bootstrap-select.min.js') }}"></script>
+  
+  <!-- multiselect --> 
+
+    <!-- Autocomplete -->
+     <link rel="stylesheet" href="{{ asset('jquery/jquery-ui.min.css') }}">
+     <script src="{{ asset('jquery/jquery-ui.min.js') }}"></script>
+    <!-- Autocomplete -->
+
+    <script src="{{ asset('sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('chart/chart.js') }}"></script>
+    <script src="{{ asset('datepicker/moment.min.js') }}"></script>
+    <script src="{{ asset('datepicker/daterangepicker.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('datepicker/daterangepicker.css') }}" />
 
 
 

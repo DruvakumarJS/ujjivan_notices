@@ -192,10 +192,11 @@
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
                                      @php
-                                     $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                                     $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                                      @endphp
 
                                      <script src="{{$script_src}}"></script>
+
 
                                      <script>
 
@@ -247,22 +248,60 @@
                                   },
                                   placeholder: '',
                                   fontFamily: {
-                                      options: [
-                                          'default',
-                                          'Arial, Helvetica, sans-serif',
-                                          'Courier New, Courier, monospace',
-                                          'Georgia, serif',
-                                          'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                                          'Tahoma, Geneva, sans-serif',
-                                          'Times New Roman, Times, serif',
-                                          'Trebuchet MS, Helvetica, sans-serif',
-                                          'Verdana, Geneva, sans-serif'
-                                      ],
-                                      supportAllValues: true
-                                  },
+                                    @php 
+                                    if($lang->code == 'as'){
+                                     echo" options: ['Shree-Ass-001, monospace', 'Shree-Ass-002, monospace', 'Calibri, monospace',]";
+                                    }
+                                    elseif($lang->code == 'bn') { 
+                                     echo" options: ['SHREE-BAN-0560E, monospace', 'SHREE-BAN-0560E, monospace', 'Calibri, monospace',]";
+                                    
+                                    } 
+                                    elseif($lang->code == 'en') { 
+                                     echo" options: ['Calibri, monospace', 'Calibri Bold, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'gu') { 
+                                     echo" options: ['SHREE-GUJ-0768, monospace', 'SHREE-GUJ-0763, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'hi') { 
+                                     echo" options: ['SHREE-DEV-0715E, monospace', 'SHREE-DEV-0715E, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'kn') { 
+                                      echo" options: ['Shree-Kan-001, monospace', 'Shree-Kan-001, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'kh') { 
+                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ml') { 
+                                     echo" options: ['SHREE-MAL-0501, monospace', 'SHREE-MAL-0502, monospace', 'Calibri, monospace', ]";
+                                    
+                                    } elseif($lang->code == 'mr') { 
+                                     echo" options: ['SHREE-DEV-0714, monospace', 'SHREE-DEV-0709, monospace', 'Calibri, monospace' ,]";
+                                    
+                                    } elseif($lang->code == 'or') { 
+                                     echo" options: ['SHREE-ORI-0601M, monospace', 'SHREE-ORI-0601M, monospace', 'Calibri, monospace',]";
+                                    
+                                      } elseif($lang->code == 'pa') { 
+                                     echo" options: ['Shree-Pun-001, monospace', 'Shree-Pun-002, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ta') { 
+                                     echo" options: ['TAM-Shree802, monospace', 'TAM-Tamil003, monospace', 'Calibri, monospace', ]";
+                                    
+                                    } elseif($lang->code == 'te') { 
+                                     echo" options: ['SHREE-TEL-1642, monospace', 'Shree-Tel-002, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ar') { 
+                                     echo" options: ['Jameel Noori Nastaleeq, monospace', 'Calibri, monospace',]";
+                                    
+                                    }  
+
+                                    @endphp 
+                                      ,
+                                      supportAllValues: true 
+                                    },
                                   fontSize: {
-                                      options: [ 10, 12, 14, 'default', 18, 20, 22 ],
-                                      supportAllValues: true
+                                      options: [ 8,9,10,11, 12,13, 14,15, 16,17, 18, 'default' ,19,20, 21,22,23,24 ],
+                                      supportAllValues: true,
+                                      default: 22
                                   },
                                   htmlSupport: {
                                       allow: [
@@ -337,10 +376,11 @@
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea> 
 
                             @php
-                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
-                            @endphp
+                             $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
+                             @endphp
 
-                            <script src="{{$script_src}}"></script> 
+                             <script src="{{$script_src}}"></script>
+
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
@@ -472,11 +512,12 @@
                                    </div>
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
-                            @php
-                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
-                            @endphp
+                             @php
+                             $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
+                             @endphp
 
-                            <script src="{{$script_src}}"></script> 
+                             <script src="{{$script_src}}"></script>
+
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
@@ -616,7 +657,7 @@
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea> 
 
                                      @php
-                                     $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                                     $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                                     @endphp
 
                                     <script src="{{$script_src}}"></script>  
@@ -670,22 +711,60 @@
                                   },
                                   placeholder: '',
                                   fontFamily: {
-                                      options: [
-                                          'default',
-                                          'Arial, Helvetica, sans-serif',
-                                          'Courier New, Courier, monospace',
-                                          'Georgia, serif',
-                                          'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                                          'Tahoma, Geneva, sans-serif',
-                                          'Times New Roman, Times, serif',
-                                          'Trebuchet MS, Helvetica, sans-serif',
-                                          'Verdana, Geneva, sans-serif'
-                                      ],
-                                      supportAllValues: true
-                                  },
+                                    @php 
+                                    if($lang->code == 'as'){
+                                     echo" options: ['Shree-Ass-001, monospace', 'Shree-Ass-002, monospace', 'Calibri, monospace',]";
+                                    }
+                                    elseif($lang->code == 'bn') { 
+                                     echo" options: ['SHREE-BAN-0560E, monospace', 'SHREE-BAN-0560E, monospace', 'Calibri, monospace',]";
+                                    
+                                    } 
+                                    elseif($lang->code == 'en') { 
+                                     echo" options: ['Calibri, monospace', 'Calibri Bold, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'gu') { 
+                                     echo" options: ['SHREE-GUJ-0768, monospace', 'SHREE-GUJ-0763, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'hi') { 
+                                     echo" options: ['SHREE-DEV-0715E, monospace', 'SHREE-DEV-0715E, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'kn') { 
+                                      echo" options: ['Shree-Kan-001, monospace', 'Shree-Kan-001, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'kh') { 
+                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ml') { 
+                                     echo" options: ['SHREE-MAL-0501, monospace', 'SHREE-MAL-0502, monospace', 'Calibri, monospace', ]";
+                                    
+                                    } elseif($lang->code == 'mr') { 
+                                     echo" options: ['SHREE-DEV-0714, monospace', 'SHREE-DEV-0709, monospace', 'Calibri, monospace' ,]";
+                                    
+                                    } elseif($lang->code == 'or') { 
+                                     echo" options: ['SHREE-ORI-0601M, monospace', 'SHREE-ORI-0601M, monospace', 'Calibri, monospace',]";
+                                    
+                                      } elseif($lang->code == 'pa') { 
+                                     echo" options: ['Shree-Pun-001, monospace', 'Shree-Pun-002, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ta') { 
+                                     echo" options: ['TAM-Shree802, monospace', 'TAM-Tamil003, monospace', 'Calibri, monospace', ]";
+                                    
+                                    } elseif($lang->code == 'te') { 
+                                     echo" options: ['SHREE-TEL-1642, monospace', 'Shree-Tel-002, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ar') { 
+                                     echo" options: ['Jameel Noori Nastaleeq, monospace', 'Calibri, monospace',]";
+                                    
+                                    }  
+
+                                    @endphp 
+                                      ,
+                                      supportAllValues: true 
+                                    },
                                   fontSize: {
-                                      options: [ 10, 12, 14, 'default', 18, 20, 22 ],
-                                      supportAllValues: true
+                                      options: [ 8,9,10,11, 12,13, 14,15, 16,17, 18, 'default' ,19,20, 21,22,23,24 ],
+                                      supportAllValues: true,
+                                      default: 22
                                   },
                                   htmlSupport: {
                                       allow: [
@@ -758,7 +837,7 @@
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>
 
                             @php
-                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                             $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                             @endphp
 
                             <script src="{{$script_src}}"></script>   
@@ -891,7 +970,7 @@
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
 
                             @php
-                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                             $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                             @endphp
 
                             <script src="{{$script_src}}"></script> 
@@ -1039,7 +1118,7 @@
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea> 
 
                                      @php
-                                     $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                                     $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                                     @endphp
 
                             <script src="{{$script_src}}"></script>  
@@ -1092,23 +1171,61 @@
                                       ]
                                   },
                                   placeholder: '',
-                                  fontFamily: {
-                                      options: [
-                                          'default',
-                                          'Arial, Helvetica, sans-serif',
-                                          'Courier New, Courier, monospace',
-                                          'Georgia, serif',
-                                          'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                                          'Tahoma, Geneva, sans-serif',
-                                          'Times New Roman, Times, serif',
-                                          'Trebuchet MS, Helvetica, sans-serif',
-                                          'Verdana, Geneva, sans-serif'
-                                      ],
-                                      supportAllValues: true
-                                  },
+                                 fontFamily: {
+                                    @php 
+                                    if($lang->code == 'as'){
+                                     echo" options: ['Shree-Ass-001, monospace', 'Shree-Ass-002, monospace', 'Calibri, monospace',]";
+                                    }
+                                    elseif($lang->code == 'bn') { 
+                                     echo" options: ['SHREE-BAN-0560E, monospace', 'SHREE-BAN-0560E, monospace', 'Calibri, monospace',]";
+                                    
+                                    } 
+                                    elseif($lang->code == 'en') { 
+                                     echo" options: ['Calibri, monospace', 'Calibri Bold, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'gu') { 
+                                     echo" options: ['SHREE-GUJ-0768, monospace', 'SHREE-GUJ-0763, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'hi') { 
+                                     echo" options: ['SHREE-DEV-0715E, monospace', 'SHREE-DEV-0715E, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'kn') { 
+                                      echo" options: ['Shree-Kan-001, monospace', 'Shree-Kan-001, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'kh') { 
+                                     echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ml') { 
+                                     echo" options: ['SHREE-MAL-0501, monospace', 'SHREE-MAL-0502, monospace', 'Calibri, monospace', ]";
+                                    
+                                    } elseif($lang->code == 'mr') { 
+                                     echo" options: ['SHREE-DEV-0714, monospace', 'SHREE-DEV-0709, monospace', 'Calibri, monospace' ,]";
+                                    
+                                    } elseif($lang->code == 'or') { 
+                                     echo" options: ['SHREE-ORI-0601M, monospace', 'SHREE-ORI-0601M, monospace', 'Calibri, monospace',]";
+                                    
+                                      } elseif($lang->code == 'pa') { 
+                                     echo" options: ['Shree-Pun-001, monospace', 'Shree-Pun-002, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ta') { 
+                                     echo" options: ['TAM-Shree802, monospace', 'TAM-Tamil003, monospace', 'Calibri, monospace', ]";
+                                    
+                                    } elseif($lang->code == 'te') { 
+                                     echo" options: ['SHREE-TEL-1642, monospace', 'Shree-Tel-002, monospace', 'Calibri, monospace',]";
+                                    
+                                    } elseif($lang->code == 'ar') { 
+                                     echo" options: ['Jameel Noori Nastaleeq, monospace', 'Calibri, monospace',]";
+                                    
+                                    }  
+
+                                    @endphp 
+                                      ,
+                                      supportAllValues: true 
+                                    },
                                   fontSize: {
-                                      options: [ 10, 12, 14, 'default', 18, 20, 22 ],
-                                      supportAllValues: true
+                                      options: [ 8,9,10,11, 12,13, 14,15, 16,17, 18, 'default' ,19,20, 21,22,23,24 ],
+                                      supportAllValues: true,
+                                      default: 22
                                   },
                                   htmlSupport: {
                                       allow: [
@@ -1180,7 +1297,7 @@
                           @elseif($views3 == 'table')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea> 
                             @php
-                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                             $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                             @endphp
 
                             <script src="{{$script_src}}"></script>  
@@ -1313,7 +1430,7 @@
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
                             @php
-                             $script_src = "https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/translations/".$lang->code. ".js";
+                             $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                             @endphp
 
                             <script src="{{$script_src}}"></script> 

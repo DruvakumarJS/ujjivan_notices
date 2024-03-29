@@ -32,7 +32,7 @@ body {
      <form method="GET" action="{{route('create_notice')}}">
      	@csrf
 		<div class="row div-margin">
-       <p>* Type of Notice you want to create</p>
+       <p class="label-bold">* Type of Notice you want to create</p>
         <div class="div-margin">
            <input type="radio" id="ujjivan" name="notice_type" value="ujjivan" onchange="handleChange(this);" <?php echo($notice_type == 'ujjivan')? 'checked' : 'disabled'  ?> >
            <label for="html">Ujjivan Notice</label>
@@ -41,7 +41,7 @@ body {
         </div>
 
         <div class="text-sm-start div-margin" >
-          <span class="" id="basic-addon3">* Select Languages for creating Notice</span>
+          <span class="label-bold" id="basic-addon3">* Select Languages for creating Notice</span>
         </div>
 
         <div class="row" id="state_dropdown_list" >
