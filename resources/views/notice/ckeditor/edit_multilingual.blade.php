@@ -298,7 +298,7 @@
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" >{{ $lang['notice_content'][$cVal]}}</textarea> 
 
                                     @php
-                                     $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
+                                     $script_src = "asset(ckeditor/translations/".$lang['notice_content']['lang_code']. ".js )";
                                      @endphp
 
                                      <script src="{{$script_src}}"></script>

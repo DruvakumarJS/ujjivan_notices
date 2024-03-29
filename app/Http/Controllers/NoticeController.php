@@ -1788,6 +1788,82 @@ class NoticeController extends Controller
 
     public function update_multi_rbi_notice(Request $request){
      // print_r(json_encode($request->Input()) ); die();
+
+      $validator = Validator::make($request->all(), [
+
+        'document_id' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+           'version' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+           'publish_date' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+        'notice.*.tittle' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+          'notice.*.description' => [
+              'required',
+              function ($attribute, $value, $fail) {
+                  // Decode HTML entities
+                  $decodedValue = ($value);
+
+                  // Check if the decoded HTML content contains any <script> tags
+                  if (strpos($decodedValue, '<script') !== false) {
+                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
+                  }
+              },
+          ],
+
+
+          
+      ]);
+
+      if ($validator->fails()) {
+        
+          return redirect()->back()->withErrors($validator)->withInput();
+      }
+      
       $imageFiles = $_FILES['notice'];
 
       foreach ($request->notice as $key => $value) {
