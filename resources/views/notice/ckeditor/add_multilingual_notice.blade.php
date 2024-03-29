@@ -101,7 +101,7 @@
       @foreach($selected_languages as $keyl=>$lang)
       <hr/>
        <div class="row">
-        <div style="width: 1000px" >
+        <div style="width: 950px" >
           <div class="card">
             <label class="card-header text-primary font-bolder" dir="{{ $lang->code == 'ar' ? 'rtl' : 'ltr' }}" >{{$lang->lang}} - {{$lang->name}}</label>
             <!-- <h5 class="card-header">

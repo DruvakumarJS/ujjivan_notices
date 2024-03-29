@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('content')-->
+@section('content')
 
 <style type="text/css">
   
@@ -198,7 +198,7 @@
 
       <hr/>
        <div class="row">
-        <div style="width: 1000px" >
+        <div style="width: 950px" >
           <div class="card">
             <label class="card-header text-primary font-bolder" dir="{{ $lang['notice_content']['lang_code']== 'ar' ? 'rtl' : 'ltr' }}" >{{$lang['language']}}</label>
             <!-- <h5 class="card-header">
