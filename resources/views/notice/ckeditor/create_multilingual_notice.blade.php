@@ -459,7 +459,20 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                              });
+                                  }).then(editor => {
+                                    editor.keystrokes.set('Space', (data, stop) => {
+                                            // Insert an   tag after the space
+                                            editor.model.change(writer => {
+                                                const selection = editor.model.document.selection;
+                                                const position = selection.getFirstPosition();
+                                                writer.insertText('\u00a0', position);
+                                            });
+                                        });
+                                      console.log('Editor created successfully:', editor);
+                                  }).catch(error => {
+                                      console.error('Error creating editor:', error);
+                                  });
+                             
                           </script>
                           @elseif($views == 'table')
                           <div class="div-margin">
@@ -595,7 +608,19 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                              });
+                              }).then(editor => {
+                                    editor.keystrokes.set('Space', (data, stop) => {
+                                            // Insert an   tag after the space
+                                            editor.model.change(writer => {
+                                                const selection = editor.model.document.selection;
+                                                const position = selection.getFirstPosition();
+                                                writer.insertText('\u00a0', position);
+                                            });
+                                        });
+                                      console.log('Editor created successfully:', editor);
+                                  }).catch(error => {
+                                      console.error('Error creating editor:', error);
+                                  });
                           </script>
                           @elseif($views == 'img')
                           <div class="div-margin">
@@ -730,7 +755,19 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                              });
+                              }).then(editor => {
+                                    editor.keystrokes.set('Space', (data, stop) => {
+                                            // Insert an   tag after the space
+                                            editor.model.change(writer => {
+                                                const selection = editor.model.document.selection;
+                                                const position = selection.getFirstPosition();
+                                                writer.insertText('\u00a0', position);
+                                            });
+                                        });
+                                      console.log('Editor created successfully:', editor);
+                                  }).catch(error => {
+                                      console.error('Error creating editor:', error);
+                                  });
                           </script>
                           @endif
                                    @endforeach
@@ -921,7 +958,19 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                              });
+                             }).then(editor => {
+                                    editor.keystrokes.set('Space', (data, stop) => {
+                                            // Insert an   tag after the space
+                                            editor.model.change(writer => {
+                                                const selection = editor.model.document.selection;
+                                                const position = selection.getFirstPosition();
+                                                writer.insertText('\u00a0', position);
+                                            });
+                                        });
+                                      console.log('Editor created successfully:', editor);
+                                  }).catch(error => {
+                                      console.error('Error creating editor:', error);
+                                  });
                           </script>
                           @elseif($views2 == 'table')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>
@@ -1054,7 +1103,19 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                              });
+                             }).then(editor => {
+                                    editor.keystrokes.set('Space', (data, stop) => {
+                                            // Insert an   tag after the space
+                                            editor.model.change(writer => {
+                                                const selection = editor.model.document.selection;
+                                                const position = selection.getFirstPosition();
+                                                writer.insertText('\u00a0', position);
+                                            });
+                                        });
+                                      console.log('Editor created successfully:', editor);
+                                  }).catch(error => {
+                                      console.error('Error creating editor:', error);
+                                  });
                           </script>
                           @elseif($views2 == 'img')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
@@ -1187,7 +1248,19 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                              });
+                              }).then(editor => {
+                                    editor.keystrokes.set('Space', (data, stop) => {
+                                            // Insert an   tag after the space
+                                            editor.model.change(writer => {
+                                                const selection = editor.model.document.selection;
+                                                const position = selection.getFirstPosition();
+                                                writer.insertText('\u00a0', position);
+                                            });
+                                        });
+                                      console.log('Editor created successfully:', editor);
+                                  }).catch(error => {
+                                      console.error('Error creating editor:', error);
+                                  });
                           </script>
                           @endif
                                   </div>
@@ -1382,7 +1455,19 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                              });
+                              }).then(editor => {
+                                    editor.keystrokes.set('Space', (data, stop) => {
+                                            // Insert an   tag after the space
+                                            editor.model.change(writer => {
+                                                const selection = editor.model.document.selection;
+                                                const position = selection.getFirstPosition();
+                                                writer.insertText('\u00a0', position);
+                                            });
+                                        });
+                                      console.log('Editor created successfully:', editor);
+                                  }).catch(error => {
+                                      console.error('Error creating editor:', error);
+                                  });
                           </script>
                           @elseif($views3 == 'table')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea> 
@@ -1514,7 +1599,19 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                              });
+                              }).then(editor => {
+                                    editor.keystrokes.set('Space', (data, stop) => {
+                                            // Insert an   tag after the space
+                                            editor.model.change(writer => {
+                                                const selection = editor.model.document.selection;
+                                                const position = selection.getFirstPosition();
+                                                writer.insertText('\u00a0', position);
+                                            });
+                                        });
+                                      console.log('Editor created successfully:', editor);
+                                  }).catch(error => {
+                                      console.error('Error creating editor:', error);
+                                  });
                           </script>
                           @elseif($views3 == 'img')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
@@ -1647,7 +1744,19 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                              });
+                              }).then(editor => {
+                                    editor.keystrokes.set('Space', (data, stop) => {
+                                            // Insert an   tag after the space
+                                            editor.model.change(writer => {
+                                                const selection = editor.model.document.selection;
+                                                const position = selection.getFirstPosition();
+                                                writer.insertText('\u00a0', position);
+                                            });
+                                        });
+                                      console.log('Editor created successfully:', editor);
+                                  }).catch(error => {
+                                      console.error('Error creating editor:', error);
+                                  });
                           </script>
                           @endif
                                   </div>
