@@ -300,7 +300,7 @@
                                     content: '{{$lang->code}}'
 
                                    },
-                                   
+
                                   
                                   toolbar: {
                                      viewportTopOffset : 70, 
@@ -461,20 +461,21 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                                  })/*.then(editor => {
+                                 /* }).then(editor => {
                                     // Define a custom keystroke event for handling space key
                                     editor.keystrokes.set('Space', (data, stop) => {
                                         // Insert a non-breaking space character after the space
                                         editor.model.change(writer => {
                                             const selection = editor.model.document.selection;
                                             const position = selection.getFirstPosition();
+                                            alert(selection.getAttribute())
                                             writer.insertText('\u00a0', position);
                                         });
                                     });
                                 }).catch(error => {
                                     console.error('Error creating editor:', error);
                                 });*/
-                                ;
+                                });
                           
                           </script>
                           @elseif($views == 'table')

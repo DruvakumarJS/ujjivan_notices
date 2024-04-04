@@ -31,9 +31,9 @@ class DeviceController extends Controller
 
     }
 
-    $current_apk_version = '1.1';
+    $current_apk_version = '1.0';
     $min_apk_version = '1.0';
-    $new_apk_available = 'true';
+    $new_apk_available = 'false';
     $mandatory_apk_update = 'false';
 
     if($request->apk_version < $min_apk_version){
