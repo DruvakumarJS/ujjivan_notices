@@ -297,12 +297,12 @@
                             
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" >{{ $lang['notice_content'][$cVal]}}</textarea> 
 
-                                    @php
+                                  <!--   @php
                                      $script_src = "asset(ckeditor/translations/".$lang['notice_content']['lang_code']. ".js )";
                                      @endphp
 
                                      <script src="{{$script_src}}"></script>
-
+ -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"), {
@@ -329,7 +329,7 @@
                                           
                                           'specialCharacters', 'horizontalLine', 'pageBreak', '|',
                                           'textPartLanguage', '|',
-                                          'uploadImage','insertTable','|','sourceEditing'
+                                          'uploadImage','insertTable','|',''
                                       ],
                                       shouldNotGroupWhenFull: true
                                   },
@@ -354,50 +354,51 @@
                                   placeholder: '',
                                   fontFamily: {
                                     @php 
-                                    if($lang['notice_content']['lang_code'] == 'as'){
+                                    echo" options: ['default' , 'Ubuntu, Arial, sans-serif',  'Ubuntu Mono, Courier New, Courier, monospace']";
+                                    /*if($lang->code == 'as'){
                                      echo" options: ['Shree-Ass-001, monospace', 'Shree-Ass-002, monospace', 'Calibri, monospace',]";
                                     }
-                                    elseif($lang['notice_content']['lang_code'] == 'bn') { 
+                                    elseif($lang->code == 'bn') { 
                                      echo" options: ['SHREE-BAN-0560E, monospace', 'SHREE-BAN-0560E, monospace', 'Calibri, monospace',]";
                                     
                                     } 
-                                    elseif($lang['notice_content']['lang_code'] == 'en') { 
-                                     echo" options: ['Calibri, monospace', 'Calibri Bold, monospace', 'Calibri, monospace',]";
+                                    elseif($lang->code == 'en') { 
+                                     echo" options: ['default' , 'Ubuntu, Arial, sans-serif',  'Ubuntu Mono, Courier New, Courier, monospace']";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'gu') { 
+                                    } elseif($lang->code == 'gu') { 
                                      echo" options: ['SHREE-GUJ-0768, monospace', 'SHREE-GUJ-0763, monospace', 'Calibri, monospace',]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'hi') { 
+                                    } elseif($lang->code == 'hi') { 
                                      echo" options: ['SHREE-DEV-0715E, monospace', 'SHREE-DEV-0715E, monospace', 'Calibri, monospace',]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'kn') { 
+                                    } elseif($lang->code == 'kn') { 
                                       echo" options: ['Shree-Kan-001, monospace', 'Shree-Kan-001, monospace', 'Calibri, monospace',]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'kh') { 
+                                    } elseif($lang->code == 'kh') { 
                                      echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Calibri, monospace',]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'ml') { 
+                                    } elseif($lang->code == 'ml') { 
                                      echo" options: ['SHREE-MAL-0501, monospace', 'SHREE-MAL-0502, monospace', 'Calibri, monospace', ]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'mr') { 
+                                    } elseif($lang->code == 'mr') { 
                                      echo" options: ['SHREE-DEV-0714, monospace', 'SHREE-DEV-0709, monospace', 'Calibri, monospace' ,]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'or') { 
+                                    } elseif($lang->code == 'or') { 
                                      echo" options: ['SHREE-ORI-0601M, monospace', 'SHREE-ORI-0601M, monospace', 'Calibri, monospace',]";
                                     
-                                      } elseif($lang['notice_content']['lang_code'] == 'pa') { 
+                                      } elseif($lang->code == 'pa') { 
                                      echo" options: ['Shree-Pun-001, monospace', 'Shree-Pun-002, monospace', 'Calibri, monospace',]";
-                                    
-                                    } elseif($lang['notice_content']['lang_code'] == 'ta') { 
+                                      
+                                    } elseif($lang->code == 'ta') { 
                                      echo" options: ['TAM-Shree802, monospace', 'TAM-Tamil003, monospace', 'Calibri, monospace', ]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'te') { 
+                                    } elseif($lang->code == 'te') { 
                                      echo" options: ['SHREE-TEL-1642, monospace', 'Shree-Tel-002, monospace', 'Calibri, monospace',]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'ar') { 
-                                     echo" options: ['Jameel Noori Nastaleeq, monospace', 'Courier Bold, monospace', 'Calibri, monospace',]";
+                                    } elseif($lang->code == 'ar') { 
+                                     echo" options: ['Jameel Noori Nastaleeq, monospace', 'Calibri, monospace',]";
                                     
-                                    } 
+                                    } */
 
                                     @endphp 
                                       ,
@@ -473,7 +474,7 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                                  }).then(editor => {
+                                  })/*.then(editor => {
                                     editor.keystrokes.set('Space', (data, stop) => {
                                             // Insert an   tag after the space
                                             editor.model.change(writer => {
@@ -485,18 +486,18 @@
                                       console.log('Editor created successfully:', editor);
                                   }).catch(error => {
                                       console.error('Error creating editor:', error);
-                                  });
+                                  })*/;
                           </script>
                           @elseif($views == 'table')
                           <div class="div-margin">
                                    </div>
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
-                             @php
+                           <!--   @php
                              $script_src = "asset(ckeditor/translations/".$lang['notice_content']['lang_code']. ".js )";
                              @endphp
 
-                             <script src="{{$script_src}}"></script>
+                             <script src="{{$script_src}}"></script> -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"), {
@@ -620,7 +621,7 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                                  }).then(editor => {
+                                  })/*.then(editor => {
                                     editor.keystrokes.set('Space', (data, stop) => {
                                             // Insert an   tag after the space
                                             editor.model.change(writer => {
@@ -632,18 +633,18 @@
                                       console.log('Editor created successfully:', editor);
                                   }).catch(error => {
                                       console.error('Error creating editor:', error);
-                                  });
+                                  })*/;
                           </script>
                           @elseif($views == 'img')
                           <div class="div-margin">
                                    </div>
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
-                            @php
+                          <!--   @php
                              $script_src = "asset(ckeditor/translations/".$lang['notice_content']['lang_code']. ".js )";
                             @endphp
 
-                             <script src="{{$script_src}}"></script>
+                             <script src="{{$script_src}}"></script> -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang['notice_content']['lang_code']}}"), {
@@ -768,7 +769,7 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                                  }).then(editor => {
+                                  })/*.then(editor => {
                                     editor.keystrokes.set('Space', (data, stop) => {
                                             // Insert an   tag after the space
                                             editor.model.change(writer => {
@@ -780,7 +781,7 @@
                                       console.log('Editor created successfully:', editor);
                                   }).catch(error => {
                                       console.error('Error creating editor:', error);
-                                  });
+                                  })*/;
                           </script>
                           @endif
                                    @endforeach
@@ -795,11 +796,11 @@
                                      @if($views2 == 'textarea')
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea> 
 
-                                     @php
+                                     <!-- @php
                                      $script_src = "asset(ckeditor/translations/".$lang['notice_content']['lang_code']. ".js )";
                                     @endphp
 
-                                     <script src="{{$script_src}}"></script> 
+                                     <script src="{{$script_src}}"></script>  -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"), {
@@ -826,7 +827,7 @@
                                           
                                           'specialCharacters', 'horizontalLine', 'pageBreak', '|',
                                           'textPartLanguage', '|',
-                                          'sourceEditing'
+                                          ''
                                       ],
                                       shouldNotGroupWhenFull: false
                                   },
@@ -851,50 +852,51 @@
                                   placeholder: '',
                                   fontFamily: {
                                     @php 
-                                    if($lang['notice_content']['lang_code'] == 'as'){
+                                    echo" options: ['default' , 'Ubuntu, Arial, sans-serif',  'Ubuntu Mono, Courier New, Courier, monospace']";
+                                    /*if($lang->code == 'as'){
                                      echo" options: ['Shree-Ass-001, monospace', 'Shree-Ass-002, monospace', 'Calibri, monospace',]";
                                     }
-                                    elseif($lang['notice_content']['lang_code'] == 'bn') { 
+                                    elseif($lang->code == 'bn') { 
                                      echo" options: ['SHREE-BAN-0560E, monospace', 'SHREE-BAN-0560E, monospace', 'Calibri, monospace',]";
                                     
                                     } 
-                                    elseif($lang['notice_content']['lang_code'] == 'en') { 
-                                     echo" options: ['Calibri, monospace', 'Calibri Bold, monospace', 'Calibri, monospace',]";
+                                    elseif($lang->code == 'en') { 
+                                     echo" options: ['default' , 'Ubuntu, Arial, sans-serif',  'Ubuntu Mono, Courier New, Courier, monospace']";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'gu') { 
+                                    } elseif($lang->code == 'gu') { 
                                      echo" options: ['SHREE-GUJ-0768, monospace', 'SHREE-GUJ-0763, monospace', 'Calibri, monospace',]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'hi') { 
+                                    } elseif($lang->code == 'hi') { 
                                      echo" options: ['SHREE-DEV-0715E, monospace', 'SHREE-DEV-0715E, monospace', 'Calibri, monospace',]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'kn') { 
+                                    } elseif($lang->code == 'kn') { 
                                       echo" options: ['Shree-Kan-001, monospace', 'Shree-Kan-001, monospace', 'Calibri, monospace',]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'kh') { 
+                                    } elseif($lang->code == 'kh') { 
                                      echo" options: ['Courier, monospace', 'Courier Bold, monospace', 'Calibri, monospace',]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'ml') { 
+                                    } elseif($lang->code == 'ml') { 
                                      echo" options: ['SHREE-MAL-0501, monospace', 'SHREE-MAL-0502, monospace', 'Calibri, monospace', ]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'mr') { 
+                                    } elseif($lang->code == 'mr') { 
                                      echo" options: ['SHREE-DEV-0714, monospace', 'SHREE-DEV-0709, monospace', 'Calibri, monospace' ,]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'or') { 
+                                    } elseif($lang->code == 'or') { 
                                      echo" options: ['SHREE-ORI-0601M, monospace', 'SHREE-ORI-0601M, monospace', 'Calibri, monospace',]";
                                     
-                                      } elseif($lang['notice_content']['lang_code'] == 'pa') { 
+                                      } elseif($lang->code == 'pa') { 
                                      echo" options: ['Shree-Pun-001, monospace', 'Shree-Pun-002, monospace', 'Calibri, monospace',]";
-                                    
-                                    } elseif($lang['notice_content']['lang_code'] == 'ta') { 
+                                      
+                                    } elseif($lang->code == 'ta') { 
                                      echo" options: ['TAM-Shree802, monospace', 'TAM-Tamil003, monospace', 'Calibri, monospace', ]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'te') { 
+                                    } elseif($lang->code == 'te') { 
                                      echo" options: ['SHREE-TEL-1642, monospace', 'Shree-Tel-002, monospace', 'Calibri, monospace',]";
                                     
-                                    } elseif($lang['notice_content']['lang_code'] == 'ar') { 
-                                     echo" options: ['Jameel Noori Nastaleeq, monospace', 'Courier Bold, monospace', 'Calibri, monospace',]";
+                                    } elseif($lang->code == 'ar') { 
+                                     echo" options: ['Jameel Noori Nastaleeq, monospace', 'Calibri, monospace',]";
                                     
-                                    } 
+                                    } */
 
                                     @endphp 
                                       ,
@@ -970,7 +972,7 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                                  }).then(editor => {
+                                  })/*.then(editor => {
                                     editor.keystrokes.set('Space', (data, stop) => {
                                             // Insert an   tag after the space
                                             editor.model.change(writer => {
@@ -982,16 +984,16 @@
                                       console.log('Editor created successfully:', editor);
                                   }).catch(error => {
                                       console.error('Error creating editor:', error);
-                                  });
+                                  })*/;
                           </script>
                           @elseif($views2 == 'table')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea> 
 
-                            @php
+                            <!-- @php
                              $script_src = "asset(ckeditor/translations/".$lang['notice_content']['lang_code']. ".js )";
                             @endphp
 
-                             <script src="{{$script_src}}"></script> 
+                             <script src="{{$script_src}}"></script>  -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"), {
@@ -1116,7 +1118,7 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                                  }).then(editor => {
+                                  })/*.then(editor => {
                                     editor.keystrokes.set('Space', (data, stop) => {
                                             // Insert an   tag after the space
                                             editor.model.change(writer => {
@@ -1128,16 +1130,16 @@
                                       console.log('Editor created successfully:', editor);
                                   }).catch(error => {
                                       console.error('Error creating editor:', error);
-                                  });
+                                  })*/;
                           </script>
                           @elseif($views2 == 'img')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
 
-                            @php
+                           <!--  @php
                              $script_src = "asset(ckeditor/translations/".$lang['notice_content']['lang_code']. ".js )";
                             @endphp
 
-                             <script src="{{$script_src}}"></script>
+                             <script src="{{$script_src}}"></script> -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang['notice_content']['lang_code']}}"), {
@@ -1262,7 +1264,7 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                                  }).then(editor => {
+                                  })/*.then(editor => {
                                     editor.keystrokes.set('Space', (data, stop) => {
                                             // Insert an   tag after the space
                                             editor.model.change(writer => {
@@ -1274,7 +1276,7 @@
                                       console.log('Editor created successfully:', editor);
                                   }).catch(error => {
                                       console.error('Error creating editor:', error);
-                                  });
+                                  })*/;
                           </script>
                           @endif
                                   </div>
@@ -1294,11 +1296,11 @@
                                      @if($views3 == 'textarea')
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea> 
 
-                                     @php
+                                     <!-- @php
                                      $script_src = "asset(ckeditor/translations/".$lang['notice_content']['lang_code']. ".js )";
                                     @endphp
 
-                                    <script src="{{$script_src}}"></script> 
+                                    <script src="{{$script_src}}"></script>  -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"), {
@@ -1325,7 +1327,7 @@
                                           
                                           'specialCharacters', 'horizontalLine', 'pageBreak', '|',
                                           'textPartLanguage', '|',
-                                          'sourceEditing'
+                                          ''
                                       ],
                                       shouldNotGroupWhenFull: false
                                   },
@@ -1350,7 +1352,8 @@
                                   placeholder: '',
                                   fontFamily: {
                                     @php 
-                                    if($lang['notice_content']['lang_code'] == 'as'){
+                                    echo" options: ['default' , 'Ubuntu, Arial, sans-serif',  'Ubuntu Mono, Courier New, Courier, monospace']";
+                                    /*if($lang['notice_content']['lang_code'] == 'as'){
                                      echo" options: ['Shree-Ass-001, monospace', 'Shree-Ass-002, monospace', 'Calibri, monospace',]";
                                     }
                                     elseif($lang['notice_content']['lang_code'] == 'bn') { 
@@ -1358,7 +1361,7 @@
                                     
                                     } 
                                     elseif($lang['notice_content']['lang_code'] == 'en') { 
-                                     echo" options: ['Calibri, monospace', 'Calibri Bold, monospace', 'Calibri, monospace',]";
+                                     echo" options: ['default' , 'Ubuntu, Arial, sans-serif',  'Ubuntu Mono, Courier New, Courier, monospace']";
                                     
                                     } elseif($lang['notice_content']['lang_code'] == 'gu') { 
                                      echo" options: ['SHREE-GUJ-0768, monospace', 'SHREE-GUJ-0763, monospace', 'Calibri, monospace',]";
@@ -1393,7 +1396,7 @@
                                     } elseif($lang['notice_content']['lang_code'] == 'ar') { 
                                       echo" options: ['Jameel Noori Nastaleeq, monospace', 'Courier Bold, monospace', 'Calibri, monospace',]";
                                     
-                                    } 
+                                    } */
 
                                     @endphp 
                                       ,
@@ -1469,7 +1472,7 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                                  }).then(editor => {
+                                  })/*.then(editor => {
                                     editor.keystrokes.set('Space', (data, stop) => {
                                             // Insert an   tag after the space
                                             editor.model.change(writer => {
@@ -1481,16 +1484,16 @@
                                       console.log('Editor created successfully:', editor);
                                   }).catch(error => {
                                       console.error('Error creating editor:', error);
-                                  });
+                                  })*/;
                           </script>
                           @elseif($views3 == 'table')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
-                            @php
+                            <!-- @php
                              $script_src = "asset(ckeditor/translations/".$lang['notice_content']['lang_code']. ".js )";
                             @endphp
 
-                             <script src="{{$script_src}}"></script>
+                             <script src="{{$script_src}}"></script> -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"), {
@@ -1615,7 +1618,7 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                                  }).then(editor => {
+                                  })/*.then(editor => {
                                     editor.keystrokes.set('Space', (data, stop) => {
                                             // Insert an   tag after the space
                                             editor.model.change(writer => {
@@ -1627,16 +1630,16 @@
                                       console.log('Editor created successfully:', editor);
                                   }).catch(error => {
                                       console.error('Error creating editor:', error);
-                                  });
+                                  })*/;
                           </script>
                           @elseif($views3 == 'img')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
-                            @php
+                           <!--  @php
                              $script_src = "asset(ckeditor/translations/".$lang['notice_content']['lang_code']. ".js )";
                             @endphp
 
-                             <script src="{{$script_src}}"></script>
+                             <script src="{{$script_src}}"></script> -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang['notice_content']['lang_code']}}"), {
@@ -1761,7 +1764,7 @@
                                       'TableOfContents',
                                       'PasteFromOfficeEnhanced'
                                   ]
-                                  }).then(editor => {
+                                  })/*.then(editor => {
                                     editor.keystrokes.set('Space', (data, stop) => {
                                             // Insert an   tag after the space
                                             editor.model.change(writer => {
@@ -1773,7 +1776,7 @@
                                       console.log('Editor created successfully:', editor);
                                   }).catch(error => {
                                       console.error('Error creating editor:', error);
-                                  });
+                                  })*/;
                           </script>
                           @endif
                                   </div>
@@ -1899,14 +1902,6 @@
   element.style.height = "250px";
   element.style.height = (element.scrollHeight) + "px";
 }
- 
-</script>
-
-<script>
-    ClassicEditor.create( document.querySelector( '#content' ) )
-        .catch( error => {
-            console.error( error );
-        } );
  
 </script>
 

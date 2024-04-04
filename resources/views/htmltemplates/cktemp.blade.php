@@ -40,15 +40,15 @@
                        
                        @if($views == 'textarea')
 
-                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}">{!! $content->$cVal !!}</div>
+                         <div class="ck-content"  id="test_{{$keys}}_{{$key1}}" dir="<?php echo ($lang_code == 'ar')?'rtl':'ltr' ?>">{!! $content->$cVal !!}</div>
                      
                          @elseif($views == 'table')
                          <!-- <textarea>{!! $content->$cVal !!}</textarea> -->
-                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}">{!! $content->$cVal !!}</div>
+                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}" dir="<?php echo ($lang_code == 'ar')?'rtl':'ltr' ?>">{!! $content->$cVal !!}</div>
                        
                        @else
                          
-                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}">{!! $content->$cVal !!}</div>
+                         <div class="ck-content" id="test_{{$keys}}_{{$key1}}" dir="<?php echo ($lang_code == 'ar')?'rtl':'ltr' ?>">{!! $content->$cVal !!}</div>
 
                        @endif
 

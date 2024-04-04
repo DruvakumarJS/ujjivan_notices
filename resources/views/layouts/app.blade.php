@@ -19,11 +19,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ 'resources/saas/content-styles.css' }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/content-styles.css') }}" rel="stylesheet" type="text/css">
 
     <!-- ckEditor -->
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-    
+    <!-- <script src="{{ asset('ckeditor/ckeditor.js') }}"></script> -->
+   <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>
+
 
      <script rel="stylesheet" src="{{ asset('jquery/jquery.min.js') }}"></script>
 

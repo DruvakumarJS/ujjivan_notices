@@ -191,12 +191,12 @@
                                    </div>
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
-                                     @php
+                                     <!-- @php
                                      $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                                      @endphp
 
                                      <script src="{{$script_src}}"></script>
-
+ -->
 
                                      <script>
 
@@ -206,7 +206,7 @@
                                     ui: '{{$lang->code}}',
 
                                     // But the content will be edited in Arabic.
-                                    content: '{{$lang->code}}'
+                                   // content: '{{$lang->code}}'
                                    },
                                   
                                   toolbar: {
@@ -224,7 +224,7 @@
                                           
                                           'specialCharacters', 'horizontalLine', 'pageBreak', '|',
                                           'textPartLanguage', '|',
-                                          'uploadImage','insertTable','|','sourceEditing'
+                                          'uploadImage','insertTable','|',''
                                       ],
                                       shouldNotGroupWhenFull: true
                                   },
@@ -249,7 +249,8 @@
                                   placeholder: '',
                                   fontFamily: {
                                     @php 
-                                    if($lang->code == 'as'){
+                                    echo" options: ['default' , 'Ubuntu, Arial, sans-serif',  'Ubuntu Mono, Courier New, Courier, monospace']";
+                                    /*if($lang->code == 'as'){
                                      echo" options: ['Shree-Ass-001, monospace', 'Shree-Ass-002, monospace', 'Calibri, monospace',]";
                                     }
                                     elseif($lang->code == 'bn') { 
@@ -282,7 +283,7 @@
                                     
                                       } elseif($lang->code == 'pa') { 
                                      echo" options: ['Shree-Pun-001, monospace', 'Shree-Pun-002, monospace', 'Calibri, monospace',]";
-                                    
+                                      
                                     } elseif($lang->code == 'ta') { 
                                      echo" options: ['TAM-Shree802, monospace', 'TAM-Tamil003, monospace', 'Calibri, monospace', ]";
                                     
@@ -292,7 +293,7 @@
                                     } elseif($lang->code == 'ar') { 
                                      echo" options: ['Jameel Noori Nastaleeq, monospace', 'Calibri, monospace',]";
                                     
-                                    }  
+                                    } */  
 
                                     @endphp 
                                       ,
@@ -387,12 +388,12 @@
                                    </div>
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea> 
 
-                            @php
+                            <!-- @php
                              $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                              @endphp
 
                              <script src="{{$script_src}}"></script>
-
+ -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"), {
@@ -536,11 +537,11 @@
                                    </div>
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key1+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key1+1}}]" ></textarea>  
 
-                             @php
+                           <!--   @php
                              $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                              @endphp
 
-                             <script src="{{$script_src}}"></script>
+                             <script src="{{$script_src}}"></script> -->
 
 
                                      <script>
@@ -692,11 +693,11 @@
                                      @if($views2 == 'textarea')
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea> 
 
-                                     @php
+                                    <!--  @php
                                      $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                                     @endphp
 
-                                    <script src="{{$script_src}}"></script>  
+                                    <script src="{{$script_src}}"></script>  --> 
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
@@ -723,7 +724,7 @@
                                           
                                           'specialCharacters', 'horizontalLine', 'pageBreak', '|',
                                           'textPartLanguage', '|',
-                                          'sourceEditing'
+                                          ''
                                       ],
                                       shouldNotGroupWhenFull: false
                                   },
@@ -748,7 +749,8 @@
                                   placeholder: '',
                                   fontFamily: {
                                     @php 
-                                    if($lang->code == 'as'){
+                                    echo" options: ['default' , 'Ubuntu, Arial, sans-serif',  'Ubuntu Mono, Courier New, Courier, monospace']";
+                                    /*if($lang->code == 'as'){
                                      echo" options: ['Shree-Ass-001, monospace', 'Shree-Ass-002, monospace', 'Calibri, monospace',]";
                                     }
                                     elseif($lang->code == 'bn') { 
@@ -781,7 +783,7 @@
                                     
                                       } elseif($lang->code == 'pa') { 
                                      echo" options: ['Shree-Pun-001, monospace', 'Shree-Pun-002, monospace', 'Calibri, monospace',]";
-                                    
+                                      
                                     } elseif($lang->code == 'ta') { 
                                      echo" options: ['TAM-Shree802, monospace', 'TAM-Tamil003, monospace', 'Calibri, monospace', ]";
                                     
@@ -791,7 +793,7 @@
                                     } elseif($lang->code == 'ar') { 
                                      echo" options: ['Jameel Noori Nastaleeq, monospace', 'Calibri, monospace',]";
                                     
-                                    }  
+                                    } */  
 
                                     @endphp 
                                       ,
@@ -884,11 +886,11 @@
                           @elseif($views2 == 'table')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>
 
-                            @php
+                           <!--  @php
                              $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                             @endphp
 
-                            <script src="{{$script_src}}"></script>   
+                            <script src="{{$script_src}}"></script> -->   
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
@@ -1029,11 +1031,11 @@
                           @elseif($views2 == 'img')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key2+1}}]" ></textarea>  
 
-                            @php
+                           <!--  @php
                              $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                             @endphp
 
-                            <script src="{{$script_src}}"></script> 
+                            <script src="{{$script_src}}"></script>  -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key2+1}}_{{$lang->code}}"), {
@@ -1189,11 +1191,11 @@
                                      @if($views3 == 'textarea')
                                      <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea> 
 
-                                     @php
+                                     <!-- @php
                                      $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                                     @endphp
 
-                            <script src="{{$script_src}}"></script>  
+                            <script src="{{$script_src}}"></script>   -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
@@ -1220,7 +1222,7 @@
                                           
                                           'specialCharacters', 'horizontalLine', 'pageBreak', '|',
                                           'textPartLanguage', '|',
-                                          'sourceEditing'
+                                          ''
                                       ],
                                       shouldNotGroupWhenFull: false
                                   },
@@ -1245,7 +1247,8 @@
                                   placeholder: '',
                                  fontFamily: {
                                     @php 
-                                    if($lang->code == 'as'){
+                                    echo" options: ['default' , 'Ubuntu, Arial, sans-serif',  'Ubuntu Mono, Courier New, Courier, monospace']";
+                                    /*if($lang->code == 'as'){
                                      echo" options: ['Shree-Ass-001, monospace', 'Shree-Ass-002, monospace', 'Calibri, monospace',]";
                                     }
                                     elseif($lang->code == 'bn') { 
@@ -1278,7 +1281,7 @@
                                     
                                       } elseif($lang->code == 'pa') { 
                                      echo" options: ['Shree-Pun-001, monospace', 'Shree-Pun-002, monospace', 'Calibri, monospace',]";
-                                    
+                                      
                                     } elseif($lang->code == 'ta') { 
                                      echo" options: ['TAM-Shree802, monospace', 'TAM-Tamil003, monospace', 'Calibri, monospace', ]";
                                     
@@ -1288,7 +1291,7 @@
                                     } elseif($lang->code == 'ar') { 
                                      echo" options: ['Jameel Noori Nastaleeq, monospace', 'Calibri, monospace',]";
                                     
-                                    }  
+                                    } */  
 
                                     @endphp 
                                       ,
@@ -1380,12 +1383,12 @@
                           </script>
                           @elseif($views3 == 'table')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea> 
-                            @php
+                           <!--  @php
                              $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                             @endphp
 
                             <script src="{{$script_src}}"></script>  
-
+ -->
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
                                   language: {
@@ -1525,11 +1528,11 @@
                           @elseif($views3 == 'img')
                             <textarea class="form-control" id="content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"  name="notice[{{$keyl}}][row{{$keys+1}}_{{$key3+1}}]" ></textarea>  
 
-                            @php
+                            <!-- @php
                              $script_src = "asset(ckeditor/translations/".$lang->code. ".js )";
                             @endphp
 
-                            <script src="{{$script_src}}"></script> 
+                            <script src="{{$script_src}}"></script>  -->
 
                                      <script>
                              CKEDITOR.ClassicEditor.create(document.getElementById("content_{{$keys+1}}_{{$key3+1}}_{{$lang->code}}"), {
@@ -1719,7 +1722,7 @@
 </div>
 
 <script type="text/javascript">
-  var mode = document.getElementById("pan").value;
+ // var mode = document.getElementById("pan").value;
    var langArray = [];
  // $('#region_list').prop('disabled', true);
  // $('#state_list').prop('disabled', true);
@@ -1777,13 +1780,13 @@
  
 </script>
 
-<script>
+<!-- <script>
     ClassicEditor.create( document.querySelector( '#content' ) )
         .catch( error => {
             console.error( error );
         } );
  
-</script>
+</script> -->
 
 <script type="text/javascript">
    $( "#publish_date" ).datepicker({
