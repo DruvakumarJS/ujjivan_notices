@@ -41,8 +41,8 @@
     <div id="app">
         
         <main class="py-4" >
-           <div class="row mx-0 px-0">
-                  <div class="col-12">
+           <div class="row mx-0 px-0 justify-content-center">
+                  <div class="col-12 justify-content-center" style="max-width: 950px">
                   @yield('content')
                   </div>
 

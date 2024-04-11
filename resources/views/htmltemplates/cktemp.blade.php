@@ -7,7 +7,7 @@
     background-image: url('/uconnect-logo.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 150px 150px; /* Adjust width and height as needed */ 
+    background-size: 250px 250px; /* Adjust width and height as needed */ 
     opacity: 0.9; /* Adjust the opacity to your preference */
     background-attachment: fixed;
 }
@@ -45,8 +45,8 @@
      
        <div class="row">
             <div style="width: 950px">
-              <div class="card text-black bg-white border border-white" style="padding: 0px 10px 10px 10px;">
-               <div class="card-header text-muted text-black" style="background-color: white; border: none; display: flex; align-items: center;height: 80px;">
+              <div class="card text-black bg-white border border-white" style="padding: 0px 20px 20px 20px;">
+               <div class="card-header text-muted text-black" style="background-color: white; border: none; display: flex; align-items: center;height: 80px;border-radius: 0;">
                   <div style="height: 30px; margin-right: auto;">
                       {!! QrCode::size(50)->generate($qrcode_data) !!}
                   </div>

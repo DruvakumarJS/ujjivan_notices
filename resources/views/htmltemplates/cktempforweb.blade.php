@@ -7,7 +7,7 @@
     background-image: url('/uconnect-logo.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 150px 150px; /* Adjust width and height as needed */ 
+    background-size: 250px 250px; /* Adjust width and height as needed */ 
     opacity: 0.9; /* Adjust the opacity to your preference */
     background-attachment: fixed;
 }
@@ -33,10 +33,12 @@
      
        <div class="row">
             <div style="width: 950px">
-              <div class="card text-black bg-white border border-white" style="padding: 0px 10px 10px 10px;">
-               <div class="card-header text-muted text-black" style="background-color: white; border: none; display: flex; align-items: center;height: 80px;">
+              <div class="card text-black bg-white border border-white" style="padding: 0px 20px 20px 20px;">
+               <div class="card-header text-muted text-black" style="background-color: white; border: none; display: flex; align-items: right;height: 80px;border-radius: 0;">
                 
-                 <img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> 
+                <div style="height: 30px; margin-left: auto;">
+                      <img src="{{ url('/') }}/images/mainLogo.svg" style="height: 30px;">
+                  </div>
                </div>
               
                 @foreach($arr as $keys=>$values)
