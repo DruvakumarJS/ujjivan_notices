@@ -2,9 +2,42 @@
 
 @section('content')
 
+<style type="text/css">
+  body {
+    background-image: url('/uconnect-logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 150px 150px; /* Adjust width and height as needed */ 
+    opacity: 0.9; /* Adjust the opacity to your preference */
+    background-attachment: fixed;
+}
+.card-header {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  position: sticky;
+  top: 0; 
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+
+.qr-code, .logo {
+    height: 30px;
+    margin-right: 10px; /* Adjust margin as needed */
+}
+
+.text-between-images {
+    margin-top: 10px;
+    text-align: center; /* Align text in the center */
+}
+
+
+</style>
+
 <div class="container-body">
   
-        <!-- content -->
+      <!-- content -->
 
         @php
         $data = json_encode($template->details , TRUE);
@@ -13,13 +46,16 @@
        <div class="row">
             <div style="width: 950px">
               <div class="card text-black bg-white border border-white" style="padding: 0px 10px 10px 10px;">
-               <div class="card-header text-muted text-black"  style="background-color: white;border: none;">
-                
-                 <div style="height: 30px;float: start;">
-                {!! QrCode::size(50)->generate($qrcode_data) !!}
-                </div>
-                 <img src="{{ url('/')}}/images/mainLogo.svg" style="height: 30px;float: right;"> 
-               </div>
+               <div class="card-header text-muted text-black" style="background-color: white; border: none; display: flex; align-items: center;height: 80px;">
+                  <div style="height: 30px; margin-right: auto;">
+                      {!! QrCode::size(50)->generate($qrcode_data) !!}
+                  </div>
+
+                  <div style="height: 30px; margin-left: auto;">
+                      <img src="{{ url('/') }}/images/mainLogo.svg" style="height: 30px;">
+                  </div>
+                  
+              </div>
 
                <div id="test">
                  
@@ -111,7 +147,7 @@
                
                 </div>
                
-                <div class="card-footer text-muted text-black bg-white" style="border: none;">
+                <div class="card-footer text-muted text-black bg-white footer" style="border: none;">
                   <label style="color: black">Version {{$version}}</label>
                   <div id="div3">
                     <label  style="color: black">Published on {{$published}}</label>

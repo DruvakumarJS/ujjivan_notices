@@ -544,6 +544,10 @@ margin-left: -15px;
         display: none;
     }
 }
+p
+{
+    margin:2px;
+}
 
 /*custom fonts*/
 @font-face {

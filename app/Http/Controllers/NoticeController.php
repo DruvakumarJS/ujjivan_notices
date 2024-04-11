@@ -420,17 +420,18 @@ class NoticeController extends Controller
         $version = $request->version;
         $published = $request->publish_date;
          $qrcode_data = url('/').'/noticefiles/'.$local_filename;
+         $name = $value['tittle'];
 
          $noticecontent = 
          File::put(public_path().'/noticefiles/'.$local_filename,
             view('htmltemplates.cktemp')
-                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ])
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code , 'name' => $name])
                 ->render()
         );
 
          File::put(public_path().'/noticefilesforweb/'.$local_filename,
             view('htmltemplates.cktempforweb')
-                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ])
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code , 'name' => $name])
                 ->render()
         );
 
@@ -1033,20 +1034,20 @@ class NoticeController extends Controller
                 $local_filename = $value['langauge'].'_'.$notice->filename; 
                 $qrcode_data = url('/').'/noticefiles/'.$local_filename;
                 
-               
+                $name = $value['tittle'] ;
                 $version = $request->version;
                 $published = $request->publish_date;
 
                  $noticecontent = 
                  File::put(public_path().'/noticefiles/'.$local_filename,
                     view('htmltemplates.cktemp')
-                        ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data' => $qrcode_data , 'lang_code' => $langaugedata->code])
+                        ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data' => $qrcode_data , 'lang_code' => $langaugedata->code ,  'name' => $name])
                         ->render()
                 );
 
                  File::put(public_path().'/noticefilesforweb/'.$local_filename,
                     view('htmltemplates.cktempforweb')
-                        ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ])
+                        ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ,'name' => $name ])
                         ->render()
                 ); 
 
