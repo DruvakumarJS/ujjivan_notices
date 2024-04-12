@@ -31,6 +31,7 @@
 			<table class="table table-responsive table-stripped">
 				<thead>
 					<tr>
+            <th>Device ID</th>
 						<th>Region</th>
 						<th>Branch Name</th>
             <th>Branch Code</th>
@@ -49,6 +50,7 @@
 				<tbody>
           @foreach($data as $key=>$value)
 					<tr>
+            <td>{{$value->name}}</td>
             <td>{{$value->branch->region->name}}</td>
             <td>{{$value->branch->name}}</td>
             <td>{{$value->branch->branch_code}}</td>
