@@ -124,7 +124,7 @@
                     <div class="form-group row">
                       <label for="" class="col-4 col-form-label">IFSC *</label>
                       <div class="col-7">
-                          <input class="form-control" name="city" type="text" placeholder="Enter IFSC Code" value="{{$value->ifsc}}" required>
+                          <input class="form-control" name="ifsc" type="text" placeholder="Enter IFSC Code" value="{{$value->ifsc}}" required>
                       </div>
                     </div>
 

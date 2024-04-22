@@ -12,12 +12,14 @@ use App\Models\User;
 use App\Models\Language;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DeviceData;
+use App\Models\Audit;
 use DB;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\LabelAlignment;
 use PDF;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 
 class HomeController extends Controller
@@ -209,9 +211,22 @@ class HomeController extends Controller
           return redirect()->back()->withErrors($validator)->withInput();
       }
 
-        $save = Region::create(['name' => $request->name , 'region_code'=> $request->branch_code]);
+       // $save = Region::create(['name' => $request->name , 'region_code'=> $request->branch_code]);
+
+        $region = New Region();
+        $region->name = $request->name;
+        $region->region_code = $request->branch_code;
+        $save = $region->save();
 
         if($save){
+          $audit = Audit::create([
+            'action' => 'New Region added - '.$request->name,
+            'track_id' => $region->id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Region',
+            'operation' => 'C'
+          ]);
+
             return redirect()->route('regions');
         }
     }
@@ -255,15 +270,32 @@ class HomeController extends Controller
         $update = Region::where('id',$request->id)->update(['name' => $request->name , 'region_code'=> $request->branch_code]);
 
         if($update){
+
+          $audit = Audit::create([
+            'action' => 'Region details modified - '.$request->name,
+            'track_id' => $request->id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Region',
+            'operation' => 'U'
+          ]);
             return redirect()->route('regions');
         }
     }
 
     public function delete_region($id){
         //print_r($id); die();
+        $data = Region::where('id',$id)->first();
         $delete = Region::where('id',$id)->delete();
 
         if($delete){
+           $audit = Audit::create([
+            'action' => 'Region deleted - '.$data->name,
+            'track_id' => $id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Region',
+            'operation' => 'D'
+          ]);
+
             return redirect()->route('regions');
         }
     }
@@ -412,6 +444,14 @@ class HomeController extends Controller
             'pincode' => $request->pincode]);
 
         if($save){
+          $data = Branch::where('branch_code', $request->branch_code)->first();
+           $audit = Audit::create([
+            'action' => 'New branch created - '.$request->branch_code,
+            'track_id' => $data->id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Branch',
+            'operation' => 'C'
+          ]);
             return redirect()->route('branches');
         }
     }
@@ -566,15 +606,33 @@ class HomeController extends Controller
             'pincode' => $request->pincode]);
 
         if($save){
+          $data = Branch::where('branch_code', $request->branch_code)->first();
+           $audit = Audit::create([
+            'action' => 'Branch details modified - '.$request->branch_code,
+            'track_id' => $data->id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Branch',
+            'operation' => 'C'
+          ]);
+
             return redirect()->route('branches');
         }
     }
 
     public function delete_branch($id){
        // print_r($id); die();
+        $data = Branch::where('id',$id)->first();
         $delete = Branch::where('id',$id)->delete();
 
         if($delete){
+
+           $audit = Audit::create([
+            'action' => 'Branch details modified - '.$data->branch_code,
+            'track_id' => $data->id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Branch',
+            'operation' => 'C'
+          ]);
             return redirect()->route('branches');
         }
     }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Audit;
 
 class LoginController extends Controller
 {
@@ -26,7 +28,20 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+   // protected $redirectTo = RouteServiceProvider::HOME;
+
+    public function redirectTo(){
+
+        $audit = Audit::create([
+            'action' => 'Logged in to Ujjivan Dashboard',
+            'track_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Login',
+            'operation' => 'C'
+          ]);
+
+        return '/home';
+    }
 
     /**
      * Create a new controller instance.

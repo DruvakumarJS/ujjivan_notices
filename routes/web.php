@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AuditController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -107,6 +108,10 @@ Route::get('get_bank_details',[HomeController::class,'get_bank_details'])->name(
 
 Route::get('/qrcode', [HomeController::class, 'showqrcode'])->name('qrcode');
 Route::post('/authenticate', [HomeController::class, 'authenticate'])->name('authenticate');
+
+
+Route::get('audit',[AuditController::class,'index'])->name('audit');
+Route::get('search_audit',[AuditController::class,'search_audit'])->name('search_audit');
 
 });
 

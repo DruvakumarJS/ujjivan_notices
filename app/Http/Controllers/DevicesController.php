@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Audit;
+use Auth;
 
 class DevicesController extends Controller
 {
@@ -179,7 +181,17 @@ class DevicesController extends Controller
         ]);
 
         if($store){
-            return redirect()->route('devices');
+          $data = Devices::where('mac_id',$request->device_id)->first();
+
+          $audit = Audit::create([
+            'action' => 'New device registered under branch ID - '.$branch->branch_code,
+            'track_id' => $data->id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Device',
+            'operation' => 'C'
+          ]);
+
+          return redirect()->route('devices');
         }
     }
 
@@ -344,6 +356,16 @@ class DevicesController extends Controller
         ]);
 
         if($update){
+
+          $audit = Audit::create([
+            'action' => 'Device details modified for branch ID - '.$branch->branch_code,
+            'track_id' => $id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Device',
+            'operation' => 'U'
+          ]);
+
+
             return redirect()->route('view_device_datails',$id);
         }
     }
@@ -357,6 +379,16 @@ class DevicesController extends Controller
     public function destroy($id)
     {
       // print_r($id); die();
+      $device=Devices::where('id',$id)->first();
+      $branch = Branch::where('id',$device->branch_id)->first();
+
+          $audit = Audit::create([
+            'action' => 'Device removed from branch ID - '.$branch->branch_code,
+            'track_id' => $id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Device',
+            'operation' => 'D'
+          ]);
 
         return redirect()->back();
     }

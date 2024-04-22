@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\Template;
 use App\Models\NoticeContent;
 use App\Models\Language;
+use App\Models\Audit;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
@@ -356,7 +357,6 @@ class NoticeController extends Controller
 
          $noticeID = $notice->id;
 
-         //print_r($noticeID);
 
          if($noticeID != 0 AND $noticeID!=''){
          $content = new NoticeContent;
@@ -434,6 +434,15 @@ class NoticeController extends Controller
                 ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code , 'name' => $name])
                 ->render()
         );
+
+          $audit = Audit::create([
+            'action' => 'New Ujjivan notice created in '.$langaugedata->lang,
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'C'
+          ]);
+             
 
 
        }
@@ -678,6 +687,14 @@ class NoticeController extends Controller
                 ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ])
                 ->render()
         ); 
+
+        $audit = Audit::create([
+            'action' => 'New Ujjivan notice created in '.$langaugedata->lang,
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'A'
+        ]);
 
 
        }
@@ -1063,6 +1080,14 @@ class NoticeController extends Controller
 
        }
 
+       $audit = Audit::create([
+            'action' => 'Ujjivan Notices modified',
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'U'
+        ]);
+
        return redirect()->route('notices',$request->default_lang);
 // die();
 
@@ -1256,6 +1281,15 @@ class NoticeController extends Controller
         $delete = Notice::where('id', $id)->delete();
 
         if($delete){
+
+           $audit = Audit::create([
+            'action' => 'Ujjivan Notice deleted',
+            'track_id' => $notice->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'D'
+          ]);
+
           $delete_content = NoticeContent::where('notice_id',$id)->delete();
           $group_notices=Notice::where('notice_group',$groupID)->get();
 
@@ -1473,6 +1507,14 @@ class NoticeController extends Controller
 
          $noticeID = $notice->id;
 
+         $audit = Audit::create([
+            'action' => 'New RBI Notice Created in '.$langaugedata->lang,
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'C'
+          ]);
+
        }
 
         return redirect()->route('notices',$request->dropdown_lang);
@@ -1604,6 +1646,14 @@ class NoticeController extends Controller
          $notice->save();
 
          $noticeID = $notice->id;
+
+         $audit = Audit::create([
+            'action' => 'New RBI Notice Created in '.$langaugedata->lang,
+            'track_id' => $noticedetails->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'A'
+          ]);
 
        }
        $update = Notice::where('notice_group',$noticedetails->notice_group)->update(['available_languages'=> $langs.','.$new_langs]);
@@ -1935,6 +1985,14 @@ class NoticeController extends Controller
       }
         
       }
+
+      $audit = Audit::create([
+            'action' => 'RBI Notices Updated',
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'U'
+          ]);
      
       return redirect()->route('notices',$request->default_lang);
 
