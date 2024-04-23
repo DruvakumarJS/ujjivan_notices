@@ -177,8 +177,9 @@ class NoticeController extends Controller
     {
      // print_r(($request->Input()) );die();
       
-     //  print_r(json_encode($request->input()) ); die();
+      // print_r(json_encode($request->selected_languages) );
 
+      
        $validator = Validator::make($request->all(), [
 
         'document_id' => [
@@ -289,8 +290,6 @@ class NoticeController extends Controller
         
           return redirect()->back()->withErrors($validator)->withInput();
       }
-
-
 
        
        $region_prompt = '0';
@@ -405,6 +404,8 @@ class NoticeController extends Controller
        
         $content = NoticeContent::where('template_id',$request->template_id)->where('notice_id',$noticeID)->first();
 
+        $langArray[] = $langaugedata->lang;
+
         $data2 = $template->details ;
  
         $arr = json_decode($data2);
@@ -435,15 +436,14 @@ class NoticeController extends Controller
                 ->render()
         );
 
-          $audit = Audit::create([
+          /*$audit = Audit::create([
             'action' => 'New Ujjivan notice created in '.$langaugedata->lang,
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
             'operation' => 'C'
-          ]);
+          ]);*/
              
-
 
        }
 
@@ -451,13 +451,20 @@ class NoticeController extends Controller
        }
 
       // die();
+       $audit = Audit::create([
+            'action' => 'New Ujjivan notices created in '.implode(',',$langArray),
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'C'
+          ]);
 
 
        return redirect()->route('notices',$request->dropdown_lang);
     }
 
     public function add_notices(Request $request){
-       //print_r($request->Input()); die();
+      // print_r($request->Input()); die();
        $validator = Validator::make($request->all(), [
 
         'document_id' => [
@@ -659,6 +666,8 @@ class NoticeController extends Controller
        
         $content = NoticeContent::where('template_id',$request->template_id)->where('notice_id',$noticeID)->first();
 
+        $langArray[] = $langaugedata->lang;
+
         $data2 = $template->details ;
  
         $arr = json_decode($data2);
@@ -688,18 +697,19 @@ class NoticeController extends Controller
                 ->render()
         ); 
 
-        $audit = Audit::create([
-            'action' => 'New Ujjivan notice created in '.$langaugedata->lang,
+       }
+     }
+
+
+     $update = Notice::where('notice_group',$noticedetails->notice_group)->update(['available_languages'=> $langs.','.$new_langs]);
+
+     $audit = Audit::create([
+            'action' => 'New Ujjivan notices added in '.implode(',', $langArray),
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
             'operation' => 'A'
-        ]);
-
-
-       }
-     }
-     $update = Notice::where('notice_group',$noticedetails->notice_group)->update(['available_languages'=> $langs.','.$new_langs]);
+      ]);
 
       return redirect()->route('notices',$request->dropdown_lang);
     }
@@ -1081,7 +1091,7 @@ class NoticeController extends Controller
        }
 
        $audit = Audit::create([
-            'action' => 'Ujjivan Notices modified',
+            'action' => 'Ujjivan Notices modified in All languages',
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
@@ -1217,7 +1227,7 @@ class NoticeController extends Controller
         $template = Template::select('details')->where('id',$request->template_id)->first();
 
        
-        $content = NoticeContent::where('template_id',$request->template_id)->where('notice_id',$request->id)->first();
+        $content = NoticeContent::where('id',$noticeContentID)->first();
 
         //print_r(json_encode($content)); die();
         $data2 = $template->details ;
@@ -1238,21 +1248,34 @@ class NoticeController extends Controller
         
        // print_r($local_filename);die();
          
+        $name = $request['tittle'] ; 
         $version = $request->version;
         $published = $request->publish_date;
 
-         $noticecontent = 
-         File::put(public_path().'/noticefiles/'.$local_filename,
-            view('htmltemplates.cktemp')
-                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published , 'qrcode_data' => $qrcode_data])
-                ->render()
-        );
+          $noticecontent = 
+                 File::put(public_path().'/noticefiles/'.$local_filename,
+                    view('htmltemplates.cktemp')
+                        ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data' => $qrcode_data , 'lang_code' => $langaugedata->code ,  'name' => $name])
+                        ->render()
+                );
+         File::put(public_path().'/noticefilesforweb/'.$local_filename,
+                    view('htmltemplates.cktempforweb')
+                        ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ,'name' => $name ])
+                        ->render()
+                ); 
 
         }
 
         } 
 
         //die();
+        $audit = Audit::create([
+            'action' => 'Ujjivan Notices modified in '.$langaugedata->lang,
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'U'
+        ]);
 
        return redirect()->route('notices',$request->lang);
 
@@ -1270,6 +1293,7 @@ class NoticeController extends Controller
         $notice = Notice::where('id', $id)->first();
         $lang = $notice->lang_code;
         $groupID = $notice->notice_group;
+        $langaugedata = Language::where('code',$notice->lang_code)->first();
 
       //  print_r($lang); die();
         $filepath = public_path().'/noticefiles/'.$notice->filename;
@@ -1283,7 +1307,7 @@ class NoticeController extends Controller
         if($delete){
 
            $audit = Audit::create([
-            'action' => 'Ujjivan Notice deleted',
+            'action' => 'Notice deleted in '.$langaugedata->lang,
             'track_id' => $notice->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
@@ -1507,15 +1531,18 @@ class NoticeController extends Controller
 
          $noticeID = $notice->id;
 
-         $audit = Audit::create([
-            'action' => 'New RBI Notice Created in '.$langaugedata->lang,
+         $langArray[] = $langaugedata->lang;
+
+
+       }
+
+        $audit = Audit::create([
+            'action' => 'New RBI Notice Created in '.implode(',', $langArray),
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
             'operation' => 'C'
           ]);
-
-       }
 
         return redirect()->route('notices',$request->dropdown_lang);
     }
@@ -1647,16 +1674,21 @@ class NoticeController extends Controller
 
          $noticeID = $notice->id;
 
-         $audit = Audit::create([
-            'action' => 'New RBI Notice Created in '.$langaugedata->lang,
+         $langArray[] = $langaugedata->lang;
+
+         
+
+       }
+       $update = Notice::where('notice_group',$noticedetails->notice_group)->update(['available_languages'=> $langs.','.$new_langs]);
+
+       $audit = Audit::create([
+            'action' => 'New RBI Notice added in '.implode(',', $langArray),
             'track_id' => $noticedetails->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
             'operation' => 'A'
           ]);
 
-       }
-       $update = Notice::where('notice_group',$noticedetails->notice_group)->update(['available_languages'=> $langs.','.$new_langs]);
         return redirect()->route('notices',$request->dropdown_lang);
     }
 
@@ -1771,6 +1803,8 @@ class NoticeController extends Controller
       $notice = Notice::where('id',$request->id)->first();
       $filepath = public_path().'/noticefiles/'.$request->lang.'_'.$notice->filename;
 
+      $langaugedata = Language::where('code',$notice->lang_code)->first();
+
        $update = Notice::where('id',$request->id)->update([
            'name' => $request->tittle ,
            'description' => $request->description ,
@@ -1808,8 +1842,15 @@ class NoticeController extends Controller
          }
          
 
-
       }
+
+      $audit = Audit::create([
+            'action' => 'RBI notices modified in '.$langaugedata->lang,
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'U'
+      ]);
 
       return redirect()->route('notices',$request->lang);
 
@@ -1945,6 +1986,8 @@ class NoticeController extends Controller
       $notice = Notice::where('id',$value['id'])->first();
       $filepath = public_path().'/noticefiles/'.$value['langauge'].'_'.$notice->filename;
 
+      $langaugedata = Language::where('code',$notice->lang_code)->first();
+
        $update = Notice::where('id',$value['id'])->update([
            'name' => $value['tittle'] ,
            'description' => $value['description'] ,
@@ -1963,6 +2006,7 @@ class NoticeController extends Controller
        ]);
 
        $noticeID = $value['id'];
+       $langArray[] = $langaugedata->lang;
 
 
        if($noticeID != 0 AND $noticeID!=''){
@@ -1987,7 +2031,7 @@ class NoticeController extends Controller
       }
 
       $audit = Audit::create([
-            'action' => 'RBI Notices Updated',
+            'action' => 'RBI Notices Updated in '.imploade(',',$langArray),
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
@@ -2006,14 +2050,80 @@ class NoticeController extends Controller
 
       if($status == 'Published'){
         $update = Notice::where('id',$id)->update(['status' => 'Draft']);
+        $new_status = 'Draft';
       }
       else {
         $update = Notice::where('id',$id)->update(['status' => 'Published']);
+        $new_status = 'Published';
       }
 
       if($update){
+
+        $audit = Audit::create([
+            'action' => 'Notices Status Updated to '.$new_status,
+            'track_id' => $noticedata->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'U'
+          ]);
+
         return redirect()->back();
       }
+
+    }
+
+    public function modify_all_status($noticegroup , $status){
+
+      $noticedata = Notice::where('notice_group',$noticegroup)->first();
+
+       if($status == 'Publish'){
+        $update = Notice::where('notice_group',$noticegroup)->update(['status' => 'Published']);
+        $new_status = 'Published';
+      }
+      else {
+        $update = Notice::where('notice_group',$noticegroup)->update(['status' => 'Draft']);
+        $new_status = 'Draft';
+      }
+
+      $audit = Audit::create([
+            'action' => 'All Notices Status Updated to '.$new_status,
+            'track_id' => $noticedata->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'U'
+          ]);
+
+      return redirect()->back();
+    }
+
+    public function delete_all($noticegroup){
+
+      $data = Notice::where('notice_group', $noticegroup)->get();
+      $noticedata = Notice::where('notice_group',$noticegroup)->first();
+
+      foreach($data as $key=>$value){
+        $filename = $value->lang_code.'_'.$value->filename ;
+
+        $filepath = public_path().'/noticefiles/'.$filename;
+       
+        if (File::exists($filepath)) {
+              unlink($filepath);
+           }
+
+      }
+    
+        $delete = Notice::where('notice_group', $noticegroup)->delete();
+
+        if($delete){
+          $audit = Audit::create([
+            'action' => 'All Notices deleted',
+            'track_id' => $noticedata->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'D'
+          ]);
+          return redirect()->back();
+        }
 
     }
 

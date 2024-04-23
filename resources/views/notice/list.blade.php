@@ -2,6 +2,26 @@
 
 @section('content')
 
+<style type="text/css">
+	 td{
+		max-width: 150px;
+		overflow: hidden;
+		text-overflow: clip;
+		white-space: nowrap;
+		}
+
+	    ::-webkit-scrollbar {
+		  height: 4px;              
+		  width: 4px;    
+		  }
+
+   .scrollable-cell {
+     
+      overflow-x: auto;/* Display ellipsis (...) for overflowed content */
+  }  
+
+</style>
+
 <div class="container-body">
   
 	<div class="container-header">
@@ -76,10 +96,9 @@
 
 			            <th>Published Date</th>
 			            <th>Version</th>
+			            <th>Status</th>
 			            <th></th>
-			            <th></th>
-			            <th></th>
-			            <th></th>
+			            
             
 					</tr>
 				</thead>
@@ -88,7 +107,7 @@
 		          @foreach($data as $key=>$value)
 		          <tr>
 		          	<td>{{$value->document_id}}</td>
-		             <td>{{$value->name}}</td>
+		             <td style="max-width: 200px;" class="scrollable-cell"  data-toggle="tooltip" data-placement="top" title="{{$value->name}}">{{$value->name}}</td>
 		             @php
                        $languages = $value->available_languages;
                        $langarray = array();
@@ -114,8 +133,8 @@
                        $langlist = implode(',',$langarray);
 
 		             @endphp
-		             <!-- <td>{{$langlist}}</td> -->
-		             <td style="max-height: 200px">
+		             <td style="max-width: 150px;" class="scrollable-cell"  data-toggle="tooltip" data-placement="top" title="{{$langlist}}">{{$langlist}}</td>
+		            <!--  <td style="max-height: 200px">
 		             	<table>
 		             	@foreach($langarray as $val)
 		             	
@@ -125,18 +144,21 @@
 
 		             	@endforeach
 		             	</table>
-		             </td>
+		             </td> -->
 		             <td>{{$value->is_pan_india}}</td>
 		             <td>{{$value->notice_type}}</td>
 		             <td>{{$value->published_date}}</td>
 		             <td>{{$value->version}}</td> 
+		             <td>{{$value->status}}</td> 
+		             <td><a  id="MybtnModal_{{$key}}"><button class="btn btn-sm btn-outline-secondary">Action</button></a></td>
 		             <!-- <td>{{$value->status}}</td> -->
-		             <td>
+		             <!-- <td>
 		             	 <a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>	
 		             </td>
 		             <td>
 		             	@if($value->notice_type == 'ujjivan')
-			             <a href="{{ route('edit_multi_notice_datails',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+			             <a href="{{ route('edit_multi_notice_datails',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
+			             <a href="{{ route('edit_notice_datails',[$value->id])}}"><button class="btn btn-sm btn-outline-secondary">Modify</button></a>
 			             @else
 			             <a href="{{ route('edit_multi_rbi_notice_datails',[$value->notice_group,$lang])}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
 			             @endif
@@ -155,8 +177,112 @@
 		           
 		             <td>
 		             	 <a onclick="return confirm('You are deleting a Notice?')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
-		             </td>
+		             </td> -->
 				  </tr>	
+
+
+				   <!-- Edit modal -->
+
+                 <div class="modal" id="modal_{{$key}}"  >
+			        <div class="modal-dialog modal-m" >
+			          <div class="modal-content">
+			            <div class="modal-header">
+			              <h5 class="modal-title"> Notice - N{{$value->document_id}}</h5>
+			             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			               
+			            </div>
+			            <div class="modal-body">
+			                 
+			             <div class="form-build">
+			              <div class="row">
+			                <div class="col-12">
+			                  
+                               <label class="label-bold">{{$value->name}}</label>
+                              
+                               
+                                <div class="card">
+                                	<div class="card-header bg-primary text-white">Action on N{{$value->document_id}} - {{$value->lang_name}} Notice</div>
+                                	<div class="card-body">
+                                		<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
+
+                                		@if($value->notice_type == 'ujjivan')
+							            <a href="{{ route('edit_notice_datails',[$value->id])}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+							             @else
+							             <a href="{{ route('edit_rbi_notice',[$value->id])}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+							             @endif
+
+                                		@if($value->status == 'Draft')
+						             	<a onclick="return confirm('You are Publishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-dark">Publish</button></a>
+						             	@else
+						             	<a  onclick="return confirm('You are UnPublishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-warning" >UnPublish</button></a>
+						             	@endif
+
+                                		<a onclick="return confirm('You are deleting a N{{$value->document_id}} Notice')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>                               		
+                                	</div>
+                                </div>
+
+                                <div class="card">
+                                	<div class="card-header bg-primary text-white">Action on N{{$value->document_id}} - Multilingual(All language) Notice</div>
+                                	<div class="card-body">
+                                		<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View All</button></a>
+
+                                		@if($value->notice_type == 'ujjivan')
+							             <a href="{{ route('edit_multi_notice_datails',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
+							             
+							             @else
+							             <a href="{{ route('edit_multi_rbi_notice_datails',[$value->notice_group,$lang])}}" ><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
+							             @endif
+
+                                		
+						             	<a onclick="return confirm('You are Publishing all N{{$value->document_id}} notices')"  href="{{route('modify_all_notice_status',[$value->notice_group,'Publish'])}}"><button class="btn btn-sm btn-dark">Publish All</button></a>
+						             
+						             	<a  onclick="return confirm('You are UnPublishing all N{{$value->document_id}} notices')"  href="{{route('modify_all_notice_status',[$value->notice_group,'UnPublish'])}}"><button class="btn btn-sm btn-outline-warning" >UnPublish All</button></a>
+						             	
+		             	
+                                		<a onclick="return confirm('You are deleting all N{{$value->document_id}} notices')" href="{{ route('delete_all_notice_datails',$value->notice_group)}}"><button class="btn btn-sm btn-outline-danger">Delete All</button></a>                                		
+                                	</div>
+                                </div>
+
+                                <div>
+                               	   <a href="{{ route('select_language',[$lang,$value->id])}}"><button class="btn btn-sm btn-outline-info">Add new NB{{$value->document_id}} Notice</button></a>
+                                </div>
+			                    
+			                    
+			                    <!-- <div class="form-group row">
+			                      <label for="" class="col-4 col-form-label">Region Name*</label>
+			                      <div class="col-7">
+			                          <input class="form-control" name="name" type="text" placeholder="Enter Region Name" required value="{{$value->name}}">
+			                      </div>
+			                    </div>
+
+			                    <div class="form-group row">
+			                      <label for="" class="col-4 col-form-label">Region Code *</label>
+			                      <div class="col-7">
+			                          <input class="form-control" name="branch_code" type="text" placeholder="Enter Region Code"  required value="{{$value->region_code}}">
+			                      </div>
+			                    </div>
+			                     -->
+			                  
+			                </div>
+			                
+			              </div>
+			               
+			             </div>
+
+			            </div>
+
+			           
+			          </div>
+			        </div>
+			      </div>
+
+			       <script>
+			        $(document).ready(function(){
+			          $('#MybtnModal_{{$key}}').click(function(){
+			            $('#modal_{{$key}}').modal('show');
+			          });
+			        });  
+			        </script>
 
 		          @endforeach
 				</tbody>
