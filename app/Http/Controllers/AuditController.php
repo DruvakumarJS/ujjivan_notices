@@ -19,10 +19,10 @@ class AuditController extends Controller
          $search = $request->search;
          
          $data = Audit::orderBy('id', 'DESC')
-                 ->where('created_at' , 'LIKE' , $search.'%')
-                 ->orWhere('action' , 'LIKE' , $search.'%')
-                 ->orWhere('module' , 'LIKE' , $search.'%')
-                 ->orWhere('track_id' , 'LIKE' , $search.'%')
+                 ->where('created_at' , 'LIKE' ,'%'. $search.'%')
+                 ->orWhere('action' , 'LIKE' , '%'.$search.'%')
+                 ->orWhere('module' , 'LIKE' , '%'.$search.'%')
+                 ->orWhere('track_id' , 'LIKE' , '%'.$search.'%')
                 /* ->orWhereHas('user',function($query)use ($search){
                     $query->where('name','LIKE','%'.$search.'%')->orWhere('employee_id','LIKE','%'.$search.'%');
                  })*/
