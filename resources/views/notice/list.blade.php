@@ -34,7 +34,7 @@
            <form method="GET" action="{{route('search_notice')}}">
             @csrf
              <div class="input-group mb-3">
-                <input class="form-control" type="text" name="search" placeholder="Search here" value="{{$search}}">
+                <input class="form-control" type="text" name="search" placeholder="Search by Notice ID" value="{{$search}}">
 
                  <input type="hidden" name="lang" value="{{$lang}}">
                 <div class="input-group-prepend">
@@ -98,7 +98,7 @@
 						<th>PAN India</th>
 			            <th>Notice Type</th>
 
-			            <th>Published Date</th>
+			            <th>Created Date</th>
 			            <th>Version</th>
 			            <th>Status</th>
 			            <th></th>
@@ -155,7 +155,7 @@
 		             </td> -->
 		             <td>{{$value->is_pan_india}}</td>
 		             <td>{{$value->notice_type}}</td>
-		             <td>{{$value->published_date}}</td>
+		             <td>{{date('d M Y',strtotime($value->created_at)) }}</td>
 		             <td>{{$value->version}}</td> 
 		             <td>{{$value->status}}<!-- {{ ($value->status=='Published') ? 'Published' : 'UnPublished'}} --></td> 
 		             <td><a  id="MybtnModal_{{$key}}"><button class="btn btn-sm btn-outline-secondary">Action</button></a></td>
@@ -195,7 +195,7 @@
 			        <div class="modal-dialog modal-m" >
 			          <div class="modal-content">
 			            <div class="modal-header">
-			              <h5 class="modal-title"> Notice - N{{$value->document_id}}</h5>
+			              <h5 class="modal-title"> Notice - {{$value->document_id}}</h5>
 			             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			               
 			            </div>

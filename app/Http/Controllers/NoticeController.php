@@ -1360,9 +1360,9 @@ class NoticeController extends Controller
        if($request->lang == 'all'){
           $data = Notice::
          where(function($query)use($search){
-         $query->where('name','LIKE','%'.$search.'%');
+         /*$query->where('name','LIKE','%'.$search.'%');*/
          $query->orWhere('document_id','LIKE','%'.$search.'%');
-         $query->orWhere('notice_type','LIKE','%'.$search.'%');
+         /*$query->orWhere('notice_type','LIKE','%'.$search.'%');*/
        })
        ->orderBy('id', 'DESC')
        ->paginate(25)->withQueryString();
@@ -1370,9 +1370,9 @@ class NoticeController extends Controller
        else{
          $data = Notice::where('lang_code',$request->lang)
          ->where(function($query)use($search){
-           $query->where('name','LIKE','%'.$search.'%');
+           /*$query->where('name','LIKE','%'.$search.'%');*/
            $query->orWhere('document_id','LIKE','%'.$search.'%');
-           $query->orWhere('notice_type','LIKE','%'.$search.'%');
+           /*$query->orWhere('notice_type','LIKE','%'.$search.'%');*/
          })
          ->orderBy('id', 'DESC')
          ->paginate(25)->withQueryString();
