@@ -219,7 +219,7 @@
                         		@endphp 
                         		
                                 <div class="card">
-                                	<div class="card-header bg-primary text-white">Action on N{{$value->document_id}} - {{$value->lang_name}} Notice</div>
+                                	<div class="card-header bg-primary text-white">Action on {{$value->document_id}} - {{$value->lang_name}} Notice</div>
                                 	<div class="card-body">
 
                                 		<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$langs}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
@@ -241,7 +241,7 @@
                                 </div>
 
                                 <div class="card">
-                                	<div class="card-header bg-primary text-white">Action on N{{$value->document_id}} - Multilingual(All language) Notice</div>
+                                	<div class="card-header bg-primary text-white">Action on {{$value->document_id}} - Multilingual(All language) Notice</div>
                                 	<div class="card-body">
                                 		<a href="{{route('view_notices',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-primary">View All</button></a>
 
@@ -263,7 +263,7 @@
                                 </div>
 
                                 <div>
-                               	   <a href="{{ route('select_language',[$lang,$value->id])}}"><button class="btn btn-sm btn-outline-success">Add new N{{$value->document_id}} Notice</button></a>
+                               	   <a href="{{ route('select_language',[$lang,$value->id])}}"><button class="btn btn-sm btn-outline-success">Add new {{$value->document_id}} Notice</button></a>
                                 </div>
 			                    
 			                    

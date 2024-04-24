@@ -60,7 +60,7 @@
                               <td>{{date('H:i:s', strtotime($value->created_at))}}</td>
                               <td>{{$value->module}}</td>
                              <!--  <td>{{ ($value->module == 'Notice')? ('N'.$value->track_id):$value->track_id}}</td> -->
-                              <td> {{ ($value->module == 'Notice')? ('N'.$value->track_id.' - '):''}} {{$value->action}}</td>
+                              <td> {{ ($value->module == 'Notice')? ($value->track_id.' - '):''}} {{$value->action}}</td>
                                                             
                             </tr>
  
