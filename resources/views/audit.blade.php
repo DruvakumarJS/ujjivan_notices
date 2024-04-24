@@ -38,7 +38,7 @@
  
        
         <div>
-        	 <label class="label-bold" style="margin-left: 20px" >Audit Logs</label>
+        	 <label class="label-bold" style="margin-left: 20px" >Audit Trail</label>
 
         	<div class="card border-white scroll tableFixHead" style="height: 600px; padding: 0px 5px 20px 20px">
 

@@ -27,10 +27,17 @@ class NoticeController extends Controller
     {
     
      // print_r($request->lang); die();
-      $data = Notice::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);
-        $search = '';
-        $lang = $request->lang;
-        $languages = Language::get();
+       $lang = $request->lang;
+       if($lang == 'all'){
+         $data = Notice::orderBy('id','DESC')->paginate(25);
+       }
+       else{
+        $data = Notice::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);
+       }
+       
+       $search = '';
+       
+       $languages = Language::get();
      
         
        return view('notice/list', compact('data','search','languages','lang'));
@@ -452,7 +459,7 @@ class NoticeController extends Controller
 
       // die();
        $audit = Audit::create([
-            'action' => 'New Ujjivan notices created in '.implode(',',$langArray),
+            'action' => 'New Ujjivan notice(s) created in '.implode(',',$langArray),
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
@@ -1350,15 +1357,29 @@ class NoticeController extends Controller
     public function search(Request $request){
      // print_r($request->Input()); die();
        $search = $request->search;
-       $data = Notice::where('lang_code',$request->lang)
-       ->where(function($query)use($search){
+       if($request->lang == 'all'){
+          $data = Notice::
+         where(function($query)use($search){
          $query->where('name','LIKE','%'.$search.'%');
          $query->orWhere('description','LIKE','%'.$search.'%');
          $query->orWhere('document_id','LIKE','%'.$search.'%');
          $query->orWhere('notice_type','LIKE','%'.$search.'%');
        })
        ->orderBy('id', 'DESC')
+       ->first()
        ->paginate(25)->withQueryString();
+       }
+       else{
+         $data = Notice::where('lang_code',$request->lang)
+         ->where(function($query)use($search){
+           $query->where('name','LIKE','%'.$search.'%');
+           $query->orWhere('description','LIKE','%'.$search.'%');
+           $query->orWhere('document_id','LIKE','%'.$search.'%');
+           $query->orWhere('notice_type','LIKE','%'.$search.'%');
+         })
+         ->orderBy('id', 'DESC')
+         ->paginate(25)->withQueryString();
+       }
        
         $lang = $request->lang;
         $languages = Language::get();
@@ -2047,10 +2068,15 @@ class NoticeController extends Controller
 
       $noticedata = Notice::where('id',$id)->first();
       $status = $noticedata->status ;
+      $langaugedata = Language::where('code',$noticedata->lang_code)->first();
 
       if($status == 'Published'){
-        $update = Notice::where('id',$id)->update(['status' => 'Draft']);
-        $new_status = 'Draft';
+        $update = Notice::where('id',$id)->update(['status' => 'UnPublished']);
+        $new_status = 'UnPublished';
+      }
+      elseif($status == 'Draft'){
+        $update = Notice::where('id',$id)->update(['status' => 'Published']);
+        $new_status = 'Published';
       }
       else {
         $update = Notice::where('id',$id)->update(['status' => 'Published']);
@@ -2060,7 +2086,7 @@ class NoticeController extends Controller
       if($update){
 
         $audit = Audit::create([
-            'action' => 'Notices Status Updated to '.$new_status,
+            'action' => $langaugedata->lang.' Notice Status Updated to '.$new_status,
             'track_id' => $noticedata->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
@@ -2081,8 +2107,8 @@ class NoticeController extends Controller
         $new_status = 'Published';
       }
       else {
-        $update = Notice::where('notice_group',$noticegroup)->update(['status' => 'Draft']);
-        $new_status = 'Draft';
+        $update = Notice::where('notice_group',$noticegroup)->update(['status' => 'UnPublished']);
+        $new_status = 'UnPublished';
       }
 
       $audit = Audit::create([
@@ -2149,6 +2175,22 @@ class NoticeController extends Controller
        }
        
        return redirect()->to($url);
+
+    }
+
+    public function view_notices($noticegroup){
+
+       $data = Notice::where('notice_group',$noticegroup)->get();
+       $pdfUrls=array();
+
+       foreach ($data as $key => $value) {
+          $path = $value->lang_code.'_'.$value->filename;
+          $pdfUrls[] = asset('noticefiles/' . $path);
+       }
+       return view('notice/viewpdf', compact('pdfUrls'));
+
+      // print_r($filearray); die();
+
 
     }
 }

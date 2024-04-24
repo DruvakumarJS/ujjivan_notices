@@ -116,7 +116,7 @@
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a  href="{{ route('notices','en')}}" ><label>Notices</label></a>
                           </li>
-                          @if(auth::user()->role == 'admin')
+                         
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                               <!-- <a href="{{ route('devices')}}">
                                   <label>Devices</label>
@@ -125,11 +125,15 @@
                                   <label>Devices</label>
                               </a>
                           </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{{route('audit')}}"> <label>Audit Trail</label> </a>
+                          </li>
                           
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                             <a onclick="settingspassword()" href="#"> <label>Settings</label> </a>
                           </li>
-                          @endif
+                         
                       </ul>
                     @endif
                   </div>

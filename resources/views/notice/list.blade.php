@@ -66,6 +66,7 @@
            
              <div class="input-group mb-3">
                 <select class="form-control form-select" id="languages" name="lang" >
+                 <option value="all" >All Languages</option>	
                 @foreach($languages as $key=>$value)
                 <option {{ ( $value->code == $lang )?'selected':'' }} value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
 
@@ -90,6 +91,9 @@
 					<tr>
 						<th>N ID</th>
 						<th>Name</th>
+						@if($lang == 'all')
+						<th>Notice Language</th>
+						@endif
 						<th>Available Languages</th>
 						<th>PAN India</th>
 			            <th>Notice Type</th>
@@ -133,6 +137,10 @@
                        $langlist = implode(',',$langarray);
 
 		             @endphp
+
+		             @if($lang == 'all')
+						<td>{{$value->langauge->lang}}</td>
+					 @endif
 		             <td style="max-width: 150px;" class="scrollable-cell"  data-toggle="tooltip" data-placement="top" title="{{$langlist}}">{{$langlist}}</td>
 		            <!--  <td style="max-height: 200px">
 		             	<table>
@@ -149,7 +157,7 @@
 		             <td>{{$value->notice_type}}</td>
 		             <td>{{$value->published_date}}</td>
 		             <td>{{$value->version}}</td> 
-		             <td>{{$value->status}}</td> 
+		             <td>{{$value->status}}<!-- {{ ($value->status=='Published') ? 'Published' : 'UnPublished'}} --></td> 
 		             <td><a  id="MybtnModal_{{$key}}"><button class="btn btn-sm btn-outline-secondary">Action</button></a></td>
 		             <!-- <td>{{$value->status}}</td> -->
 		             <!-- <td>
@@ -211,8 +219,8 @@
 							             <a href="{{ route('edit_rbi_notice',[$value->id])}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
 							             @endif
 
-                                		@if($value->status == 'Draft')
-						             	<a onclick="return confirm('You are Publishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-dark">Publish</button></a>
+                                		@if($value->status == 'Draft' OR $value->status == 'UnPublished')
+						             	<a onclick="return confirm('You are Publishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-dark">Publish</button></a>
 						             	@else
 						             	<a  onclick="return confirm('You are UnPublishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-warning" >UnPublish</button></a>
 						             	@endif
@@ -224,7 +232,7 @@
                                 <div class="card">
                                 	<div class="card-header bg-primary text-white">Action on N{{$value->document_id}} - Multilingual(All language) Notice</div>
                                 	<div class="card-body">
-                                		<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View All</button></a>
+                                		<a href="{{route('view_notices',$value->notice_group)}}"><button class="btn btn-sm btn-outline-primary">View All</button></a>
 
                                 		@if($value->notice_type == 'ujjivan')
 							             <a href="{{ route('edit_multi_notice_datails',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
@@ -234,7 +242,7 @@
 							             @endif
 
                                 		
-						             	<a onclick="return confirm('You are Publishing all N{{$value->document_id}} notices')"  href="{{route('modify_all_notice_status',[$value->notice_group,'Publish'])}}"><button class="btn btn-sm btn-dark">Publish All</button></a>
+						             	<a onclick="return confirm('You are Publishing all N{{$value->document_id}} notices')"  href="{{route('modify_all_notice_status',[$value->notice_group,'Publish'])}}"><button class="btn btn-sm btn-outline-dark">Publish All</button></a>
 						             
 						             	<a  onclick="return confirm('You are UnPublishing all N{{$value->document_id}} notices')"  href="{{route('modify_all_notice_status',[$value->notice_group,'UnPublish'])}}"><button class="btn btn-sm btn-outline-warning" >UnPublish All</button></a>
 						             	
@@ -244,7 +252,7 @@
                                 </div>
 
                                 <div>
-                               	   <a href="{{ route('select_language',[$lang,$value->id])}}"><button class="btn btn-sm btn-outline-info">Add new NB{{$value->document_id}} Notice</button></a>
+                               	   <a href="{{ route('select_language',[$lang,$value->id])}}"><button class="btn btn-sm btn-outline-success">Add new N{{$value->document_id}} Notice</button></a>
                                 </div>
 			                    
 			                    

@@ -36,5 +36,9 @@ class Notice extends Model
 
       public function noticeContent(){
         return $this->hasMany(NoticeContent::class,'notice_group','notice_group');
-    }      
+      } 
+
+      public function langauge(){
+        return $this->belongsTo(Language::class,'lang_code','code');
+      }     
 }

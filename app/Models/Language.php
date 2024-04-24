@@ -15,5 +15,9 @@ class Language extends Model
     	'code',
     	'font'
     ];
+
+     public function notice(){
+        return $this->hasMany(notice::class,'code','lang_code');
+      }
 }
 

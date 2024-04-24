@@ -84,6 +84,7 @@ Route::put('update-multi-rbi_notice-datails',[NoticeController::class,'update_mu
 Route::get('modify-status/{id}',[NoticeController::class,'modify_status'])->name('modify_notice_status');
 Route::get('modify-all-status/{id}/{status}',[NoticeController::class,'modify_all_status'])->name('modify_all_notice_status');
 Route::get('delete-all/{id}',[NoticeController::class,'delete_all'])->name('delete_all_notice_datails');
+Route::get('view-notices/{id}',[NoticeController::class,'view_notices'])->name('view_notices');
 
 
 
