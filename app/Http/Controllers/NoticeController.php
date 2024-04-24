@@ -2142,7 +2142,7 @@ class NoticeController extends Controller
 
         if($delete){
           $audit = Audit::create([
-            'action' => 'All Notices deleted',
+            'action' => 'All language Notices deleted',
             'track_id' => $noticedata->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',

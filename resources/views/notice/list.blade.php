@@ -206,12 +206,23 @@
 			                <div class="col-12">
 			                  
                                <label class="label-bold">{{$value->name}}</label>
-                              
-                               
+
+                                @php
+                        		 if($lang == 'all'){
+                        		  $langs = $value->lang_code ; 
+                        		 }
+                        		 else{
+                        		  $langs =$lang;
+                        		}
+                        		 
+                        		
+                        		@endphp 
+                        		
                                 <div class="card">
                                 	<div class="card-header bg-primary text-white">Action on N{{$value->document_id}} - {{$value->lang_name}} Notice</div>
                                 	<div class="card-body">
-                                		<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
+
+                                		<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$langs}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
 
                                 		@if($value->notice_type == 'ujjivan')
 							            <a href="{{ route('edit_notice_datails',[$value->id])}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
@@ -232,7 +243,7 @@
                                 <div class="card">
                                 	<div class="card-header bg-primary text-white">Action on N{{$value->document_id}} - Multilingual(All language) Notice</div>
                                 	<div class="card-body">
-                                		<a href="{{route('view_notices',$value->notice_group)}}"><button class="btn btn-sm btn-outline-primary">View All</button></a>
+                                		<a href="{{route('view_notices',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-primary">View All</button></a>
 
                                 		@if($value->notice_type == 'ujjivan')
 							             <a href="{{ route('edit_multi_notice_datails',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
