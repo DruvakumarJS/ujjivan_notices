@@ -8,6 +8,7 @@ use App\Models\DeviceData;
 use App\Models\Devices;
 use App\Models\Notice;
 use App\Models\Language;
+use App\Models\NonIdleDevice;
 
 class DeviceController extends Controller
 {
@@ -398,6 +399,40 @@ class DeviceController extends Controller
       ]);
 
      }
+
+   }
+
+   public function save_non_idle_device_state(Request $request){
+      
+      if(isset($request->mac_id) && isset($request->elapsed_time)){
+         if(Devices::where('mac_id',$request->mac_id)->exists()){
+            
+            $save = NonIdleDevice::create([
+              'mac_id' => $request->mac_id ,
+              'elapsed_time' => $request->elapsed_time,
+              'temperature'=> $request->temperature,
+              'app_version'=> $request->apk_version]);
+           
+            return response()->json([
+              'status'=> 'true',
+              'message' => 'Saved Successfully',
+            ]);
+         }
+         else{
+            return response()->json([
+              'status'=> 'false',
+              'message' => 'Device not registered',
+            ]);
+
+         }   
+
+      }else{
+       
+        return response()->json([
+          'status'=> 'false',
+          'message' => 'Insufficient data',
+        ]);
+      }
 
    }
 

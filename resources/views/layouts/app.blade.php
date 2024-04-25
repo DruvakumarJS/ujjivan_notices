@@ -68,10 +68,19 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
+
+                        <div class="dropdown">
+
+                            <a href="" data-bs-toggle="dropdown" aria-expanded="true"> <img class="circle" src="{{asset('images/notification.svg')}}" style="width: 20px;height: 20px;margin-left: 10px;margin-top: 10px"> <span class="badge rounded-pill badge-notification bg-danger" id="n_count"></span> </a>
+                            <ul class="dropdown-menu dropdown-menu-end" id="notifications">
+                               
+                            </ul>
+                         </div>
+
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
@@ -89,13 +98,16 @@
                                         {{ __('Logout') }}
                                     </a>
 
+
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>
                             </li>
                         @endguest
+
                     </ul>
+
                 </div>
             </div>
 
@@ -146,6 +158,7 @@
         </main>
     </div>
 </body>
+
 
 <script type="text/javascript">
   function requestpassword(){
@@ -262,6 +275,59 @@
  }
  );
 }
+
+</script>
+<script type="text/javascript">
+  $( document ).ready(function() {
+     var _token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+     var dropdown = $("#notifications");
+        
+     var response = ""
+     
+      $.ajax({
+       url:"{{ route('notification') }}",
+       method:"GET",
+       data:{_token:_token },
+       dataType:"json",
+       success:function(data)
+       {
+        console.log(data);
+        var datasize = data.length;
+        if(datasize > 0 ){
+          $("#n_count").text(''+datasize);
+           
+            for(var count = 0; count < data.length; count++){
+              var name = data[count].name + ' - '+ data[count].branch_code;
+              var elapsedTime = data[count].elapsed_time;
+              var nameSpan = $("<span style='font-weight:bold'></span>").text(name).css("display", "block");
+            var remainingContentSpan = $("<span></span>").text("Device is running continuously from past " + elapsedTime).css("display", "block");
+            // Append name and remaining content spans to the list item
+            var listItem = $("<li style='width:300px;padding-left:5px;'></li>").append(nameSpan).append(remainingContentSpan);
+            // Append list item to the list
+            dropdown.append(listItem);
+            // Append divider after the list item
+            dropdown.append($("<li style='display:inline-block;width:5px;height:50%;background-color:#ccc;margin-right:5px;margin-left:5px;'></li>"));
+      
+            }
+
+            dropdown.css({
+            "max-height": "500px", // Set the maximum height of the list
+            "overflow-y": "auto" // Make the list vertically scrollable
+        });
+        }
+        else{
+           var name = 'No notification available' ;
+               dropdown.append($("<li style='width:250px;margin-left:5px;margin-right:5px;'></li>").attr("value", name).text(name));
+        }
+        
+        
+        
+       
+       }
+      })
+
+       
+    });
 
 </script>
 

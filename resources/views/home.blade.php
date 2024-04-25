@@ -309,9 +309,18 @@ new Chart("noticesChart", {
       lineTension: 0,
       backgroundColor: "#0496C7",
       borderColor: "rgba(0,0,255,0.1)",
+      data: @json($noticeArray['unpublished']),
+      label: "UnPublished"
+    },
+    {
+      fill: true,
+      lineTension: 0,
+      backgroundColor: "#696969",
+      borderColor: "rgba(0,0,255,0.1)",
       data: @json($noticeArray['draft']),
       label: "Draft"
-    }]
+    },
+    ]
   },
   options: {
       responsive: true,

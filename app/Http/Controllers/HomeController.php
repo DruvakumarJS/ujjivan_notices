@@ -13,6 +13,7 @@ use App\Models\Language;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DeviceData;
 use App\Models\Audit;
+use App\Models\NonIdleDevice;
 use DB;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -53,7 +54,6 @@ class HomeController extends Controller
        // print_r($inactive_time); die();
         $regionName= array();
         $devicecount=array();
-
 
         $regions = Region::get();
 
@@ -146,14 +146,16 @@ class HomeController extends Controller
                $Draft = Notice::where('lang_code',$lng->code)->where('status','Draft')->count();
                $draftarray[]=$Draft;
 
+               $unpublished = Notice::where('lang_code',$lng->code)->where('status','UnPublished')->count();
+               $unpublishedarray[]=$unpublished;
+
 
             }
 
-           /* print_r($langugaearray); print_r("</br>");
-            print_r($publishedarray); print_r("</br>");
-            print_r($draftarray); print_r("</br>");die();
-         */
-            $noticeArray=['languages'=> $langugaearray , 'published' => $publishedarray , 'draft' => $draftarray];
+            //devices running for more than 18 hours
+
+
+            $noticeArray=['languages'=> $langugaearray , 'published' => $publishedarray , 'draft' => $draftarray , 'unpublished' => $unpublishedarray ];
 
         
            return view('home',compact('pie_data' , 'line_data' , 'monthdata' , 'noticeArray'));
@@ -773,6 +775,25 @@ class HomeController extends Controller
            echo json_encode("UnAuthorized");
         }
         
+    }
+
+    public function notification(Request $request){
+       $data = NonIdleDevice::where('created_at','LIKE',date('Y-m-d').'%')->get();
+       $notification=array();
+       foreach ($data as $key => $value) {
+         $id = $value->mac_id;
+         $deviceDetail = Devices::where('mac_id',$id)->first();
+         $branch = Branch::where('id', $deviceDetail->branch_id)->first();
+         $notification[]=[
+          'mac_id'=> $id,
+          'name'=> $deviceDetail->name,
+          'branch_code' => $branch->branch_code,
+          'elapsed_time'=> $value->elapsed_time ,
+          'logged_time' => $value->created_at
+           ];
+       }
+
+       return response()->json($notification);
     }
 
 

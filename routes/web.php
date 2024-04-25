@@ -115,6 +115,7 @@ Route::post('/authenticate', [HomeController::class, 'authenticate'])->name('aut
 
 Route::get('audit',[AuditController::class,'index'])->name('audit');
 Route::get('search_audit',[AuditController::class,'search_audit'])->name('search_audit');
+Route::get('notification',[HomeController::class,'notification'])->name('notification');
 
 });
 
