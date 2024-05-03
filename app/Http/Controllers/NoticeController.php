@@ -182,7 +182,7 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-     // print_r(($request->Input()) );die();
+     // print_r(json_encode($request->Input()) );die();
       
       // print_r(json_encode($request->selected_languages) );
 
@@ -342,8 +342,8 @@ class NoticeController extends Controller
          $notice->is_region_wise = $region_prompt ;
          $notice->regions = $region_list ;
          $notice->is_state_wise = $state_prompt ;
-         $notice->states = $state_list ;
-         $notice->branch_code = $branchcodes ;
+         $notice->states =  implode(',', $request->states) ;
+         $notice->branch_code = implode(',', $request->branches) ;
          $notice->status = 'Draft';
          $notice->available_languages =$request->selected_lang_code ;
          $notice->template_id = $request->template_id;
@@ -2188,6 +2188,26 @@ class NoticeController extends Controller
 
       // print_r($filearray); die();
 
+
+    }
+
+    public function get_states_list(Request $request){
+
+      $regionId = $request->regions;
+
+      $states = Branch::select('state')->whereIn('region_id',$regionId)->groupBy(['state'])->get();
+
+      return response()->json($states);
+
+    }
+
+    public function get_branch_list(Request $request){
+
+      $states = $request->states;
+
+      $states = Branch::select('*')->whereIn('state',$states)->get();
+
+      return response()->json($states);
 
     }
 }

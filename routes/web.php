@@ -54,7 +54,7 @@ Route::post('add_notices',[NoticeController::class,'add_notices'])->name('add_no
 Route::post('add_rbi_notice',[NoticeController::class,'add_rbi_notice'])->name('add_rbi_notice');
 
 
-Route::get('create_notice',[NoticeController::class,'create'])->name('create_notice');
+Route::post('create_notice',[NoticeController::class,'create'])->name('create_notice');
 Route::post('save-notice',[NoticeController::class,'store'])->name('save_notice');
 Route::get('view-notice-datails/{id}',[NoticeController::class,'show'])->name('view_notice_datails');
 Route::get('edit-notice-datails/{id}',[NoticeController::class,'edit'])->name('edit_notice_datails');
@@ -67,7 +67,7 @@ Route::put('update-multilang-notice-datails',[NoticeController::class,'update_mu
 //Route::post('update-notice',[NoticeController::class,'store'])->name('update_notice');
 
 Route::get('delete-notice-datails/{id}',[NoticeController::class,'destroy'])->name('delete_notice_datails');
-Route::get('search-notice',[NoticeController::class,'search'])->name('search_notice');
+Route::post('search-notice',[NoticeController::class,'search'])->name('search_notice');
 
 Route::get('templates',[NoticeController::class,'templates'])->name('templates');
 
@@ -85,6 +85,9 @@ Route::get('modify-status/{id}',[NoticeController::class,'modify_status'])->name
 Route::get('modify-all-status/{id}/{status}',[NoticeController::class,'modify_all_status'])->name('modify_all_notice_status');
 Route::get('delete-all/{id}',[NoticeController::class,'delete_all'])->name('delete_all_notice_datails');
 Route::get('view-notices/{id}',[NoticeController::class,'view_notices'])->name('view_notices');
+
+Route::get('get-states-list',[NoticeController::class,'get_states_list'])->name('get_states_list');
+Route::get('get-branch-list',[NoticeController::class,'get_branch_list'])->name('get_branch_list');
 
 
 

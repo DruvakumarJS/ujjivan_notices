@@ -302,7 +302,7 @@ new Chart("noticesChart", {
       backgroundColor: "#FEB834",
       borderColor: "rgba(0,0,255,0.1)",
       data: @json($noticeArray['published']),
-      label: "Published"
+      label: "Published" + "(" + @json($noticeArray['publish_count']) + ")"
     },
     {
       fill: true,
@@ -310,7 +310,7 @@ new Chart("noticesChart", {
       backgroundColor: "#0496C7",
       borderColor: "rgba(0,0,255,0.1)",
       data: @json($noticeArray['unpublished']),
-      label: "UnPublished"
+      label: "UnPublished" + "(" + @json($noticeArray['UnPublished_count']) + ")"
     },
     {
       fill: true,
@@ -318,7 +318,7 @@ new Chart("noticesChart", {
       backgroundColor: "#696969",
       borderColor: "rgba(0,0,255,0.1)",
       data: @json($noticeArray['draft']),
-      label: "Draft"
+      label: "Draft" + "(" + @json($noticeArray['draftdount']) + ")"
     },
     ]
   },

@@ -31,15 +31,11 @@
 			<table class="table table-responsive table-stripped">
 				<thead>
 					<tr>
-            <th>Device ID</th>
-						<th>Region</th>
-						<th>Branch Name</th>
+            <th>Region Name</th>
             <th>Branch Code</th>
-            <th>IFSC</th>
-            <th>Area</th>
-            <th>City</th>
+            <th>Branch Name</th>
+            <th>Address</th>
             <th>State</th>
-            <th>Pincode</th>
             <th>Device Status</th>
             <th>Last updated</th>
             <th></th>
@@ -50,15 +46,11 @@
 				<tbody>
           @foreach($data as $key=>$value)
 					<tr>
-            <td>{{$value->name}}</td>
             <td>{{$value->branch->region->name}}</td>
-            <td>{{$value->branch->name}}</td>
             <td>{{$value->branch->branch_code}}</td>
-            <td>{{$value->branch->ifsc}}</td>
-            <td>{{$value->branch->area}}</td>
-            <td>{{$value->branch->city}}</td>
+            <td>{{$value->branch->name}}</td>
+            <td>{{$value->branch->area}} , {{$value->branch->city}} ,{{$value->branch->district}} , {{$value->branch->pincode}}</td>
             <td>{{$value->branch->state}}</td>
-            <td>{{$value->branch->pincode}}</td>
             @php
 
             $last_updated_time = strtotime($value->last_updated_date);

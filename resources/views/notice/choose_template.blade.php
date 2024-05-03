@@ -31,7 +31,7 @@ body {
 
 	<div class="page-container">
    
-     <form method="GET" action="{{route('create_notice')}}">
+     <form method="POST" action="{{route('create_notice')}}">
      	@csrf
 		<div class="row div-margin">
        <p class="label-bold"> * Please select type of Notice you want to create</p>

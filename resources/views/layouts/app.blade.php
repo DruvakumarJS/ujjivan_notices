@@ -143,7 +143,7 @@
                           </li>
                           
                           <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a onclick="settingspassword()" href="#"> <label>Settings</label> </a>
+                            <a  href="{{route('settings')}}"> <label>Bank Related Settings</label> </a>
                           </li>
                          
                       </ul>

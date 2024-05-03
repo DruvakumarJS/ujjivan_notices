@@ -63,33 +63,8 @@ class DevicesController extends Controller
                   }
               },
           ],
-           'name' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
 
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-
-          'mobile' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-
-        'device_id' => [
+         'device_id' => [
               'required',
               function ($attribute, $value, $fail) {
                   // Decode HTML entities
@@ -171,8 +146,6 @@ class DevicesController extends Controller
             'region_id' => $branch->region_id,
             'branch_id' => $request->branch_id,
             'bank_id' => '0',
-            'name' => $request->name,
-            'mobile' => $request->mobile,
             'mac_id' => $request->device_id,
             'device_details' => $request->device_id .':'.$request->model,
             'status' => 'Offline',
@@ -245,32 +218,6 @@ class DevicesController extends Controller
                   }
               },
           ],
-           'name' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-
-          'mobile' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-
         'device_id' => [
               'required',
               function ($attribute, $value, $fail) {

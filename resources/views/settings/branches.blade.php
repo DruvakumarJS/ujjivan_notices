@@ -41,16 +41,11 @@
       <table class="table table-responsive table-stripped">
         <thead>
           <tr>
-            <th>Branch Name</th>
             <th>Branch Code</th>
+            <th>Branch Name</th>
             <th>Region Name</th>
-            <th>Region Code</th>
-            <th>IFSC</th>
-            <th>Area</th>
-            <th>City</th>
-            <th>District</th>
+            <th>Address</th>
             <th>State</th>
-            <th>Pincode</th>
             <th>Action</th>
             
           </tr>
@@ -59,16 +54,11 @@
         <tbody>
           @foreach($data as $key=>$value)
           <tr>
-            <td>{{$value->name}}</td>
             <td>{{$value->branch_code}}</td>
+            <td>{{$value->name}}</td>
             <td>{{$value->region->name}}</td>
-            <td>{{$value->region->region_code}}</td>
-            <td>{{$value->ifsc}}</td>
-            <td>{{$value->area}}</td>
-            <td>{{$value->city}}</td>
-            <td>{{$value->district}}</td>
+            <td>{{$value->area}} , {{$value->city}} , {{$value->district}} , {{$value->pincode}}</td>
             <td>{{$value->state}}</td>
-            <td>{{$value->pincode}}</td>
             <td>
               <!-- <a href=""><button class="btn btn-sm btn-outline-primary">View More</button></a> -->
               <a  id="MybtnModal_{{$key}}" ><button class="btn btn-sm btn-outline-primary">Edit</button></a>

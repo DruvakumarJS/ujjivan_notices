@@ -76,6 +76,20 @@
             </div>   
        </div>
 
+        <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Branch Code * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text" class="form-control" id="branch_code" name="branch_code" aria-describedby="basic-addon3" readonly>
+                </div>
+            </div>   
+       </div>
+
        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
@@ -93,70 +107,13 @@
        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Branch Code * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="branch_code" name="branch_code" aria-describedby="basic-addon3" readonly>
-                </div>
-            </div>   
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">IFSC * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" minlength="11" maxlength="11" class="form-control" id="ifsc" name="ifsc" readonly>
-                </div>
-            </div>   
-       </div>
-
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Area * </span>
+                    <span class="" id="basic-addon3">Address * </span>
                   </div>
             </div> 
             <div class="col-6">
                 <div class="input-group mb-3">
 
                   <input type="text" class="form-control" id="area" name="area" readonly>
-                </div>
-            </div>   
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">City * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="city" name="city"  readonly>
-                </div>
-            </div>   
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">District * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="dist" name="city"  readonly>
                 </div>
             </div>   
        </div>
@@ -175,51 +132,6 @@
             </div>   
        </div>
 
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">PINCODE * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="pincode" name="pincode" aria-describedby="basic-addon3" readonly>
-                </div>
-            </div>   
-       </div>
-
-       <hr/>
-       <h4>Contact Details</h4>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Name * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="name" maxlength="10" required>
-                </div>
-            </div>   
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Mobile * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input  type="text" minlength="10" maxlength="10" class="form-control" id="basic-url" name="mobile" aria-describedby="basic-addon3" required >
-                </div>
-            </div>   
-       </div>
-       
        <hr/>
        <h4>Device Details</h4>
 
@@ -301,11 +213,7 @@ $( document ).ready(function() {
            $('#bank').val(ui.item.value);
             $('#branch_code').val(ui.item.branch_code);
             $('#branch_name').val(ui.item.name);
-            $('#ifsc').val(ui.item.ifsc);
-            $('#area').val(ui.item.area);
-            $('#city').val(ui.item.city);
-            $('#dist').val(ui.item.district);
-            $('#pincode').val(ui.item.pincode);
+            $('#area').val(ui.item.area +','+ui.item.city + ',' +ui.item.district + ','+ ui.item.pincode);
             $('#state').val(ui.item.state);
             $('#branch_id').val(ui.item.id);
            

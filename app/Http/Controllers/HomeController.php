@@ -138,6 +138,10 @@ class HomeController extends Controller
              $publishedarray=array();
              $draftarray=array();
 
+             $t_p=Notice::where('status','Published')->count();
+             $t_up=Notice::where('status','UnPublished')->count();
+             $t_d=Notice::where('status','Draft')->count();
+
             foreach ($languages as $key => $lng) {
                $langugaearray[]=$lng->lang;
                $published = Notice::where('lang_code',$lng->code)->where('status','Published')->count();
@@ -149,13 +153,12 @@ class HomeController extends Controller
                $unpublished = Notice::where('lang_code',$lng->code)->where('status','UnPublished')->count();
                $unpublishedarray[]=$unpublished;
 
-
             }
 
             //devices running for more than 18 hours
 
 
-            $noticeArray=['languages'=> $langugaearray , 'published' => $publishedarray , 'draft' => $draftarray , 'unpublished' => $unpublishedarray ];
+            $noticeArray=['languages'=> $langugaearray , 'published' => $publishedarray , 'draft' => $draftarray , 'unpublished' => $unpublishedarray , 'publish_count'=> $t_p , 'UnPublished_count'=>$t_up , 'draftdount' => $t_d];
 
         
            return view('home',compact('pie_data' , 'line_data' , 'monthdata' , 'noticeArray'));
