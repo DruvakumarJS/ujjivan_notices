@@ -309,17 +309,22 @@ class NoticeController extends Controller
        if($request->is_pan_india == 'Yes'){
            $region_list = '';
            $state_list = '';
+           $branchcodes = '';
        }
-       else if(isset($request->regions)){
+        if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
 
 
        }
-       else{
+       if(isset($request->states)){
            $state_prompt = 'ya';
 
            $state_list = implode(',' , $request->states);
+       }
+       if(isset($request->branches)){
+         
+           $branchcodes = implode(',' , $request->branches);
        }
 
        $group_id = rand('000000','999999');
@@ -342,8 +347,8 @@ class NoticeController extends Controller
          $notice->is_region_wise = $region_prompt ;
          $notice->regions = $region_list ;
          $notice->is_state_wise = $state_prompt ;
-         $notice->states =  implode(',', $request->states) ;
-         $notice->branch_code = implode(',', $request->branches) ;
+         $notice->states =  $state_list;
+         $notice->branch_code = $branchcodes ;
          $notice->status = 'Draft';
          $notice->available_languages =$request->selected_lang_code ;
          $notice->template_id = $request->template_id;
@@ -754,6 +759,7 @@ class NoticeController extends Controller
     public function edit($id)
     {
         $data = Notice::where('id',$id)->first();
+         $regions = Region::all();
 
         $template = Template::select('details')->where('id',$data->template_id)->first();
 
@@ -766,7 +772,7 @@ class NoticeController extends Controller
         $arr = json_decode($data2);
 
         //return view('notice/edit',compact('data','id','template','arr' ,'content'));
-        return view('notice/ckeditor/edit',compact('data','id','template','arr' ,'content'));
+        return view('notice/ckeditor/edit',compact('data','id','template','arr' ,'content','regions'));
     }
 
     public function edit_multilingual($id,$lang){
@@ -809,8 +815,7 @@ class NoticeController extends Controller
     }
 
     public function update_multilang_notice(Request $request){
-    //  print_r($request->Input() ) ;
-     // die();
+     // print_r($request->Input() ) ;die();
       $region_prompt = '0';
        $state_prompt = 'na';
 
@@ -821,17 +826,22 @@ class NoticeController extends Controller
        if($request->is_pan_india == 'Yes'){
            $region_list = '';
            $state_list = '';
+           $branchcodes = '';
        }
-       else if(isset($request->regions)){
+        if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
 
 
        }
-       else{
+       if(isset($request->states)){
            $state_prompt = 'ya';
 
            $state_list = implode(',' , $request->states);
+       }
+       if(isset($request->branches)){
+         
+           $branchcodes = implode(',' , $request->branches);
        }
 
       /*$current = date('Y-m-d_H_i_s');
@@ -1131,17 +1141,22 @@ class NoticeController extends Controller
        if($request->is_pan_india == 'Yes'){
            $region_list = '';
            $state_list = '';
+           $branchcodes = '';
        }
-       else if(isset($request->regions)){
+        if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
 
 
        }
-       else{
+       if(isset($request->states)){
            $state_prompt = 'ya';
 
            $state_list = implode(',' , $request->states);
+       }
+       if(isset($request->branches)){
+         
+           $branchcodes = implode(',' , $request->branches);
        }
 
       /*$current = date('Y-m-d_H_i_s');
@@ -1484,20 +1499,25 @@ class NoticeController extends Controller
        $state_list = '';
        $branchcodes = '';
       
-       if($request->is_pan_india == 'Yes'){
+        if($request->is_pan_india == 'Yes'){
            $region_list = '';
            $state_list = '';
+           $branchcodes = '';
        }
-       else if(isset($request->regions)){
+        if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
 
 
        }
-       else{
+       if(isset($request->states)){
            $state_prompt = 'ya';
 
            $state_list = implode(',' , $request->states);
+       }
+       if(isset($request->branches)){
+         
+           $branchcodes = implode(',' , $request->branches);
        }
 
        $group_id = rand('000000','999999');
@@ -1712,8 +1732,9 @@ class NoticeController extends Controller
 
      public function edit_rbi_notice($id){
         $data = Notice::where('id',$id)->first();
+        $regions = Region::all();
 
-        return view('notice/ckeditor/edit_rbi',compact('data','id'));
+        return view('notice/ckeditor/edit_rbi',compact('data','regions','id'));
     }
 
   
@@ -1802,21 +1823,27 @@ class NoticeController extends Controller
        $state_list = '';
        $branchcodes = '';
       
-       if($request->is_pan_india == 'Yes'){
+        if($request->is_pan_india == 'Yes'){
            $region_list = '';
            $state_list = '';
+           $branchcodes = '';
        }
-       else if(isset($request->regions)){
+        if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
 
 
        }
-       else{
+       if(isset($request->states)){
            $state_prompt = 'ya';
 
            $state_list = implode(',' , $request->states);
        }
+       if(isset($request->branches)){
+         
+           $branchcodes = implode(',' , $request->branches);
+       }
+
 
       $notice = Notice::where('id',$request->id)->first();
       $filepath = public_path().'/noticefiles/'.$request->lang.'_'.$notice->filename;
@@ -1988,19 +2015,23 @@ class NoticeController extends Controller
        if($request->is_pan_india == 'Yes'){
            $region_list = '';
            $state_list = '';
+           $branchcodes = '';
        }
-       else if(isset($request->regions)){
+        if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
 
 
        }
-       else{
+       if(isset($request->states)){
            $state_prompt = 'ya';
 
            $state_list = implode(',' , $request->states);
        }
-
+       if(isset($request->branches)){
+         
+           $branchcodes = implode(',' , $request->branches);
+       }
       $notice = Notice::where('id',$value['id'])->first();
       $filepath = public_path().'/noticefiles/'.$value['langauge'].'_'.$notice->filename;
 
@@ -2049,7 +2080,7 @@ class NoticeController extends Controller
       }
 
       $audit = Audit::create([
-            'action' => 'RBI Notices Updated in '.imploade(',',$langArray),
+            'action' => 'RBI Notices modified in All languages',
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
@@ -2203,11 +2234,18 @@ class NoticeController extends Controller
 
     public function get_branch_list(Request $request){
 
-      $states = $request->states;
+      $search = $request->states;
 
-      $states = Branch::select('*')->whereIn('state',$states)->get();
+      if($search == "all"){
+          $data = Branch::get();
 
-      return response()->json($states);
+      }
+      else{
+         $data = Branch::select('*')->whereIn('state',$search)->get();
+
+      }
+
+      return response()->json($data);
 
     }
 }

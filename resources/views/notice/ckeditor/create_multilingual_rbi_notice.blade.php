@@ -52,23 +52,6 @@
             </div>   
        </div>
 
-       <div class="row" >
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Region-wise  </span>
-                  </div>
-            </div> 
-            <div class="col-6" >
-                <div class="input-group mb-3" id="region_dropdown">
-                 <select class="form-control form-select" name="is_region_wise" id="region_prompt" >
-                  <option value="">Select</option>
-                  <option value="1">Yes</option>
-                  <option value="0">No</option>
-                 </select>
-                </div>
-            </div>   
-       </div>
-
        <div class="row" id="region_dropdown_list" id="region_div">
             <div class="col-2">
                   <div class="text-sm-end" >
@@ -77,33 +60,15 @@
             </div> 
           <div class="col-6">
              <div class="input-group mb-3">
-             <select class="form-control selectpicker" multiple name="regions[]" id="region_list" >
-              <option value="">Select Region</option>
+             <select class="form-control selectpicker" multiple name="regions[]" id="region_list">
+             
                 @foreach($regions as $key=>$value)
-                   <option value="{{$value->name}}">{{$value->name}}</option>
+                   <option value="{{$value->id}}">{{$value->name}}</option>
                 @endforeach
               </select>
 
               </div>
             </div>
-       </div>
-
-
-       <div class="row" id="state_div">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">State-wise </span>
-                  </div>
-            </div> 
-            <div class="col-6" id="state_dropdown">
-                <div class="input-group mb-3">
-                 <select class="form-control form-select" name="is_state_wise" id="state_prompt" >
-                  <option value="">Select</option>
-                  <option value="ya">Yes</option>
-                  <option value="na">No</option>
-                 </select>
-                </div>
-            </div>   
        </div>
 
         <div class="row" id="state_dropdown_list">
@@ -114,17 +79,31 @@
             </div> 
           <div class="col-6">
              <div class="input-group mb-3">
-             <select class="form-control selectpicker" multiple search="true" name="states[]" id="state_list" >
-                <!-- <option value="Karnataka">Karnataka</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Kerala">Kerala</option>
-                <option value="Telangana">Telangana</option> -->
-                <option value="">Select Region</option>
-                @foreach($branch as $key=>$value)
-                   <option value="{{$value->state}}">{{$value->state}}</option>
-                @endforeach
-
+            
+               <div id="multiselect-container" class="form-control" style="padding: 0px;">
+                  <select class="form-control selectpicker" id="state_list" >
               </select>
+
+               </div>
+
+              </div>
+            </div>
+       </div>
+
+        <div class="row" id="state_dropdown_list">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Select Branch(s)  </span>
+                  </div>
+            </div> 
+          <div class="col-6">
+             <div class="input-group mb-3">
+            
+               <div id="multiselect-branch-container" class="form-control" style="padding: 0px;">
+                  <select class="form-control selectpicker" id="branch_list" >
+              </select>
+
+               </div>
 
               </div>
             </div>
@@ -294,6 +273,7 @@
   $(document).ready(function() {
       $('#region_list').prop('disabled', true);
       $('#state_list').prop('disabled', true);
+      $('#branch_list').prop('disabled', true);
       $('#region_prompt').prop('disabled', true);
       $('#state_prompt').prop('disabled', true);
     });
@@ -308,29 +288,45 @@
      
        if(this.value == "No"){
           
-           $('#region_prompt').prop('disabled', false);
-
-           document.getElementById("region_prompt").required = true;
-       }
-
-       if(this.value == "Yes"){
-          
-           $('#region_prompt').prop('disabled', true);
-           document.getElementById("region_prompt").required = false;
-
-           $('#state_prompt').prop('disabled', true);
-           document.getElementById("state_prompt").required = false;
- 
-       }
-
-      if(this.value == "1"){
-        
            $('#region_list').prop('disabled', false);
            $('#region_list').selectpicker('refresh');
            document.getElementById("region_list").required = true;
 
-           $('#state_prompt').prop('disabled', true);
-           document.getElementById("state_prompt").required = false;
+           $('#state_list').prop('disabled', false);
+           $('#state_list').selectpicker('refresh');
+            document.getElementById("state_list").required = true; 
+
+       }
+
+       if(this.value == "Yes"){
+          
+           $('#region_list').prop('disabled', true);
+           $('#region_list').prop('selectedIndex', -1);
+           $('#region_list').selectpicker('refresh');
+           document.getElementById("region_list").required = false;
+
+           $('#selectpicker1').prop('disabled', true);
+           $('#selectpicker1').prop('selectedIndex', -1);
+           $('#selectpicker1').selectpicker('refresh');
+
+           $('#selectpicker').prop('disabled', true);
+           $('#selectpicker').prop('selectedIndex', -1);
+           $('#selectpicker').selectpicker('refresh');
+           
+           $('#branches').prop('disabled', true);
+           $('#branches').prop('selectedIndex', -1);
+           $('#branches').selectpicker('refresh');
+          
+           $('#state_list').prop('disabled', true);
+           $('#state_list').prop('selectedIndex', -1);
+           $('#state_list').selectpicker('refresh');
+           document.getElementById("state_list").required = false; 
+
+           $('#branch_list').prop('disabled', true);
+           $('#branch_list').prop('selectedIndex', -1);
+           $('#branch_list').selectpicker('refresh');
+           document.getElementById("branch_list").required = false; 
+ 
        }
 
        if(this.value == "0"){
@@ -341,20 +337,6 @@
            $('#state_prompt').prop('disabled', false);
            document.getElementById("state_prompt").required = true;
        }
-
-       if(this.value == "ya"){
-           $('#state_list').prop('disabled', false);
-           $('#state_list').selectpicker('refresh');
-           document.getElementById("state_list").required = true;          
-       }
-
-       if(this.value == "na"){
-           $('#state_list').prop('disabled', true);
-           $('#state_list').selectpicker('refresh');
-           document.getElementById("state_list").required = false;          
-       }
-      
-
 
   });
 
@@ -381,6 +363,111 @@
 
         }
       });
+</script>
+<script>
+  $(document).ready(function() {
+    $('#region_list').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+      var selectedValues = $(this).val();
+     // alert(selectedValues);
+
+      
+
+      var _token = $('input[name="_token"]').val();
+
+      $.ajax({
+           url:"{{ route('get_states_list') }}",
+           method:"GET",
+           data:{regions:selectedValues, _token:_token },
+           dataType:"json",
+           success:function(data)
+           {
+           // alert(data);
+            console.log(data);
+
+            var optionsHtml = '';
+
+            $.each(data, function(index, item) {
+            
+              optionsHtml += '<option value="' + item.state + '">' + item.state + '</option>';
+            });
+
+            // Generate the multiselect dropdown HTML
+            var selectPickerHtml = '<select id="selectpicker" multiple="multiple" class="form-control selectpicker" name="states[]" required>' + optionsHtml + '</select>';
+
+            console.log('Generated HTML:', selectPickerHtml); // Debugging
+            // Append the HTML to the container
+            $('#multiselect-container').html(selectPickerHtml);
+
+            // Initialize the multiselect plugin
+            $('#selectpicker').selectpicker();
+
+            $('#selectpicker').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+            var selectedValues2 = $(this).val();
+           // alert(selectedValues2);
+            //console.log('Selected Values:', selectedValues2);
+
+           get_branch_list(selectedValues2);
+          });
+
+           
+           }
+
+          });
+
+       
+   
+
+    });
+
+
+   function get_branch_list(statelist){
+    //alert(statelist);
+
+    var _token = $('input[name="_token"]').val();
+
+      $.ajax({
+           url:"{{ route('get_branch_list') }}",
+           method:"GET",
+           data:{states:statelist, _token:_token },
+           dataType:"json",
+           success:function(data)
+           {
+           // alert(data);
+            console.log(data);
+
+            var optionsbranch = '';
+
+            $.each(data, function(index, item) {
+            
+              optionsbranch += '<option value="' + item.id + '">' + item.branch_code + '-' + item.district + '</option>';
+            });
+
+            // Generate the multiselect dropdown HTML
+            var selectPickerbranch = '<select id="branches" multiple="multiple" class="form-control selectpicker" name="branches[]" required>' + optionsbranch + '</select>';
+
+            console.log('Generated HTML:', selectPickerbranch); // Debugging
+            // Append the HTML to the container
+            $('#multiselect-branch-container').html(selectPickerbranch);
+
+            // Initialize the multiselect plugin
+            $('#branches').selectpicker();
+
+            $('#branches').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+            var branchlist = $(this).val();
+            if(clickedIndex == '0'){
+              //alert('ll');
+            }
+          
+             });
+            
+           
+           }
+
+          });
+   } 
+      
+
+  });
 </script>
 
 
