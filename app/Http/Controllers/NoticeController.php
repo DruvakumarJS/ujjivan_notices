@@ -29,7 +29,38 @@ class NoticeController extends Controller
      // print_r($request->lang); die();
        $lang = $request->lang;
        if($lang == 'all'){
-         $data = Notice::orderBy('id','DESC')->paginate(25);
+        $region_id = '8';
+        $state = 'Karnataka';
+        $branchid = '6';
+        ;
+         $data = Notice::where('is_pan_india','Yes')
+                 ->orWhere(function($query)use($region_id){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->where('branch_code','all');
+                 })
+                  ->orWhere(function($query)use($region_id,$state,$branchid){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]); 
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->where('branch_code','all'); 
+                 })
+                   ->paginate(25);
+
+       // $data = Notice::paginate(25);            
        }
        else{
         $data = Notice::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);
@@ -2234,15 +2265,17 @@ class NoticeController extends Controller
 
     public function get_branch_list(Request $request){
 
-      $search = $request->states;
+      $stateslist = $request->states;
+      $reionlist = $request->regions;
+      // if(in_array("all", $search)){
 
-      if($search == "all"){
-          $data = Branch::get();
-
+      if($stateslist == 'all'){
+        $data = Branch::whereIn('region_id',$reionlist)->get();
+       // $data = "abc";
       }
       else{
-         $data = Branch::select('*')->whereIn('state',$search)->get();
-
+        $data  = Branch::whereIn('region_id',$reionlist)->whereIn('state',$stateslist)->get();
+        // $data = "def";
       }
 
       return response()->json($data);

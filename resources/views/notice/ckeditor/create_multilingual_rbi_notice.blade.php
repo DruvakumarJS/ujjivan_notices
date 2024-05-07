@@ -367,7 +367,7 @@
 <script>
   $(document).ready(function() {
     $('#region_list').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-      var selectedValues = $(this).val();
+      var regions = $(this).val();
      // alert(selectedValues);
 
       
@@ -377,14 +377,14 @@
       $.ajax({
            url:"{{ route('get_states_list') }}",
            method:"GET",
-           data:{regions:selectedValues, _token:_token },
+           data:{regions:regions, _token:_token },
            dataType:"json",
            success:function(data)
            {
            // alert(data);
             console.log(data);
 
-            var optionsHtml = '';
+            var optionsHtml = '<option value="all">All</option>';
 
             $.each(data, function(index, item) {
             
@@ -404,9 +404,19 @@
             $('#selectpicker').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
             var selectedValues2 = $(this).val();
            // alert(selectedValues2);
-            //console.log('Selected Values:', selectedValues2);
+            if (selectedValues2 && selectedValues2.includes('all')) {
+            // Disable all options except "All"
+            $('#selectpicker option:not([value="all"])').prop('selected', false);
+            selectedValues2='all';
+            } else {
+                // Enable all options
+                $('#selectpicker option').prop('disabled', false);
+            }
 
-           get_branch_list(selectedValues2);
+            // Refresh the selectpicker to apply changes
+            $('#selectpicker').selectpicker('refresh');
+
+           get_branch_list(regions,selectedValues2);
           });
 
            
@@ -420,7 +430,7 @@
     });
 
 
-   function get_branch_list(statelist){
+   function get_branch_list(regions,statelist){
     //alert(statelist);
 
     var _token = $('input[name="_token"]').val();
@@ -428,14 +438,14 @@
       $.ajax({
            url:"{{ route('get_branch_list') }}",
            method:"GET",
-           data:{states:statelist, _token:_token },
+           data:{regions:regions,states:statelist, _token:_token },
            dataType:"json",
            success:function(data)
            {
            // alert(data);
             console.log(data);
 
-            var optionsbranch = '';
+            var optionsbranch = '<option value="all">All</option>';
 
             $.each(data, function(index, item) {
             
@@ -454,9 +464,16 @@
 
             $('#branches').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
             var branchlist = $(this).val();
-            if(clickedIndex == '0'){
-              //alert('ll');
+            
+            if (branchlist && branchlist.includes('all')) {
+            // Disable all options except "All"
+            $('#branches option:not([value="all"])').prop('selected', false);
+            branchlist='all';
+            } else {
+                // Enable all options
+                $('#branches option').prop('disabled', false);
             }
+             $('#branches').selectpicker('refresh');
           
              });
             

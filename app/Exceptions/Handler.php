@@ -48,10 +48,10 @@ class Handler extends ExceptionHandler
             return response()->view('errors.database', [], 500);
         }
 
-        if (strpos($exception->getMessage(), 'Unknown column') !== false) {
+      /*  if (strpos($exception->getMessage(), 'Unknown column') !== false) {
             // Handle the error when a column is not found
             return response()->view('errors.column-not-found', [], 500);
-        }
+        }*/
 
         return parent::render($request, $exception);
     }
