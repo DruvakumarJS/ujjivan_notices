@@ -29,9 +29,9 @@ class NoticeController extends Controller
      // print_r($request->lang); die();
        $lang = $request->lang;
        if($lang == 'all'){
-        $region_id = '8';
+       /* $region_id = '8';
         $state = 'Karnataka';
-        $branchid = '6';
+        $branchid = '1';
         ;
          $data = Notice::where('is_pan_india','Yes')
                  ->orWhere(function($query)use($region_id){
@@ -58,12 +58,13 @@ class NoticeController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->where('branch_code','all'); 
                  })
-                   ->paginate(25);
+                   ->paginate(25);*/
 
-       // $data = Notice::paginate(25);            
+        $data = Notice::paginate(25);            
        }
        else{
         $data = Notice::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);
+        
        }
        
        $search = '';
@@ -336,6 +337,9 @@ class NoticeController extends Controller
        $region_list = '';
        $state_list = '';
        $branchcodes = '';
+
+       $reion_names = '';
+       $br_code = '';
       
        if($request->is_pan_india == 'Yes'){
            $region_list = '';
@@ -345,6 +349,12 @@ class NoticeController extends Controller
         if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
+
+           foreach ($request->regions as $key => $value) {
+             $re = Region::where('id',$value)->first();
+             $rearray[]=$re->name;
+           }
+           $reion_names = implode(',', $rearray);
 
 
        }
@@ -356,6 +366,21 @@ class NoticeController extends Controller
        if(isset($request->branches)){
          
            $branchcodes = implode(',' , $request->branches);
+         
+           if(!in_array('all', $request->branches)){
+
+             foreach ($request->branches as $key => $value2) {
+               $br = Branch::where('id',$value2)->first();
+               $brarray[]=$br->branch_code;
+              }
+              $br_code = implode(',', $brarray);
+
+           }
+           else{
+            $br_code = implode(',', $request->branches);
+           }
+
+          
        }
 
        $group_id = rand('000000','999999');
@@ -496,6 +521,10 @@ class NoticeController extends Controller
       // die();
        $audit = Audit::create([
             'action' => 'New Ujjivan notice(s) created in '.implode(',',$langArray),
+            'pan_india' => $request->is_pan_india,
+            'regions' => $reion_names,
+            'states' => $state_list,
+            'branch' => $br_code,
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
@@ -853,6 +882,9 @@ class NoticeController extends Controller
        $region_list = '';
        $state_list = '';
        $branchcodes = '';
+
+       $reion_names = '';
+       $br_code = '';
       
        if($request->is_pan_india == 'Yes'){
            $region_list = '';
@@ -862,6 +894,12 @@ class NoticeController extends Controller
         if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
+
+           foreach ($request->regions as $key => $value) {
+             $re = Region::where('id',$value)->first();
+             $rearray[]=$re->name;
+           }
+           $reion_names = implode(',', $rearray);
 
 
        }
@@ -873,6 +911,19 @@ class NoticeController extends Controller
        if(isset($request->branches)){
          
            $branchcodes = implode(',' , $request->branches);
+
+           if(!in_array('all', $request->branches)){
+
+             foreach ($request->branches as $key => $value2) {
+               $br = Branch::where('id',$value2)->first();
+               $brarray[]=$br->branch_code;
+              }
+              $br_code = implode(',', $brarray);
+
+           }
+           else{
+            $br_code = implode(',', $request->branches);
+           }
        }
 
       /*$current = date('Y-m-d_H_i_s');
@@ -1140,6 +1191,10 @@ class NoticeController extends Controller
 
        $audit = Audit::create([
             'action' => 'Ujjivan Notices modified in All languages',
+            'pan_india' => $request->is_pan_india,
+            'regions' => $reion_names,
+            'states' => $state_list,
+            'branch' => $br_code,
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',

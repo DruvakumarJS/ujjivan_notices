@@ -1,11 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+
 <style type="text/css">
-  thead th {
- 
-  height: 50px;
-}
+   td{
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+    }
+
+      ::-webkit-scrollbar {
+      height: 4px;              
+      width: 4px;    
+      }
+
+   .scrollable-cell {
+     
+      overflow-x: auto;/* Display ellipsis (...) for overflowed content */
+  }  
+
+</style>
 </style>
 <div class="container">
     <div class="row justify-content-center">
@@ -47,9 +62,13 @@
                             <tr>
                               <th>Date</th>
                               <th>Time</th>
-                              <th scope="col">Module</th>
+                              <th>Module</th>
                              <!--  <th scope="col">Tracker ID</th> -->
-                              <th scope="col">Action</th>
+                              <th >Action</th>
+                              <th >Pan India</th>
+                              <th >Regions</th>
+                              <th >States</th>
+                              <th >Branch</th>
                               
                             </tr>
                           </thead>
@@ -60,7 +79,11 @@
                               <td>{{date('H:i:s', strtotime($value->created_at))}}</td>
                               <td>{{$value->module}}</td>
                              <!--  <td>{{ ($value->module == 'Notice')? ('N'.$value->track_id):$value->track_id}}</td> -->
-                              <td> {{ ($value->module == 'Notice')? ($value->track_id.' - '):''}} {{$value->action}}</td>
+                              <td style="max-width: 250px;" class="scrollable-cell"  data-toggle="tooltip" data-placement="top" title="{{ ($value->module == 'Notice')? ($value->track_id.' - '):''}} {{$value->action}}"> {{ ($value->module == 'Notice')? ($value->track_id.' - '):''}} {{$value->action}}</td>
+                              <td>{{$value->pan_india}}</td>
+                              <td style="max-width: 150px;" class="scrollable-cell"  data-toggle="tooltip" data-placement="top" title="{{$value->regions}}">{{$value->regions}}</td>
+                              <td style="max-width: 150px;" class="scrollable-cell"  data-toggle="tooltip" data-placement="top" title="{{$value->states}}">{{$value->states}}</td>
+                              <td style="max-width: 150px;" class="scrollable-cell"  data-toggle="tooltip" data-placement="top" title="{{$value->branch}}">{{$value->branch}}</td>
                                                             
                             </tr>
  

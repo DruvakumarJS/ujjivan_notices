@@ -2026,12 +2026,12 @@
             });
 
           // Refresh selectpicker after updating selected options
-          $('#branches').selectpicker('refresh');
+           $('#branches').selectpicker('refresh');
 
             // Initialize the multiselect plugin
             $('#branches').selectpicker();
 
-            $('#branches').prop('disabled',true);
+           // $('#branches').prop('disabled',true);
 
 
             /*$('#branches').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {

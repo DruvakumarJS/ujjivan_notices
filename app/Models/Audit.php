@@ -14,7 +14,11 @@ class Audit extends Model
     	'user_id',
     	'module',
     	'operation',
-        'track_id'];
+        'track_id',
+        'pan_india',
+        'regions',
+        'states',
+        'branch'];
 
     public function user(){
 	 return $this->belongsTo(User::class,'user_id', 'id');

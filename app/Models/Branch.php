@@ -33,5 +33,9 @@ class Branch extends Model
 
     public function devices(){
         return $this->hasMany(Device::class,'id','branch_id');
+    } 
+
+    public function notice(){
+        return $this->hasMany(Notices::class,'id','branch_code');
     }  
 }

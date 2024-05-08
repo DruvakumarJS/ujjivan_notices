@@ -96,8 +96,7 @@
 						@endif
 						<th>Available Languages</th>
 						<th>PAN India</th>
-			            <th>Notice Type</th>
-
+						<th>Notice Type</th>
 			            <th>Created Date</th>
 			            <th>Version</th>
 			            <th>Status</th>

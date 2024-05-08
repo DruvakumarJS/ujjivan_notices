@@ -40,5 +40,9 @@ class Notice extends Model
 
       public function langauge(){
         return $this->belongsTo(Language::class,'lang_code','code');
+      } 
+
+      public function branch(){
+        return $this->belongsTo(Branch::class,'branch_code','id');
       }     
 }

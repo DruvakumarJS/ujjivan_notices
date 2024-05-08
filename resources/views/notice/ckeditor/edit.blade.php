@@ -1627,7 +1627,7 @@
 
             // Initialize the multiselect plugin
             $('#branches').selectpicker();
-            $('#branches').prop('disabled',true);
+           // $('#branches').prop('disabled',true);
 
             /*$('#branches').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
             var branchlist = $(this).val();
