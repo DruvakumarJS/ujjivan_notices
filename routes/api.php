@@ -28,5 +28,7 @@ Route::post('/get-all-notices',[DeviceController::class,'get_all_notices']);
 Route::post('/get-all-notices-for-db',[DeviceController::class,'get_notices_for_db']);
 Route::post('/upload-roomdb-data-to-server',[DeviceController::class,'insert_roomdb_data']);
 Route::post('/save-non-idle-device-data',[DeviceController::class,'save_non_idle_device_state']);
+Route::post('/get-branch-based-notices',[DeviceController::class,'get_branch_based_notices']);
+
 
 	

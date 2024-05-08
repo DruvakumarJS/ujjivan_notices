@@ -31,7 +31,7 @@ class NoticeController extends Controller
        if($lang == 'all'){
        /* $region_id = '8';
         $state = 'Karnataka';
-        $branchid = '1';
+        $branchid = '6';
         ;
          $data = Notice::where('is_pan_india','Yes')
                  ->orWhere(function($query)use($region_id){
@@ -1223,6 +1223,9 @@ class NoticeController extends Controller
        $region_list = '';
        $state_list = '';
        $branchcodes = '';
+
+       $reion_names = '';
+       $br_code = '';
       
        if($request->is_pan_india == 'Yes'){
            $region_list = '';
@@ -1232,6 +1235,12 @@ class NoticeController extends Controller
         if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
+
+           foreach ($request->regions as $key => $value) {
+             $re = Region::where('id',$value)->first();
+             $rearray[]=$re->name;
+           }
+           $reion_names = implode(',', $rearray);
 
 
        }
@@ -1243,6 +1252,19 @@ class NoticeController extends Controller
        if(isset($request->branches)){
          
            $branchcodes = implode(',' , $request->branches);
+
+           if(!in_array('all', $request->branches)){
+
+             foreach ($request->branches as $key => $value2) {
+               $br = Branch::where('id',$value2)->first();
+               $brarray[]=$br->branch_code;
+              }
+              $br_code = implode(',', $brarray);
+
+           }
+           else{
+            $br_code = implode(',', $request->branches);
+           }
        }
 
       /*$current = date('Y-m-d_H_i_s');
@@ -1379,6 +1401,10 @@ class NoticeController extends Controller
         //die();
         $audit = Audit::create([
             'action' => 'Ujjivan Notices modified in '.$langaugedata->lang,
+            'pan_india' => $request->is_pan_india,
+            'regions' => $reion_names,
+            'states' => $state_list,
+            'branch' => $br_code,
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
@@ -1584,6 +1610,9 @@ class NoticeController extends Controller
        $region_list = '';
        $state_list = '';
        $branchcodes = '';
+
+       $reion_names = '';
+       $br_code = '';
       
         if($request->is_pan_india == 'Yes'){
            $region_list = '';
@@ -1593,6 +1622,12 @@ class NoticeController extends Controller
         if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
+
+           foreach ($request->regions as $key => $value) {
+             $re = Region::where('id',$value)->first();
+             $rearray[]=$re->name;
+           }
+           $reion_names = implode(',', $rearray);
 
 
        }
@@ -1604,6 +1639,20 @@ class NoticeController extends Controller
        if(isset($request->branches)){
          
            $branchcodes = implode(',' , $request->branches);
+
+           if(!in_array('all', $request->branches)){
+
+             foreach ($request->branches as $key => $value2) {
+               $br = Branch::where('id',$value2)->first();
+               $brarray[]=$br->branch_code;
+              }
+              $br_code = implode(',', $brarray);
+
+           }
+           else{
+            $br_code = implode(',', $request->branches);
+           }
+
        }
 
        $group_id = rand('000000','999999');
@@ -1908,6 +1957,9 @@ class NoticeController extends Controller
        $region_list = '';
        $state_list = '';
        $branchcodes = '';
+
+       $reion_names = '';
+       $br_code = '';
       
         if($request->is_pan_india == 'Yes'){
            $region_list = '';
@@ -1917,6 +1969,12 @@ class NoticeController extends Controller
         if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
+
+           foreach ($request->regions as $key => $value) {
+             $re = Region::where('id',$value)->first();
+             $rearray[]=$re->name;
+           }
+           $reion_names = implode(',', $rearray);
 
 
        }
@@ -1928,6 +1986,19 @@ class NoticeController extends Controller
        if(isset($request->branches)){
          
            $branchcodes = implode(',' , $request->branches);
+
+           if(!in_array('all', $request->branches)){
+
+             foreach ($request->branches as $key => $value2) {
+               $br = Branch::where('id',$value2)->first();
+               $brarray[]=$br->branch_code;
+              }
+              $br_code = implode(',', $brarray);
+
+           }
+           else{
+            $br_code = implode(',', $request->branches);
+           }
        }
 
 
@@ -1977,6 +2048,10 @@ class NoticeController extends Controller
 
       $audit = Audit::create([
             'action' => 'RBI notices modified in '.$langaugedata->lang,
+            'pan_india' => $request->is_pan_india,
+            'regions' => $reion_names,
+            'states' => $state_list,
+            'branch' => $br_code,
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
@@ -2097,6 +2172,9 @@ class NoticeController extends Controller
        $region_list = '';
        $state_list = '';
        $branchcodes = '';
+
+       $reion_names = '';
+       $br_code = '';
       
        if($request->is_pan_india == 'Yes'){
            $region_list = '';
@@ -2106,6 +2184,12 @@ class NoticeController extends Controller
         if(isset($request->regions)){
            $region_prompt = '1';
            $region_list = implode(',' , $request->regions);
+
+           foreach ($request->regions as $key1 => $value1) {
+             $re = Region::where('id',$value1)->first();
+             $rearray[]=$re->name;
+           }
+           $reion_names = implode(',', $rearray);
 
 
        }
@@ -2117,7 +2201,21 @@ class NoticeController extends Controller
        if(isset($request->branches)){
          
            $branchcodes = implode(',' , $request->branches);
+
+           if(!in_array('all', $request->branches)){
+
+             foreach ($request->branches as $key2 => $value2) {
+               $br = Branch::where('id',$value2)->first();
+               $brarray[]=$br->branch_code;
+              }
+              $br_code = implode(',', $brarray);
+
+           }
+           else{
+            $br_code = implode(',', $request->branches);
+           }
        }
+
       $notice = Notice::where('id',$value['id'])->first();
       $filepath = public_path().'/noticefiles/'.$value['langauge'].'_'.$notice->filename;
 
@@ -2167,6 +2265,10 @@ class NoticeController extends Controller
 
       $audit = Audit::create([
             'action' => 'RBI Notices modified in All languages',
+            'pan_india' => $request->is_pan_india,
+            'regions' => $reion_names,
+            'states' => $state_list,
+            'branch' => $br_code,
             'track_id' => $request->document_id,
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
@@ -2324,7 +2426,7 @@ class NoticeController extends Controller
       $reionlist = $request->regions;
       // if(in_array("all", $search)){
 
-      if($stateslist == 'all'){
+      if($stateslist == 'all' || in_array("all", $stateslist)){
         $data = Branch::whereIn('region_id',$reionlist)->get();
        // $data = "abc";
       }

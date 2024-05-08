@@ -478,7 +478,7 @@
            // $('#branches').prop('disabled',true);
 
 
-            /*$('#branches').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+            $('#branches').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
             var branchlist = $(this).val();
             if (branchlist && branchlist.includes('all')) {
            
@@ -491,7 +491,7 @@
 
             $('#branches').selectpicker('refresh');
           
-             });*/
+             });
             
            
            }

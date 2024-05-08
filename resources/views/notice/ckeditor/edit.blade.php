@@ -1627,15 +1627,21 @@
 
             // Initialize the multiselect plugin
             $('#branches').selectpicker();
-           // $('#branches').prop('disabled',true);
-
-            /*$('#branches').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+            
+            $('#branches').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
             var branchlist = $(this).val();
-            if(clickedIndex == '0'){
-              
+            if (branchlist && branchlist.includes('all')) {
+           
+            $('#branches option:not([value="all"])').prop('selected', false);
+           // selectedValues21='0';
+            } else {
+                
+                $('#branches option').prop('disabled', false);
             }
+
+            $('#branches').selectpicker('refresh');
           
-             });*/
+             });
             
            
            }
