@@ -70,9 +70,10 @@ class NoticeController extends Controller
        $search = '';
        
        $languages = Language::get();
+       $branches = Branch::get();
      
         
-       return view('notice/list', compact('data','search','languages','lang'));
+       return view('notice/list', compact('data','search','languages','lang', 'branches'));
     }
 
      public function templates(){

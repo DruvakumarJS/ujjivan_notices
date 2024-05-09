@@ -799,5 +799,44 @@ class HomeController extends Controller
        return response()->json($notification);
     }
 
+    public function branch_notices($id){
+     // print_r($id); die();
+        $branch = Branch::where('id',$id)->first();
+        $region_id = $branch->region_id;
+        $state = $branch->state;
+        $branchid = $branch->id;
+
+        $languages = Language::get();
+
+        $data = Notice::where('is_pan_india','Yes')
+                 ->orWhere(function($query)use($region_id){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->where('branch_code','all');
+                 })
+                  ->orWhere(function($query)use($region_id,$state,$branchid){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]); 
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->where('branch_code','all'); 
+                 })
+                   ->paginate(50);
+
+          return view('settings/notices',compact('data','languages'));
+    }
+
 
 }

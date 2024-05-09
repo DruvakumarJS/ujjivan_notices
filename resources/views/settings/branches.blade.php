@@ -60,7 +60,7 @@
             <td>{{$value->area}} , {{$value->city}} , {{$value->district}} , {{$value->pincode}}</td>
             <td>{{$value->state}}</td>
             <td>
-              <!-- <a href=""><button class="btn btn-sm btn-outline-primary">View More</button></a> -->
+              <a href="{{route('branch_notices',$value->id)}}"><button class="btn btn-sm btn-outline-primary">View Notices</button></a>
               <a  id="MybtnModal_{{$key}}" ><button class="btn btn-sm btn-outline-primary">Edit</button></a>
               <a onclick="return confirm('You are deleting a Device?')" href="{{ route('delete_branch',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
             </td>

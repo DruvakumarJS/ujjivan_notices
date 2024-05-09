@@ -78,6 +78,23 @@
           
         </div>
 
+        <!-- 
+        <div id="div2" style="margin-right: 30px">
+           
+             <div class="input-group mb-3">
+                <select class="form-control form-select" id="branch" name="branch" >
+                 <option value="all" >All Branches</option>	
+                @foreach($branches as $key2=>$value2)
+                <option value="{{$value2->branch_code}}">{{$value2->branch_code}} - {{$value2->city}} - {{$value2->state}} - {{$value2->pincode}}</option>
+
+                @endforeach
+                
+              </select>
+
+              </div>
+          
+        </div> -->
+
 	<div id="div1">
       <label class="label-bold">Notices</label>
     </div>
