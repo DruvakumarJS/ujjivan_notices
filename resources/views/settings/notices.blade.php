@@ -30,6 +30,39 @@
       <label class="label-bold">Notices</label>
     </div>
 
+    <div id="div2" style="margin-right: 30px">
+       <form method="POST" action="{{route('search_branch_notice')}}">
+        @csrf
+         <div class="input-group mb-3">
+            <input class="form-control" type="text" name="search" placeholder="Search by Notice ID" value="{{$search}}">
+
+             <input type="hidden" name="lang" value="{{$lang}}">
+             <input type="hidden" id="branchid" name="id" value="{{$id}}">
+
+            <div class="input-group-prepend">
+               <button class="btn btn-outline-secondary rounded-0" type="submit" >Search</button>
+            </div>
+          </div>
+       </form>
+    </div>
+
+    <div id="div2" style="margin-right: 30px">
+           
+         <div class="input-group mb-3">
+         	<input type="hidden" id="branch_id" name="id" value="{{$id}}">
+            <select class="form-control form-select" id="languages" name="lang" >
+             <option value="all" >All Languages</option>	
+            @foreach($languages as $key=>$value)
+            <option {{ ( $value->code == $lang )?'selected':'' }} value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
+
+            @endforeach
+            
+          </select>
+
+          </div>
+          
+        </div>    
+
 	</div> 
 
 	<div class="page-container div-margin">
@@ -131,8 +164,11 @@
 	$("[name='lang']").on("change", function (e) {
 		//alert( window.location.origin);
      let edit_id = $(this).val();
+     let branchid = <?php echo $id; ?>;
+    // alert(branchid);
+
     
-     var href = window.location.origin + '/notices/' + edit_id ;
+     var href = window.location.origin + '/branch-notices/' + edit_id + "/" + branchid ;
     // alert(href);
 
      window.location=href;

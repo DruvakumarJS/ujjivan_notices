@@ -799,14 +799,16 @@ class HomeController extends Controller
        return response()->json($notification);
     }
 
-    public function branch_notices($id){
-     // print_r($id); die();
+    public function branch_notices($lang,$id){
+    //  print_r($id); die();
         $branch = Branch::where('id',$id)->first();
         $region_id = $branch->region_id;
         $state = $branch->state;
         $branchid = $branch->id;
 
         $languages = Language::get();
+
+        if($lang == 'all'){
 
         $data = Notice::where('is_pan_india','Yes')
                  ->orWhere(function($query)use($region_id){
@@ -833,9 +835,147 @@ class HomeController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->where('branch_code','all'); 
                  })
-                   ->paginate(50);
+                   ->orderBy('id', 'DESC')
+                   ->paginate(25);
+          }
+          else{
+            $data = Notice::where(function($query)use($lang){
+                   $query->where('is_pan_india','Yes');
+                   $query->where('lang_code',$lang);
+                 })
+                 ->orWhere(function($query)use($region_id,$lang){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->where('branch_code','all');
+                    $query->where('lang_code',$lang);
+                 })
+                  ->orWhere(function($query)use($region_id,$state,$branchid,$lang){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where('lang_code',$lang);
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lang){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]); 
+                    $query->where('lang_code',$lang);
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lang){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->where('branch_code','all'); 
+                    $query->where('lang_code',$lang);
+                 })
+                   ->orderBy('id', 'DESC')
+                   ->paginate(25);
 
-          return view('settings/notices',compact('data','languages'));
+          }         
+
+          $search = '';         
+
+          return view('settings/notices',compact('data','languages','search','lang','id'));
+    }
+
+    public function search(Request $request){
+      //print_r($request->Input()); die();
+
+       $search = $request->search;
+       $lang = $request->lang;
+       $id = $request->id;
+
+       $branch = Branch::where('id',$id)->first();
+        $region_id = $branch->region_id;
+        $state = $branch->state;
+        $branchid = $branch->id;
+
+       if($request->lang == 'all'){
+          $data = Notice::where(function($query)use($search){
+                   $query->where('is_pan_india','Yes');
+                   $query->where('document_id','LIKE','%'.$search.'%');
+                 })
+                 ->orWhere(function($query)use($region_id,$search){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->where('branch_code','all');
+                    $query->where('document_id','LIKE','%'.$search.'%');
+                 })
+                  ->orWhere(function($query)use($region_id,$state,$branchid,$search){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where('document_id','LIKE','%'.$search.'%');
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$search){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]); 
+                    $query->where('document_id','LIKE','%'.$search.'%');
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$search){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->where('branch_code','all'); 
+                    $query->where('document_id','LIKE','%'.$search.'%');
+                 })
+       ->orderBy('id', 'DESC')
+       ->paginate(25)->withQueryString();
+       }
+       else{
+         $data = Notice::where(function($query)use($search,$lang){
+                   $query->where('is_pan_india','Yes');
+                   $query->where('document_id','LIKE','%'.$search.'%');
+                   $query->where('lang_code',$lang);
+                 })
+                 ->orWhere(function($query)use($region_id,$search,$lang){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->where('branch_code','all');
+                    $query->where('document_id','LIKE','%'.$search.'%');
+                    $query->where('lang_code',$lang);
+                 })
+                  ->orWhere(function($query)use($region_id,$state,$branchid,$search,$lang){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where('document_id','LIKE','%'.$search.'%');
+                    $query->where('lang_code',$lang);
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$search,$lang){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]); 
+                    $query->where('document_id','LIKE','%'.$search.'%');
+                    $query->where('lang_code',$lang);
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$search,$lang){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->where('branch_code','all'); 
+                    $query->where('document_id','LIKE','%'.$search.'%');
+                    $query->where('lang_code',$lang);
+                 })
+        
+         ->orderBy('id', 'DESC')
+         ->paginate(25)->withQueryString();
+       }
+       
+        
+        $languages = Language::get();
+
+       return view('settings/notices', compact('data','search','languages','lang','id'));
     }
 
 

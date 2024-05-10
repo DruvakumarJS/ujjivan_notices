@@ -103,8 +103,8 @@ Route::post('save-branch',[HomeController::class,'save_branch'])->name('save_bra
 Route::put('update-branch',[HomeController::class,'update_branch'])->name('update_branch');
 Route::get('delete-branch/{id}',[HomeController::class,'delete_branch'])->name('delete_branch');
 
-Route::get('branch-notices/{id}',[HomeController::class,'branch_notices'])->name('branch_notices');
-
+Route::get('branch-notices/{lang}/{id}',[HomeController::class,'branch_notices'])->name('branch_notices');
+Route::post('search-branch-notice',[HomeController::class,'search'])->name('search_branch_notice');
 
 Route::get('banks',[HomeController::class,'banks'])->name('banks');
 Route::post('save-bank',[HomeController::class,'save_bank'])->name('save_bank');

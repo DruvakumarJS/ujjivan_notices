@@ -60,7 +60,7 @@ class NoticeController extends Controller
                  })
                    ->paginate(25);*/
 
-        $data = Notice::paginate(25);            
+        $data = Notice::orderBy('id','DESC')->paginate(25);            
        }
        else{
         $data = Notice::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);

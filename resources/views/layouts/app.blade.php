@@ -143,7 +143,7 @@
                           </li>
                           
                           <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a  href="{{route('settings')}}"> <label>Bank Related Settings</label> </a>
+                            <a  href="{{route('settings')}}"> <label>Branch Master</label> </a>
                           </li>
                          
                       </ul>
