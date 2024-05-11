@@ -64,9 +64,9 @@
             $day_diffrence = strtotime($cur_date) - strtotime($last_updated_date) ;
             $day_diffrence_minutes = $day_diffrence/60 ;
 
-            if($day_diffrence_minutes !=0 && $diffrence_minutes > 15){ $status='Dead'; }
+            if($day_diffrence_minutes !=0 && $diffrence_minutes > 120){ $status='Dead'; }
 
-            elseif($diffrence_minutes > 15){$status='Offline';}
+            elseif($diffrence_minutes > 120){$status='Offline';}
 
             else {$status='Online';}
             
