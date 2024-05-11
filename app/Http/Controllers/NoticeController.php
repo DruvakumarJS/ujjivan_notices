@@ -1190,7 +1190,7 @@ class NoticeController extends Controller
 
        }
 
-      /* $audit = Audit::create([
+       $audit = Audit::create([
             'action' => 'Ujjivan Notices modified in All languages',
             'pan_india' => $request->is_pan_india,
             'regions' => $reion_names,
@@ -1200,7 +1200,7 @@ class NoticeController extends Controller
             'user_id' => Auth::user()->id,
             'module' => 'Notice',
             'operation' => 'U'
-        ]);*/
+        ]);
 
        return redirect()->route('notices',$request->default_lang);
 // die();

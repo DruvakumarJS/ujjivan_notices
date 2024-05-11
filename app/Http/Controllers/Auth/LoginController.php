@@ -37,7 +37,8 @@ class LoginController extends Controller
             'track_id' => Auth::user()->id,
             'user_id' => Auth::user()->id,
             'module' => 'Login',
-            'operation' => 'C'
+            'operation' => 'C',
+            'pan_india' => '-'
           ]);
 
         return '/home';
