@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\DeviceData;
 use App\Models\Audit;
 use App\Models\NonIdleDevice;
+use App\Imports\ImportBranches;
 use DB;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -21,6 +22,7 @@ use Endroid\QrCode\LabelAlignment;
 use PDF;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use Excel;
 
 
 class HomeController extends Controller
@@ -44,7 +46,7 @@ class HomeController extends Controller
     {
         $today = date('Y-m-d');
         $current_time = date('Y-m-d H:i');
-        $active_time = date("Y-m-d H:i",strtotime("-15 minutes", strtotime($current_time)));
+        $active_time = date("Y-m-d H:i",strtotime("-120 minutes", strtotime($current_time)));
         $inactive_time = date("Y-m-d H:i",strtotime("-2880 minutes", strtotime($current_time)));
 
         $online = Devices::where('last_updated_date' , '>=', $active_time)->where('last_updated_date','LIKE',$today.'%')->count();
@@ -166,11 +168,12 @@ class HomeController extends Controller
 
     public function settings(){
     
-        $region =Region::count(); 
+        $region =Region::get(); 
         $branch =Branch::count(); 
         $bank =Bank::count(); 
+        $search = '';
 
-        return view('settings/list' , compact('region','branch','bank'));
+        return view('settings/list' , compact('region','branch','bank','search'));
     }
     public function region(){
 
@@ -308,134 +311,13 @@ class HomeController extends Controller
     public function branches(){
         $region = Region::get();
         $data = Branch::paginate(25);
-        return view('settings/branches', compact('region','data'));
+        $search = '';
+        return view('settings/branches', compact('region','data','search'));
     }
 
     public function save_branch(Request $request){
 
-       // print_r($request->input()); die();
-
-        $validator = Validator::make($request->all(), [
-
-        'region' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-           'name' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-
-          'branch_code' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-
-        'ifsc' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-
-          'area' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-
-
-          'state' => [
-              '',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = html_entity_decode($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-          'district' => [
-              '',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = html_entity_decode($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-          'city' => [
-              '',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = html_entity_decode($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-          'pincode' => [
-              '',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = html_entity_decode($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-      ]);
-
-      if ($validator->fails()) {
-        
-          return redirect()->back()->withErrors($validator)->withInput();
-      }
+       // print_r($request->ctname); die();
 
         $save = Branch::create([
             'region_id'=>$request->region,
@@ -446,19 +328,37 @@ class HomeController extends Controller
             'state' => $request->state ,
             'district' => $request->district ,
             'city' => $request->city ,
-            'pincode' => $request->pincode]);
+            'pincode' => $request->pincode,
+            'ct_name' => $request->ctname,
+            'ct_mobile' => $request->ctnumber,
+            'ct_email' => $request->ctemail,
+            'ct_designation' => $request->ctdesignation,]);
 
         if($save){
           $data = Branch::where('branch_code', $request->branch_code)->first();
            $audit = Audit::create([
-            'action' => 'New branch created - '.$request->branch_code,
+            'action' => 'New branch created ',
             'track_id' => $data->id,
             'user_id' => Auth::user()->id,
             'module' => 'Branch',
-            'operation' => 'C'
+            'operation' => 'C',
+            'pan_india' => '-',
+            'regions' => $request->region,
+            'states' => $request->state,
+            'branch' => $request->branch_code
           ]);
-            return redirect()->route('branches');
+            return redirect()->route('settings');
         }
+    }
+
+    public function edit_branch($id){
+     // print_r($id); die();
+
+      $value = Branch::where('id',$id)->first();
+      $region = Region::get();
+
+      return view('settings/edit_branch',compact('value','region')); 
+
     }
 
     public function update_branch(Request $request){
@@ -608,19 +508,48 @@ class HomeController extends Controller
             'state' => $request->state ,
             'district' => $request->district ,
             'city' => $request->city ,
-            'pincode' => $request->pincode]);
+            'pincode' => $request->pincode,
+            'ct_name' => $request->cname,
+            'ct_mobile' => $request->cnumber,
+            'ct_email' => $request->cemail,
+            'ct_designation' => $request->cdesignation]);
 
         if($save){
           $data = Branch::where('branch_code', $request->branch_code)->first();
            $audit = Audit::create([
-            'action' => 'Branch details modified - '.$request->branch_code,
+            'action' => 'Branch details modified for the branch '.$request->branch_code,
             'track_id' => $data->id,
             'user_id' => Auth::user()->id,
             'module' => 'Branch',
-            'operation' => 'C'
+            'operation' => 'C',
+            'pan_india' => '-',
+            'regions' => $request->region,
+            'states' => $request->state,
+            'branch' => $request->branch_code
           ]);
 
-            return redirect()->route('branches');
+            return redirect()->route('settings');
+           
+        }
+    }
+
+    public function import_branches(Request $request){
+     $import = new ImportBranches ;
+     Excel::import($import, $request->file('file'));
+
+     if($import->getRowCount() == 0){
+            return redirect()->back()->withMessage('No data imported');
+        }
+        else {
+            $audit = Audit::create([
+            'action' => 'Branch details imported via Excel sheet',
+            'track_id' => '',
+            'user_id' => Auth::user()->id,
+            'module' => 'Branch',
+            'operation' => 'C',
+            'pan_india' => '-',
+          ]);
+            return redirect()->back()->withMessage('Import Successfull. '.$import->getRowCount() . ' Branches  added .');
         }
     }
 
@@ -638,8 +567,23 @@ class HomeController extends Controller
             'module' => 'Branch',
             'operation' => 'C'
           ]);
-            return redirect()->route('branches');
+            return redirect()->route('settings');
         }
+    }
+
+    public function search_branch(Request $request){
+        $region = Region::get();
+        $search = $request->search ; 
+        $data = Branch::where('branch_code' , 'LIKE','%'.$search.'%')
+              ->orWhere('name' , 'LIKE','%'.$search.'%')
+              ->orWhere('pincode' , 'LIKE','%'.$search.'%')
+              ->orWhere('state' , 'LIKE','%'.$search.'%')
+              ->orWhere('city' , 'LIKE','%'.$search.'%')
+              ->orWhere('district' , 'LIKE','%'.$search.'%')
+              ->orWhere('area' , 'LIKE','%'.$search.'%')
+              ->paginate(25);
+        return view('settings/list', compact('region','data','search'));
+
     }
 
 
@@ -976,6 +920,29 @@ class HomeController extends Controller
         $languages = Language::get();
 
        return view('settings/notices', compact('data','search','languages','lang','id'));
+    }
+
+    public function get_branches(Request $request){
+       $regionId = $request->regionId;
+       $branchArray=array();
+
+       $branch = Branch::where('region_id',$regionId)->get();
+       $regionData = Region::where('id',$regionId)->first();
+
+       foreach ($branch as $key => $value) {
+          $branchArray[] = [
+            'regionId' => $regionId ,
+            'region_name' => $regionData->name,
+            'branch_id' => $value->id,
+            'name' => $value->name ,
+            'branch_code' => $value->branch_code ,
+            'address' => $value->area.' ,'.$value->city.' ,'.$value->district.' ,'.$value->pincode,
+            'state' => $value->state ,
+            
+          ];
+       }
+
+       return response()->json($branchArray);
     }
 
 

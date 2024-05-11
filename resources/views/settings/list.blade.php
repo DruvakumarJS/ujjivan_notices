@@ -1,56 +1,317 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card shadow-sm border border-primary">
-                <div class="card-header bg-primary text-white"><label style="font-weight: bolder;">Region</label> </div>
+<style type="text/css">
+  .active {
+  background-color: orange !important;
+}
+</style>
 
-                <div class="card-body">
-                   <label>Total No. of Regions</label>
-                   <div class="justify-content-center">
-                       <label class="label-bold curved-text"></label>
-                   </div>
-                   <label class="label-bold curved-text">{{$region}}</label>
-                   <a href="{{ route('regions')}}" class="btn btn-warning" style="float: right">View More</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card shadow-sm border border-primary">
-                <div class="card-header bg-primary text-white"><label style="font-weight: bolder;">Branches</label></div>
-
-                <div class="card-body">
-                   <label>Total No. of Branches</label>
-                   <div class="justify-content-center">
-                       <label class="label-bold curved-text"></label>
-                   </div>
-                   <label class="label-bold curved-text">{{$branch}}</label>
-                   <a href="{{ route('branches')}}" class="btn btn-warning" style="float: right">View More</a>
-                </div>
-            </div>
-        </div>
-
-       <!--  <div class="col-md-3">
-            <div class="card shadow-sm border border-primary">
-                <div class="card-header bg-primary text-white"><label style="font-weight: bolder;">Banks</label></div>
-
-                <div class="card-body">
-                   <label>Total No. of Banks</label>
-                   <div class="justify-content-center">
-                       <label class="label-bold curved-text"></label>
-                   </div>
-                   <label class="label-bold curved-text">{{$bank}}</label>
-                   <a href="{{ route('banks')}}" class="btn btn-secondary" style="float: right">View More</a>
-                </div>
-            </div>
-        </div> -->
-
-        
-
-        
+<div class="container-header">
+    <div id="div2">
+      <a data-bs-toggle="modal" data-bs-target="#importModal"  class="btn btn-light btn-outline-secondary" href=""><label id="modal">Import Branch Details</label></a>
     </div>
+ 
+     <div id="div2" style="margin-right: 30px">
+       <a data-bs-toggle="modal" data-bs-target="#mymodal" ><button class="btn btn-outline-primary">Add New Branch</button></a>
+    </div> 
+    
 </div>
+
+        @if(Session::has('message'))
+            <p id="mydiv" class="text-danger text-center">{{ Session::get('message') }}</p>
+        @endif 
+
+<!-- Import Modal -->
+        <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Import Branch Details from Excel Sheet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="{{ route('import_branches')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group mb-4">
+                        <div class="custom-file text-left">
+                            <input type="file" name="file" class="custom-file-input" id="customFile">
+                           
+                        </div>
+                    </div>
+                    <button class="btn btn-danger">Import</button>
+                    
+                </form>
+
+                <div id="div2">
+                       <a target="_blank" href="{{ URL::to('/') }}/Import_branch.xlsx" ><button class="btn btn-sm btn-light">Download Template</button></a>
+                    </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+<!--Import Modal -->
+
+<div class="container">
+
+    <div class="row" >
+      @foreach($region as $key=>$value)
+        <div class="col-md-2 div-margin">
+          <button type="button" id="btnOUs_{{$key}}" class="form-control btn btn-outline-secondary" ng-click="levelOU()" style="" value="{{$value->id}}"> <span style="font-weight: bolder;">{{$value->name}}</span> </button>
+        </div>
+      @endforeach
+    </div>
+
+    <!-- <div class="div-margin" id="div2" >
+     <form method="POST" action="{{route('search_branch')}}">
+      @csrf
+       <div class="input-group mb-3">
+          <input class="form-control" type="text" name="search" placeholder="Search here" value="{{$search}}">
+          <div class="input-group-prepend">
+             <button class="btn btn-outline-secondary rounded-0" type="submit" >Search</button>
+          </div>
+        </div>
+     </form>
+    </div> -->
+
+    <label class="label-bold div-margin" id="branch_count">Branch</label>
+
+    
+
+     <div class="row">
+        <div class="card border-white">
+
+            <table class="table">
+                <thead>
+                 <tr>
+                    <th>Branch Code</th>
+                    <th>Branch Name</th>
+                    <th>Region Name</th>
+                    <th>Address</th>
+                    <th>State</th>
+                    <th>Action</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <!-- Add Branch -->
+
+    <div class="modal" id="mymodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add New Branch</h5>
+             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               
+            </div>
+            <div class="modal-body">
+                 
+             <div class="form-build">
+              <div class="row">
+                <div class="col-6">
+                  <form method="post" action="{{ route('save_branch')}}" enctype="multipart/form-data" >
+                    @csrf
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Region*</label>
+                      <div class="col-7">
+                          <select class="form-control form-select" name="region" required>
+                            <option value="">Select Region</option>
+                            @foreach($region as $key2=>$value2)
+                             <option value="{{$value2->id}}">{{$value2->name}} - {{$value2->region_code}}</option>
+                            @endforeach
+                          </select>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Branch Name*</label>
+                      <div class="col-7">
+                          <input class="form-control" name="name" type="text" placeholder="Enter Branch Name" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Branch Code *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="branch_code" type="text" placeholder="Enter Branch Code"  required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">IFSC *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="ifsc" type="text" placeholder="Enter IFSC Code " minlength="11" maxlength="11" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Area *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="area" type="text" placeholder="Enter Area Name"  required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">City *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="city" type="text" placeholder="Enter City Name"  required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">District *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="district" type="text" placeholder="Enter District Name"  required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">State *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="state" type="text" placeholder="Enter State Name"  required>
+                      </div>
+                    </div>
+
+                     <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Pincode *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="pincode" type="text" placeholder="Enter PinCode" minlength="6" maxlength="6"  required>
+                      </div>
+                    </div>
+
+                  <hr/>
+                  <label class="label-bold">Bank Contact Details</label>
+
+                    <div class="form-group row div-margin">
+                      <label for="" class="col-4 col-form-label">name *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="ctname" type="text" placeholder="Enter Contact Name"  required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Number *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="ctnumber" type="text" placeholder="Enter Contact Number" minlength="10" maxlength="10"  required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Email *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="ctemail" type="text" placeholder="Enter Email ID"  required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-4 col-form-label">Designation *</label>
+                      <div class="col-7">
+                          <input class="form-control" name="ctdesignation" type="text" placeholder="Enter Designation"   required>
+                      </div>
+                    </div>
+
+                    
+                     <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-outline-success">Save </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"data-bs-dismiss="modal" aria-label="Close">Close</button>
+                      </div>
+                  </form>
+                  
+                </div>
+                
+              </div>
+               
+             </div>
+
+            </div>
+
+           
+          </div>
+        </div>
+      </div>
+
+    <!--  Add Branch -->
+
+    
+</div>
+
+<script type="text/javascript">
+   $(document).ready(function() {
+      $('#btnOUs_0').click();
+      var regionId = $('#btnOUs_0').val();
+
+      getbranches(regionId);
+   });
+
+  $("button").click(function(){
+    $("button").removeClass("active");
+    $(this).addClass("active");
+    var regionId = $(this).val();
+   // alert("idis "+regionId);
+    getbranches(regionId);
+  });
+
+  function getbranches(regionId){
+    //alert(regionId);
+      var _token = $('input[name="_token"]').val();
+
+      $.ajax({
+           url:"{{ route('get_branches') }}",
+           method:"GET",
+           data:{regionId:regionId, _token:_token },
+           dataType:"json",
+           success:function(data)
+           {
+            //alert(data);
+            console.log(data);
+
+            var output = '';
+
+            $('#branch_count').text('Branch ('+data.length+')');
+
+            for(var count = 0; count < data.length; count++){
+              var branch_id = data[count].branch_id;
+               var noticehref = window.location.origin + '/branch-notices/en/'+ branch_id ;
+               var edithref = window.location.origin + '/edit-branch/'+ branch_id ;
+               var deletehref = window.location.origin + '/delete-branch/'+ branch_id ;
+             
+               output += '<tr>';
+               output += '<td>' + data[count].branch_code + '</td>';
+               output += '<td>' + data[count].name + '</td>';
+               output += '<td>' + data[count].region_name + '</td>';
+               output += '<td>' + data[count].address + '</td>';
+               output += '<td>' + data[count].state + '</td>';
+             output += '<td>' +
+                      '<a href="' + noticehref + '"><button class="btn btn-sm btn-outline-secondary">View Notices</button></a>' +' ' +
+                      '<a href="' + edithref + '"><button class="btn btn-sm btn-outline-success">Edit</button></a>' +' ' +
+                      '<a onclick="return confirm(\'You are deleting a Branch?\')" href="' + deletehref + '"><button class="btn btn-sm btn-outline-danger">Delete</button></a>' +
+                      '</td>';
+
+               output += '</tr>';
+  
+            }
+
+             $('tbody').html(output);
+
+
+           }
+
+          });
+
+    
+ 
+
+  }
+</script>
+
+
 @endsection

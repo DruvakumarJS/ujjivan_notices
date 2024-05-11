@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-between">
+      @if(auth::user()->id == '3')
       <div class="col-md-6 col-sm-6">
         <div class="card shadow-sm border border-primary" >
              <label class="label-bold">Device Health</label>
@@ -14,8 +15,10 @@
                  
           </div>
       </div>
-
+      @endif
+    
       <div class="col-md-6 col-sm-6">
+     
         <div class="card shadow-sm border border-primary" >
              <label class="label-bold">Devices Count</label>
                        
@@ -27,7 +30,7 @@
       </div>
    
     </div>
-
+  @if(auth::user()->id == '3')
     <div class="row justify-content-between">
       <div class="col-md-6 col-sm-6">
         <div class="card shadow-sm border" >
@@ -53,7 +56,7 @@
       </div>
    
     </div>
-
+@endif
     <div class="row justify-content-between">
       <div class="col-md-12">
         <div class="card shadow-sm border" >

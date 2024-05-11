@@ -19,15 +19,21 @@ class AdminSeeder extends Seeder
          $admin =
             [
                 [
-                    'name' => 'SuperAdmin',
+                    'name' => 'Admin',
                     'email' =>'admin@admin.com',
-                    'password' => Hash::make('admin'),
+                    'password' => Hash::make('admin@ujjivan'),
                     'role' => 'admin'
                 ],
                 [
                     'name' => 'Ujjivan',
                     'email' =>'user@ujjivan.com',
                     'password' => Hash::make('ujjivan'),
+                    'role' => 'ujjivan'
+                ],
+                [
+                    'name' => 'Super Admin',
+                    'email' =>'superadmin@netiapps.com',
+                    'password' => Hash::make('Notices@netiapps'),
                     'role' => 'ujjivan'
                 ],
                 

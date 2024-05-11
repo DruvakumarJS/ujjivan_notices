@@ -20,6 +20,16 @@
             width: 30px;
             text-align: center; /* Match the card's border-radius */
         }
+        .new-label {
+		    position: absolute;
+		    top: 5px;
+		    right: 5px;
+		    background-color: orange; /* You can change the background color */
+		    color: white;
+		    padding: 3px 6px;
+		    font-size: 10px;
+		    border-radius: 3px;
+		}
     </style>
 
 <div class="container-body">
@@ -72,26 +82,26 @@
 	   
 		<div class="row" >
 			@foreach($data as $key=>$value)
-				<div class="col-6">
-					@if($value->notice_type == 'ujjivan')
-					 <a href="{{ URL::to('/') }}/noticefilesforweb/{{$value->lang_code}}_{{$value->filename}}" style="text-decoration:none" >
-                    @else
-                     <a href="{{ URL::to('/') }}/noticefiles/{{$value->lang_code}}_{{$value->filename}}" style="text-decoration:none" >
-                    @endif
-					<div class="card shadow-sm border border-grey " >
-						<div class="card-title-bg label-bold" style="background-color: primary;font-size: 12px">{{ $data->firstItem() + $key }}</div>
-						<h6 class="div-margin label-bold" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 12px" >{{$value->name}}</h6>
-						<label style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 12px">{{ $value->description}}</label>
-					</div>
-					</a>
-				</div>
+			<div class="col-12">
+			    @if($value->notice_type == 'ujjivan')
+			    <a href="{{ URL::to('/') }}/noticefilesforweb/{{$value->lang_code}}_{{$value->filename}}" style="text-decoration:none" >
+			    @else
+			    <a href="{{ URL::to('/') }}/noticefiles/{{$value->lang_code}}_{{$value->filename}}" style="text-decoration:none" >
+			    @endif
+			    <div class="card shadow-sm border border-grey " >
+			        <div class="card-title-bg label-bold" style="background-color: primary;font-size: 12px">{{  $key+1 }}</div>
+			        
+			        <!-- Add the "new" label here -->
+			        <div class="new-label">{{ ($value->notice_type == 'ujjivan')?'Ujjivan':'RBI'}}</div>
+			        
+			        <h6 class="div-margin label-bold" style="font-size: 12px" >{{$value->name}}</h6>
+			    </div>
+			    </a>
+			</div>	
 			@endforeach
 			
 		</div>
-      <label>Showing {{ $data->firstItem() }} to {{ $data->lastItem() }}
-                of {{$data->total()}} results</label>
-
-            {!! $data->appends('abc')->links('pagination::bootstrap-4') !!}
+      
 			
 		</div>
 		

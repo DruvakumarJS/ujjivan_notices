@@ -2374,7 +2374,7 @@ class NoticeController extends Controller
 
       $data = Notice::where('lang_code',$request->lang)
               ->where('status','Published')
-              ->orderBy('id','DESC')->paginate(25);
+              ->orderBy('id','DESC')->get();
       $lang = $request->lang;
       $languages = Language::get();
       $search = '';

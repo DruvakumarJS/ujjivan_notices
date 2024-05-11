@@ -21,7 +21,11 @@ class Branch extends Model
     	'pincode',
     	'description',
         'lattitude',
-        'longitude'];
+        'longitude',
+        'ct_name',
+        'ct_mobile',
+        'ct_email',
+        'ct_designation'];
 
     public function region(){
         return $this->belongsTo(Region::class,'region_id','id');

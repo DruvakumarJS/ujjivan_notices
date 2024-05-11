@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Audit;
+use Auth;
 
 class AuditController extends Controller
 {
     public function index(){
     	$search = '';
-    	$data = Audit::orderBy('id','desc')->paginate(50);
+        if(Auth::user()->id == '3'){
+           $data = Audit::orderBy('id','desc')->paginate(50);
+        }
+        else{
+           $data = Audit::where('module','!=','Device')->orderBy('id','desc')->paginate(50);
+        }
+    	
 
     	return view('audit',compact('data','search'));
     }

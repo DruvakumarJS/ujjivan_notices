@@ -3,14 +3,14 @@
 @section('content')
 
 <style type="text/css">
-  body {
+  /*body {
     background-image: url('/uconnect-logo.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 250px 250px; /* Adjust width and height as needed */ 
-    opacity: 0.9; /* Adjust the opacity to your preference */
+    background-size: 250px 250px; 
+    opacity: 0.9; 
     background-attachment: fixed;
-}
+}*/
 .card-header {
   background-color: #f0f0f0;
   font-weight: bold;

@@ -128,15 +128,19 @@
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a  href="{{ route('notices','en')}}" ><label>Notices</label></a>
                           </li>
+
+                          @if(auth::user()->id == '3')
                          
                           <li class="list-group-item d-flex justify-content-between align-items-center">
-                              <!-- <a href="{{ route('devices')}}">
-                                  <label>Devices</label>
-                              </a> -->
-                              <a onclick="requestpassword()" href="#">
+                              <a href="{{ route('devices')}}">
                                   <label>Devices</label>
                               </a>
+                              <!-- <a onclick="requestpassword()" href="#">
+                                  <label>Devices</label>
+                              </a> -->
                           </li>
+
+                          @endif
 
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                             <a href="{{route('audit')}}"> <label>Audit Trail</label> </a>

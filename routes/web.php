@@ -100,11 +100,17 @@ Route::get('delete-region/{id}',[HomeController::class,'delete_region'])->name('
 
 Route::get('branches',[HomeController::class,'branches'])->name('branches');
 Route::post('save-branch',[HomeController::class,'save_branch'])->name('save_branch');
+Route::get('edit-branch/{id}',[HomeController::class,'edit_branch'])->name('edit_branch');
 Route::put('update-branch',[HomeController::class,'update_branch'])->name('update_branch');
 Route::get('delete-branch/{id}',[HomeController::class,'delete_branch'])->name('delete_branch');
+Route::post('search-branch',[HomeController::class,'search_branch'])->name('search_branch');
 
 Route::get('branch-notices/{lang}/{id}',[HomeController::class,'branch_notices'])->name('branch_notices');
 Route::post('search-branch-notice',[HomeController::class,'search'])->name('search_branch_notice');
+Route::get('get_branches',[HomeController::class,'get_branches'])->name('get_branches');
+Route::post('import-branches',[HomeController::class,'import_branches'])->name('import_branches');
+
+
 
 Route::get('banks',[HomeController::class,'banks'])->name('banks');
 Route::post('save-bank',[HomeController::class,'save_bank'])->name('save_bank');

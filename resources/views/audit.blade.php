@@ -62,6 +62,7 @@
                             <tr>
                               <th>Date</th>
                               <th>Time</th>
+                              <th>User</th>
                               <th>Module</th>
                              <!--  <th scope="col">Tracker ID</th> -->
                               <th >Action</th>
@@ -77,6 +78,7 @@
                             <tr>
                               <td>{{date('D', strtotime($value->created_at))}} , {{date('d M Y', strtotime($value->created_at))}}</td>
                               <td>{{date('H:i:s', strtotime($value->created_at))}}</td>
+                              <td>{{$value->user->name}}</td>
                               <td>{{$value->module}}</td>
                              <!--  <td>{{ ($value->module == 'Notice')? ('N'.$value->track_id):$value->track_id}}</td> -->
                               <td style="max-width: 250px;" class="scrollable-cell"  data-toggle="tooltip" data-placement="top" title="{{ ($value->module == 'Notice')? ($value->track_id.' - '):''}} {{$value->action}}"> {{ ($value->module == 'Notice')? ($value->track_id.' - '):''}} {{$value->action}}</td>
