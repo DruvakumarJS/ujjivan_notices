@@ -39,7 +39,7 @@
                            
                         </div>
                     </div>
-                    <button class="btn btn-danger">Import</button>
+                    <button class="btn btn-success">Import</button>
                     
                 </form>
 
@@ -58,22 +58,26 @@
     <div class="row" >
       @foreach($region as $key=>$value)
         <div class="col-md-2 div-margin">
-          <button type="button" id="btnOUs_{{$key}}" class="form-control btn btn-outline-secondary" ng-click="levelOU()" style="" value="{{$value->id}}"> <span style="font-weight: bolder;">{{$value->name}}</span> </button>
+          <button type="button" id="btnOUs_{{$key}}" class="form-control btn btn-outline-secondary" ng-click="levelOU()" style="" value="{{$value->id}}_{{$key}}"> <span style="font-weight: bolder;">{{$value->name}}</span> </button>
         </div>
       @endforeach
     </div>
 
-    <!-- <div class="div-margin" id="div2" >
-     <form method="POST" action="{{route('search_branch')}}">
+    <div class="div-margin" id="div2" >
+     <form method="POST" id="searchForm" >
       @csrf
+       <input type="hidden" name="btn_pos" id="btn_position">
+       <input type="hidden" name="region_id" id="r_id">
        <div class="input-group mb-3">
-          <input class="form-control" type="text" name="search" placeholder="Search here" value="{{$search}}">
+          <input class="form-control" type="text" name="search" id="search" placeholder="Search here" value="{{$search}}">
           <div class="input-group-prepend">
-             <button class="btn btn-outline-secondary rounded-0" type="submit" >Search</button>
+             <!-- <button class="btn btn-outline-secondary rounded-0" type="submit" >Search</button> -->
+             <!-- <a href="#" class="btn btn-outline-secondary rounded-0" onclick="document.getElementById('searchForm').submit()">Search</a> -->
+             <a href="#" class="btn btn-outline-secondary rounded-0" onclick="searchBranch()">Search</a>
           </div>
         </div>
      </form>
-    </div> -->
+    </div>
 
     <label class="label-bold div-margin" id="branch_count">Branch</label>
 
@@ -218,8 +222,8 @@
                           <input class="form-control" name="ctdesignation" type="text" placeholder="Enter Designation"   required>
                       </div>
                     </div>
-
                     
+                   
                      <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-outline-success">Save </button>
                         <button type="button" class="btn btn-sm btn-outline-secondary"data-bs-dismiss="modal" aria-label="Close">Close</button>
@@ -246,21 +250,55 @@
 
 <script type="text/javascript">
    $(document).ready(function() {
-      $('#btnOUs_0').click();
-      var regionId = $('#btnOUs_0').val();
 
-      getbranches(regionId);
+    var btn_pos = '<?php echo $btn_position?>';
+    var search = '<?php echo $search?>';
+   
+    if(search == ''){
+      $('#btnOUs_'+btn_pos).click();
+      var data = $('#btnOUs_0').val();
+      var spl = data.split("_");
+      var regionId = spl[0];
+     
+      document.getElementById('btn_position').value = '0';
+      document.getElementById('r_id').value = regionId;
+
+
+     // getbranches(regionId);
+    }
+    else{
+      $('#btnOUs_'+btn_pos).addClass("active");
+      var data = $('#btnOUs_'+btn_pos).val();
+      var spl = data.split("_");
+      var regionId = spl[0];
+      document.getElementById('btn_position').value = btn_pos;
+      document.getElementById('r_id').value = regionId;
+     
+
+    }
+      
    });
 
   $("button").click(function(){
+
     $("button").removeClass("active");
     $(this).addClass("active");
-    var regionId = $(this).val();
+    $('#search').val('');
+    var data = $(this).val();
    // alert("idis "+regionId);
-    getbranches(regionId);
+   var spl = data.split("_");
+   var regionId = spl[0];
+   
+   var pos = spl[1];
+
+  // $('#btn_position').val(spl[1]);
+   document.getElementById('btn_position').value = spl[1];
+   document.getElementById('r_id').value = regionId;
+  
+    getbranches(regionId , pos);
   });
 
-  function getbranches(regionId){
+  function getbranches(regionId , pos){
     //alert(regionId);
       var _token = $('input[name="_token"]').val();
 
@@ -275,6 +313,7 @@
             console.log(data);
 
             var output = '';
+            var btn_pos = pos;
 
             $('#branch_count').text('Branch ('+data.length+')');
 
@@ -307,10 +346,72 @@
 
           });
 
+     
+  }
+
+   function searchBranch(){
+        
+        var _token = $('input[name="_token"]').val();
+        var regionId = $('#r_id').val();
+        var btn_pos = $('#btn_position').val();
+        var search = $('#search').val();
+
+        if(search == ''){
+          alert('Please enter search key');
+        }
+        else{
+
+
+      $.ajax({
+           url:"{{ route('search_branch') }}",
+           method:"POST",
+           data:{regionId:regionId, _token:_token ,btn_pos:btn_pos , search:search},
+           dataType:"json",
+           success:function(data)
+           {
+           // alert(data);
+            console.log(data);
+
+            var output = '';
+
+            $('#branch_count').text('Branch ('+data.length+')');
+
+            for(var count = 0; count < data.length; count++){
+              var branch_id = data[count].branch_id;
+               var noticehref = window.location.origin + '/branch-notices/en/'+ branch_id ;
+               var edithref = window.location.origin + '/edit-branch/'+ branch_id ;
+               var deletehref = window.location.origin + '/delete-branch/'+ branch_id ;
+
+               output += '<tr>';
+               output += '<td>' + data[count].branch_code + '</td>';
+               output += '<td>' + data[count].name + '</td>';
+               output += '<td>' + data[count].region_name + '</td>';
+               output += '<td>' + data[count].address + '</td>';
+               output += '<td>' + data[count].state + '</td>';
+             output += '<td>' +
+                      '<a href="' + noticehref + '"><button class="btn btn-sm btn-outline-secondary">View Notices</button></a>' +' ' +
+                      '<a href="' + edithref + '"><button class="btn btn-sm btn-outline-success">Edit</button></a>' +' ' +
+                      '<a onclick="return confirm(\'You are deleting a Branch?\')" href="' + deletehref + '"><button class="btn btn-sm btn-outline-danger">Delete</button></a>' +
+                      '</td>';
+
+               output += '</tr>';
+  
+            }
+
+             $('tbody').html(output);
+
+
+           }
+
+          });
+
+        }
+
+      }
+
     
  
 
-  }
 </script>
 
 

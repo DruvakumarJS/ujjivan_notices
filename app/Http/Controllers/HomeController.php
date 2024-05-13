@@ -172,17 +172,16 @@ class HomeController extends Controller
         $branch =Branch::count(); 
         $bank =Bank::count(); 
         $search = '';
+        $btn_position = '0';
 
-        return view('settings/list' , compact('region','branch','bank','search'));
+        return view('settings/list' , compact('region','branch','bank','search','btn_position'));
     }
-    public function region(){
+    /*public function region(){
 
         $data = Region::paginate(25);
         return view('settings/regions',compact('data'));
     }
     public function save_region(Request $request){
-
-       // print_r($request->input()); die();
 
          $validator = Validator::make($request->all(), [
 
@@ -306,7 +305,7 @@ class HomeController extends Controller
 
             return redirect()->route('regions');
         }
-    }
+    }*/
 
     public function branches(){
         $region = Region::get();
@@ -317,7 +316,7 @@ class HomeController extends Controller
 
     public function save_branch(Request $request){
 
-       // print_r($request->ctname); die();
+        print_r($request->ctname); die();
 
         $save = Branch::create([
             'region_id'=>$request->region,
@@ -517,7 +516,7 @@ class HomeController extends Controller
         if($save){
           $data = Branch::where('branch_code', $request->branch_code)->first();
            $audit = Audit::create([
-            'action' => 'Branch details modified for the branch '.$request->branch_code,
+            'action' => 'Branch details modified ',
             'track_id' => $data->id,
             'user_id' => Auth::user()->id,
             'module' => 'Branch',
@@ -528,7 +527,7 @@ class HomeController extends Controller
             'branch' => $request->branch_code
           ]);
 
-            return redirect()->route('settings');
+            return redirect()->back()->withMessage('Updated Successfully');
            
         }
     }
@@ -570,23 +569,6 @@ class HomeController extends Controller
             return redirect()->route('settings');
         }
     }
-
-    public function search_branch(Request $request){
-        $region = Region::get();
-        $search = $request->search ; 
-        $data = Branch::where('branch_code' , 'LIKE','%'.$search.'%')
-              ->orWhere('name' , 'LIKE','%'.$search.'%')
-              ->orWhere('pincode' , 'LIKE','%'.$search.'%')
-              ->orWhere('state' , 'LIKE','%'.$search.'%')
-              ->orWhere('city' , 'LIKE','%'.$search.'%')
-              ->orWhere('district' , 'LIKE','%'.$search.'%')
-              ->orWhere('area' , 'LIKE','%'.$search.'%')
-              ->paginate(25);
-        return view('settings/list', compact('region','data','search'));
-
-    }
-
-
 
     public function banks(){
         $branch = Branch::get();
@@ -826,7 +808,7 @@ class HomeController extends Controller
     }
 
     public function search(Request $request){
-      //print_r($request->Input()); die();
+     // print_r($request->Input()); die();
 
        $search = $request->search;
        $lang = $request->lang;
@@ -944,6 +926,49 @@ class HomeController extends Controller
 
        return response()->json($branchArray);
     }
+
+     public function search_branch(Request $request){
+    //  print_r($request->input()); die();
+
+        $region = Region::get();
+        $search = $request->search ; 
+        $btn_position = $request->btn_pos;
+        $branchArray=array();
+
+        $regionData = Region::where('id',$request->regionId)->first();
+
+        $data = Branch::where('region_id', $request->regionId)
+              ->where(function($query)use($search){
+                $query->where('branch_code' , 'LIKE','%'.$search.'%');
+                $query->orWhere('name' , 'LIKE','%'.$search.'%');
+                $query->orWhere('pincode' , 'LIKE','%'.$search.'%');
+                $query->orWhere('state' , 'LIKE','%'.$search.'%');
+                $query->orWhere('city' , 'LIKE','%'.$search.'%');
+                $query->orWhere('district' , 'LIKE','%'.$search.'%');
+                $query->orWhere('area' , 'LIKE','%'.$search.'%');
+              })
+              ->get();
+
+        foreach ($data as $key => $value) {
+          $branchArray[] = [
+            'regionId' => $request->regionId ,
+            'region_name' => $regionData->name,
+            'branch_id' => $value->id,
+            'name' => $value->name ,
+            'branch_code' => $value->branch_code ,
+            'address' => $value->area.' ,'.$value->city.' ,'.$value->district.' ,'.$value->pincode,
+            'state' => $value->state ,
+            
+          ];
+       }
+              
+              //->paginate(25);
+      //  return view('settings/list', compact('region','data','search','btn_position'));
+
+        return response()->json($branchArray);
+
+    }
+
 
 
 }
