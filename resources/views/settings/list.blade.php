@@ -15,7 +15,36 @@
      <div id="div2" style="margin-right: 30px">
        <a data-bs-toggle="modal" data-bs-target="#mymodal" ><button class="btn btn-outline-primary">Add New Branch</button></a>
     </div> 
-    
+
+</div>
+<div class="container-header">
+  <div class="row" >
+      @foreach($region as $key=>$value)
+        <div class="col-md-2 div-margin">
+          <button type="button" id="btnOUs_{{$key}}" class="form-control btn btn-outline-secondary" ng-click="levelOU()" style="" value="{{$value->id}}_{{$key}}"> <span style="font-weight: bolder;">{{$value->name}}</span> </button>
+        </div>
+      @endforeach
+    </div>
+
+   <div>
+      <div class="div-margin" id="div2" >
+     <form method="POST" id="searchForm" >
+      @csrf
+       <input type="hidden" name="btn_pos" id="btn_position">
+       <input type="hidden" name="region_id" id="r_id">
+       <div class="input-group mb-3">
+          <input class="form-control" type="text" name="search" id="search" placeholder="Search here" value="{{$search}}">
+          <div class="input-group-prepend">
+             <!-- <button class="btn btn-outline-secondary rounded-0" type="submit" >Search</button> -->
+             <!-- <a href="#" class="btn btn-outline-secondary rounded-0" onclick="document.getElementById('searchForm').submit()">Search</a> -->
+             <a href="#" class="btn btn-outline-secondary rounded-0" onclick="searchBranch()">Search</a>
+          </div>
+        </div>
+     </form>
+    </div>
+   </div>
+
+   <!--  <label class="label-bold div-margin" id="branch_count">Branch</label> -->
 </div>
 
         @if(Session::has('message'))
@@ -55,46 +84,20 @@
 
 <div class="container">
 
-    <div class="row" >
-      @foreach($region as $key=>$value)
-        <div class="col-md-2 div-margin">
-          <button type="button" id="btnOUs_{{$key}}" class="form-control btn btn-outline-secondary" ng-click="levelOU()" style="" value="{{$value->id}}_{{$key}}"> <span style="font-weight: bolder;">{{$value->name}}</span> </button>
-        </div>
-      @endforeach
-    </div>
-
-    <div class="div-margin" id="div2" >
-     <form method="POST" id="searchForm" >
-      @csrf
-       <input type="hidden" name="btn_pos" id="btn_position">
-       <input type="hidden" name="region_id" id="r_id">
-       <div class="input-group mb-3">
-          <input class="form-control" type="text" name="search" id="search" placeholder="Search here" value="{{$search}}">
-          <div class="input-group-prepend">
-             <!-- <button class="btn btn-outline-secondary rounded-0" type="submit" >Search</button> -->
-             <!-- <a href="#" class="btn btn-outline-secondary rounded-0" onclick="document.getElementById('searchForm').submit()">Search</a> -->
-             <a href="#" class="btn btn-outline-secondary rounded-0" onclick="searchBranch()">Search</a>
-          </div>
-        </div>
-     </form>
-    </div>
-
-    <label class="label-bold div-margin" id="branch_count">Branch</label>
-
-    
-
      <div class="row">
         <div class="card border-white">
 
             <table class="table">
                 <thead>
                  <tr>
-                    <th>Branch Code</th>
-                    <th>Branch Name</th>
-                    <th>Region Name</th>
-                    <th>Address</th>
-                    <th>State</th>
-                    <th>Action</th>
+                    <th >Branch Code</th>
+                    <th >Branch Name</th>
+                    <th >Region Name</th>
+                    <th >Address</th>
+                    <th >State</th>
+                    <th >Action</th>
+                    <th ></th>
+                    <th ></th>
                     
                   </tr>
                 </thead>
@@ -329,11 +332,13 @@
                output += '<td>' + data[count].region_name + '</td>';
                output += '<td>' + data[count].address + '</td>';
                output += '<td>' + data[count].state + '</td>';
-             output += '<td>' +
-                      '<a href="' + noticehref + '"><button class="btn btn-sm btn-outline-secondary">View Notices</button></a>' +' ' +
-                      '<a href="' + edithref + '"><button class="btn btn-sm btn-outline-success">Edit</button></a>' +' ' +
-                      '<a onclick="return confirm(\'You are deleting a Branch?\')" href="' + deletehref + '"><button class="btn btn-sm btn-outline-danger">Delete</button></a>' +
+               output += '<td>' +
+                      '<a href="' + noticehref + '"><button class="btn btn-sm btn-outline-secondary">View Notices</button></a>'+'</td>';
+               output += '<td>' +'<a href="' + edithref + '"><button class="btn btn-sm btn-outline-success">Edit</button></a>'+
                       '</td>';
+               output += '<td>' +
+                      '<a onclick="return confirm(\'You are deleting a Branch?\')" href="' + deletehref + '"><button class="btn btn-sm btn-outline-danger">Delete</button></a>' +
+                      '</td>';              
 
                output += '</tr>';
   
@@ -388,11 +393,13 @@
                output += '<td>' + data[count].region_name + '</td>';
                output += '<td>' + data[count].address + '</td>';
                output += '<td>' + data[count].state + '</td>';
-             output += '<td>' +
-                      '<a href="' + noticehref + '"><button class="btn btn-sm btn-outline-secondary">View Notices</button></a>' +' ' +
-                      '<a href="' + edithref + '"><button class="btn btn-sm btn-outline-success">Edit</button></a>' +' ' +
-                      '<a onclick="return confirm(\'You are deleting a Branch?\')" href="' + deletehref + '"><button class="btn btn-sm btn-outline-danger">Delete</button></a>' +
+              output += '<td>' +
+                      '<a href="' + noticehref + '"><button class="btn btn-sm btn-outline-secondary">View Notices</button></a>'+'</td>';
+               output += '<td>' +'<a href="' + edithref + '"><button class="btn btn-sm btn-outline-success">Edit</button></a>'+
                       '</td>';
+               output += '<td>' +
+                      '<a onclick="return confirm(\'You are deleting a Branch?\')" href="' + deletehref + '"><button class="btn btn-sm btn-outline-danger">Delete</button></a>' +
+                      '</td>'; 
 
                output += '</tr>';
   

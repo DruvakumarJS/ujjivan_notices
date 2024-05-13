@@ -918,7 +918,7 @@ class HomeController extends Controller
             'branch_id' => $value->id,
             'name' => $value->name ,
             'branch_code' => $value->branch_code ,
-            'address' => $value->area.' ,'.$value->city.' ,'.$value->district.' ,'.$value->pincode,
+            'address' => $value->area,
             'state' => $value->state ,
             
           ];

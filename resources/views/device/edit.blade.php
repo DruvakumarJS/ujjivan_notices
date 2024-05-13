@@ -88,7 +88,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="area" name="area" value="{{$data->branch->area}} , {{$data->branch->city}} , {{$data->branch->district}} ,{{$data->branch->pincode}}" readonly>
+                  <input type="text" class="form-control" id="area" name="area" value="{{$data->branch->area}}" readonly>
                 </div>
             </div>   
        </div>
