@@ -495,16 +495,16 @@ class NoticeController extends Controller
          $noticecontent = 
         
          File::put(public_path().'/noticefiles/'.$local_filename,
-            view('htmltemplates.cktemp')
-                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code , 'name' => $name])
-                ->render()
-        );
-
-        File::put(public_path().'/noticefilesOffline/'.$local_filename,
             view('htmltemplates.ckofflinetemp')
                 ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code , 'name' => $name])
                 ->render()
         );
+
+       /* File::put(public_path().'/noticefilesOffline/'.$local_filename,
+            view('htmltemplates.ckofflinetemp')
+                ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code , 'name' => $name])
+                ->render()
+        );*/
 
          File::put(public_path().'/noticefilesforweb/'.$local_filename,
             view('htmltemplates.cktempforweb')
@@ -766,7 +766,7 @@ class NoticeController extends Controller
 
          $noticecontent = 
          File::put(public_path().'/noticefiles/'.$local_filename,
-            view('htmltemplates.cktemp')
+            view('htmltemplates.ckofflinetemp')
                 ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'lang_code' => $langaugedata->code ])
                 ->render()
         );
@@ -1174,7 +1174,7 @@ class NoticeController extends Controller
 
                  $noticecontent = 
                  File::put(public_path().'/noticefiles/'.$local_filename,
-                    view('htmltemplates.cktemp')
+                    view('htmltemplates.ckofflinetemp')
                         ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data' => $qrcode_data , 'lang_code' => $langaugedata->code ,  'name' => $name])
                         ->render()
                 );
@@ -1392,7 +1392,7 @@ class NoticeController extends Controller
 
           $noticecontent = 
                  File::put(public_path().'/noticefiles/'.$local_filename,
-                    view('htmltemplates.cktemp')
+                    view('htmltemplates.ckofflinetemp')
                         ->with(["content" => $content , "arr" => $arr ,'template' => $template , 'version' => $version , 'published' => $published ,'qrcode_data' => $qrcode_data , 'lang_code' => $langaugedata->code ,  'name' => $name])
                         ->render()
                 );

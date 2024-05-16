@@ -454,7 +454,6 @@ class DeviceController extends Controller
         $region_id = $branchData->region_id;
         $state = $branchData->state;
         $branchid = $branchData->id;
-
         
 
         $data = Notice::where(function($query)use($lastdate){
@@ -559,29 +558,154 @@ class DeviceController extends Controller
    
                 ->get();          
 
-               // print_r(json_encode($data)); die();
-
-          
-       /* $data = Notice::where(function($query){
-           $query->where('published_date','<=',date('Y-m-d'));
-        })
-        
-         ->where(function($query)use($lastdate){  
-           $query->where('created_at' ,'>',$lastdate);
-           $query->orWhere('updated_at','>=',$lastdate);
-        })
-        ->get();*/
-
+        foreach ($old as $key => $value) {
+            $old_data[]=$value->id;
+        }
+       
         /*old notice*/
-       /* $old = Notice::where(function($query){
-           $query->where('published_date','<=',date('Y-m-d'));
-        })
+
+         return response([
+          'status'=>'true',
+          'data' => $data,
+          'old_notice_ids' => $old_data
+          
+        ]);
+
+      }
+      else{
+
+        return response([
+          'status'=>'false',
+          'data' => $data,
+          'old_notice_ids' => $old_data
+          
+        ]);
+
+      }
+
+
+   }
+
+   public function get_branch_based_notices_offline(Request $request){
+      
+      $device_id = $request->mac_id ;
+      
+      $data = array();
+      $old_data = array();
+
+      if(Devices::where('mac_id',$request->mac_id)->exists()){
+       
+        $lastdate = $request->lastupdatedate;
+
+        $deviceData = Devices::where('mac_id',$request->mac_id)->first();
+        $branchData = Branch::where('id',$deviceData->branch_id)->first();
+
+        $region_id = $branchData->region_id;
+        $state = $branchData->state;
+        $branchid = $branchData->id;
         
-         ->where(function($query)use($lastdate){  
-           $query->where('created_at' ,'<',$lastdate);
-           $query->orWhere('updated_at','<',$lastdate);
-        })
-        ->get();*/
+
+        $data = Notice::where(function($query)use($lastdate){
+                  $query->where('is_pan_india','Yes');
+                  $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                   })  
+                 ->orWhere(function($query)use($region_id,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->where('branch_code','all');
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                    
+                 })
+                  ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->where('branch_code','all'); 
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                 })
+   
+                ->get();
+
+        $old = Notice::where(function($query)use($lastdate){
+                  $query->where('is_pan_india','Yes');
+                  $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'<',$lastdate);
+                     $query2->orWhere('updated_at','<',$lastdate);
+                  });
+                   })  
+                 ->orWhere(function($query)use($region_id,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->where('branch_code','all');
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'<',$lastdate);
+                     $query2->orWhere('updated_at','<',$lastdate);
+                  });
+                    
+                 })
+                  ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'<',$lastdate);
+                     $query2->orWhere('updated_at','<',$lastdate);
+                  });
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'<',$lastdate);
+                     $query2->orWhere('updated_at','<',$lastdate);
+                  });
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->where('branch_code','all'); 
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'<',$lastdate);
+                     $query2->orWhere('updated_at','<',$lastdate);
+                  });
+                 })
+   
+                ->get();          
 
         foreach ($old as $key => $value) {
             $old_data[]=$value->id;
