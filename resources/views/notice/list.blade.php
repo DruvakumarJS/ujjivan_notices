@@ -44,9 +44,6 @@
            </form>
         </div>
 
-        <a href="{{route('download_html')}}">download</a>
-
-
         <!-- <div id="div2" style="margin-right: 30px">
            <form method="GET" action="{{route('notices',$lang)}}">
             @csrf
