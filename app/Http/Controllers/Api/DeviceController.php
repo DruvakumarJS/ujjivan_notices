@@ -592,6 +592,7 @@ class DeviceController extends Controller
       
       $data = array();
       $old_data = array();
+      $supporting_files = array();
 
       if(Devices::where('mac_id',$request->mac_id)->exists()){
        
@@ -603,6 +604,15 @@ class DeviceController extends Controller
         $region_id = $branchData->region_id;
         $state = $branchData->state;
         $branchid = $branchData->id;
+
+        $supporting_files[]=[
+                 url('/').'/noticefiles/Ujjivan_files/app.css',
+                 url('/').'/noticefiles/Ujjivan_files/app.js.download',
+                 url('/').'/noticefiles/Ujjivan_files/content-styles.css',
+                 url('/').'/noticefiles/Ujjivan_files/ckeditor.js.download',
+                 url('/').'/noticefiles/Ujjivan_files/mainLogo.svg',
+                 url('/').'/noticefiles/Ujjivan_files/style.css'
+               ];
         
 
         $data = Notice::where(function($query)use($lastdate){
@@ -716,6 +726,7 @@ class DeviceController extends Controller
          return response([
           'status'=>'true',
           'data' => $data,
+          'support' => $supporting_files,
           'old_notice_ids' => $old_data
           
         ]);
@@ -726,6 +737,7 @@ class DeviceController extends Controller
         return response([
           'status'=>'false',
           'data' => $data,
+          'support' => $supporting_files,
           'old_notice_ids' => $old_data
           
         ]);

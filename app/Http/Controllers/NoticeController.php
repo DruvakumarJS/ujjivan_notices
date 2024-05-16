@@ -9,10 +9,12 @@ use App\Models\Template;
 use App\Models\NoticeContent;
 use App\Models\Language;
 use App\Models\Audit;
+use App\Exports\ExportNotice;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use File;
+use Excel;
 use App\Rules\NoScriptInjection;
 use Illuminate\Support\Facades\Validator;
 
@@ -2444,5 +2446,14 @@ class NoticeController extends Controller
 
       return response()->json($data);
 
+    }
+
+    public function export_notices($lang,$search){
+     // print_r($search); die();
+      $language = Language::where('code',$lang)->first();
+        $file_name = $language->lang.'_Notices.csv';
+       
+         return Excel::download(new ExportNotice($lang,$search), $file_name);
+      
     }
 }

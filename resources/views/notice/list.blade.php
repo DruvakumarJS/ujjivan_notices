@@ -77,6 +77,20 @@
           
         </div>
 
+        @php
+        if($search == ''){
+          $filter = 'all';
+         }
+         else{
+         $filter = $search;
+     }
+
+        @endphp
+
+         <div id="div3" style="margin-right: 30px">
+             <a href="{{route('export_notices',[$lang,$filter])}}"><button class="btn btn-light btn-outline-secondary" > Download CSV</button></a>
+          </div>	
+
        
 
 	<div id="div1">
