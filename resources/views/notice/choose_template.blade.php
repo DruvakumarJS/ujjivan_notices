@@ -71,13 +71,13 @@ body {
 					 <label>
           <input class="div-margin radioInput" type="radio" name="template_id" value="{{$value->id}}" selected required class="card-input-element" style="margin-left: 30px" /><span style="margin-left: 10px">{{ $value->name}}</span>
 
-				  <div class="card border border-primary" style="height: 250px">
+				  <div class="card border border-primary" style="height: 250px;min-width: 200px">
 
 				  	
 
 				  	@php
-                     $details = $value->details ;
-                     $arr = json_decode($details);
+             $details = $value->details ;
+             $arr = json_decode($details);
 				  	@endphp
 
 				  	@foreach($arr as $keys=>$values)
@@ -151,27 +151,7 @@ body {
 
 			@endforeach
 			 </div>
-		
-
-    <!-- <div class="text-sm-start div-margin" >
-          <span class="" id="basic-addon3">Select Languages for creating Notice</span>
-        </div>
-        <div class="row" id="state_dropdown_list" >
-          <div class="col-10">
-             <div class="input-group mb-3">
-
-              <select class="form-control selectpicker"  multiple search="true" id="languages" name="lang[]" required="" onchange="selectedValues()">
-                @foreach($languages as $key=>$value)
-                <option value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
-
-                @endforeach
-                
-              </select>
-
-              </div>
-            </div>
-        </div> -->
-
+	
         <input type="hidden" name="dropdown_lang" value="{{$lang}}">
 
        <div id="div">

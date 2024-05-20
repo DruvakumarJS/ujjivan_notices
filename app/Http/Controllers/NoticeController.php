@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Auth;
 use File;
 use Excel;
+use Schema;
 use App\Rules\NoScriptInjection;
 use Illuminate\Support\Facades\Validator;
 
@@ -144,6 +145,11 @@ class NoticeController extends Controller
         $notice_id = $request->noticeid;
         $dropdown_lang =$request->dropdown_lang; 
 
+        if($template_id == 3){
+
+          return view('notice/ckeditor/custom_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code','notice_type' , 'group_id', 'notice_id','notice','dropdown_lang'));
+        }
+
         return view('notice/ckeditor/add_multilingual_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code','notice_type' , 'group_id', 'notice_id','notice','dropdown_lang'));
 
       } 
@@ -164,6 +170,15 @@ class NoticeController extends Controller
 
         $arr = json_decode($data);
         $dropdown_lang =$request->dropdown_lang; 
+
+         if($template_id == 3){
+
+          $info_columns = Schema::getColumnListing('branch_information');
+          //print_r($columns); die();
+
+
+          return view('notice/ckeditor/custom_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code','notice_type','dropdown_lang','info_columns'));
+        }
 
         return view('notice/ckeditor/create_multilingual_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code','notice_type','dropdown_lang'));
 
@@ -2455,5 +2470,113 @@ class NoticeController extends Controller
        
          return Excel::download(new ExportNotice($lang,$search), $file_name);
       
+    }
+
+    public function save_custom_notice(Request $request){
+      print_r(json_encode($request->input()) ); die();
+
+       $region_prompt = '0';
+       $state_prompt = 'na';
+
+       $region_list = '';
+       $state_list = '';
+       $branchcodes = '';
+
+       $reion_names = '';
+       $br_code = '';
+      
+        if($request->is_pan_india == 'Yes'){
+           $region_list = '';
+           $state_list = '';
+           $branchcodes = '';
+       }
+        if(isset($request->regions)){
+           $region_prompt = '1';
+           $region_list = implode(',' , $request->regions);
+
+           foreach ($request->regions as $key => $value) {
+             $re = Region::where('id',$value)->first();
+             $rearray[]=$re->name;
+           }
+           $reion_names = implode(',', $rearray);
+
+
+       }
+       if(isset($request->states)){
+           $state_prompt = 'ya';
+
+           $state_list = implode(',' , $request->states);
+       }
+       if(isset($request->branches)){
+         
+           $branchcodes = implode(',' , $request->branches);
+
+           if(!in_array('all', $request->branches)){
+
+             foreach ($request->branches as $key => $value2) {
+               $br = Branch::where('id',$value2)->first();
+               $brarray[]=$br->branch_code;
+              }
+              $br_code = implode(',', $brarray);
+
+           }
+           else{
+            $br_code = implode(',', $request->branches);
+           }
+
+       }
+
+       $group_id = rand('000000','999999');
+
+       $current = date('Y-m-d_H_i_s');
+       $c_time = $current.'.pdf';
+       $rbifilename = 'rbinotice_'.$c_time;
+
+       foreach($request->notice as $key=>$value) {
+
+        $langaugedata = Language::where('code',$value['langauge'])->first();
+
+         $notice = new Notice;
+         $notice->name = $value['tittle'] ;
+         $notice->description = $value['description'] ;
+         $notice->path = 'noticefiles';
+         $notice->filename = $rbifilename;
+         $notice->is_pan_india = $request->is_pan_india ;
+         $notice->is_region_wise = $region_prompt ;
+         $notice->regions = $region_list ;
+         $notice->is_state_wise = $state_prompt ;
+         $notice->states = $state_list ;
+         $notice->branch_code = $branchcodes ;
+         $notice->status = 'Draft';
+         $notice->available_languages =$request->selected_lang_code ;
+         $notice->template_id = '0';
+         $notice->creator = Auth::user()->id ;
+         $notice->voiceover = 'N';
+         $notice->lang_code = $langaugedata->code;
+         $notice->lang_name = $langaugedata->name;
+         $notice->notice_group = $group_id;
+         $notice->notice_type = 'rbi';
+         $notice->document_id = $request->document_id;
+         $notice->published_date = $request->publish_date;
+         $notice->version = $request->version;
+
+         $notice->save();
+
+         $noticeID = $notice->id;
+
+         $langArray[] = $langaugedata->lang;
+
+
+       }
+
+        $audit = Audit::create([
+            'action' => 'New Custom Ujjivan Notice Created in '.implode(',', $langArray),
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'C'
+          ]);
+
+        return redirect()->route('notices',$request->dropdown_lang);
     }
 }

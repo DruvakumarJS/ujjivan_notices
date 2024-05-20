@@ -78,6 +78,34 @@
             </div>   
        </div>
 
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Conatct's Name * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text" class="form-control" id="state" aria-describedby="basic-addon3" name="state" value="{{$data->branchcontact->bm_name}}"readonly>
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Contact's Mobile Number * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text" class="form-control" id="state" aria-describedby="basic-addon3" name="state" value="{{$data->branchcontact->bm_number}}"readonly>
+                </div>
+            </div>   
+       </div>
+
        <hr/>
        <h4>Device Details</h4>
 

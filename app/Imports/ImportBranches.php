@@ -3,12 +3,14 @@
 namespace App\Imports;
 
 use App\Models\Branch;
+use App\Models\BranchInformation;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
 class ImportBranches implements  ToModel, WithStartRow
 {
     /**
+    * @param array $row
     * @param Collection $collection
     */
     public $rowCount = 0;
@@ -22,7 +24,7 @@ class ImportBranches implements  ToModel, WithStartRow
     {
          ++$this->rowCount;
 
-         $save = Branch::create([
+        /* $save = Branch::create([
          	'region_id' => $row[0],
          	'name' => $row[1],
          	'branch_code' => $row[2],
@@ -37,7 +39,30 @@ class ImportBranches implements  ToModel, WithStartRow
          	'ct_email' => $row[11],
          	'ct_designation' => $row[12],
 
-         ]);
+         ]);*/
+
+         $branch  = new Branch();
+         $branch->region_id = $row[0];
+         $branch->name = $row[1];
+         $branch->branch_code = $row[2];
+         $branch->ifsc = $row[3];
+         $branch->area = $row[4];
+         $branch->city = $row[5];
+         $branch->district = $row[6];
+         $branch->state = $row[7];
+         $branch->pincode = $row[8];
+
+         $branch->save();
+
+         $branchID = $branch->id;
+
+         $branchinfo = new BranchInformation();
+         $branchinfo->branch_id = $branchID;
+         $branchinfo->bm_name = $row[9];
+         $branchinfo->bm_number = $row[10];
+         $branchinfo->bm_designation = $row[12];
+
+         $branchinfo->save();
     }
 
     public function getRowCount(): int

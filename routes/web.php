@@ -67,7 +67,7 @@ Route::put('update-multilang-notice-datails',[NoticeController::class,'update_mu
 //Route::post('update-notice',[NoticeController::class,'store'])->name('update_notice');
 
 Route::get('delete-notice-datails/{id}',[NoticeController::class,'destroy'])->name('delete_notice_datails');
-Route::post('search-notice',[NoticeController::class,'search'])->name('search_notice');
+Route::get('search-notice',[NoticeController::class,'search'])->name('search_notice');
 
 Route::get('templates',[NoticeController::class,'templates'])->name('templates');
 
@@ -89,6 +89,7 @@ Route::get('view-notices/{id}',[NoticeController::class,'view_notices'])->name('
 Route::get('get-states-list',[NoticeController::class,'get_states_list'])->name('get_states_list');
 Route::get('get-branch-list',[NoticeController::class,'get_branch_list'])->name('get_branch_list');
 Route::get('export_notices/{lang}/{search}',[NoticeController::class,'export_notices'])->name('export_notices');
+Route::post('save_custom_notice',[NoticeController::class,'save_custom_notice'])->name('save_custom_notice');
 
 
 
