@@ -8,8 +8,11 @@ use App\Models\DeviceData;
 use App\Models\Devices;
 use App\Models\Branch;
 use App\Models\Notice;
+use App\Models\NoticeContent;
+use App\Models\BranchInformation;
 use App\Models\Language;
 use App\Models\NonIdleDevice;
+use File;
 
 class DeviceController extends Controller
 {
@@ -586,7 +589,7 @@ class DeviceController extends Controller
 
    }
 
-   public function get_branch_based_notices_offline(Request $request){
+   /*public function get_branch_based_notices_offline(Request $request){
       
       $device_id = $request->mac_id ;
       
@@ -606,13 +609,13 @@ class DeviceController extends Controller
         $branchid = $branchData->id;
 
         $supporting_files[]=[
-                 url('/').'/noticefiles/Ujjivan_files/app.css',
-                 url('/').'/noticefiles/Ujjivan_files/app.js.download',
-                 url('/').'/noticefiles/Ujjivan_files/content-styles.css',
-                 url('/').'/noticefiles/Ujjivan_files/ckeditor.js.download',
-                 url('/').'/noticefiles/Ujjivan_files/mainLogo.svg',
-                 url('/').'/noticefiles/Ujjivan_files/style.css'
-               ];
+           url('/').'/noticefiles/Ujjivan_files/app.css',
+           url('/').'/noticefiles/Ujjivan_files/app.js.download',
+           url('/').'/noticefiles/Ujjivan_files/content-styles.css',
+           url('/').'/noticefiles/Ujjivan_files/ckeditor.js.download',
+           url('/').'/noticefiles/Ujjivan_files/mainLogo.svg',
+           url('/').'/noticefiles/Ujjivan_files/style.css'
+         ];
         
 
         $data = Notice::where(function($query)use($lastdate){
@@ -721,7 +724,7 @@ class DeviceController extends Controller
             $old_data[]=$value->id;
         }
        
-        /*old notice*/
+       
 
          return response([
           'status'=>'true',
@@ -737,6 +740,270 @@ class DeviceController extends Controller
         return response([
           'status'=>'false',
           'data' => $data,
+          'support' => $supporting_files,
+          'old_notice_ids' => $old_data
+          
+        ]);
+
+      }
+
+
+   }*/
+
+
+   public function get_branch_based_notices_offline(Request $request){
+      
+      $device_id = $request->mac_id ;
+      
+      $data = array();
+      $custom_notice = array();
+      $old_data = array();
+      $supporting_files = array();
+
+      if(Devices::where('mac_id',$request->mac_id)->exists()){
+       
+        $lastdate = $request->lastupdatedate;
+
+        $deviceData = Devices::where('mac_id',$request->mac_id)->first();
+        $branchData = Branch::where('id',$deviceData->branch_id)->first();
+
+        $region_id = $branchData->region_id;
+        $state = $branchData->state;
+        $branchid = $branchData->id;
+
+        $supporting_files[]=[
+           url('/').'/noticefiles/Ujjivan_files/app.css',
+           url('/').'/noticefiles/Ujjivan_files/app.js.download',
+           url('/').'/noticefiles/Ujjivan_files/content-styles.css',
+           url('/').'/noticefiles/Ujjivan_files/ckeditor.js.download',
+           url('/').'/noticefiles/Ujjivan_files/mainLogo.svg',
+           url('/').'/noticefiles/Ujjivan_files/style.css'
+         ];
+        
+
+        $data = Notice::where(function($query)use($lastdate){
+                  $query->where('is_pan_india','Yes');
+                  $query->where('template_id','!=','3');
+                  $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                   })  
+                 ->orWhere(function($query)use($region_id,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','!=','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->where('branch_code','all');
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                    
+                 })
+                  ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','!=','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','!=','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','!=','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->where('branch_code','all'); 
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                 })
+   
+                ->get();
+
+        //custom
+
+        $custom_notice = Notice::where(function($query)use($lastdate){
+                  $query->where('is_pan_india','Yes');
+                  $query->where('template_id','3');
+                  $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                   })  
+                 ->orWhere(function($query)use($region_id,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->where('branch_code','all');
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                    
+                 })
+                  ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->where('branch_code','all'); 
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'>',$lastdate);
+                     $query2->orWhere('updated_at','>=',$lastdate);
+                  });
+                 })
+   
+                ->get(); 
+
+                foreach ($custom_notice as $keys => $c_notice) {
+                   $c_id = $c_notice->id;
+
+                   $cust_data = NoticeContent::where('notice_id',$c_id)->first();
+                   $n_data = $cust_data->cll;
+
+                   $local_filename = $c_notice->filename;
+                   $branchDetail = BranchInformation::where('branch_id',$branchid)->first();
+
+                   //print_r($cust_data ); die();
+
+                  /* if(!file_exists(public_path().'/custom_noticefiles')) {
+                         File::makeDirectory(public_path().'/custom_noticefiles', $mode = 0777, true, true);
+                     }
+*/
+
+                   //if (!file_exists(public_path().'/custom_noticefiles/'.$local_filename)) {
+                     
+                    File::put(public_path().'/custom_noticefiles/'.$local_filename,
+                      view('htmltemplates.custom_ckofflinetemp')
+                          ->with(['data' => $cust_data , 'version' => $c_notice->version , 'published' => $c_notice->published_date ,'branch_detail'=>$branchDetail  ])
+                          ->render()
+                    );
+
+                   // }
+    
+
+                }
+
+        //old               
+
+        $old = Notice::where(function($query)use($lastdate){
+                  $query->where('is_pan_india','Yes');
+                  $query->where('template_id','!=','3');
+                  $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'<',$lastdate);
+                     $query2->orWhere('updated_at','<',$lastdate);
+                  });
+                   })  
+                 ->orWhere(function($query)use($region_id,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','!=','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->where('branch_code','all');
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'<',$lastdate);
+                     $query2->orWhere('updated_at','<',$lastdate);
+                  });
+                    
+                 })
+                  ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','!=','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->where('states','all');
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'<',$lastdate);
+                     $query2->orWhere('updated_at','<',$lastdate);
+                  });
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','!=','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'<',$lastdate);
+                     $query2->orWhere('updated_at','<',$lastdate);
+                  });
+                 })
+                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
+                    $query->where('is_pan_india','No');
+                    $query->where('template_id','!=','3');
+                    $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
+                    $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
+                    $query->where('branch_code','all'); 
+                    $query->where(function($query2)use($lastdate){  
+                     $query2->where('created_at' ,'<',$lastdate);
+                     $query2->orWhere('updated_at','<',$lastdate);
+                  });
+                 })
+   
+                ->get();          
+
+        foreach ($old as $key => $value) {
+            $old_data[]=$value->id;
+        }
+       
+        /*old notice*/
+
+         return response([
+          'status'=>'true',
+          'data' => $data,
+          'custom_notice' => $custom_notice ,
+          'support' => $supporting_files,
+          'old_notice_ids' => $old_data
+          
+        ]);
+
+      }
+      else{
+
+        return response([
+          'status'=>'false',
+          'data' => $data,
+          'custom_notice' => $custom_notice ,
           'support' => $supporting_files,
           'old_notice_ids' => $old_data
           

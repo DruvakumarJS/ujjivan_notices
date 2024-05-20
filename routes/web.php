@@ -91,8 +91,7 @@ Route::get('get-branch-list',[NoticeController::class,'get_branch_list'])->name(
 Route::get('export_notices/{lang}/{search}',[NoticeController::class,'export_notices'])->name('export_notices');
 Route::post('save_custom_notice',[NoticeController::class,'save_custom_notice'])->name('save_custom_notice');
 
-
-
+Route::get('generate_custom_notice/{id}',[NoticeController::class,'generate_custom_notice'])->name('generate_custom_notice');
 
 Route::get('settings',[HomeController::class,'settings'])->name('settings');
 Route::get('regions',[HomeController::class,'region'])->name('regions');

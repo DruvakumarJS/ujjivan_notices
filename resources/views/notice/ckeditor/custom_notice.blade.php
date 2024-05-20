@@ -153,43 +153,24 @@
        <input type="hidden" name="notice_type" value="{{$notice_type}}">
        <input type="hidden" name="dropdown_lang" value="{{$dropdown_lang}}">
       
-      @foreach($selected_languages as $keyl=>$lang)
+    
       <hr/>
        <div class="row">
         <div style="width: 1000px" >
           <div class="card">
-            <h5 class="card-header">
-                <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
-                    <i class="fa fa-chevron-down pull-right"></i>
-                    {{$lang->lang}} - {{$lang->name}}
-                </a>
-            </h5>
+            
             <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-2">
                           <div class="text-sm-end" >
-                            @if($lang->code == 'as')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'bn')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'en')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'gu')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'hi')<span class="" id="basic-addon3">{{ __('सूचना टुकड़ी *') }}</span>
-                            @elseif($lang->code == 'kn')<span class="" id="basic-addon3">{{ __('ಸೂಚನೆ ಶೀರ್ಷಿಕೆ *') }}</span>
-                            @elseif($lang->code == 'kh')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'ml')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'mr')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'or')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'pa')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'ta')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'te')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @elseif($lang->code == 'ur')<span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
-                            @endif
+                            <span class="" id="basic-addon3">{{ __('Notice Tittle *') }}</span>
 
                           </div>
                         </div> 
-                        <div class="col-6">
+                        <div class="col-10">
                             <div class="input-group mb-3">
-                             <input class="form-control" type="text" name="notice[{{$keyl}}][tittle]" maxlength="250" required>
+                             <input class="form-control" type="text" name="tittle" maxlength="250" required>
                             </div>
                         </div>   
                    </div>
@@ -197,25 +178,12 @@
                    <div class="row">
                         <div class="col-2">
                           <div class="text-sm-end" >
-                            @if($lang->code == 'as')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'bn')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'en')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'gu')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'hi')<span class="" id="basic-addon3">{{ __('सूचना विवरण *') }}</span>
-                            @elseif($lang->code == 'kn')<span class="" id="basic-addon3">{{ __('ಸೂಚನೆ ವಿವರಣೆ *') }}</span>
-                            @elseif($lang->code == 'kh')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'ml')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'mr')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'or')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'pa')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'ta')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'te')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
-                            @elseif($lang->code == 'ur')<span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>@endif
+                            <span class="" id="basic-addon3">{{ __('Notice Description *') }}</span>
                           </div>
                         </div> 
-                        <div class="col-6">
+                        <div class="col-10">
                             <div class="input-group mb-3">
-                             <input class="form-control" type="text" name="notice[{{$keyl}}][description]" maxlength="250" required>
+                             <input class="form-control" type="text" name="description" maxlength="250" required>
                             </div>
                         </div>   
                    </div> 
@@ -233,7 +201,7 @@
                             <td>
                                   <div class="row">
                                      <div class="col-md-5">
-                                      <input class="form-control" type="text" name="contact[0][name]"> 
+                                      <input class="form-control" type="text" name="contact[0][name]" placeholder="Enter Tittle"> 
                                      </div>
 
                                      <div class="col-md-5">
@@ -267,7 +235,7 @@
                      </div>
                    </div>
 
-                   <input class="form-control" type="hidden" name="notice[{{$keyl}}][langauge]" value="{{$lang->code}}">
+                  
                    
                 </div>
             </div>
@@ -275,9 +243,9 @@
         </div>
          
        </div>
-      @endforeach 
+     
     
-
+      <input class="form-control" type="hidden" name="langauge" value="en">             
       <input type="hidden" name="selected_languages" value="{{$selected_languages}}">
       <div id="div3" class="div-margin">
          <button class="btn btn-success" type="submit">Submit</button> 
@@ -292,7 +260,7 @@
     var j = 'n';
     $("#dynamic-ar").click(function () {
         ++i;
-         $("#dynamicAddRemove").append('<tr><td><div class="row"><div class="col-md-5"><input class="form-control" type="text" name="contact['+ i +'][name]"></div><div class="col-md-5"><select class="form-control form-select" name="contact['+ i +'][value]"><option>Select value</option>@foreach($info_columns as $info)<option value="{{$info}}">{{$info}}</option>@endforeach</select> </div><div class="col-md-1"><button class="btn btn-sm btn-outline-secondary remove-input-mandate" >Remove</button></div></div></td></tr>');
+         $("#dynamicAddRemove").append('<tr><td><div class="row"><div class="col-md-5"><input class="form-control" type="text" name="contact['+ i +'][name]" placeholder="Enter Tittle"></div><div class="col-md-5"><select class="form-control form-select" name="contact['+ i +'][value]"><option>Select value</option>@foreach($info_columns as $info)<option value="{{$info}}">{{$info}}</option>@endforeach</select> </div><div class="col-md-1"><button class="btn btn-sm btn-outline-secondary remove-input-mandate" >Remove</button></div></div></td></tr>');
         
 
         document.getElementById("btnn").style.display="block";

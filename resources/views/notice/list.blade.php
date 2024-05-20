@@ -235,8 +235,10 @@
                                 <div class="card">
                                 	<div class="card-header bg-primary text-white">Action on {{$value->document_id}} - {{$value->lang_name}} Notice</div>
                                 	<div class="card-body">
-
+                                		
                                 		<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$langs}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
+                                		@if($value->template_id != '3')
+                                		
 
                                 		@if($value->notice_type == 'ujjivan')
 							            <a href="{{ route('edit_notice_datails',[$value->id])}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
@@ -250,9 +252,13 @@
 						             	<a  onclick="return confirm('You are UnPublishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-warning" >UnPublish</button></a>
 						             	@endif
 
-                                		<a onclick="return confirm('You are deleting a N{{$value->document_id}} Notice')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>                               		
+                                		<a onclick="return confirm('You are deleting a N{{$value->document_id}} Notice')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>   
+
+                                		@endif                            		
                                 	</div>
                                 </div>
+
+                                @if($value->template_id != '3')
 
                                 <div class="card">
                                 	<div class="card-header bg-primary text-white">Action on {{$value->document_id}} - Multilingual(All language) Notice</div>
@@ -275,11 +281,12 @@
                                 		<a onclick="return confirm('You are deleting all N{{$value->document_id}} notices')" href="{{ route('delete_all_notice_datails',$value->notice_group)}}"><button class="btn btn-sm btn-outline-danger">Delete All</button></a>                                		
                                 	</div>
                                 </div>
-
+            
                                 <div>
                                	   <a href="{{ route('select_language',[$lang,$value->id])}}"><button class="btn btn-sm btn-outline-success">Add new {{$value->document_id}} Notice</button></a>
                                 </div>
 			                    
+			                    @endif 
 			                    
 			                    <!-- <div class="form-group row">
 			                      <label for="" class="col-4 col-form-label">Region Name*</label>
