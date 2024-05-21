@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="csrf-token" content="">
+
+    <title>Ujjivan</title>
+
+    
+    <script src="./Ujjivan_files/app.js.download" defer=""></script>
+
+    <link href="./Ujjivan_files/app.css" rel="stylesheet">
+    
+    <link href="./Ujjivan_files/style.css" rel="stylesheet">
+   
+    <link href="./Ujjivan_files/content-styles.css" rel="stylesheet" type="text/css">  
+    
+    <script src="./Ujjivan_files/ckeditor.js.download"></script>
+
+</head>
+<body>
+    <div id="app">
+        
+        <main class="py-4" >
+           <div class="row mx-0 px-0 justify-content-center">
+                  <div class="col-12 justify-content-center" style="max-width: 950px">
+                  
+<style type="text/css">
+  
+.card-header {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  position: sticky;
+  top: 0; 
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+
+.qr-code, .logo {
+    height: 30px;
+    margin-right: 10px; /* Adjust margin as needed */
+}
+
+.text-between-images {
+    margin-top: 10px;
+    text-align: center; /* Align text in the center */
+}
+
+
+</style>
+
+<div class="container-body">
+  
+      <!-- content -->
+
+       <div class="row">
+            <div style="width: 950px">
+              <div class="card text-black bg-white border border-white" style="padding: 0px 20px 20px 20px;">
+               <div class="card-header text-muted text-black" style="background-color: white; border: none; display: flex; align-items: center;height: 80px;border-radius: 0;">
+                 
+                  <div style="height: 30px; margin-left: auto;">
+                      <img src="./Ujjivan_files/mainLogo.svg" style="height: 30px;">
+                  </div>
+                  
+              </div>
+
+                            
+
+              <div class="card-body" id="test">
+                <table  class="table table-responsive " id="dynamicAddRemove">
+                                    <tr>
+                    
+                      <td>
+                          <div class="row d-flex justify-content-center align-items-center">
+                             <div class="col-md-5">
+                              <input class="form-control text-end" type="text" value="Name" readonly > 
+                             </div>
+
+                             <div class="col-md-5">
+                              <input class="form-control" type="text" name="" readonly value="">
+                             </div>
+                            
+                          </div>    
+                      </td>
+                    
+                  </tr>
+                                   </table>
+              </div>
+
+              <div class="card-footer text-muted text-black bg-white footer" style="border: none;">
+                 <label style="color: black">Version ewee</label>
+                <div id="div3">
+                   <label  style="color: black">Published on 2024-05-21</label>
+                </div>
+              </div>
+                
+              </div>
+            </div>
+       </div>
+     
+      
+  
+</div>
+
+
+    
+                  </div>
+
+            </div>
+        </main>
+    </div>
+</body>
+
+<script>
+ var data = [];
+function createHashMap() {
+   const parent = document.getElementById('test').children;
+
+   for (var i = 0; i < parent.length; i++) {
+   var childre = parent[i].id;
+   var child_data = document.getElementById(childre).children;
+
+   for(var j=0 ; j<child_data.length ; j++){
+    data.push(child_data[j]);
+   }
+   console.log('child are ', i+" : "+ data);
+
+    }
+
+    var hashMap = {};
+
+    for (var i = 0; i < data.length; i++) {
+        var currentElement = data[i];
+
+         console.log('elements2', currentElement.innerText.trim());
+
+        // Use content-based identifier for figure tags
+        var id;
+        if (currentElement.tagName.toLowerCase() === 'figure') {
+            // Generate an ID for figure elements
+            id = 'table_' + i;
+            var value = currentElement.innerText.trim();
+            // Add the dynamically generated id to the HashMap
+            hashMap[id] = value;
+        } else {
+            // Generate a default ID for other elements
+            id = 'element_' + i;
+            var value = currentElement.innerText.trim();
+            // Add the dynamically generated id to the HashMap
+            hashMap[id] = value;
+        }
+    }
+
+    Android.onReceiveHashMap(JSON.stringify(hashMap));
+}
+
+function highlightElement(index) {
+
+    console.log('elements', data.innerText);
+
+    // Reset the style of all elements
+    for (var i = 0; i < data.length; i++) {
+        data[i].style.backgroundColor = '';
+    }
+
+    // Highlight the specified element in yellow
+    var elementToHighlight = data[index];
+    if (elementToHighlight) {
+        elementToHighlight.style.backgroundColor = 'yellow';
+        elementToHighlight.style.padding = "5px 5px 5px 5px";
+        elementToHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      }
+}
+</script>
+
+</html>

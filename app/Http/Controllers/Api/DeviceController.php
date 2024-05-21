@@ -901,7 +901,7 @@ class DeviceController extends Controller
                    $cust_data = NoticeContent::where('notice_id',$c_id)->first();
                    $n_data = $cust_data->cll;
 
-                   $local_filename = $c_notice->filename;
+                   $local_filename = 'en_'.$c_notice->filename;
                    $branchDetail = BranchInformation::where('branch_id',$branchid)->first();
 
                    //print_r($cust_data ); die();
