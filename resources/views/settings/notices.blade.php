@@ -137,13 +137,7 @@
 		             <td>{{date('d M Y',strtotime($value->created_at)) }}</td>
 		             <td>{{$value->version}}</td> 
 		             <td>{{$value->status}}<!-- {{ ($value->status=='Published') ? 'Published' : 'UnPublished'}} --></td> 
-		             <td>
-		             	@if($value->template_id == 3)
-                         <a target="_blank" href="{{ URL::to('/') }}/custom_noticefiles/en_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
-		             	@else
-		             	<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$value->lang_code}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
-		             	@endif
-		             </td>
+		             <td><a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$value->lang_code}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a></td>
 		             
 				  </tr>	
 
