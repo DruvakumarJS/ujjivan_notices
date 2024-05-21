@@ -166,16 +166,7 @@ class NoticeController extends Controller
 
         $arr = json_decode($data);
         $dropdown_lang =$request->dropdown_lang; 
-/*
-         if($template_id == 3){
 
-          $info_columns = Schema::getColumnListing('branch_information');
-          //print_r($columns); die();
-
-
-          return view('notice/ckeditor/custom_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code','notice_type','dropdown_lang','info_columns'));
-        }
-*/
         return view('notice/ckeditor/create_multilingual_notice',compact('regions','branch','template','arr','template_id','languages','selected_languages','selected_lang_code','notice_type','dropdown_lang'));
 
       } 
@@ -185,6 +176,7 @@ class NoticeController extends Controller
       //  print_r("lll"); die();
         $langarray=$request->lang ;
         $selected_lang_code = implode(',', $langarray);
+        
       //  print_r($langarray); die();
        // $template_id = $request->template_id;
         $regions = Region::all();
@@ -200,8 +192,41 @@ class NoticeController extends Controller
       //  $arr = json_decode($data);
         $dropdown_lang =$request->dropdown_lang; 
 
-         $info_columns = Schema::getColumnListing('branch_information');
-        
+         $info_cols = Schema::getColumnListing('branch_information');
+         $excludedColumns = ['id', 'created_at', 'updated_at'];
+         $filteredColumns = array_diff($info_cols, $excludedColumns);
+         $readableNames = [
+            'branch_id' => 'Branch ID',
+            'bm_name' => 'Branch Manger Name',
+            'bm_number' => 'Branch Manger Number',
+            'bm_email' => 'Branch Manger Email',
+            'bm_designation' => 'Branch Manger Designation',
+            'bo_name' => 'Branch Officer Name',
+            'bo_number' => 'Branch Officer Number',
+            'bo_email' => 'Branch Officer Email',
+            'bo_designation' => 'Branch Officer Designation',
+            'medical' => 'Medical Emergency Number',
+            'ambulance' => 'Ambulance Number',
+            'fire' => 'Fire Emergency Number',
+            'police' => 'Police Emergency Number',
+
+            // Add all your columns here
+        ];
+
+        $info_columns = [];
+        foreach ($filteredColumns as $column) {
+          if (isset($readableNames[$column])) {
+              $info_columns[$column] = $readableNames[$column];
+          } else {
+              $info_columns[$column] = $column; // Use the original name if no readable name is found
+          }
+      }
+          /*foreach ($filteredColumns as $column) {
+              $info_columns[] = $readableNames[$column] ?? $column; 
+          }*/
+
+         // print_r(json_encode($info_columns) ); die();
+
          return view('notice/ckeditor/custom_notice',compact('regions','branch','languages','selected_languages','selected_lang_code','notice_type' ,'dropdown_lang','info_columns'));
       }
       else{

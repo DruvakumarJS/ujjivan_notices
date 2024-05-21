@@ -54,9 +54,9 @@
                   <tr>
                     
                       <td>
-                          <div class="row">
+                          <div class="row d-flex justify-content-center align-items-center">
                              <div class="col-md-5">
-                              <input class="form-control" type="text" value="{{$key}}" readonl> 
+                              <input class="form-control text-end" type="text" value="{{$key}}" readonly> 
                              </div>
 
                              <div class="col-md-5">

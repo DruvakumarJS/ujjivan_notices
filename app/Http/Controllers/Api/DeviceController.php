@@ -906,12 +906,12 @@ class DeviceController extends Controller
 
                    //print_r($cust_data ); die();
 
-                  /* if(!file_exists(public_path().'/custom_noticefiles')) {
+                   if(!file_exists(public_path().'/custom_noticefiles')) {
                          File::makeDirectory(public_path().'/custom_noticefiles', $mode = 0777, true, true);
                      }
-*/
 
-                   //if (!file_exists(public_path().'/custom_noticefiles/'.$local_filename)) {
+
+                   if (!file_exists(public_path().'/custom_noticefiles/'.$local_filename)) {
                      
                     File::put(public_path().'/custom_noticefiles/'.$local_filename,
                       view('htmltemplates.custom_ckofflinetemp')
@@ -919,7 +919,7 @@ class DeviceController extends Controller
                           ->render()
                     );
 
-                   // }
+                    }
     
 
                 }

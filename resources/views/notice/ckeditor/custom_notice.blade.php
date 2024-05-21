@@ -199,16 +199,16 @@
                         <table  class="table table-responsive " id="dynamicAddRemove">
                           <tr>
                             <td>
-                                  <div class="row">
+                                  <div class="row d-flex justify-content-center align-items-center">
                                      <div class="col-md-5">
-                                      <input class="form-control" type="text" name="contact[0][name]" placeholder="Enter Tittle"> 
+                                      <input class="form-control text-end" type="text" name="contact[0][name]" placeholder="Enter Tittle"> 
                                      </div>
 
                                      <div class="col-md-5">
                                       <select class="form-control form-select" name="contact[0][value]">
                                         <option>Select value</option>
-                                        @foreach($info_columns as $info)
-                                           <option value="{{$info}}">{{$info}}</option>
+                                        @foreach($info_columns as $key=>$info)
+                                           <option value="{{$key}}">{{$info}}</option>
                                         @endforeach
                                       </select> 
                                      </div>
@@ -260,7 +260,7 @@
     var j = 'n';
     $("#dynamic-ar").click(function () {
         ++i;
-         $("#dynamicAddRemove").append('<tr><td><div class="row"><div class="col-md-5"><input class="form-control" type="text" name="contact['+ i +'][name]" placeholder="Enter Tittle"></div><div class="col-md-5"><select class="form-control form-select" name="contact['+ i +'][value]"><option>Select value</option>@foreach($info_columns as $info)<option value="{{$info}}">{{$info}}</option>@endforeach</select> </div><div class="col-md-1"><button class="btn btn-sm btn-outline-secondary remove-input-mandate" >Remove</button></div></div></td></tr>');
+         $("#dynamicAddRemove").append('<tr><td><div class="row d-flex justify-content-center align-items-center"><div class="col-md-5"><input class="form-control text-end" type="text" name="contact['+ i +'][name]" placeholder="Enter Tittle"></div><div class="col-md-5"><select class="form-control form-select" name="contact['+ i +'][value]"><option>Select value</option>@foreach($info_columns as $key=>$info)<option value="{{$key}}">{{$info}}</option>@endforeach</select> </div><div class="col-md-1"><button class="btn btn-sm btn-outline-secondary remove-input-mandate" >Remove</button></div></div></td></tr>');
         
 
         document.getElementById("btnn").style.display="block";
