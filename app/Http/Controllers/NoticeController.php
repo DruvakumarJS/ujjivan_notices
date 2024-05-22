@@ -1133,7 +1133,8 @@ class NoticeController extends Controller
            'voiceover' => $request->voice_over,
            'document_id' => $request->document_id,
            'published_date' => $request->publish_date ,
-           'version' => $request->version
+           'version' => $request->version,
+           'status' => 'UnPublished'
        ]);
 
        $noticeID = $request->id;
@@ -1355,7 +1356,8 @@ class NoticeController extends Controller
            'voiceover' => $request->voice_over,
            'document_id' => $request->document_id,
            'published_date' => $request->publish_date ,
-           'version' => $request->version
+           'version' => $request->version,
+           'status' => 'UnPublished'
        ]);
 
        $noticeID = $request->id;
@@ -2087,7 +2089,8 @@ class NoticeController extends Controller
            'creator'=>Auth::user()->id ,
            'document_id' => $request->document_id,
            'published_date' => $request->publish_date ,
-           'version'=> $request->version
+           'version'=> $request->version,
+           'status' => 'UnPublished'
 
          
        ]);
@@ -2301,7 +2304,8 @@ class NoticeController extends Controller
            'creator'=>Auth::user()->id ,
            'document_id' => $request->document_id,
            'published_date' => $request->publish_date ,
-           'version'=> $request->version
+           'version'=> $request->version,
+           'status' => 'UnPublished'
 
          
        ]);
