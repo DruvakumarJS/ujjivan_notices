@@ -2512,9 +2512,15 @@ class NoticeController extends Controller
     }
 
     public function export_notices($lang,$search){
-     // print_r($search); die();
+     // print_r($lang); print_r($search); die();
       $language = Language::where('code',$lang)->first();
-        $file_name = $language->lang.'_Notices.csv';
+      if($lang == 'all'){
+         $file_name = 'Notices.csv';
+      }
+      else{
+         $file_name = $language->lang.'_Notices.csv';
+      }
+       
        
          return Excel::download(new ExportNotice($lang,$search), $file_name);
       

@@ -24,13 +24,48 @@ class ExportNotice implements FromCollection,WithHeadings
     public function collection()
     {
     	$search = $this->search;
+        $lang = $this->lang;
 
-    	if($search == 'all'){
-    		 $data = Notice::select('name','document_id','notice_type','lang_name','status',DB::raw(
-            "DATE_FORMAT(created_at, '%d-%m-%Y') as date"),)->where('lang_code', $this->lang)->get();
+    	if($search == 'all' && $lang == 'all'){
+    		 $data = Notice::select('name',
+                'document_id',
+                'notice_type',
+                'lang_name',
+                'status',
+                DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y') as date"))
+             ->get();
     	}
+        else if($search == 'all' && $lang != 'all'){
+             $data = Notice::select('name',
+                'document_id',
+                'notice_type',
+                'lang_name',
+                'status',
+                DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y') as date"))
+             ->where('lang_code', $this->lang)            
+             ->get();
+
+        }
+        else if($search != 'all' && $lang == 'all'){
+             $data = Notice::select('name',
+                'document_id',
+                'notice_type',
+                'lang_name',
+                'status',
+                DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y') as date"))
+             ->where(function($query)use($search){
+                $query->where('document_id','LIKE','%'.$search.'%');
+             })
+             ->get();
+        }
+
     	else{
-             $data = Notice::select('name','document_id','notice_type','lang_name','status','created_at')
+             $data = Notice::select('name',
+                'document_id',
+                'notice_type',
+                'lang_name',
+                'status',
+                DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y') as date"))
              ->where('lang_code', $this->lang)
              ->where(function($query)use($search){
                 $query->where('document_id','LIKE','%'.$search.'%');
