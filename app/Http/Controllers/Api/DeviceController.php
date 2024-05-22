@@ -928,7 +928,7 @@ class DeviceController extends Controller
 
         $old = Notice::where(function($query)use($lastdate){
                   $query->where('is_pan_india','Yes');
-                  $query->where('template_id','!=','3');
+                 // $query->where('template_id','!=','3');
                   $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'<',$lastdate);
                      $query2->orWhere('updated_at','<',$lastdate);
@@ -936,7 +936,7 @@ class DeviceController extends Controller
                    })  
                  ->orWhere(function($query)use($region_id,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','!=','3');
+                   // $query->where('template_id','!=','3');
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->where('branch_code','all');
@@ -948,7 +948,7 @@ class DeviceController extends Controller
                  })
                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','!=','3');
+                   // $query->where('template_id','!=','3');
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
@@ -959,7 +959,7 @@ class DeviceController extends Controller
                  })
                    ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','!=','3');
+                    //$query->where('template_id','!=','3');
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
@@ -970,7 +970,7 @@ class DeviceController extends Controller
                  })
                    ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','!=','3');
+                    //$query->where('template_id','!=','3');
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->where('branch_code','all'); 
