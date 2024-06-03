@@ -21,7 +21,11 @@ class Devices extends Model
             'date_of_install',
             'last_updated_date',
             'apk_version',
-            'remote_id'
+            'remote_id',
+            'deviceID',
+            'tv_serial_no',
+            'router_serial_number',
+            'sim_card_number'
         ];
 
     public function bank(){

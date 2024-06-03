@@ -134,11 +134,14 @@ class DevicesController extends Controller
           return redirect()->back()->withErrors($validator)->withInput();
       }
 
-    
+        if(Devices::where('deviceID',$request->serial_no)->exists()){
+            return redirect()->back()->withMessage('Duplicate device Serial Number . Please re-check the device Serial Number genarated by Super Admin')->withInput();
+        }
 
         if(Devices::where('mac_id',$request->device_id)->exists()){
-            return redirect()->back()->withMessage('Duplicate device ID . Please re-check the device ID ')->withInput();
+            return redirect()->back()->withMessage('Duplicate authorization ID . Please re-check the authorization ID in the application')->withInput();
         }
+
 
         $branch = Branch::where('id',$request->branch_id)->first();
 
@@ -147,9 +150,14 @@ class DevicesController extends Controller
             'branch_id' => $request->branch_id,
             'bank_id' => '0',
             'mac_id' => $request->device_id,
-            'device_details' => $request->device_id .':'.$request->model,
+            'device_details' => $request->model,
+            'deviceID' => $request->serial_no,
+            'tv_serial_no' => $request->tv,
+            'router_serial_number' => $request->router,
+            'sim_card_number' => $request->sim,
             'status' => 'Offline',
-            'date_of_install' => $request->date_of_installation
+            'date_of_install' => $request->date_of_installation,
+            'remote_id' => $request->serial_no
 
         ]);
 
@@ -294,12 +302,11 @@ class DevicesController extends Controller
             'region_id' => $branch->region_id,
             'branch_id' => $request->branch_id,
             'bank_id' => '0',
-            'name' => $request->name,
-            'mobile' => $request->mobile,
-            'mac_id' => $request->device_id,
-            'device_details' => $request->device_id .':'.$request->model,
-            'date_of_install' => $request->date_of_installation,
-            'remote_id' => $request->remote_id
+            'device_details' => $request->model,
+            'tv_serial_no' => $request->tv,
+            'router_serial_number' => $request->router,
+            'sim_card_number' => $request->sim,
+            'date_of_install' => $request->date_of_installation
         ]);
 
         if($update){
