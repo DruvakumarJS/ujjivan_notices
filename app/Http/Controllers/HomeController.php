@@ -329,14 +329,26 @@ class HomeController extends Controller
             'state' => $request->state ,
             'district' => $request->district ,
             'city' => $request->city ,
-            'pincode' => $request->pincode,
-            'ct_name' => $request->ctname,
-            'ct_mobile' => $request->ctnumber,
-            'ct_email' => $request->ctemail,
-            'ct_designation' => $request->ctdesignation,]);
+            'pincode' => $request->pincode]);
 
         if($save){
           $data = Branch::where('branch_code', $request->branch_code)->first();
+
+          $info = BranchInformation::create([
+            'branch_id' => $data->id,
+            'bm_name' => $request->bm_name , 
+            'bm_number' => $request->bm_number , 
+            'bm_email' => $request->bm_email , 
+            'bm_designation' => "BM" , 
+            'bo_name' => $request->bo_name , 
+            'bo_number' => $request->bo_number , 
+            'bo_email' => $request->bo_email , 
+            'bo_designation' => "BO" , 
+            'medical' => $request->medical , 
+            'ambulance' => $request->ambulance , 
+            'fire' => $request->fire , 
+            'police' => $request->police ]);
+
            $audit = Audit::create([
             'action' => 'New branch created ',
             'track_id' => $data->id,

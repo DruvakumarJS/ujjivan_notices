@@ -127,7 +127,7 @@
                  
              <div class="form-build">
               <div class="row">
-                <div class="col-6">
+                <div class="col-7">
                   <form method="post" action="{{ route('save_branch')}}" enctype="multipart/form-data" >
                     @csrf
 
@@ -202,33 +202,81 @@
                   <hr/>
                   <label class="label-bold">Bank Contact Details</label>
 
-                    <div class="form-group row div-margin">
-                      <label for="" class="col-4 col-form-label">name *</label>
-                      <div class="col-7">
-                          <input class="form-control" name="ctname" type="text" placeholder="Enter Contact Name"  >
-                      </div>
-                    </div>
+                  <p class="label-bold">Branch Manager</p>
 
-                    <div class="form-group row">
-                      <label for="" class="col-4 col-form-label">Number *</label>
-                      <div class="col-7">
-                          <input class="form-control" name="ctnumber" type="text" placeholder="Enter Contact Number" minlength="10" maxlength="10"  >
-                      </div>
+                  <div class="form-group row div-margin">
+                    <label for="" class="col-4 col-form-label">name *</label>
+                    <div class="col-7">
+                        <input class="form-control" name="bm_name" type="text" placeholder="Enter Contact Name"   >
                     </div>
+                  </div>
 
-                    <div class="form-group row">
-                      <label for="" class="col-4 col-form-label">Email *</label>
-                      <div class="col-7">
-                          <input class="form-control" name="ctemail" type="text" placeholder="Enter Email ID"  >
-                      </div>
+                  <div class="form-group row div-margin">
+                    <label for="" class="col-4 col-form-label">Number *</label>
+                    <div class="col-7">
+                        <input class="form-control" name="bm_number" type="text" placeholder="Enter Contact Number" minlength="10" maxlength="10"  >
                     </div>
+                  </div>
 
-                    <div class="form-group row">
-                      <label for="" class="col-4 col-form-label">Designation *</label>
-                      <div class="col-7">
-                          <input class="form-control" name="ctdesignation" type="text" placeholder="Enter Designation"   >
-                      </div>
+                  <div class="form-group row div-margin">
+                    <label for="" class="col-4 col-form-label">Email *</label>
+                    <div class="col-7">
+                        <input class="form-control" name="bm_email" type="text" placeholder="Enter Email ID"  >
                     </div>
+                  </div>
+
+                  <p class="label-bold">Branch Officer</p>
+
+                  <div class="form-group row div-margin">
+                    <label for="" class="col-4 col-form-label">name *</label>
+                    <div class="col-7">
+                        <input class="form-control" name="bo_name" type="text" placeholder="Enter Contact Name"   >
+                    </div>
+                  </div>
+
+                  <div class="form-group row div-margin">
+                    <label for="" class="col-4 col-form-label">Number *</label>
+                    <div class="col-7">
+                        <input class="form-control" name="bo_number" type="text" placeholder="Enter Contact Number"  >
+                    </div>
+                  </div>
+
+                  <div class="form-group row div-margin">
+                    <label for="" class="col-4 col-form-label">Email *</label>
+                    <div class="col-7">
+                        <input class="form-control" name="bo_email" type="text" placeholder="Enter Email ID"  >
+                    </div>
+                  </div>
+                <hr/>
+                  <p class="label-bold">Emergency Contact Details</p>
+
+                  <div class="form-group row div-margin">
+                    <label for="" class="col-4 col-form-label">Medical *</label>
+                    <div class="col-7">
+                        <input class="form-control" name="medical" type="text" placeholder="Enter Medical Contact Number"  >
+                    </div>
+                  </div>
+
+                  <div class="form-group row div-margin">
+                    <label for="" class="col-4 col-form-label">Ambulance *</label>
+                    <div class="col-7">
+                        <input class="form-control" name="ambulance" type="text" placeholder="Enter Ambulance Contact Number"   >
+                    </div>
+                  </div>
+
+                  <div class="form-group row div-margin">
+                    <label for="" class="col-4 col-form-label">Police *</label>
+                    <div class="col-7">
+                        <input class="form-control" name="police" type="text" placeholder="Enter Police Contact Number"  >
+                    </div>
+                  </div>
+
+                  <div class="form-group row div-margin">
+                    <label for="" class="col-4 col-form-label">Fire *</label>
+                    <div class="col-7">
+                        <input class="form-control" name="fire" type="text" placeholder="Enter Fireman Contact Number"  >
+                    </div>
+                  </div>
                     
                    
                      <div class="modal-footer">
