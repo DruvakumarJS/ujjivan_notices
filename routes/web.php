@@ -111,6 +111,11 @@ Route::post('search-branch-notice',[HomeController::class,'search'])->name('sear
 Route::get('get_branches',[HomeController::class,'get_branches'])->name('get_branches');
 Route::post('import-branches',[HomeController::class,'import_branches'])->name('import_branches');
 
+Route::get('create-poster',[HomeController::class,'poster'])->name('poster');
+Route::post('update-poster',[HomeController::class,'update_poster'])->name('update_poster');
+
+
+
 
 
 Route::get('banks',[HomeController::class,'banks'])->name('banks');

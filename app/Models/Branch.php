@@ -43,7 +43,7 @@ class Branch extends Model
         return $this->hasMany(Notices::class,'id','branch_code');
     } 
 
-    public function branchInformation(){
-        return $this->hasOne(BranchInformation::class,'id' , 'branch_id');
+    public function branchinfo(){
+        return $this->hasOne(BranchInformation::class);
     } 
 }

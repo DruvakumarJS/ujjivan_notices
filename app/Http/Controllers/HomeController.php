@@ -7,6 +7,7 @@ use App\Models\Devices;
 use App\Models\Notice;
 use App\Models\Region;
 use App\Models\Branch;
+use App\Models\BranchInformation;
 use App\Models\Bank;
 use App\Models\User;
 use App\Models\Language;
@@ -23,6 +24,7 @@ use PDF;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use Excel;
+use File;
 
 
 class HomeController extends Controller
@@ -316,7 +318,7 @@ class HomeController extends Controller
 
     public function save_branch(Request $request){
 
-        print_r($request->ctname); die();
+      //  print_r($request->ctname); die();
 
         $save = Branch::create([
             'region_id'=>$request->region,
@@ -351,10 +353,11 @@ class HomeController extends Controller
     }
 
     public function edit_branch($id){
-     // print_r($id); die();
 
-      $value = Branch::where('id',$id)->first();
+      $value = Branch::with('branchinfo')->where('id',$id)->first();
       $region = Region::get();
+
+     // print_r(json_encode($value) ); die();
 
       return view('settings/edit_branch',compact('value','region')); 
 
@@ -362,8 +365,9 @@ class HomeController extends Controller
 
     public function update_branch(Request $request){
 
-       // print_r($request->input()); die();
-         $validator = Validator::make($request->all(), [
+        //print_r($request->input()); die();
+
+        $validator = Validator::make($request->all(), [
 
          'id' => [
               'required',
@@ -493,12 +497,37 @@ class HomeController extends Controller
           ],
       ]);
 
+      $fileName = '';
+
       if ($validator->fails()) {
         
           return redirect()->back()->withErrors($validator)->withInput();
       }
 
-        $save = Branch::where('id',$request->id)->update([
+        if (file_exists(public_path().'/announcement')) {
+              
+        } else {
+           
+            File::makeDirectory(public_path().'/announcement', $mode = 0777, true, true);
+        }
+
+
+        if($file = $request->hasFile('announcement_file')) {
+             
+            $file = $request->file('announcement_file') ;
+           // $fileName = $file->getClientOriginalName() ;
+            $current = date('Y-m-d_H_i_s');
+            $temp = explode(".", $file->getClientOriginalName());
+            $fileName=$request->branch_code.'_'.$current. '.' . end($temp);
+           
+            $destinationPath = public_path().'/announcement' ;
+            $file->move($destinationPath,$fileName);
+            
+         }
+
+        $data = Branch::where('branch_code', $request->branch_code)->first();
+
+        $save = Branch::where('id',$data->id)->update([
             'region_id'=>$request->region,
             'name' => $request->name , 
             'branch_code'=> $request->branch_code ,
@@ -508,13 +537,31 @@ class HomeController extends Controller
             'district' => $request->district ,
             'city' => $request->city ,
             'pincode' => $request->pincode,
-            'ct_name' => $request->cname,
-            'ct_mobile' => $request->cnumber,
-            'ct_email' => $request->cemail,
-            'ct_designation' => $request->cdesignation]);
+            ]);
 
-        if($save){
-          $data = Branch::where('branch_code', $request->branch_code)->first();
+        $updateBranchinfo = BranchInformation::where('branch_id',$data->id)->update([
+            'bm_name' => $request->bm_name , 
+            'bm_number' => $request->bm_number , 
+            'bm_email' => $request->bm_email , 
+            'bm_designation' => "BM" , 
+            'bo_name' => $request->bo_name , 
+            'bo_number' => $request->bo_number , 
+            'bo_email' => $request->bo_email , 
+            'bo_designation' => "BO" , 
+            'medical' => $request->medical , 
+            'ambulance' => $request->ambulance , 
+            'fire' => $request->fire , 
+            'police' => $request->police , 
+            'disclaimer1' => $request->disclaimer1 , 
+            'disclaimer2' => $request->disclaimer2 , 
+            'announcement' => $request->announcement , 
+            'start_time' => $request->start , 
+            'end_time' => $request->end , 
+            'filename' => $fileName , 
+          ]);
+
+        if($save || $updateBranchinfo){
+          
            $audit = Audit::create([
             'action' => 'Branch details modified ',
             'track_id' => $data->id,
@@ -530,6 +577,8 @@ class HomeController extends Controller
             return redirect()->back()->withMessage('Updated Successfully');
            
         }
+         return redirect()->back();
+
     }
 
     public function import_branches(Request $request){
@@ -966,6 +1015,52 @@ class HomeController extends Controller
       //  return view('settings/list', compact('region','data','search','btn_position'));
 
         return response()->json($branchArray);
+
+    }
+
+    public function poster(){
+      return view('settings.poster');
+    }
+
+    public function update_poster(Request $request){
+    // print_r($request->input()); die();
+     $announcement = '0';
+      $start = '';
+      $end = '';
+      $fileName = '';
+
+      if($request->announcement == '1'){
+        if($file = $request->hasFile('announcement_file')) {
+             
+            $file = $request->file('announcement_file') ;
+           // $fileName = $file->getClientOriginalName() ;
+            $current = date('Y-m-d_H_i_s');
+            $temp = explode(".", $file->getClientOriginalName());
+            $fileName='PAN_'.$current. '.' . end($temp);
+           
+            $destinationPath = public_path().'/announcement' ;
+            $file->move($destinationPath,$fileName);
+            
+         }
+
+        $announcement = '1';
+        $start = $request->start;
+        $end = $request->end;
+        $fileName = $fileName;
+      }
+
+      $update = BranchInformation::where('id','!=','0')->update([
+        'disclaimer2' => $request->disclaimer2 , 
+        'announcement' => $announcement , 
+        'start_time' => $start , 
+        'end_time' => $end , 
+        'filename' => $fileName , 
+      ]);
+
+      if($update){
+        return redirect()->route('branches');
+      }
+
 
     }
 

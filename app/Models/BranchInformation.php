@@ -23,6 +23,12 @@ class BranchInformation extends Model
         'ambulance',
         'fire',
         'police',
+        'disclaimer1',
+        'disclaimer2',
+        'announcement',
+        'start_time',
+        'end_time',
+        'filename',
 
         ];
 

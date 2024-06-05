@@ -41,28 +41,56 @@ class ImportBranches implements  ToModel, WithStartRow
 
          ]);*/
 
-         $branch  = new Branch();
-         $branch->region_id = $row[0];
-         $branch->name = $row[1];
-         $branch->branch_code = $row[2];
-         $branch->ifsc = $row[3];
-         $branch->area = $row[4];
-         $branch->city = $row[5];
-         $branch->district = $row[6];
-         $branch->state = $row[7];
-         $branch->pincode = $row[8];
+         $branchcode = $row[2];
 
-         $branch->save();
+         if(BranchInformation::where('branch_id',$branchcode)->exists()){
+            $info = BranchInformation::where('branch_id',$branchcode)->first();
 
-         $branchID = $branch->id;
+            $updateBranch = Branch::where('id',$info->id)->update([
+                'region_id' => $row[0],
+                'name' => $row[1],
+                'ifsc' => $row[3],
+                'area' => $row[4],
+                'city' => $row[5],
+                'district' => $row[6],
+                'state' => $row[7],
+                'pincode' => $row[8],
+            ]);
 
-         $branchinfo = new BranchInformation();
-         $branchinfo->branch_id = $branchID;
-         $branchinfo->bm_name = $row[9];
-         $branchinfo->bm_number = $row[10];
-         $branchinfo->bm_designation = $row[12];
+            if($updateBranch){
+                $update_info = BranchInformation::where('branch_id',$info->id)->update([
+                     'bm_name' => $row[9],
+                     'bm_number' => $row[10],
+                     'bm_designation' => $row[12],
+                ]);
+            }
+         } 
+         else{
+             $branch  = new Branch();
+             $branch->region_id = $row[0];
+             $branch->name = $row[1];
+             $branch->branch_code = $row[2];
+             $branch->ifsc = $row[3];
+             $branch->area = $row[4];
+             $branch->city = $row[5];
+             $branch->district = $row[6];
+             $branch->state = $row[7];
+             $branch->pincode = $row[8];
 
-         $branchinfo->save();
+             $branch->save();
+
+             $branchID = $branch->id;
+
+             $branchinfo = new BranchInformation();
+             $branchinfo->branch_id = $branchID;
+             $branchinfo->bm_name = $row[9];
+             $branchinfo->bm_number = $row[10];
+             $branchinfo->bm_designation = $row[12];
+
+             $branchinfo->save();
+         }
+
+         
     }
 
     public function getRowCount(): int

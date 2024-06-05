@@ -16,6 +16,10 @@
        <a data-bs-toggle="modal" data-bs-target="#mymodal" ><button class="btn btn-outline-primary">Add New Branch</button></a>
     </div> 
 
+    <div id="div2" style="margin-right: 30px">
+       <a href="{{ route('poster')}}"><button title="Use this button to create Poster & Disclaimer ,if you are planning for PAN India " class="btn btn-outline-dark">Poster & Disclaimer </button></a>
+    </div>
+
 </div>
 <div class="container-header">
   <div class="row" >
@@ -201,28 +205,28 @@
                     <div class="form-group row div-margin">
                       <label for="" class="col-4 col-form-label">name *</label>
                       <div class="col-7">
-                          <input class="form-control" name="ctname" type="text" placeholder="Enter Contact Name"  required>
+                          <input class="form-control" name="ctname" type="text" placeholder="Enter Contact Name"  >
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label for="" class="col-4 col-form-label">Number *</label>
                       <div class="col-7">
-                          <input class="form-control" name="ctnumber" type="text" placeholder="Enter Contact Number" minlength="10" maxlength="10"  required>
+                          <input class="form-control" name="ctnumber" type="text" placeholder="Enter Contact Number" minlength="10" maxlength="10"  >
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label for="" class="col-4 col-form-label">Email *</label>
                       <div class="col-7">
-                          <input class="form-control" name="ctemail" type="text" placeholder="Enter Email ID"  required>
+                          <input class="form-control" name="ctemail" type="text" placeholder="Enter Email ID"  >
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label for="" class="col-4 col-form-label">Designation *</label>
                       <div class="col-7">
-                          <input class="form-control" name="ctdesignation" type="text" placeholder="Enter Designation"   required>
+                          <input class="form-control" name="ctdesignation" type="text" placeholder="Enter Designation"   >
                       </div>
                     </div>
                     

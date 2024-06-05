@@ -35,7 +35,7 @@
           <label class="label-bold">Branch Name : </label> <label>{{$data->branch->name}} , {{$data->branch->branch_code}},{{$data->branch->ifsc}}</label>
         </div>
         <div class="col-md-4">
-          <label class="label-bold">Device ID : </label> <label>{{$data->mac_id}} </label>
+          <label class="label-bold">Device Serial Number : </label> <label>{{$data->deviceID}} </label>
         </div>
         <div class="col-md-4">
           <label class="label-bold" id="running">Total Running time : </label> 

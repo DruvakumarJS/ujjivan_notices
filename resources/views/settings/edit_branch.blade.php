@@ -102,34 +102,137 @@
 
         <hr/>
         <label class="label-bold">Bank Contact Details</label>
+        <hr/>
+        
+        <p class="label-bold">Branch Manager</p>
 
           <div class="form-group row div-margin">
             <label for="" class="col-2 col-form-label">name *</label>
             <div class="col-6">
-                <input class="form-control" name="cname" type="text" placeholder="Enter Contact Name" value="{{$value->ct_name}}"  required>
+                <input class="form-control" name="bm_name" type="text" placeholder="Enter Contact Name" value="{{$value->branchinfo->bm_name}}"  >
             </div>
           </div>
 
           <div class="form-group row div-margin">
             <label for="" class="col-2 col-form-label">Number *</label>
             <div class="col-6">
-                <input class="form-control" name="cnumber" type="text" placeholder="Enter Contact Number" minlength="10" maxlength="10" value="{{$value->ct_mobile}}" required>
+                <input class="form-control" name="bm_number" type="text" placeholder="Enter Contact Number" minlength="10" maxlength="10" value="{{$value->branchinfo->bm_number}}" >
             </div>
           </div>
 
           <div class="form-group row div-margin">
             <label for="" class="col-2 col-form-label">Email *</label>
             <div class="col-6">
-                <input class="form-control" name="cemail" type="text" placeholder="Enter Email ID" value="{{$value->ct_email}}" required>
+                <input class="form-control" name="bm_email" type="text" placeholder="Enter Email ID" value="{{$value->branchinfo->bm_email}}" >
+            </div>
+          </div>
+
+          <p class="label-bold">Branch Officer</p>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">name *</label>
+            <div class="col-6">
+                <input class="form-control" name="bo_name" type="text" placeholder="Enter Contact Name" value="{{$value->branchinfo->bo_name}}"  >
             </div>
           </div>
 
           <div class="form-group row div-margin">
-            <label for="" class="col-2 col-form-label">Designation *</label>
+            <label for="" class="col-2 col-form-label">Number *</label>
             <div class="col-6">
-                <input class="form-control" name="cdesignation" type="text" placeholder="Enter Designation" value="{{$value->ct_designation}}" required>
+                <input class="form-control" name="bo_number" type="text" placeholder="Enter Contact Number" value="{{$value->branchinfo->bo_number}}" >
             </div>
           </div>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">Email *</label>
+            <div class="col-6">
+                <input class="form-control" name="bo_email" type="text" placeholder="Enter Email ID" value="{{$value->branchinfo->bo_email}}" >
+            </div>
+          </div>
+        <hr/>
+          <p class="label-bold">Emergency Contact Details</p>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">Medical *</label>
+            <div class="col-6">
+                <input class="form-control" name="medical" type="text" placeholder="Enter Medical Contact Number" value="{{$value->branchinfo->medical}}"  >
+            </div>
+          </div>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">Ambulance *</label>
+            <div class="col-6">
+                <input class="form-control" name="ambulance" type="text" placeholder="Enter Ambulance Contact Number" value="{{$value->branchinfo->ambulance}}"  >
+            </div>
+          </div>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">Police *</label>
+            <div class="col-6">
+                <input class="form-control" name="police" type="text" placeholder="Enter Police Contact Number" value="{{$value->branchinfo->police}}" >
+            </div>
+          </div>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">Fire *</label>
+            <div class="col-6">
+                <input class="form-control" name="fire" type="text" placeholder="Enter Fireman Contact Number" value="{{$value->branchinfo->fire}}" >
+            </div>
+          </div>
+
+          <hr/>
+          <label class="label-bold">Display Standiee Disclaimer </label>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">Disclaimer 1 (Top)*</label>
+            <div class="col-6">
+                <textarea class="form-control" name="disclaimer1" readonly>Branch Name : {{$value->name}}  |  Branch Code : {{$value->branch_code}}  |  Manager Name : {{$value->branchinfo->bm_name}}  |  Manager Contact : {{$value->branchinfo->bm_number}}</textarea>
+            </div>
+          </div>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">Disclaimer 2 (Bottom)*</label>
+            <div class="col-6">
+                <textarea class="form-control" name="disclaimer2" onkeyup="textAreaAdjust(this)" style="overflow:hidden" required>{{$value->branchinfo->disclaimer2}}</textarea>
+            </div>
+          </div>  
+
+          <hr/>
+          <label class="label-bold">Display Standiee Poster </label>
+          <p>A full screen image wil be displayed in display standiee when it is set to active for the provided interval .Later the application will rollouts automatically to show notices . </p>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">Advertisement </label>
+            <div class="col-6">
+                <select class="form-control form-select" name="announcement">
+                  <option value="">Select</option>
+                  <option value="1" {{ ($value->branchinfo->announcement == '1')?'selected':''}}>Active</option>
+                  <option value="0" {{ ($value->branchinfo->announcement == '0')?'selected':''}}>Inactive</option>
+                </select>
+            </div>
+          </div>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">Start Date and Time </label>
+            <div class="col-6">
+                <input class="form-control" type="datetime-local" name="start" id="start" value="{{$value->branchinfo->start_time}}">
+            </div>
+          </div>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">End Date and Time </label>
+            <div class="col-6">
+                <input class="form-control" type="datetime-local" name="end" id="end" value="{{$value->branchinfo->end_time}}">
+            </div>
+          </div>
+
+          <div class="form-group row div-margin">
+            <label for="" class="col-2 col-form-label">File </label>
+            <div class="col-6">
+                <input class="form-control" type="file" name="announcement_file" id="announcement_file" accept="image/*">
+            </div>
+          </div>
+  
         <input type="hidden" name="id" value="{{$value->id}}">
 
         
@@ -144,5 +247,12 @@
     </div>    
     
 </div>
+
+<script type="text/javascript">
+  function textAreaAdjust(element) {
+  element.style.height = "1px";
+  element.style.height = (25+element.scrollHeight)+"px";
+}
+</script>
   
 @endsection
