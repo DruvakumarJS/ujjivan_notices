@@ -1022,7 +1022,7 @@ class DeviceController extends Controller
       $custom_notice = array();
       $old_data = array();
       $supporting_files = array();
-      $bank_info = '';
+      $bank_info = array();
 
       if(Devices::where('mac_id',$request->mac_id)->exists()){
        
@@ -1257,7 +1257,7 @@ class DeviceController extends Controller
           $disclaimer2 = $branchInfo->disclaimer2 ;
 
 
-          $bank_info = ['disclaimer_top' => $disclaimer1 , 'disclaimer_bottom' => $disclaimer2 ,'display_poster' => $branchInfo->announcement , 'start_time' => date('Y-m-d H:i:s',strtotime($branchInfo->start_time)) , 'end_time' => date('Y-m-d H:i:s',strtotime($branchInfo->end_time)) , 'filename' => ($branchInfo->filename != '')?url('/').'/announcement'.$branchInfo->filename:''];
+          $bank_info[] = ['disclaimer_top' => $disclaimer1 , 'disclaimer_bottom' => $disclaimer2 ,'display_poster' => $branchInfo->announcement , 'start_time' => date('Y-m-d H:i:s',strtotime($branchInfo->start_time)) , 'end_time' => date('Y-m-d H:i:s',strtotime($branchInfo->end_time)) , 'filename' => ($branchInfo->filename != '')?url('/').'/announcement'.$branchInfo->filename:''];
         }
 
        
