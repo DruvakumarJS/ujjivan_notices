@@ -448,8 +448,8 @@
             var optionsbranch = '<option value="all">All</option>';
 
             $.each(data, function(index, item) {
-            
-              optionsbranch += '<option value="' + item.id + '">' + item.branch_code + '-' + item.district + '</option>';
+ 
+              optionsbranch += '<option value="' + item.id + '">' + item.branch_code + ' - ' + item.name + ' - ' + item.district + ' - ' + item.state + '</option>';
             });
 
             // Generate the multiselect dropdown HTML
