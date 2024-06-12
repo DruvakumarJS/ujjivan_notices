@@ -17,16 +17,22 @@ use App\Http\Controllers\AuditController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    //return view('auth.login');
+     return redirect(route('login'));
 });
 
 Auth::routes();
+
+Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'index'])->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'attemptLogin']);
+
 Route::get('ujjivan_notices/{lang}',[NoticeController::class,'AllNotices'])->name('ujjivan_notices');
 Route::get('search_notice/{lang}/{id}',[NoticeController::class,'search_public_notice'])->name('search_public_notice');
 
 
 Route::group(['middleware' => 'auth'], function () {
     // Your protected routes go here
+Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

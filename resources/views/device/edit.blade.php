@@ -135,7 +135,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="serial_no" placeholder="Enter Serial Number " value="{{$data->deviceID}}" readonly required>
+                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="serial_no" placeholder="Enter Serial Number " value="{{$data->deviceID}}"  required>
                 </div>
             </div>   
        </div>
@@ -149,7 +149,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="device_id" maxlength="20" placeholder="Enter Authorization ID (Shown in application) " value="{{($data->mac_id)}}" readonly required>
+                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="device_id" maxlength="20" placeholder="Enter Authorization ID (Shown in application) " value="{{($data->mac_id)}}" required>
                 </div>
             </div>   
        </div>

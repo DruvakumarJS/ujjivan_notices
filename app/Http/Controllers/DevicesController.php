@@ -335,14 +335,18 @@ class DevicesController extends Controller
       // print_r($id); die();
       $device=Devices::where('id',$id)->first();
       $branch = Branch::where('id',$device->branch_id)->first();
-
-          $audit = Audit::create([
+      $Deletedevice=Devices::where('id',$id)->delete();
+      if($Deletedevice){
+         $audit = Audit::create([
             'action' => 'Device removed from branch ID - '.$branch->branch_code,
             'track_id' => $id,
             'user_id' => Auth::user()->id,
             'module' => 'Device',
             'operation' => 'D'
           ]);
+      }
+
+         
 
         return redirect()->back();
     }

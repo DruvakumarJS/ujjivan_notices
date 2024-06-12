@@ -1,27 +1,27 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="4fqYQ4aUut8jcLbAyXDRI7f6sIdoFXTMXQRngf29">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Ujjivan</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="http://127.0.0.1:8000/js/app.js" defer></script>
 
     <!-- Fonts -->
     <!-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> -->
 
     <!-- Styles -->
-    <link src="{{ env('APP_URL') }}/css/app.css" rel="stylesheet">
-    <link src="{{ env('APP_URL') }}/css/style.css" rel="stylesheet">
-    <link src="{{ env('APP_URL') }}/css/content-styles.css" rel="stylesheet" type="text/css">
+    <link src="http://127.0.0.1:8000/css/app.css" rel="stylesheet">
+    <link src="http://127.0.0.1:8000/css/style.css" rel="stylesheet">
+    <link src="http://127.0.0.1:8000/css/content-styles.css" rel="stylesheet" type="text/css">
 
-    <link src="{{ env('APP_URL') }}/ckeditor/ckeditor.js" rel="stylesheet">
+    <link src="http://127.0.0.1:8000/ckeditor/ckeditor.js" rel="stylesheet">
 
     
    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="noreferrer"></script> -->
@@ -44,7 +44,73 @@
         <main class="py-4" >
            <div class="row mx-0 px-0 justify-content-center">
                   <div class="col-12 justify-content-center" style="max-width: 950px">
-                  @yield('content')
+                  
+<style type="text/css">
+  /*body {
+    background-image: url('/uconnect-logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 250px 250px; 
+    opacity: 0.9; 
+    background-attachment: fixed;
+}*/
+.card-header {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  position: sticky;
+  top: 0; 
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+</style>
+
+
+<div class="container-body">
+  
+        <!-- content -->
+
+             
+       <div class="row">
+            <div style="width: 950px">
+              <div class="card text-black bg-white border border-white" style="padding: 0px 20px 20px 20px;">
+               <div class="card-header text-muted text-black" style="background-color: white; border: none; display: flex; align-items: right;height: 80px;border-radius: 0;">
+                
+                <div style="height: 30px; margin-left: auto;">
+                      <img src="http://127.0.0.1:8000/images/mainLogo.svg" style="height: 30px;">
+                  </div>
+               </div>
+              
+                                   <!-- <label style="color: black">textarea</label> -->
+                                      
+                                                             
+                       
+                       
+                         <div class="ck-content" id="paragraphs" dir="ltr"><p>fgfgggg</p><p>ggg</p><p>fgfg</p><p>fg</p><p>f</p></div>
+                     
+                         
+                                       
+                                     
+                               
+                
+               
+                <div class="card-footer text-muted text-black bg-white" style="border: none;">
+                  <label style="color: black">Version 11</label>
+                  <div id="div3">
+                    <label  style="color: black">Published on 2024-06-12</label>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+       </div>
+     
+      
+  
+</div>
+
+
+    
                   </div>
 
             </div>

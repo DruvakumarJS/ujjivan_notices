@@ -10,43 +10,43 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ env('APP_URL') }}/js/app.js" defer></script>
 
     <!-- Fonts -->
    <!--  <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> -->
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/content-styles.css') }}" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="{{ env('APP_URL') }}/css/app.css" />
+    <link rel="stylesheet" href="{{ env('APP_URL') }}/css/style.css" />
+    <link rel="stylesheet" href="{{ env('APP_URL') }}/css/content-styles.css"  type="text/css"/>
+    
     <!-- ckEditor -->
     <!-- <script src="{{ asset('ckeditor/ckeditor.js') }}"></script> -->
    <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>
 
-
-     <script rel="stylesheet" src="{{ asset('jquery/jquery.min.js') }}"></script>
+     <script rel="stylesheet" src="{{ env('APP_URL') }}/jquery/jquery.min.js"></script>
 
   <!-- multiselect -->
- 
-    <link rel="stylesheet" href="{{ asset('multiselect/bootstrap-select.css') }}"></script>
-    <script  src="{{ asset('multiselect/bootstrap.bundle.min.js') }}"></script>
-    <script  src="{{ asset('multiselect/bootstrap-select.min.js') }}"></script>
-  
+    <link rel="stylesheet" href="{{ env('APP_URL') }}/multiselect/bootstrap-select.css"/>
+    <script rel="stylesheet" src="{{ env('APP_URL') }}/multiselect/bootstrap.bundle.min.js"></script>
+    <script rel="stylesheet" src="{{ env('APP_URL') }}/multiselect/bootstrap-select.min.js"></script>
+    
+   
   <!-- multiselect --> 
 
     <!-- Autocomplete -->
-     <link rel="stylesheet" href="{{ asset('jquery/jquery-ui.min.css') }}">
-     <script src="{{ asset('jquery/jquery-ui.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ env('APP_URL') }}/jquery/jquery-ui.min.css"/>
+    <script rel="stylesheet" src="{{ env('APP_URL') }}/jquery/jquery-ui.min.js"></script>
     <!-- Autocomplete -->
 
-    <script src="{{ asset('sweetalert/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('chart/chart.js') }}"></script>
-    <script src="{{ asset('datepicker/moment.min.js') }}"></script>
-    <script src="{{ asset('datepicker/daterangepicker.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('datepicker/daterangepicker.css') }}" />
+    <script rel="stylesheet" src="{{ env('APP_URL') }}/sweetalert/sweetalert.min.js"></script>
+    <script rel="stylesheet" src="{{ env('APP_URL') }}/chart/chart.js"></script>
+    <script rel="stylesheet" src="{{ env('APP_URL') }}/datepicker/moment.min.js"></script>
+    <script rel="stylesheet" src="{{ env('APP_URL') }}/datepicker/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ env('APP_URL') }}/datepicker/daterangepicker.css"/>
 
+   
 </head>
 <body>
     <div id="app">

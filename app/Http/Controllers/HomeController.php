@@ -51,13 +51,16 @@ class HomeController extends Controller
         $active_time = date("Y-m-d H:i",strtotime("-120 minutes", strtotime($current_time)));
         $inactive_time = date("Y-m-d H:i",strtotime("-2880 minutes", strtotime($current_time)));
 
-        $online = Devices::where('last_updated_date' , '>=', $active_time)->where('last_updated_date','LIKE',$today.'%')->count();
-        $offiine = Devices::where('last_updated_date' , '<', $active_time)->where('last_updated_date','>=',$inactive_time)->count();
-        $dead = Devices::where('last_updated_date','<',$inactive_time)->count();
+        $online = Devices::where('last_updated_date' , '>=', $active_time)->where('last_updated_date','LIKE',$today.'%')->get();
+        $offiine = Devices::where('last_updated_date' , '<', $active_time)->where('last_updated_date','>=',$inactive_time)->get();
+        $dead = Devices::where('last_updated_date','<',$inactive_time)->get();
 
        // print_r($inactive_time); die();
         $regionName= array();
         $devicecount=array();
+        $online_device=array();
+        $offline_device=array();
+        $dead_deivce=array();
 
         $regions = Region::get();
 
@@ -69,9 +72,21 @@ class HomeController extends Controller
             $devicecount[] =  $device->count();
 
         }
+        foreach ($online as $key => $value) {
+          $online_device[] = $value->branch->branch_code.'-'.$value->branch->city.'-'.$value->branch->state;
+        }
+        foreach ($offiine as $key2 => $value2) {
+          $offline_device[] = $value2->branch->branch_code.'-'.$value2->branch->city.'-'.$value2->branch->state;
+        }
+        foreach ($dead as $key3 => $value3) {
+          $dead_deivce[] = $value3->branch->branch_code.'-'.$value3->branch->city.'-'.$value3->branch->state;
+        }
+       // print_r($online_device); die();
 
-        $pie_data = ['labels' => ['Online' ,  'Offline' , 'Dead'],
-            'data' => [ $online ,  $offiine , $dead],
+        $pie_data = [
+            'labels' => ['Online' ,  'Offline' , 'Dead'],
+            'data' => [ count($online) ,  count($offiine) , count($dead)],
+            'devices' => [ 'online_device'=> $online_device ,  'offline_device'=>$offline_device , 'dead_device'=>$dead_deivce],
         ];
 
         $line_data =['labels' => $regionName,'data' => $devicecount ];
@@ -627,8 +642,9 @@ class HomeController extends Controller
             'module' => 'Branch',
             'operation' => 'C'
           ]);
-            return redirect()->route('settings');
+            
         }
+        return redirect()->route('settings');
     }
 
     public function banks(){

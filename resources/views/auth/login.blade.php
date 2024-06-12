@@ -15,14 +15,14 @@
                 @endif  
 
                 <div class="card-body" >
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST"  action="{{ url('/login')}}" id="loginForm">
                         @csrf
 
                         <div class="row mb-3">
                             <label style="color: white" for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required  autofocus>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  required  autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@
                             <label style="color: white" for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required >
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="off" required >
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -57,10 +57,13 @@
                                 </div>
                             </div>
                         </div>
+                        <input type='hidden' value="{{ Session::get('publicKey')  }}" id="publicKey" />
 
                         <div class="row mb-0">
+                            <span class="invalid-feedback text-center py-2 text-white" role="alert" id="invalidCred"> User Id / Password seems to be invalid </span>
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-warning">
+
+                                <button type="button" id="loginBtn" class="btn btn-warning">
                                     {{ __('Login') }}
                                 </button>
 
@@ -77,4 +80,7 @@
         </div>
     </div>
 </div>
+
+<script src="{{ env('APP_URL') }}/js/jsencrypt.min.js" nonce="wUDPhZ1Z60pnMCukimCi"></script>
+<script src="{{ env('APP_URL') }}/js/encrypt.js" nonce="wUDPhZ1Z60pnMCukimCi"></script>
 @endsection

@@ -1860,7 +1860,6 @@
 </script>
 
 
-
 <script type="text/javascript">
    $( "#publish_date" ).datepicker({
         //minDate:0,

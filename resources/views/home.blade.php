@@ -76,33 +76,34 @@
  <script>
 
 Chart.defaults.global.defaultFontStyle = 'bold';
+
 var barColors = [
   "#008000",
   "#FFA500",
   "#FF0000"
- 
 ];
 
-new Chart("myChart", {
+var ctx = document.getElementById("myChart").getContext("2d");
+
+var myPieChart = new Chart(ctx, {
   type: "pie",
   data: {
     labels: @json($pie_data['labels']),
     datasets: [{
       backgroundColor: barColors,
-      borderWidth: 0, 
+      borderWidth: 0,
       data: @json($pie_data['data'])
     }]
   },
   options: {
-     legend: {
-        position: 'bottom',
-        labels: {
-              fontSize: 12
-        },
-      },
+    legend: {
+      position: 'bottom',
+      labels: {
+        fontSize: 12
+      }
+    },
     title: {
       display: true
-     
     },
     tooltips: {
       callbacks: {
@@ -110,24 +111,62 @@ new Chart("myChart", {
           var label = data.labels[tooltipItem.index];
           var value = data.datasets[0].data[tooltipItem.index];
           var rule = '';
-          if(label == 'Dead'){
-            rule = 'Devices that have not sent data over 48 hours'
 
+          if (label === 'Dead') {
+            rule = "Devices that have not sent data over 48 hours" ;
+          } else if (label === 'Online') {
+            rule = 'Devices that are active and sending data to server every 15 minutes' ;
+          } else if (label === 'Offline') {
+            rule = 'Devices that are active but not sending data every 15 minutes' ;
           }
-          if(label == 'Online'){
-            rule = 'Devices that are active and sending data to server every 15 minutes '
 
-          }
-          if(label == 'Offline'){
-            rule = 'Devices that are active but not sending data every 15 minutes '
-
-          }
-          return label + ': ' + value + ' units ( '+rule+')' ; // Customize this line as needed
+          return label + ': ' + value + ' units\n(' + rule + ')';
         }
+      },
+      bodyFontSize: 12,
+      bodySpacing: 10,
+      xPadding: 10,
+      yPadding: 10
+    },
+    onClick: function(event, elements) {
+      if (elements.length > 0) {
+        var activeElement = elements[0];
+        var datasetIndex = activeElement._datasetIndex;
+        var dataIndex = activeElement._index;
+
+        var label = this.data.labels[dataIndex];
+        var value = this.data.datasets[datasetIndex].data[dataIndex];
+        var rule = '';
+
+        if (label === 'Dead') {
+          var dataArray = @json($pie_data['devices']['dead_device']);
+          var formattedData = dataArray.map(function(item) {
+            return item.replace(/,/g, '\n');
+          });
+          rule = formattedData.join('\n');
+        } else if (label === 'Online') {
+          var dataArray = @json($pie_data['devices']['online_device']);
+          var formattedData = dataArray.map(function(item) {
+            return item.replace(/,/g, '\n');
+          });
+          rule = formattedData.join('\n');
+        } else if (label === 'Offline') {
+          var dataArray = @json($pie_data['devices']['offline_device']);
+          var formattedData = dataArray.map(function(item) {
+            return item.replace(/,/g, '\n');
+          });
+          rule = formattedData.join('\n');
+        }
+
+        alert(label + ': ' + value + ' units\n' + rule );
       }
     }
   }
 });
+
+
+
+
 
 </script>
 
