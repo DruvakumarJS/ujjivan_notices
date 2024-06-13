@@ -60,7 +60,7 @@ Route::post('add_notices',[NoticeController::class,'add_notices'])->name('add_no
 Route::post('add_rbi_notice',[NoticeController::class,'add_rbi_notice'])->name('add_rbi_notice');
 
 
-Route::post('create_notice',[NoticeController::class,'create'])->name('create_notice');
+Route::get('create_notice',[NoticeController::class,'create'])->name('create_notice');
 Route::post('save-notice',[NoticeController::class,'store'])->name('save_notice');
 Route::get('view-notice-datails/{id}',[NoticeController::class,'show'])->name('view_notice_datails');
 Route::get('edit-notice-datails/{id}',[NoticeController::class,'edit'])->name('edit_notice_datails');

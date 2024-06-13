@@ -44,11 +44,13 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         // Custom error pages for specific HTTP error codes
+        
         if ($exception instanceof QueryException && strpos($exception->getMessage(), 'No connection could be made') !== false) {
             return response()->view('errors.database', [], 500);
         }
 
         if (strpos($exception->getMessage(), 'Unknown column') !== false) {
+            print_r("111"); die();
             // Handle the error when a column is not found
             return response()->view('errors.column-not-found', [], 500);
         }

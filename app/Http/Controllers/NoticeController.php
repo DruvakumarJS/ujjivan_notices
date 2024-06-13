@@ -280,7 +280,7 @@ class NoticeController extends Controller
       
       // print_r(json_encode($request->selected_languages) );
 
-      
+     
        $validator = Validator::make($request->all(), [
 
         'document_id' => [
@@ -388,7 +388,7 @@ class NoticeController extends Controller
       ]);
 
       if ($validator->fails()) {
-        
+         //  print_r("lll"); die();
           return redirect()->back()->withErrors($validator)->withInput();
       }
 

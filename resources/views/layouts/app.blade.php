@@ -12,10 +12,6 @@
     <!-- Scripts -->
     <script src="{{ env('APP_URL') }}/js/app.js" defer></script>
 
-    <!-- Fonts -->
-   <!--  <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> -->
-
     <!-- Styles -->
     <link rel="stylesheet" href="{{ env('APP_URL') }}/css/app.css" />
     <link rel="stylesheet" href="{{ env('APP_URL') }}/css/style.css" />
