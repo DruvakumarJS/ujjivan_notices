@@ -26,6 +26,7 @@
 }
 
 
+
 </style>
 
 <div class="container-body">
@@ -50,14 +51,21 @@
               
 
               <div class="card-body" id="test">
-                <table  class="table table-responsive " id="dynamicAddRemove">
+                <div class="text-center">
+                  <h4>Emergency Contact Details</h4>
+
+                </div>
+                
+                <table  class="table table-responsive py-4 table-bordered" id="dynamicAddRemove">
+ 
+                <tbody>
                   @foreach($info as $key=>$value)
                   <tr>
                     
-                      <td>
+                      <!-- <td>
                           <div class="row d-flex justify-content-center align-items-center">
                              <div class="col-md-5">
-                              <input class="form-control text-end" type="text" value="{{$key}}" readonly > 
+                              <input class="form-control text-end" type="text" value="{{$branch_detail->$key}}" readonly > 
                              </div>
 
                              <div class="col-md-5">
@@ -65,10 +73,14 @@
                              </div>
                             
                           </div>    
-                      </td>
+                      </td> -->
+
+                      <td width="50%"><span class="text-end">{{$branch_detail->$key}}</span></td>
+                      <td width="50%">{{$branch_detail->$value}}</td>
                     
                   </tr>
                    @endforeach
+                   </tbody>
                 </table>
               </div>
 

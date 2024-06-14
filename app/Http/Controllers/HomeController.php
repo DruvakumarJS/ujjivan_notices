@@ -16,6 +16,7 @@ use App\Models\DeviceData;
 use App\Models\Audit;
 use App\Models\NonIdleDevice;
 use App\Imports\ImportBranches;
+use App\Imports\ImportEmergencyContacts;
 use DB;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -1089,6 +1090,27 @@ class HomeController extends Controller
         return redirect()->route('branches');
       }
 
+
+    }
+
+    public function import_branch_emergency_contacts(Request $request){
+      $import = new ImportEmergencyContacts ;
+     Excel::import($import, $request->file('file'));
+
+     if($import->getRowCount() == 0){
+            return redirect()->back()->withMessage('No data imported');
+        }
+        else {
+            $audit = Audit::create([
+            'action' => 'Branch Emergency Contact details imported via Excel sheet',
+            'track_id' => '',
+            'user_id' => Auth::user()->id,
+            'module' => 'Branch',
+            'operation' => 'C',
+            'pan_india' => '-',
+          ]);
+            return redirect()->back()->withMessage('Import Successfull. '.$import->getRowCount() . ' Branch contact details added .');
+        }
 
     }
 

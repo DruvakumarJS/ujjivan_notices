@@ -116,12 +116,10 @@ Route::get('branch-notices/{lang}/{id}',[HomeController::class,'branch_notices']
 Route::post('search-branch-notice',[HomeController::class,'search'])->name('search_branch_notice');
 Route::get('get_branches',[HomeController::class,'get_branches'])->name('get_branches');
 Route::post('import-branches',[HomeController::class,'import_branches'])->name('import_branches');
+Route::post('import-branch-emergency-contacts',[HomeController::class,'import_branch_emergency_contacts'])->name('import_branch_emergency_contacts');
 
 Route::get('create-poster',[HomeController::class,'poster'])->name('poster');
 Route::post('update-poster',[HomeController::class,'update_poster'])->name('update_poster');
-
-
-
 
 
 Route::get('banks',[HomeController::class,'banks'])->name('banks');

@@ -10,6 +10,7 @@ use App\Models\Branch;
 use App\Models\Notice;
 use App\Models\NoticeContent;
 use App\Models\BranchInformation;
+use App\Models\EmergencyContactDetail;
 use App\Models\Language;
 use App\Models\NonIdleDevice;
 use File;
@@ -1165,8 +1166,9 @@ class DeviceController extends Controller
                    $cust_data = NoticeContent::where('notice_id',$c_id)->first();
                    $n_data = $cust_data->cll;
 
-                   $local_filename = 'en_'.$c_notice->filename;
-                   $branchDetail = BranchInformation::where('branch_id',$branchid)->first();
+                   $local_filename = $c_notice->lang_code.'_'.$c_notice->filename;
+                  // $branchDetail = BranchInformation::where('branch_id',$branchid)->first();
+                   $branchDetail = EmergencyContactDetail::where('branch_id',$branchData->branch_code)->first();
 
                    //print_r($cust_data ); die();
 

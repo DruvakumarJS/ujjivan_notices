@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
         }
 
         if (strpos($exception->getMessage(), 'Unknown column') !== false) {
-            print_r("111"); die();
+           
             // Handle the error when a column is not found
             return response()->view('errors.column-not-found', [], 500);
         }
