@@ -74,13 +74,13 @@ class HomeController extends Controller
 
         }
         foreach ($online as $key => $value) {
-          $online_device[] = $value->branch->branch_code.'-'.$value->branch->city.'-'.$value->branch->state;
+          $online_device[] = $value->branch->branch_code.'-'.$value->branch->name.'-'.$value->branch->district.'-'.$value->branch->state;
         }
         foreach ($offiine as $key2 => $value2) {
-          $offline_device[] = $value2->branch->branch_code.'-'.$value2->branch->city.'-'.$value2->branch->state;
+          $offline_device[] = $value2->branch->branch_code.'-'.$value2->branch->name.'-'.$value2->branch->district.'-'.$value2->branch->state;
         }
         foreach ($dead as $key3 => $value3) {
-          $dead_deivce[] = $value3->branch->branch_code.'-'.$value3->branch->city.'-'.$value3->branch->state;
+          $dead_deivce[] = $value3->branch->branch_code.'-'.$value3->branch->name.'-'.$value3->branch->district.'-'.$value3->branch->state;
         }
        // print_r($online_device); die();
 
