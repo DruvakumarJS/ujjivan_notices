@@ -303,6 +303,8 @@ class DevicesController extends Controller
             'branch_id' => $request->branch_id,
             'bank_id' => '0',
             'device_details' => $request->model,
+            'deviceID' => $request->serial_no,
+            'mac_id'=> $request->device_id,
             'tv_serial_no' => $request->tv,
             'router_serial_number' => $request->router,
             'sim_card_number' => $request->sim,
