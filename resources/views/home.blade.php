@@ -112,11 +112,11 @@ var myPieChart = new Chart(ctx, {
           var rule = '';
 
           if (label === 'Dead') {
-            rule = "Devices that have not sent data over 48 hours.Click to view device location" ;
+            rule = "Devices that have not sent data over 48 hours" ;
           } else if (label === 'Online') {
-            rule = 'Devices that are active and sending data to server every 15 minutes.Click to view device location' ;
+            rule = 'Devices that are active and sending data to server every 15 minutes' ;
           } else if (label === 'Offline') {
-            rule = 'Devices that are active but not sending data every 15 minutes.Click to view device location' ;
+            rule = 'Devices that are active but not sending data every 15 minutes' ;
           }
 
           return label + ': ' + value + ' units\n(' + rule + ')';
