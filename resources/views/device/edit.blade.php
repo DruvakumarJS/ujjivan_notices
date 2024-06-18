@@ -157,13 +157,13 @@
        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">TV MAC Address * </span>
+                    <span class="" id="basic-addon3">Display Serial Number * </span>
                   </div>
             </div> 
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="tv" aria-describedby="basic-addon3" maxlength="200" value="{{$data->tv_serial_no}}" placeholder="Enter TV MAC Address">
+                  <input type="text" class="form-control" id="basic-url" name="tv" aria-describedby="basic-addon3" maxlength="200" value="{{$data->tv_serial_no}}" placeholder="Enter Display Serial Number">
                 </div>
             </div>   
        </div>
@@ -171,13 +171,13 @@
        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Android Box MAC Address * </span>
+                    <span class="" id="basic-addon3">Android Box Serial Number * </span>
                   </div>
             </div> 
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="model" aria-describedby="basic-addon3" maxlength="200" value="{{$data->device_details}}" placeholder="Enter Android Box MAC Address">
+                  <input type="text" class="form-control" id="basic-url" name="model" aria-describedby="basic-addon3" maxlength="200" value="{{$data->device_details}}" placeholder="Enter Android Box Serial Number">
                 </div>
             </div>   
        </div>
@@ -186,13 +186,13 @@
        <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">GSM Router MAC Address * </span>
+                    <span class="" id="basic-addon3">GSM Router Serial Number * </span>
                   </div>
             </div> 
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="router" aria-describedby="basic-addon3" maxlength="200" value="{{$data->router_serial_number}}" placeholder="Enter GSM Router MAC Address ">
+                  <input type="text" class="form-control" id="basic-url" name="router" aria-describedby="basic-addon3" maxlength="200" value="{{$data->router_serial_number}}" placeholder="Enter GSM Router Serial Number ">
                 </div>
             </div>   
        </div>
@@ -207,6 +207,20 @@
                 <div class="input-group mb-3">
 
                   <input type="text" class="form-control" id="basic-url" name="sim" aria-describedby="basic-addon3" maxlength="200" placeholder="Enter Sim Card Number" value="{{$data->sim_card_number}}">
+                </div>
+            </div>   
+       </div>
+
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Sim Card Connection Number * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <input type="text" class="form-control" id="basic-url" name="sim_connection" aria-describedby="basic-addon3" maxlength="200" placeholder="Enter Sim Card Connection Number" value="{{$data->sim_connection_number}}">
                 </div>
             </div>   
        </div>

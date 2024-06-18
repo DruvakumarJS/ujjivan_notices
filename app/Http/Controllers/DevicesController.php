@@ -77,20 +77,6 @@ class DevicesController extends Controller
               },
           ],
 
-          'model' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-
-
           'date_of_installation' => [
               '',
               function ($attribute, $value, $fail) {
@@ -154,7 +140,8 @@ class DevicesController extends Controller
             'deviceID' => $request->serial_no,
             'tv_serial_no' => $request->tv,
             'router_serial_number' => $request->router,
-            'sim_card_number' => $request->sim,
+            'sim_card_number' => $request->sim,   
+            'sim_connection_number' => $request->sim_connection,
             'status' => 'Offline',
             'date_of_install' => $request->date_of_installation,
             'remote_id' => $request->serial_no
@@ -239,19 +226,6 @@ class DevicesController extends Controller
               },
           ],
 
-          'model' => [
-              'required',
-              function ($attribute, $value, $fail) {
-                  // Decode HTML entities
-                  $decodedValue = ($value);
-
-                  // Check if the decoded HTML content contains any <script> tags
-                  if (strpos($decodedValue, '<script') !== false) {
-                      $fail('Scripts are not allowed within Notices and inputs, remove them and submit again  ');
-                  }
-              },
-          ],
-
 
           'date_of_installation' => [
               '',
@@ -308,6 +282,7 @@ class DevicesController extends Controller
             'tv_serial_no' => $request->tv,
             'router_serial_number' => $request->router,
             'sim_card_number' => $request->sim,
+            'sim_connection_number' => $request->sim_connection,
             'date_of_install' => $request->date_of_installation
         ]);
 
