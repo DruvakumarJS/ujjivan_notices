@@ -192,7 +192,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" name="router" aria-describedby="basic-addon3" maxlength="200" value="{{$data->sim_card_number}}" placeholder="Enter GSM Router MAC Address ">
+                  <input type="text" class="form-control" id="basic-url" name="router" aria-describedby="basic-addon3" maxlength="200" value="{{$data->router_serial_number}}" placeholder="Enter GSM Router MAC Address ">
                 </div>
             </div>   
        </div>
