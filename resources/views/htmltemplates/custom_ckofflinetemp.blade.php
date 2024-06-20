@@ -61,19 +61,6 @@
                 <tbody>
                   @foreach($info as $key=>$value)
                   <tr>
-                    
-                      <!-- <td>
-                          <div class="row d-flex justify-content-center align-items-center">
-                             <div class="col-md-5">
-                              <input class="form-control text-end" type="text" value="{{$branch_detail->$key}}" readonly > 
-                             </div>
-
-                             <div class="col-md-5">
-                              <input class="form-control" type="text" name="" readonly value="{{$branch_detail->$value}}">
-                             </div>
-                            
-                          </div>    
-                      </td> -->
 
                       <td width="50%"><span class="text-end">{{$branch_detail->$key}}</span></td>
                       <td width="50%">{{$branch_detail->$value}}</td>
