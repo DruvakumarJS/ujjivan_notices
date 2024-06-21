@@ -47,6 +47,7 @@ class ImportEmergencyContacts implements ToModel, WithStartRow
                 'contact_center_number' => $row[16],
                 'cyber_dost' => $row[17],
                 'cyber_dost_number' => $row[18],
+                'lang_code' => $row[19],
             ]);
 
            
@@ -73,6 +74,7 @@ class ImportEmergencyContacts implements ToModel, WithStartRow
                 'contact_center_number' => $row[16],
                 'cyber_dost' => $row[17],
                 'cyber_dost_number' => $row[18],
+                'lang_code' => $row[19],
             ]);
 
 
