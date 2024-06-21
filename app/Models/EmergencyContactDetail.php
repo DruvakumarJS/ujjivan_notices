@@ -28,6 +28,7 @@ class EmergencyContactDetail extends Model
             'contact_center',
             'contact_center_number',
             'cyber_dost',
-            'cyber_dost_number'
+            'cyber_dost_number',
+            'lang_code'
         ];
 }
