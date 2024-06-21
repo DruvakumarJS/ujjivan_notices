@@ -237,7 +237,7 @@
                                 	<div class="card-body">
                                 		
                                 		<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$langs}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
-                                		<!-- @if($value->template_id != '3') -->
+                                		@if($value->template_id != '3')
                                 		
 
                                 		@if($value->notice_type == 'ujjivan')
@@ -245,14 +245,14 @@
 							             @else
 							             <a href="{{ route('edit_rbi_notice',[$value->id])}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
 							             @endif
-
+                                        @endif 
                                 		@if($value->status == 'Draft' OR $value->status == 'UnPublished')
 						             	<a onclick="return confirm('You are Publishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-dark">Publish</button></a>
 						             	@else
 						             	<a  onclick="return confirm('You are UnPublishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-warning" >UnPublish</button></a>
 						             	@endif
 
-						             	<!-- @endif  --> 
+						             	 
 
                                 		<a onclick="return confirm('You are deleting a N{{$value->document_id}} Notice')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>   
 
