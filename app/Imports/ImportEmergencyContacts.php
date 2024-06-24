@@ -5,6 +5,7 @@ namespace App\Imports;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use App\Models\EmergencyContactDetail;
+use App\Models\BranchInformation;
 
 
 class ImportEmergencyContacts implements ToModel, WithStartRow
@@ -50,6 +51,10 @@ class ImportEmergencyContacts implements ToModel, WithStartRow
                 'lang_code' => $row[19],
             ]);
 
+            $updateBranchInformation = BranchInformation::where('branch_id',$branchcode)->update([
+                'bm_name' => ltrim($row[9],'BRANCH MANAGER/'),
+                'bm_number' => $row[10]]);
+
            
          } 
          else{
@@ -76,6 +81,11 @@ class ImportEmergencyContacts implements ToModel, WithStartRow
                 'cyber_dost_number' => $row[18],
                 'lang_code' => $row[19],
             ]);
+
+             $updateBranchInformation = BranchInformation::create([
+                'branch_id' => $row[0],
+                'bm_name' => ltrim($row[9],'BRANCH MANAGER/'),
+                'bm_number' => $row[10]]);
 
 
             
