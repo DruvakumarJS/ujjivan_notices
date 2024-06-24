@@ -6,6 +6,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use App\Models\EmergencyContactDetail;
 use App\Models\BranchInformation;
+use App\Models\Branch;
 
 
 class ImportEmergencyContacts implements ToModel, WithStartRow
