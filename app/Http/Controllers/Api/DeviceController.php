@@ -1163,7 +1163,7 @@ class DeviceController extends Controller
                 foreach ($custom_notice as $keys => $c_notice) {
                    $c_id = $c_notice->id;
 
-                   $cust_data = NoticeContent::where('notice_id',$c_id)->first();
+                   $cust_data = NoticeContent::where('notice_id',$c_id)->orderBy('id','DESC')->first();
                    $n_data = $cust_data->cll;
 
                    $local_filename = $c_notice->lang_code.'_'.$c_notice->filename;
@@ -1176,8 +1176,7 @@ class DeviceController extends Controller
                          File::makeDirectory(public_path().'/custom_noticefiles', $mode = 0777, true, true);
                      }
 
-
-                   if (!file_exists(public_path().'/custom_noticefiles/'.$local_filename)) {
+                  // if (!file_exists(public_path().'/custom_noticefiles/'.$local_filename)) {
                      
                     File::put(public_path().'/custom_noticefiles/'.$local_filename,
                       view('htmltemplates.custom_ckofflinetemp')
@@ -1185,7 +1184,7 @@ class DeviceController extends Controller
                           ->render()
                     );
 
-                    }
+                   // }
     
 
                 }
