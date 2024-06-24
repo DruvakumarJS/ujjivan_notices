@@ -82,8 +82,10 @@ class ImportEmergencyContacts implements ToModel, WithStartRow
                 'lang_code' => $row[19],
             ]);
 
+             $Branch = Branch::where('branch_code',$row[0])->first();
+
              $updateBranchInformation = BranchInformation::create([
-                'branch_id' => $row[0],
+                'branch_id' => $Branch->id,
                 'bm_name' => ltrim($row[9],'BRANCH MANAGER/'),
                 'bm_number' => $row[10]]);
 
