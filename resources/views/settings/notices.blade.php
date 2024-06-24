@@ -137,7 +137,13 @@
 		             <td>{{date('d M Y',strtotime($value->created_at)) }}</td>
 		             <td>{{$value->version}}</td> 
 		             <td>{{$value->status}}<!-- {{ ($value->status=='Published') ? 'Published' : 'UnPublished'}} --></td> 
-		             <td><a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$value->lang_code}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a></td>
+		             <td>
+		             	@if($value->notice_type == 'custom_ujjivan')
+                          <a target="_blank" href="{{ URL::to('/') }}/custom_noticefiles/{{$value->lang_code}}_{{$branchcode}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
+		             	@else
+		             	 <a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$value->lang_code}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
+		             	@endif
+		             </td>
 		             
 				  </tr>	
 

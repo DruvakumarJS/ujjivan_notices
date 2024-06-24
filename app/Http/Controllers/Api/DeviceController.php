@@ -1035,6 +1035,7 @@ class DeviceController extends Controller
         $region_id = $branchData->region_id;
         $state = $branchData->state;
         $branchid = $branchData->id;
+        $branchCode = $branchData->branch_code;
 
         $supporting_files[]=[
            url('/').'/noticefiles/Ujjivan_files/app.css',
@@ -1166,7 +1167,7 @@ class DeviceController extends Controller
                    $cust_data = NoticeContent::where('notice_id',$c_id)->orderBy('id','DESC')->first();
                    $n_data = $cust_data->cll;
 
-                   $local_filename = $c_notice->lang_code.'_'.$c_notice->filename;
+                   $local_filename = $c_notice->lang_code.'_'.$branchCode.'_'.$c_notice->filename;
                   // $branchDetail = BranchInformation::where('branch_id',$branchid)->first();
                    $branchDetail = EmergencyContactDetail::where('branch_id',$branchData->branch_code)->first();
 
@@ -1260,7 +1261,7 @@ class DeviceController extends Controller
           $disclaimer2 = $branchInfo->disclaimer2 ;
 
 
-          $bank_info[] = ['disclaimer_top' => $disclaimer1 , 'disclaimer_bottom' => $disclaimer2 ,'display_poster' => $branchInfo->announcement , 'start_time' => date('Y-m-d H:i:s',strtotime($branchInfo->start_time)) , 'end_time' => date('Y-m-d H:i:s',strtotime($branchInfo->end_time)) , 'filename' => ($branchInfo->filename != '')?url('/').'/announcement'.$branchInfo->filename:''];
+          $bank_info[] = ['branchcode'=>$branchCode ,'disclaimer_top' => $disclaimer1 , 'disclaimer_bottom' => $disclaimer2 ,'display_poster' => $branchInfo->announcement , 'start_time' => date('Y-m-d H:i:s',strtotime($branchInfo->start_time)) , 'end_time' => date('Y-m-d H:i:s',strtotime($branchInfo->end_time)) , 'filename' => ($branchInfo->filename != '')?url('/').'/announcement'.$branchInfo->filename:''];
         }
 
        

@@ -809,6 +809,7 @@ class HomeController extends Controller
         $region_id = $branch->region_id;
         $state = $branch->state;
         $branchid = $branch->id;
+        $branchcode = $branch->branch_code;
 
         $languages = Language::get();
 
@@ -882,7 +883,7 @@ class HomeController extends Controller
 
           $search = '';         
 
-          return view('settings/notices',compact('data','languages','search','lang','id'));
+          return view('settings/notices',compact('data','languages','search','lang','id','branchcode'));
     }
 
     public function search(Request $request){
@@ -896,6 +897,7 @@ class HomeController extends Controller
         $region_id = $branch->region_id;
         $state = $branch->state;
         $branchid = $branch->id;
+        $branchcode = $branch->branch_code;
 
        if($request->lang == 'all'){
           $data = Notice::where(function($query)use($search){
@@ -979,7 +981,7 @@ class HomeController extends Controller
         
         $languages = Language::get();
 
-       return view('settings/notices', compact('data','search','languages','lang','id'));
+       return view('settings/notices', compact('data','search','languages','lang','id','branchcode'));
     }
 
     public function get_branches(Request $request){
