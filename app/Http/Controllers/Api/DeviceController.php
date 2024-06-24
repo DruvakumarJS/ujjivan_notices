@@ -1176,16 +1176,18 @@ class DeviceController extends Controller
                          File::makeDirectory(public_path().'/custom_noticefiles', $mode = 0777, true, true);
                      }
 
-                  // if (!file_exists(public_path().'/custom_noticefiles/'.$local_filename)) {
-                     
+                   if (file_exists(public_path().'/custom_noticefiles/'.$local_filename)) {
+                    unlink(public_path().'/custom_noticefiles/'.$local_filename);
+                    
+                    }
+
                     File::put(public_path().'/custom_noticefiles/'.$local_filename,
                       view('htmltemplates.custom_ckofflinetemp')
                           ->with(['data' => $cust_data , 'version' => $c_notice->version , 'published' => $c_notice->published_date ,'branch_detail'=>$branchDetail  ])
                           ->render()
                     );
 
-                   // }
-    
+
 
                 }
 

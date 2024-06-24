@@ -218,7 +218,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="date" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="date_of_installation" value="{{$data->date_of_install}}" readonly readonly>
+                  <input type="date" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="date_of_installation" value="{{$data->date_of_install}}" readonly >
                 </div>
             </div>  
             
@@ -234,7 +234,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
 
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="date_of_installation" value="{{$data->last_updated_date}}" readonly readonly>
+                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="date_of_installation" value="{{($data->last_updated_date != '')?date(date('d-m-Y H:i',strtotime($data->last_updated_date))):''}}" readonly >
                 </div>
             </div>  
             

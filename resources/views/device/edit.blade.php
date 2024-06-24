@@ -239,52 +239,6 @@
             </div>  
             
        </div>
-
-      
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Last Updated Date </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="date_of_installation" value="{{$data->last_updated_date}}" readonly>
-                </div>
-            </div>  
-            
-       </div>
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Current APK version </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="date_of_installation" value="{{$data->apk_version}}" readonly>
-                </div>
-            </div>  
-            
-       </div>
-
-       <!-- <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Remote ID</span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-
-                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="date_of_installation" value="{{$data->remote_id}}" >
-                </div>
-            </div>  
-            
-       </div> -->
             
        </div>
         <input type="hidden" name="branch_id" id="branch_id" value="{{$data->branch_id}}">
