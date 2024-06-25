@@ -288,10 +288,14 @@
                                 		<a onclick="return confirm('You are deleting all N{{$value->document_id}} notices')" href="{{ route('delete_all_notice_datails',$value->notice_group)}}"><button class="btn btn-sm btn-outline-danger">Delete All</button></a>                                		
                                 	</div>
                                 </div>
+
+                                @if($value->template_id != '3')
             
                                 <div>
                                	   <a href="{{ route('select_language',[$lang,$value->id])}}"><button class="btn btn-sm btn-outline-success">Add new {{$value->document_id}} Notice</button></a>
                                 </div>
+
+                                @endif
 			                    
 			                   
 			                    
