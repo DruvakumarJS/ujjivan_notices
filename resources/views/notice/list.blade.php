@@ -231,6 +231,8 @@
                         		 
                         		
                         		@endphp 
+
+                        		 @if($value->template_id != '3')
                         		
                                 <div class="card">
                                 	<div class="card-header bg-primary text-white">Action on {{$value->document_id}} - {{$value->lang_name}} Notice</div>
@@ -260,18 +262,21 @@
                                 	</div>
                                 </div>
 
-                                @if($value->template_id != '3')
+                                @endif
 
                                 <div class="card">
                                 	<div class="card-header bg-primary text-white">Action on {{$value->document_id}} - Multilingual(All language) Notice</div>
                                 	<div class="card-body">
                                 		<a href="{{route('view_notices',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-primary">View All</button></a>
+                                        @if($value->template_id != '3')
 
                                 		@if($value->notice_type == 'ujjivan')
 							             <a href="{{ route('edit_multi_notice_datails',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
 							             
 							             @else
 							             <a href="{{ route('edit_multi_rbi_notice_datails',[$value->notice_group,$lang])}}" ><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
+							             @endif
+
 							             @endif
 
                                 		
@@ -288,7 +293,7 @@
                                	   <a href="{{ route('select_language',[$lang,$value->id])}}"><button class="btn btn-sm btn-outline-success">Add new {{$value->document_id}} Notice</button></a>
                                 </div>
 			                    
-			                    @endif 
+			                   
 			                    
 			                    <!-- <div class="form-group row">
 			                      <label for="" class="col-4 col-form-label">Region Name*</label>
