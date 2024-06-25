@@ -1169,7 +1169,7 @@ class DeviceController extends Controller
 
                    $local_filename = $c_notice->lang_code.'_'.$branchCode.'_'.$c_notice->filename;
                   // $branchDetail = BranchInformation::where('branch_id',$branchid)->first();
-                   $branchDetail = EmergencyContactDetail::where('branch_id',$branchData->branch_code)->first();
+                   $branchDetail = EmergencyContactDetail::where('branch_id',$branchData->branch_code)->where('lang_code',$c_notice->lang_code)->first();
 
                    //print_r($cust_data ); die();
 
@@ -1184,7 +1184,7 @@ class DeviceController extends Controller
 
                     File::put(public_path().'/custom_noticefiles/'.$local_filename,
                       view('htmltemplates.custom_ckofflinetemp')
-                          ->with(['data' => $cust_data , 'version' => $c_notice->version , 'published' => $c_notice->published_date ,'branch_detail'=>$branchDetail  ])
+                          ->with(['data' => $cust_data , 'version' => $c_notice->version , 'published' => $c_notice->published_date ,'branch_detail'=>$branchDetail ,'name' =>$c_notice->name  ])
                           ->render()
                     );
 

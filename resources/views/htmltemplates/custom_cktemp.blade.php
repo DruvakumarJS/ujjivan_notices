@@ -49,6 +49,10 @@
               
 
               <div class="card-body">
+                <div class="text-center">
+                  <h4>{{$name}}</h4>
+
+                </div>
                 <table  class="table table-responsive " id="dynamicAddRemove">
                   @foreach($info as $key=>$value)
                   <tr>

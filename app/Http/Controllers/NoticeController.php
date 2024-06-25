@@ -2601,39 +2601,40 @@ class NoticeController extends Controller
              $features = "{}";
          }
 
-          $languags=explode(',',$request->selected_lang_code);
-          foreach ($languags as $key => $value) {
-          
+         $languags=explode(',',$request->selected_lang_code);
+         foreach ($request->notice as $key => $value) {
 
-          $langaugedata = Language::where('code',$value)->first();
+         $langaugedata = Language::where('code',$value['langauge'])->first();
+ 
+         $notice = new Notice;
+         $notice->name = $value['tittle'] ;
+         $notice->description = $value['description'] ;
+         $notice->path = 'custom_noticefiles';
+         $notice->filename = $custmfilename;
+         $notice->is_pan_india = $request->is_pan_india ;
+         $notice->is_region_wise = $region_prompt ;
+         $notice->regions = $region_list ;
+         $notice->is_state_wise = $state_prompt ;
+         $notice->states =  $state_list;
+         $notice->branch_code = $branchcodes ;
+         $notice->status = 'Draft';
+         $notice->available_languages =$request->selected_lang_code ;
+         $notice->template_id = '3';
+         $notice->creator = Auth::user()->id ;
+         $notice->voiceover = 'Y';
+         $notice->lang_code = $langaugedata->code;
+         $notice->lang_name = $langaugedata->name;
+         $notice->notice_group = $group_id;
+         $notice->notice_type = 'custom_ujjivan';
+         $notice->document_id = $request->document_id;
+         $notice->published_date = $request->publish_date;
+         $notice->version = $request->version;
+         $notice->expiry_date = '2024-12-12';
 
-           $notice = new Notice;
-           $notice->name = $request->tittle;
-           $notice->description = $request->description ;
-           $notice->path = 'noticefiles';
-           $notice->filename = $custmfilename;
-           $notice->is_pan_india = $request->is_pan_india ;
-           $notice->is_region_wise = $region_prompt ;
-           $notice->regions = $region_list ;
-           $notice->is_state_wise = $state_prompt ;
-           $notice->states = $state_list ;
-           $notice->branch_code = $branchcodes ;
-           $notice->status = 'Draft';
-           $notice->available_languages =$request->selected_lang_code ;
-           $notice->template_id = '3';
-           $notice->creator = Auth::user()->id ;
-           $notice->voiceover = 'N';
-           $notice->lang_code = $langaugedata->code;
-           $notice->lang_name = $langaugedata->name;
-           $notice->notice_group = $group_id;
-           $notice->notice_type = 'custom_ujjivan';
-           $notice->document_id = $request->document_id;
-           $notice->published_date = $request->publish_date;
-           $notice->version = $request->version;
 
-           $notice->save();
+         $notice->save();
 
-           $noticeID = $notice->id;
+         $noticeID = $notice->id;
 
            $langArray[] = $langaugedata->lang;
 
@@ -2675,7 +2676,7 @@ class NoticeController extends Controller
            $noticecontent = 
            File::put(public_path().'/noticefiles/'.$local_filename,
               view('htmltemplates.custom_cktemp')
-                  ->with(["content" => $content ,  'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data ])
+                  ->with(["content" => $content ,  'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'name'=>$value['tittle'] ])
                   ->render()
           );
 

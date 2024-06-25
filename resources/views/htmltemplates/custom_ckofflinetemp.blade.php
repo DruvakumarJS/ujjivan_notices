@@ -52,7 +52,7 @@
 
               <div class="card-body" id="test">
                 <div class="text-center">
-                  <h4>Emergency Contact Details</h4>
+                  <h4>{{$name}}</h4>
 
                 </div>
                 
@@ -62,8 +62,8 @@
                   @foreach($info as $key=>$value)
                   <tr>
 
-                      <td width="50%"><span class="text-end">{{$branch_detail->$key}}</span></td>
-                      <td width="50%">{{$branch_detail->$value}}</td>
+                      <td width="50%"><span class="text-end">{{ (isset($branch_detail->$key))? $branch_detail->$key:'' }}</span></td>
+                      <td width="50%">{{ (isset($branch_detail->$value))? $branch_detail->$value:'' }}</td>
                     
                   </tr>
                    @endforeach
