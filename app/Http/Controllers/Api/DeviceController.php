@@ -1161,6 +1161,8 @@ class DeviceController extends Controller
    
                 ->get(); 
 
+               // print_r($custom_notice);die();
+
                 foreach ($custom_notice as $keys => $c_notice) {
                    $c_id = $c_notice->id;
 

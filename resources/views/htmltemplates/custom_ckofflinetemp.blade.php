@@ -52,7 +52,7 @@
 
               <div class="card-body" id="test">
                 <div class="text-center">
-                  <h4>{{$name}}</h4>
+                  <h4>{{ (isset($name))? $name:'' }}</h4>
 
                 </div>
                 
