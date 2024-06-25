@@ -53,8 +53,11 @@ class ImportEmergencyContacts implements ToModel, WithStartRow
                 'lang_code' => $row[19],
             ]);
 
+            $BranchManager= explode('/', $row[9]);
+
+
             $updateBranchInformation = BranchInformation::where('branch_id',$Branch->id)->update([
-                'bm_name' => ltrim($row[9],'BRANCH MANAGER/'),
+                'bm_name' => $BranchManager[1],
                 'bm_number' => $row[10]]);
 
            
@@ -84,10 +87,10 @@ class ImportEmergencyContacts implements ToModel, WithStartRow
                 'lang_code' => $row[19],
             ]);
 
-        
+              $BranchManager= explode('/', $row[9]);
              $updateBranchInformation = BranchInformation::create([
                 'branch_id' => $Branch->id,
-                'bm_name' => ltrim($row[9],'BRANCH MANAGER/'),
+                'bm_name' => $BranchManager[1],
                 'bm_number' => $row[10]]);
 
 
