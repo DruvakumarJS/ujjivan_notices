@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 use App\Models\EmergencyContactDetail;
 use App\Models\BranchInformation;
 use App\Models\Branch;
+use App\Models\Notice;
 
 
 class ImportEmergencyContacts implements ToModel, WithStartRow
@@ -60,9 +61,9 @@ class ImportEmergencyContacts implements ToModel, WithStartRow
                 'bm_name' => $BranchManager[1],
                 'bm_number' => $row[10]]);
             }
-            
 
            
+
          } 
          else{
             
@@ -90,15 +91,17 @@ class ImportEmergencyContacts implements ToModel, WithStartRow
               ]);
 
              $BranchManager= explode('/', $row[9]);
-             if($row[19]=='en'){
+              if($row[19]=='en'){
                 $updateBranchInformation = BranchInformation::where('branch_id',$Branch->id)->update([
                 'bm_name' => $BranchManager[1],
                 'bm_number' => $row[10]]);
-              }
+                }
 
 
             
          }
+
+          $updateNotice = Notice::where('template_id','3')->update([]);
 
          
     }
