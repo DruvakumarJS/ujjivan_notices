@@ -98,6 +98,10 @@ Route::get('export_notices/{lang}/{search}',[NoticeController::class,'export_not
 Route::post('save_custom_notice',[NoticeController::class,'save_custom_notice'])->name('save_custom_notice');
 
 Route::get('generate_custom_notice/{id}',[NoticeController::class,'generate_custom_notice'])->name('generate_custom_notice');
+Route::get('edit-multi-custom-notices/{id}/{lang}',[NoticeController::class,'edit_multi_custom_notices'])->name('edit_multi_custom_notices');
+Route::post('update-custom-notice',[NoticeController::class,'update_custom_notice'])->name('update_custom_notice');
+Route::post('add-custom-notice',[NoticeController::class,'add_custom_notice'])->name('add_custom_notice');
+
 
 Route::get('settings',[HomeController::class,'settings'])->name('settings');
 Route::get('regions',[HomeController::class,'region'])->name('regions');

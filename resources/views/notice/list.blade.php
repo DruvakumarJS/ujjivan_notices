@@ -268,16 +268,19 @@
                                 	<div class="card-header bg-primary text-white">Action on {{$value->document_id}} - Multilingual(All language) Notice</div>
                                 	<div class="card-body">
                                 		<a href="{{route('view_notices',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-primary">View All</button></a>
-                                        @if($value->template_id != '3')
+                                        
 
                                 		@if($value->notice_type == 'ujjivan')
 							             <a href="{{ route('edit_multi_notice_datails',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
+
+							             @elseif($value->notice_type == 'custom_ujjivan')
+							             <a href="{{ route('edit_multi_custom_notices',[$value->notice_group,$lang])}}" ><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
 							             
 							             @else
 							             <a href="{{ route('edit_multi_rbi_notice_datails',[$value->notice_group,$lang])}}" ><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
 							             @endif
 
-							             @endif
+							            
 
                                 		
 						             	<a onclick="return confirm('You are Publishing all N{{$value->document_id}} notices')"  href="{{route('modify_all_notice_status',[$value->notice_group,'Publish'])}}"><button class="btn btn-sm btn-outline-dark">Publish All</button></a>
@@ -289,13 +292,13 @@
                                 	</div>
                                 </div>
 
-                                @if($value->template_id != '3')
+                               
             
                                 <div>
                                	   <a href="{{ route('select_language',[$lang,$value->id])}}"><button class="btn btn-sm btn-outline-success">Add new {{$value->document_id}} Notice</button></a>
                                 </div>
 
-                                @endif
+                              
 			                    
 			                   
 			                    

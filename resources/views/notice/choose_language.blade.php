@@ -38,6 +38,8 @@ body {
            <label for="html">Ujjivan Notice</label>
            <input type="radio" id="rbi" name="notice_type" value="rbi" style="margin-left: 30px;" onchange="handleChange(this);" <?php echo($notice_type == 'rbi')? 'checked' : 'disabled'  ?> >
            <label for="html">RBI Notice</label><notice_type>
+           <input type="radio" id="custom_ujjivan" name="notice_type" value="custom_ujjivan" style="margin-left: 30px;" onchange="handleChange(this);" <?php echo($notice_type == 'custom_ujjivan')? 'checked' : 'disabled'  ?> >
+           <label for="html">Custom Ujjivan Notice</label><notice_type>
         </div>
 
         <div class="text-sm-start div-margin" >

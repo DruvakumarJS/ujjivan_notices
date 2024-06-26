@@ -173,7 +173,65 @@ class NoticeController extends Controller
       
       }
       else if($notice_type == 'custom_ujjivan'){
-      //  print_r("lll"); die();
+       
+        if(isset($request->noticeid)){
+        $notice = Notice::where('id', $request->noticeid)->first();
+        $langarray=$request->lang ;
+        $selected_lang_code = implode(',', $langarray);
+     
+        $regions = Region::all();
+        $branch = Branch::select('state')->groupBy('state')->get();
+       // $template = Template::select('details')->where('id',$template_id)->first();
+        $languages = Language::get();
+        $selected_languages = Language::whereIn('code',$request->lang)->get();
+       
+        $dropdown_lang =$request->dropdown_lang; 
+
+        $custNoticeDetails = NoticeContent::where('notice_group' , $notice->notice_group)->first();
+
+
+         $info_cols = Schema::getColumnListing('emergency_contact_details');
+         $excludedColumns = ['id','lang_code','created_at', 'updated_at'];
+         $filteredColumns = array_diff($info_cols, $excludedColumns);
+         $readableNames = [
+            'branch_id' => 'Branch ID',
+            'police' => 'Police Station addres',
+            'police_contact' => 'Police Station Contact Number',
+            'medical' => 'Emergency Medical Support',
+            'medical_contact' => 'Medical Support Contact',
+            'ambulance' => 'Ambulance',
+            'ambulance_contact' => 'Ambulance Contact Number',
+            'fire' => 'Fire Station',
+            'fire_contact' => 'Fire Station Contact',
+            'manager' => 'Branch managerer Name',
+            'manager_contact' => 'Branch Manager Number',
+            'rno' => 'RNO',
+            'rno_contact' => 'RNO Contact',
+            'pno' => 'PNO',
+            'pno_contact' => 'PNO Contact',
+            'contact_center' => 'Contact Center',
+            'contact_center_number' => 'Contact Center Number',
+            'cyber_dost' => 'Cyber Dost',
+            'cyber_dost_number' => 'Cyber Dost Number',
+
+            // Add all your columns here
+        ];
+
+
+        $info_columns = [];
+        foreach ($filteredColumns as $column) {
+          if (isset($readableNames[$column])) {
+              $info_columns[$column] = $readableNames[$column];
+          } else {
+              $info_columns[$column] = $column; // Use the original name if no readable name is found
+          }
+         }
+        
+         return view('notice/ckeditor/add_custom_notice',compact('notice','regions','branch','languages','selected_languages','selected_lang_code','notice_type' ,'dropdown_lang','info_columns','custNoticeDetails'));
+         }
+
+        
+        else{
         $langarray=$request->lang ;
         $selected_lang_code = implode(',', $langarray);
      
@@ -221,10 +279,13 @@ class NoticeController extends Controller
           } else {
               $info_columns[$column] = $column; // Use the original name if no readable name is found
           }
-      }
+         }
         
          return view('notice/ckeditor/custom_notice',compact('regions','branch','languages','selected_languages','selected_lang_code','notice_type' ,'dropdown_lang','info_columns'));
-      }
+        }
+       }
+
+    
       else{
        // print_r($request->Input()); die();
         if(isset($request->noticeid)){
@@ -2699,4 +2760,317 @@ class NoticeController extends Controller
       print_r($id); die();
 
     }
+
+    public function edit_multi_custom_notices($id , $lang){
+        $notice = Notice::where('notice_group' , $id)->first();
+        $notice_content = NoticeContent::where('notice_group' , $id)->first();
+        $langarray=$notice->available_languages ;
+        $selected_lang_code = explode(',', $langarray);
+        $template_id = $notice->template_id;
+        $notice_type = 'custom_ujjivan';
+        $noticegroup = $id;
+     
+        $regions = Region::all();
+        $branch = Branch::select('state')->groupBy('state')->get();
+       // $template = Template::select('details')->where('id',$template_id)->first();
+        $languages = Language::get();
+        $selected_languages = Language::whereIn('code',$selected_lang_code)->get();
+       
+        //$dropdown_lang =$request->dropdown_lang; 
+         $data = Notice::where('notice_group' , $id)->first();
+         $custom_noticeData = Notice::where('notice_group' , $id)->get();
+         $custNoticeDetails = NoticeContent::where('notice_group' , $id)->first();
+         $info_cols = Schema::getColumnListing('emergency_contact_details');
+         $excludedColumns = ['id','lang_code','created_at', 'updated_at'];
+         $filteredColumns = array_diff($info_cols, $excludedColumns);
+         $readableNames = [
+            'branch_id' => 'Branch ID',
+            'police' => 'Police Station addres',
+            'police_contact' => 'Police Station Contact Number',
+            'medical' => 'Emergency Medical Support',
+            'medical_contact' => 'Medical Support Contact',
+            'ambulance' => 'Ambulance',
+            'ambulance_contact' => 'Ambulance Contact Number',
+            'fire' => 'Fire Station',
+            'fire_contact' => 'Fire Station Contact',
+            'manager' => 'Branch managerer Name',
+            'manager_contact' => 'Branch Manager Number',
+            'rno' => 'RNO',
+            'rno_contact' => 'RNO Contact',
+            'pno' => 'PNO',
+            'pno_contact' => 'PNO Contact',
+            'contact_center' => 'Contact Center',
+            'contact_center_number' => 'Contact Center Number',
+            'cyber_dost' => 'Cyber Dost',
+            'cyber_dost_number' => 'Cyber Dost Number',
+
+            // Add all your columns here
+        ];
+
+
+        $info_columns = [];
+        foreach ($filteredColumns as $column) {
+          if (isset($readableNames[$column])) {
+              $info_columns[$column] = $readableNames[$column];
+          } else {
+              $info_columns[$column] = $column; // Use the original name if no readable name is found
+          }
+      }
+        
+         return view('notice/ckeditor/edit_custom_notice',compact('noticegroup','lang','data','regions','branch','languages','selected_languages','selected_lang_code','notice_type' ,'info_columns','custom_noticeData','custNoticeDetails'));
+    }
+
+    public function update_custom_notice(Request $request){
+      //print_r(json_encode($request->input())); die();
+
+       $data = $request->contact ;             
+       $result = array();
+
+       foreach ($data as $keys => $custom_value) {
+
+       if(!empty($custom_value['value'])){
+        $result[$custom_value['name']]=$custom_value['value'];
+       }
+          
+      }
+
+      if(sizeof($result)>0){
+           $features = json_encode($result,JSON_UNESCAPED_UNICODE);
+       }
+       else{
+           $features = "{}";
+       }
+
+      foreach ($request->notice as $key => $value) {
+
+       $region_prompt = '0';
+       $state_prompt = 'na';
+
+       $region_list = '';
+       $state_list = '';
+       $branchcodes = '';
+
+       $reion_names = '';
+       $br_code = '';
+      
+       if($request->is_pan_india == 'Yes'){
+           $region_list = '';
+           $state_list = '';
+           $branchcodes = '';
+       }
+        if(isset($request->regions)){
+           $region_prompt = '1';
+           $region_list = implode(',' , $request->regions);
+
+           foreach ($request->regions as $key1 => $value1) {
+             $re = Region::where('id',$value1)->first();
+             $rearray[]=$re->name;
+           }
+           $reion_names = implode(',', $rearray);
+
+
+       }
+       if(isset($request->states)){
+           $state_prompt = 'ya';
+
+           $state_list = implode(',' , $request->states);
+       }
+       if(isset($request->branches)){
+         
+           $branchcodes = implode(',' , $request->branches);
+
+           if(!in_array('all', $request->branches)){
+
+             foreach ($request->branches as $key2 => $value2) {
+               $br = Branch::where('id',$value2)->first();
+               $brarray[]=$br->branch_code;
+              }
+              $br_code = implode(',', $brarray);
+
+           }
+           else{
+            $br_code = implode(',', $request->branches);
+           }
+       }
+
+      $notice = Notice::where('id',$value['id'])->first();
+      $filepath = public_path().'/noticefiles/'.$value['langauge'].'_'.$notice->filename;
+
+      $langaugedata = Language::where('code',$notice->lang_code)->first();
+
+      $update = Notice::where('id',$value['id'])->update([
+           'name' => $value['tittle'] ,
+           'description' => $value['description'] ,
+           'is_pan_india'=> $request->is_pan_india ,
+           'is_region_wise' => $region_prompt ,
+           'regions' => $region_list ,
+           'is_state_wise' => $state_prompt ,
+           'states'=> $state_list ,
+           'branch_code'=> $branchcodes ,
+           'creator'=>Auth::user()->id ,
+           'document_id' => $request->document_id,
+           'published_date' => $request->publish_date ,
+           'version'=> $request->version,
+           'status' => 'UnPublished'
+
+         
+       ]);
+
+      $noticeID = $value['id'];
+      $langArray[] = $langaugedata->lang;
+
+
+      if($noticeID != 0 AND $noticeID!=''){
+         $updateContent = NoticeContent::where('notice_id',$noticeID)->update(['c11'=>$features]);
+         $content = NoticeContent::select('c11')->where('notice_id',$noticeID)->first();
+
+         if (file_exists(public_path().'/noticefiles')) {
+              
+          } else {
+             
+              File::makeDirectory(public_path().'/noticefiles', $mode = 0777, true, true);
+          }
+
+         // print_r(json_encode($content) ); die();
+
+          $local_filename = $value['langauge'].'_'.$notice->filename;
+          $version = $request->version;
+          $published = $request->publish_date;
+           $qrcode_data = url('/').'/noticefiles/'.$local_filename;
+           $name = $request->tittle;
+
+         //  $info = json_decode($content->c11);
+
+          // print_r($info); die();
+
+           $noticecontent = 
+           File::put(public_path().'/noticefiles/'.$local_filename,
+              view('htmltemplates.custom_cktemp')
+                  ->with(["content" => $content ,  'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'name'=>$value['tittle'] ])
+                  ->render()
+          );
+
+      }
+        
+      }
+
+      $audit = Audit::create([
+            'action' => 'Custom Notices modified in All languages',
+            'pan_india' => $request->is_pan_india,
+            'regions' => $reion_names,
+            'states' => $state_list,
+            'branch' => $br_code,
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'U'
+          ]);
+     
+      return redirect()->route('notices',$request->default_lang);
+
+    }
+
+    public function add_custom_notice(Request $request){
+      // print_r(json_encode($request->input())); die();
+
+       $noticedetails = Notice::where('id', $request->notice_id)->first();
+       $langs = $noticedetails->available_languages;
+       $new_langs = $request->selected_lang_code;
+
+       foreach ($request->notice as $key => $value) {
+         
+         $langaugedata = Language::where('code',$value['langauge'])->first();
+
+         $notice = new Notice;
+         $notice->name = $value['tittle'] ;
+         $notice->description = $value['description'] ;
+         $notice->path = 'custom_noticefiles';
+         $notice->filename = $noticedetails->filename;
+         $notice->is_pan_india = $noticedetails->is_pan_india ;
+         $notice->is_region_wise = $noticedetails->is_region_wise ;
+         $notice->regions = $noticedetails->regions;
+         $notice->is_state_wise = $noticedetails->is_state_wise;
+         $notice->states = $noticedetails->states;
+         $notice->branch_code = $noticedetails->branch_code ;
+         $notice->status = 'Draft';
+         $notice->available_languages = $langs.','.$new_langs ;
+         $notice->template_id = $noticedetails->template_id;
+         $notice->creator = Auth::user()->id ;
+         $notice->voiceover = 'Y';
+         $notice->lang_code = $langaugedata->code;
+         $notice->lang_name = $langaugedata->name;
+         $notice->notice_group = $noticedetails->notice_group;
+         $notice->notice_type = 'custom_ujjivan';
+         $notice->document_id = $noticedetails->document_id;
+         $notice->published_date = $request->publish_date;
+         $notice->version = $request->version;
+         $notice->expiry_date = '2024-12-12';
+
+         $notice->save();
+
+         $noticeID = $notice->id;
+
+         $langArray[] = $langaugedata->lang;
+
+         if($noticeID != 0 AND $noticeID!=''){
+
+          $noticeContent = NoticeContent::where('notice_group',$noticedetails->notice_group)->first(); 
+         
+         $content = new NoticeContent;
+         $content->notice_id = $noticeID ;
+         $content->template_id = '3';
+         $content->lang_code = $langaugedata->code;
+         $content->lang_name = $langaugedata->name;
+         $content->notice_group = $noticedetails->notice_group;
+
+         $content->c11 = $noticeContent->c11;
+
+         $content->save();
+         $noticeContentID = $content->id;
+
+         $content = NoticeContent::select('c11')->where('notice_id',$noticeID)->first();
+
+         if (file_exists(public_path().'/noticefiles')) {
+              
+          } else {
+             
+              File::makeDirectory(public_path().'/noticefiles', $mode = 0777, true, true);
+          }
+
+         // print_r(json_encode($content) ); die();
+
+          $local_filename = $langaugedata->code.'_'.$noticedetails->filename;
+          $version = $request->version;
+          $published = $request->publish_date;
+           $qrcode_data = url('/').'/noticefiles/'.$local_filename;
+           $name = $request->tittle;
+
+         //  $info = json_decode($content->c11);
+
+          // print_r($info); die();
+
+           $noticecontent = 
+           File::put(public_path().'/noticefiles/'.$local_filename,
+              view('htmltemplates.custom_cktemp')
+                  ->with(["content" => $content ,  'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'name'=>$value['tittle'] ])
+                  ->render()
+          );
+
+       
+        
+      }
+    }
+
+    $update = Notice::where('notice_group',$noticedetails->notice_group)->update(['available_languages'=> $langs.','.$new_langs]);
+
+     $audit = Audit::create([
+            'action' => 'Custom Notices added in -'.implode(',', $langArray),
+            'track_id' => $request->document_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Notice',
+            'operation' => 'U'
+          ]);
+     
+      return redirect()->route('notices',$request->dropdown_lang);
+}
 }

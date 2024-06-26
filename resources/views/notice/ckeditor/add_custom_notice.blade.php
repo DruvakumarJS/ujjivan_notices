@@ -16,7 +16,7 @@
 </style>
 
 <div class="container-body">
-	 <label class="label-bold">Create Custom Notice</label>
+	 <label class="label-bold">Add Custom Notice</label>
 	 <div class="page-container">
 
      @if ($errors->any())
@@ -32,84 +32,8 @@
 
 	 <hr/>
       
-       <form method="POST" action="{{ route('save_custom_notice')}}" enctype="multipart/form-data">
+       <form method="POST" action="{{ route('add_custom_notice')}}" enctype="multipart/form-data">
         @csrf 	
-
-       <div class="row">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">PAN India * </span>
-                  </div>
-            </div> 
-            <div class="col-6">
-                <div class="input-group mb-3">
-                 <select class="form-control form-select" name="is_pan_india" id="pan" required>
-                  <option value="">Select</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                 </select>
-                </div>
-            </div>   
-       </div>
-
-       <div class="row" id="region_dropdown_list" id="region_div">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Select Region(s)  </span>
-                  </div>
-            </div> 
-          <div class="col-6">
-             <div class="input-group mb-3">
-             <select class="form-control selectpicker" multiple name="regions[]" id="region_list">
-             
-                @foreach($regions as $key=>$value)
-                   <option value="{{$value->id}}">{{$value->name}}</option>
-                @endforeach
-              </select>
-
-              </div>
-            </div>
-       </div>
-
-        <div class="row" id="state_dropdown_list">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Select State(s)  </span>
-                  </div>
-            </div> 
-          <div class="col-6">
-             <div class="input-group mb-3">
-            
-               <div id="multiselect-container" class="form-control" style="padding: 0px;">
-                  <select class="form-control selectpicker" id="state_list" >
-              </select>
-
-               </div>
-
-              </div>
-            </div>
-       </div>
-
-        <div class="row" id="state_dropdown_list">
-            <div class="col-2">
-                  <div class="text-sm-end" >
-                    <span class="" id="basic-addon3">Select Branch(s)  </span>
-                  </div>
-            </div> 
-          <div class="col-6">
-             <div class="input-group mb-3">
-            
-               <div id="multiselect-branch-container" class="form-control" style="padding: 0px;">
-                  <select class="form-control selectpicker" id="branch_list" >
-              </select>
-
-               </div>
-
-              </div>
-            </div>
-       </div>
-       
-
        <div class="row" id="state_div">
             <div class="col-2">
                   <div class="text-sm-end" >
@@ -150,8 +74,11 @@
        </div>
 
        <input type="hidden" name="selected_lang_code" value="{{$selected_lang_code}}">
+       <input type="hidden" name="notice_id" value="{{$notice->id}}">
        <input type="hidden" name="notice_type" value="{{$notice_type}}">
        <input type="hidden" name="dropdown_lang" value="{{$dropdown_lang}}">
+       <input type="hidden" name="default_lang" value="{{$dropdown_lang}}">  
+
       
       
       @foreach($selected_languages as $keyl=>$lang)
@@ -230,6 +157,9 @@
         </div>
          
        </div>
+        @php
+        $custData = json_decode($custNoticeDetails->c11 , true);
+       @endphp
       @endforeach
       <div class="row">
         <div style="width: 1000px" >
@@ -247,44 +177,35 @@
 
                         <div class="card-body">
                         <table  class="table table-responsive " id="dynamicAddRemove">
+                          @foreach($custData as $keys=>$values)
                           <tr>
                             <td>
                                   <div class="row d-flex justify-content-center align-items-center">
                                      <div class="col-md-5">
                                       
-                                      <select class="form-control form-select" name="contact[0][name]">
+                                      <select class="form-control form-select" name="contact[0][name]" disabled>
                                         <option>Select lable</option>
                                         @foreach($info_columns as $key=>$info)
-                                           <option value="{{$key}}">{{$info}}</option>
+                                           <option value="{{$key}}" {{ ($key == $keys)?'selected':'' }}>{{$info}}</option>
                                         @endforeach
                                       </select>
                                      </div>
 
                                      <div class="col-md-5">
-                                      <select class="form-control form-select" name="contact[0][value]">
+                                      <select class="form-control form-select" name="contact[0][value]" disabled>
                                         <option>Select Contact</option>
                                         @foreach($info_columns as $key=>$info)
-                                           <option value="{{$key}}">{{$info}}</option>
+                                           <option value="{{$key}}" {{ ($key == $values)? 'selected' : '' }}>{{$info}}</option>
                                         @endforeach
                                       </select> 
                                      </div>
-                                     <div class="col-md-1">
-                                      <button class="btn btn-sm btn-outline-secondary remove-input-mandate" >Remove</button>
-                                    </div>
+                                     
                                   </div>    
                             </td>
                           </tr>
+                          @endforeach
                         </table>
                          </div>
-                        
-                        <div class="row">
-                            <div class="col-7">
-                               <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-success div-margin">Add Row </button>
-                               
-                            </div>
-                        </div> 
-
-                       
                         
                       </div>
                        
@@ -301,7 +222,7 @@
        </div>
      
     
-      <input class="form-control" type="hidden" name="langauge" value="{{$dropdown_lang}}">             
+      <input class="form-control" type="hidden" name="langauge" value="en">             
       <input type="hidden" name="selected_languages" value="{{$selected_languages}}">
       <div id="div3" class="div-margin">
          <button class="btn btn-success" type="submit">Submit</button> 
