@@ -1050,6 +1050,7 @@ class DeviceController extends Controller
         $data = Notice::where(function($query)use($lastdate){
                   $query->where('is_pan_india','Yes');
                   $query->where('template_id','!=','3');
+                  $query->whereNull('deleted_at');
                   $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
                      $query2->orWhere('updated_at','>=',$lastdate);
@@ -1061,6 +1062,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->where('branch_code','all');
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
                      $query2->orWhere('updated_at','>=',$lastdate);
@@ -1073,6 +1075,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
                      $query2->orWhere('updated_at','>=',$lastdate);
@@ -1084,6 +1087,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
                      $query2->orWhere('updated_at','>=',$lastdate);
@@ -1095,6 +1099,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->where('branch_code','all'); 
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
                      $query2->orWhere('updated_at','>=',$lastdate);
@@ -1108,6 +1113,7 @@ class DeviceController extends Controller
         $custom_notice = Notice::where(function($query)use($lastdate){
                   $query->where('is_pan_india','Yes');
                   $query->where('template_id','3');
+                  $query->whereNull('deleted_at');
                   $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
                      $query2->orWhere('updated_at','>=',$lastdate);
@@ -1119,6 +1125,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->where('branch_code','all');
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
                      $query2->orWhere('updated_at','>=',$lastdate);
@@ -1131,6 +1138,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
                      $query2->orWhere('updated_at','>=',$lastdate);
@@ -1142,6 +1150,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
                      $query2->orWhere('updated_at','>=',$lastdate);
@@ -1153,6 +1162,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->where('branch_code','all'); 
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
                      $query2->orWhere('updated_at','>=',$lastdate);
@@ -1198,6 +1208,7 @@ class DeviceController extends Controller
 
         $old = Notice::where(function($query)use($lastdate){
                   $query->where('is_pan_india','Yes');
+                  $query->whereNull('deleted_at');
                  // $query->where('template_id','!=','3');
                   $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'<',$lastdate);
@@ -1210,6 +1221,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->where('branch_code','all');
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'<',$lastdate);
                      $query2->orWhere('updated_at','<',$lastdate);
@@ -1222,6 +1234,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'<',$lastdate);
                      $query2->orWhere('updated_at','<',$lastdate);
@@ -1233,6 +1246,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'<',$lastdate);
                      $query2->orWhere('updated_at','<',$lastdate);
@@ -1244,6 +1258,7 @@ class DeviceController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->where('branch_code','all'); 
+                    $query->whereNull('deleted_at');
                     $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'<',$lastdate);
                      $query2->orWhere('updated_at','<',$lastdate);

@@ -17,6 +17,8 @@ use App\Models\Audit;
 use App\Models\NonIdleDevice;
 use App\Imports\ImportBranches;
 use App\Imports\ImportEmergencyContacts;
+use App\Models\EmergencyContactDetail;
+
 use DB;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -815,30 +817,37 @@ class HomeController extends Controller
 
         if($lang == 'all'){
 
-        $data = Notice::where('is_pan_india','Yes')
+        $data = Notice::where(function($query){
+                   $query->where('is_pan_india','Yes');
+                   $query->where('status','Published');
+                 })
                  ->orWhere(function($query)use($region_id){
                     $query->where('is_pan_india','No');
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->where('branch_code','all');
+                    $query->where('status','Published');
                  })
                   ->orWhere(function($query)use($region_id,$state,$branchid){
                     $query->where('is_pan_india','No');
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where('status','Published');
                  })
                    ->orWhere(function($query)use($region_id,$state,$branchid){
                     $query->where('is_pan_india','No');
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
-                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]); 
+                    $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
+                    $query->where('status','Published'); 
                  })
                    ->orWhere(function($query)use($region_id,$state,$branchid){
                     $query->where('is_pan_india','No');
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->where('branch_code','all'); 
+                    $query->where('status','Published');
                  })
                    ->orderBy('id', 'DESC')
                    ->paginate(25);
@@ -847,6 +856,7 @@ class HomeController extends Controller
             $data = Notice::where(function($query)use($lang){
                    $query->where('is_pan_india','Yes');
                    $query->where('lang_code',$lang);
+                   $query->where('status','Published');
                  })
                  ->orWhere(function($query)use($region_id,$lang){
                     $query->where('is_pan_india','No');
@@ -854,6 +864,7 @@ class HomeController extends Controller
                     $query->where('states','all');
                     $query->where('branch_code','all');
                     $query->where('lang_code',$lang);
+                    $query->where('status','Published');
                  })
                   ->orWhere(function($query)use($region_id,$state,$branchid,$lang){
                     $query->where('is_pan_india','No');
@@ -861,6 +872,7 @@ class HomeController extends Controller
                     $query->where('states','all');
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
                     $query->where('lang_code',$lang);
+                    $query->where('status','Published');
                  })
                    ->orWhere(function($query)use($region_id,$state,$branchid,$lang){
                     $query->where('is_pan_india','No');
@@ -868,6 +880,7 @@ class HomeController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]); 
                     $query->where('lang_code',$lang);
+                    $query->where('status','Published');
                  })
                    ->orWhere(function($query)use($region_id,$state,$branchid,$lang){
                     $query->where('is_pan_india','No');
@@ -875,6 +888,7 @@ class HomeController extends Controller
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->where('branch_code','all'); 
                     $query->where('lang_code',$lang);
+                    $query->where('status','Published');
                  })
                    ->orderBy('id', 'DESC')
                    ->paginate(25);
@@ -1113,6 +1127,81 @@ class HomeController extends Controller
           ]);
             return redirect()->back()->withMessage('Import Successfull. '.$import->getRowCount() . ' Branch contact details added .');
         }
+
+    }
+
+    public function emergency_contacts($lang){
+      $languages = Language::get();
+      $search = '';
+      if($lang == 'all'){
+        $data = EmergencyContactDetail::paginate(50);
+      }else{
+        $data = EmergencyContactDetail::where('lang_code',$lang)->paginate(50);
+      }
+      
+
+      return view('settings.emergency_contacts',compact('data','languages','search','lang'));
+    }
+
+    public function update_emergency_contacts(Request $request){
+
+      $update = EmergencyContactDetail::where('branch_id',$request->branch_id)->where('lang_code',$request->lang_code)->update([
+            'police' => $request->police,
+            'police_contact' => $request->police_contact,
+            'medical' => $request->medical,
+            'medical_contact' => $request->medical_contact,
+            'ambulance' => $request->ambulance,
+            'ambulance_contact' => $request->ambulance_contact,
+            'fire' => $request->fire,
+            'fire_contact' => $request->fire_contact,
+            'manager' => $request->manager,
+            'manager_contact' => $request->manager_contact,
+            'rno' => $request->rno,
+            'rno_contact' => $request->rno_contact,
+            'pno' => $request->pno,
+            'pno_contact' => $request->pno_contact,
+            'contact_center' => $request->contact_center,
+            'contact_center_number' => $request->contact_center_number,
+            'cyber_dost' => $request->cyber_dost,
+            'cyber_dost_number' => $request->cyber_dost_number
+          ]);
+
+      if($update){
+        $BranchManager= explode('/', $request->manager);
+        $Branch = Branch::where('branch_code',$request->branch_id)->first();
+
+        $updateBranchInformation = BranchInformation::where('branch_id',$Branch->id)->update([
+            'bm_name' => $BranchManager[1],
+            'bm_number' => $request->manager_contact
+          ]);
+
+        $updateNotice = Notice::where('template_id','3')->update([]);
+      }
+
+      return redirect()->back();
+
+    }
+
+    public function search_emergency_conatcts(Request $request,$lang){
+      $search = $request->search;
+      $languages = Language::get();
+     
+      if($lang == 'all'){
+        $data = EmergencyContactDetail::where('branch_id','LIKE',$search.'%')
+                ->orWhere('police','LIKE',$search.'%')
+                ->orWhere('manager','LIKE',$search.'%')
+                ->paginate(50);
+      }else{
+        $data = EmergencyContactDetail::where('lang_code',$lang)
+                ->where(function($query)use($search){
+                  $query->where('branch_id','LIKE',$search.'%');
+                  $query->orWhere('police','LIKE',$search.'%');
+                  $query->orWhere('manager','LIKE',$search.'%');
+                })
+                ->paginate(50);
+      }
+
+      return view('settings.emergency_contacts',compact('data','languages','search','lang'));
 
     }
 

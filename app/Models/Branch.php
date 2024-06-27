@@ -46,4 +46,8 @@ class Branch extends Model
     public function branchinfo(){
         return $this->hasOne(BranchInformation::class);
     } 
+
+    public function emergencycontacts(){
+        return $this->hasMany(EmergencyContactDetail::class,'branch_code','branch_id');
+    }
 }

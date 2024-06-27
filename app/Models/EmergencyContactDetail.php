@@ -31,4 +31,8 @@ class EmergencyContactDetail extends Model
             'cyber_dost_number',
             'lang_code'
         ];
+
+    public function branch(){
+        return $this->belongsTo(Branch::class,'branch_id','branch_code');
+    }    
 }

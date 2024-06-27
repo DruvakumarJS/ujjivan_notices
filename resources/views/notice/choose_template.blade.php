@@ -42,7 +42,7 @@ body {
            <label for="html">RBI Notice</label><notice_type>
 
            <input type="radio" id="custom_ujjivan" name="notice_type" value="custom_ujjivan" style="margin-left: 30px;" onchange="handleChange(this);">
-           <label for="html">Custom Ujjivan Notice</label><notice_type>
+           <label for="html">Emergency Contact Number</label><notice_type>
         </div>
 
         <div class="text-sm-start div-margin" >
@@ -84,7 +84,7 @@ body {
 				  	@endphp
 
 				  	@foreach($arr as $keys=>$values)
-                   <!-- <label style="color: black">{{ $values->coloum }}</label> -->
+                   
                    @php
                      $data = explode(',',$values->coloum);
                    @endphp

@@ -13,10 +13,6 @@
     </div>
     
      <div id="div2" style="margin-right: 30px">
-      <a data-bs-toggle="modal" data-bs-target="#emergencyModal"  class="btn btn-light btn-outline-secondary" href=""><label id="modal">Import Emergency Contact</label></a>
-    </div>
- 
-     <div id="div2" style="margin-right: 30px">
        <a data-bs-toggle="modal" data-bs-target="#mymodal" ><button class="btn btn-outline-primary">Add New Branch</button></a>
     </div> 
 
@@ -90,38 +86,7 @@
         </div>
 <!--Import Modal -->
 
-<!-- Emergency Modal -->
 
-        <div class="modal fade" id="emergencyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Import Emergency Contact Details from Excel Sheet</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form action="{{ route('import_branch_emergency_contacts')}}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group mb-4">
-                        <div class="custom-file text-left">
-                            <input type="file" name="file" class="custom-file-input" id="customFile">
-                           
-                        </div>
-                    </div>
-                    <button class="btn btn-success">Import</button>
-                    
-                </form>
-
-                <div id="div2">
-                       <a target="_blank" href="{{ URL::to('/') }}/Import_branches.xlsx" ><button class="btn btn-sm btn-light">Download Template</button></a>
-                    </div>
-              </div>
-              
-            </div>
-          </div>
-        </div>
-
-<!-- Emergency Model -->
 
 <div class="container">
 

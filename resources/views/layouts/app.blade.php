@@ -145,6 +145,10 @@
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                             <a  href="{{route('settings')}}"> <label>Branch Master</label> </a>
                           </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a  href="{{route('emergency_contacts','en')}}"> <label>Emergency Contacts</label> </a>
+                          </li>
                          
                       </ul>
                     @endif

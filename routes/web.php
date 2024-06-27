@@ -144,6 +144,10 @@ Route::get('notification',[HomeController::class,'notification'])->name('notific
 
 
 Route::get('download_html',[HomeController::class,'download_html'])->name('download_html');
+Route::get('emergency-contacts-details/{lang}',[HomeController::class,'emergency_contacts'])->name('emergency_contacts');
+Route::post('update-emergency-contacts-details',[HomeController::class,'update_emergency_contacts'])->name('update_emergency_contacts');
+Route::get('search-emergency-contacts-details/{lang}',[HomeController::class,'search_emergency_conatcts'])->name('search_emergency_conatcts');
+
 
 });
 
