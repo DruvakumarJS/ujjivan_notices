@@ -570,18 +570,6 @@ class HomeController extends Controller
             ]);
 
         $updateBranchinfo = BranchInformation::where('branch_id',$data->id)->update([
-            'bm_name' => $request->bm_name , 
-            'bm_number' => $request->bm_number , 
-            'bm_email' => $request->bm_email , 
-            'bm_designation' => "BM" , 
-            'bo_name' => $request->bo_name , 
-            'bo_number' => $request->bo_number , 
-            'bo_email' => $request->bo_email , 
-            'bo_designation' => "BO" , 
-            'medical' => $request->medical , 
-            'ambulance' => $request->ambulance , 
-            'fire' => $request->fire , 
-            'police' => $request->police , 
             'disclaimer1' => $request->disclaimer1 , 
             'disclaimer2' => $request->disclaimer2 , 
             'announcement' => $request->announcement , 
