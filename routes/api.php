@@ -31,6 +31,8 @@ Route::post('/save-non-idle-device-data',[DeviceController::class,'save_non_idle
 Route::post('/get-branch-based-notices',[DeviceController::class,'get_branch_based_notices']);
 Route::post('/get-branch-based-notices2',[DeviceController::class,'get_branch_based_notices_offline']);
 Route::post('/get-branch-based-notices-with-disclaimer',[DeviceController::class,'get_branch_based_notices_offline_with_disclaimer']);
+Route::post('/get-branch-based-notices-with-disclaimer-updates',[DeviceController::class,'get_branch_based_notices_offline_with_disclaimer_new']);
+
 
 
 	
