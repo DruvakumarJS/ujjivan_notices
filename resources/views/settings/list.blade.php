@@ -20,7 +20,7 @@
        <a href="{{ route('poster')}}"><button title="Use this button to create Poster & Disclaimer ,if you are planning for PAN India " class="btn btn-outline-dark">Poster & Disclaimer </button></a>
     </div>
 
-    <div id="div2">
+    <div id="div2" style="margin-right: 30px">
       <a data-bs-toggle="modal" data-bs-target="#importOmbudsmentModal"  class="btn btn-light btn-outline-secondary" href=""><label id="modal">Import Ombudsment Details</label></a>
     </div>
 
@@ -116,7 +116,7 @@
                 </form>
 
                 <div id="div2">
-                       <a target="_blank" href="{{ URL::to('/') }}/Import_branches.xlsx" ><button class="btn btn-sm btn-light">Download Template</button></a>
+                       <a target="_blank" href="{{ URL::to('/') }}/N9_ombudsman.xlsx" ><button class="btn btn-sm btn-light">Download Template</button></a>
                     </div>
               </div>
               
