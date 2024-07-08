@@ -38,11 +38,15 @@ body {
         <div class="div-margin">
            <input type="radio" id="ujjivan" name="notice_type" value="ujjivan" onchange="handleChange(this);" checked >
            <label for="html">Statndard Ujjivan Notice</label>
+
            <input type="radio" id="rbi" name="notice_type" value="rbi" style="margin-left: 30px;" onchange="handleChange(this);">
            <label for="html">RBI Notice</label><notice_type>
 
            <input type="radio" id="custom_ujjivan" name="notice_type" value="custom_ujjivan" style="margin-left: 30px;" onchange="handleChange(this);">
            <label for="html">Emergency Contact Number</label><notice_type>
+
+           <input type="radio" id="custom_ujjivan_n9" name="notice_type" value="custom_ujjivan_n9" style="margin-left: 30px;" onchange="handleChange(this);">
+           <label for="html">Escalation to Banking Ombudsman  </label><notice_type>
         </div>
 
         <div class="text-sm-start div-margin" >
@@ -177,6 +181,18 @@ body {
     
   }
   else if(src.value == 'custom_ujjivan'){
+  
+     $(".radioInput").removeAttr("required");
+     $(".radioInput").prop("disabled", true);
+     $(".radioInput").prop("checked", false);
+
+     $('#languages').selectpicker('val',['en']);
+    // $('#languages').prop("disabled", true);
+
+
+    
+  }
+   else if(src.value == 'custom_ujjivan_n9'){
   
      $(".radioInput").removeAttr("required");
      $(".radioInput").prop("disabled", true);

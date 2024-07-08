@@ -20,6 +20,14 @@
        <a href="{{ route('poster')}}"><button title="Use this button to create Poster & Disclaimer ,if you are planning for PAN India " class="btn btn-outline-dark">Poster & Disclaimer </button></a>
     </div>
 
+    <div id="div2">
+      <a data-bs-toggle="modal" data-bs-target="#importOmbudsmentModal"  class="btn btn-light btn-outline-secondary" href=""><label id="modal">Import Ombudsment Details</label></a>
+    </div>
+
+    <!-- <div id="div2" style="margin-right: 30px">
+       <a href="{{ route('import_banking_ombudsment')}}"><button title="Use this button to create Poster & Disclaimer ,if you are planning for PAN India " class="btn btn-outline-dark">Import Banking Ombudsment </button></a>
+    </div> -->
+
 </div>
 <div class="container-header">
   <div class="row" >
@@ -85,6 +93,37 @@
           </div>
         </div>
 <!--Import Modal -->
+
+<!-- Import Ombudsment Modal -->
+        <div class="modal fade" id="importOmbudsmentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Import Banking Ombudsment Details from Excel Sheet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="{{ route('import_banking_ombudsment')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group mb-4">
+                        <div class="custom-file text-left">
+                            <input type="file" name="file" class="custom-file-input" id="customFile">
+                           
+                        </div>
+                    </div>
+                    <button class="btn btn-success">Import</button>
+                    
+                </form>
+
+                <div id="div2">
+                       <a target="_blank" href="{{ URL::to('/') }}/Import_branches.xlsx" ><button class="btn btn-sm btn-light">Download Template</button></a>
+                    </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+<!--Import Ombudsment Modal -->
 
 
 

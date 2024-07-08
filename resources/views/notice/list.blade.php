@@ -232,14 +232,14 @@
                         		
                         		@endphp 
 
-                        		 @if($value->template_id != '3')
+                        		 @if($value->template_id != '3' && $value->template_id != '4')
                         		
                                 <div class="card">
                                 	<div class="card-header bg-primary text-white">Action on {{$value->document_id}} - {{$value->lang_name}} Notice</div>
                                 	<div class="card-body">
                                 		
                                 		<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$langs}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
-                                		@if($value->template_id != '3')
+                                		@if($value->template_id != '3' && $value->template_id != '4')
                                 		
 
                                 		@if($value->notice_type == 'ujjivan')

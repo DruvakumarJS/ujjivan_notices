@@ -18,7 +18,7 @@ use App\Models\NonIdleDevice;
 use App\Imports\ImportBranches;
 use App\Imports\ImportEmergencyContacts;
 use App\Models\EmergencyContactDetail;
-
+use App\Imports\ImporteBankingOmbudsment;
 use DB;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -1192,6 +1192,30 @@ class HomeController extends Controller
       return view('settings.emergency_contacts',compact('data','languages','search','lang'));
 
     }
+
+     public function import_banking_ombudsment(Request $request){
+      $import = new ImporteBankingOmbudsment; ;
+     Excel::import($import, $request->file('file'));
+
+     if($import->getRowCount() == 0){
+            return redirect()->back()->withMessage('No data imported');
+        }
+        else {
+            $audit = Audit::create([
+            'action' => 'Banking Ombudsment details imported via Excel sheet',
+            'track_id' => '',
+            'user_id' => Auth::user()->id,
+            'module' => 'Branch',
+            'operation' => 'C',
+            'pan_india' => '-',
+          ]);
+            return redirect()->back()->withMessage('Import Successfull. '.$import->getRowCount() . ' Banking Ombudsment contact details added .');
+        }
+
+    }
+
+
+
 
 
 

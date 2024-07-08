@@ -152,7 +152,8 @@
        <input type="hidden" name="selected_lang_code" value="{{$selected_lang_code}}">
        <input type="hidden" name="notice_type" value="{{$notice_type}}">
        <input type="hidden" name="dropdown_lang" value="{{$dropdown_lang}}">
-       <input type="hidden" name="template_id" value="3">
+       <input type="hidden" name="template_id" value="4">
+      
       
       
       @foreach($selected_languages as $keyl=>$lang)
@@ -217,7 +218,7 @@
                         </div> 
                         <div class="col-6">
                             <div class="input-group mb-3">
-                             <textarea class="form-control" type="text" name="notice[{{$keyl}}][description]"  required> </textarea> 
+                             <textarea class="form-control" type="text" name="notice[{{$keyl}}][description]"  required></textarea>
                             </div>
                         </div>   
                    </div>
@@ -247,6 +248,7 @@
                         </div>
 
                         <div class="card-body">
+                       
                         <table  class="table table-responsive " id="dynamicAddRemove">
                           <tr>
                             <td>
@@ -269,9 +271,8 @@
                                         @endforeach
                                       </select> 
                                      </div>
-                                     <div class="col-md-1">
-                                      <button class="btn btn-sm btn-outline-secondary remove-input-mandate" >Remove</button>
-                                    </div>
+
+                                     <div class="col-md-1"><button class="btn btn-sm btn-outline-secondary remove-input-mandate" >Remove</button></div>
                                   </div>    
                             </td>
                           </tr>

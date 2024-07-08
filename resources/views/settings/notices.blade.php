@@ -27,7 +27,7 @@
 	<div class="container-header">
 
 	<div id="div1">
-      <label class="label-bold">Notices</label>
+      <label class="label-bold">Branch Notices</label>
     </div>
 
     <div id="div2" style="margin-right: 30px">

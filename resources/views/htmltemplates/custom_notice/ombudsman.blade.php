@@ -26,6 +26,7 @@
 }
 
 
+
 </style>
 
 <div class="container-body">
@@ -44,34 +45,31 @@
               </div>
 
               @php
-                $info = json_decode($content->c11);
+                $info = json_decode($data->c11);
+
               @endphp
               
 
-              <div class="card-body">
+              <div class="card-body" id="test">
                 <div class="text-center">
-                  <h4>{{$name}}</h4>
-
-                </div>               
-                <table  class="table table-responsive py-4" id="dynamicAddRemove">
+                  <h4 style="font-weight: bold;">{{ (isset($name))? $name:'' }}</h4>
+                </div>
+                <div class="text-start">
+                  <lable>{{ (isset($description))? $description:'' }}</lable>
+                </div>
+                
+                <table  class="table table-responsive py-4 table-bordered" id="dynamicAddRemove">
+ 
+                <tbody>
                   @foreach($info as $key=>$value)
                   <tr>
-                    
-                      <td>
-                          <div class="row d-flex justify-content-center align-items-center">
-                             <div class="col-md-5">
-                              <input class="form-control text-end" type="text" value="{{$key}}" readonly> 
-                             </div>
 
-                             <div class="col-md-5">
-                              <input class="form-control" type="text" name="" readonly >
-                             </div>
-                            
-                          </div>    
-                      </td>
+                      <td width="50%"><span class="text-end">{{ (isset($OmbudsmanDetail->$key))? $OmbudsmanDetail->$key:'' }}</span></td>
+                      <td width="50%">{{ (isset($OmbudsmanDetail->$value))? $OmbudsmanDetail->$value:'' }}</td>
                     
                   </tr>
                    @endforeach
+                   </tbody>
                 </table>
               </div>
 

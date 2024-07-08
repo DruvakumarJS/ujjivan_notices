@@ -285,6 +285,115 @@ class NoticeController extends Controller
         }
        }
 
+       else if($notice_type == 'custom_ujjivan_n9'){
+       //print_r("kkk"); die();
+       if(isset($request->noticeid)){
+        $notice = Notice::where('id', $request->noticeid)->first();
+        $langarray=$request->lang ;
+        $selected_lang_code = implode(',', $langarray);
+     
+        $regions = Region::all();
+        $branch = Branch::select('state')->groupBy('state')->get();
+       // $template = Template::select('details')->where('id',$template_id)->first();
+        $languages = Language::get();
+        $selected_languages = Language::whereIn('code',$request->lang)->get();
+       
+        $dropdown_lang =$request->dropdown_lang; 
+
+        $custNoticeDetails = NoticeContent::where('notice_group' , $notice->notice_group)->first();
+
+
+         $info_cols = Schema::getColumnListing('banking_ombudsments');
+         $excludedColumns = ['id','lang_code','created_at', 'updated_at'];
+         $filteredColumns = array_diff($info_cols, $excludedColumns);
+         $readableNames = [
+            'state' => 'STATE',
+            'banking_ombudsment' => 'BANKING OMBUDSMAN LABLE',
+            'banking_ombudsment_name' => 'NAME OF THE BANKING OMBUDSMAN',
+            'center' => 'CENTER LABLE',
+            'center_name' => 'NAME OF THE CENTER',
+            'area' => 'AREA LABLE',
+            'area_name' => 'NAME OF THE AREA',
+            'address' => 'ADDRESS LABLE',
+            'full_address' => 'COMPLETE ADDRESS',
+            'tel' => 'TELEPHONE LABLE',
+            'tel_number' => 'TELEPHONE NUMBER',
+            'fax' => 'FAX LABLE',
+            'fax_number' => 'FAX NUMBER',
+            'email' => 'E-MAIL LABLE',
+            'email_id' => 'E-MAIL ADDRESS',
+            'toll_free' => 'TOLL-FREE LABLE',
+            'toll_free_number' => 'TOLL-FREE NUMBER',
+            
+            // Add all your columns here
+        ];
+
+
+        $info_columns = [];
+        foreach ($filteredColumns as $column) {
+          if (isset($readableNames[$column])) {
+              $info_columns[$column] = $readableNames[$column];
+          } else {
+              $info_columns[$column] = $column; // Use the original name if no readable name is found
+          }
+         }
+        
+         return view('notice/ckeditor/add_custom_notice',compact('notice','regions','branch','languages','selected_languages','selected_lang_code','notice_type' ,'dropdown_lang','info_columns','custNoticeDetails'));
+         }
+
+        
+        else{
+        $langarray=$request->lang ;
+        $selected_lang_code = implode(',', $langarray);
+     
+        $regions = Region::all();
+        $branch = Branch::select('state')->groupBy('state')->get();
+       // $template = Template::select('details')->where('id',$template_id)->first();
+        $languages = Language::get();
+        $selected_languages = Language::whereIn('code',$request->lang)->get();
+       
+        $dropdown_lang =$request->dropdown_lang; 
+
+
+         $info_cols = Schema::getColumnListing('banking_ombudsments');
+         $excludedColumns = ['id','lang_code','created_at', 'updated_at'];
+         $filteredColumns = array_diff($info_cols, $excludedColumns);
+         $readableNames = [
+            'state' => 'STATE',
+            'banking_ombudsment' => 'BANKING OMBUDSMAN LABLE',
+            'banking_ombudsment_name' => 'NAME OF THE BANKING OMBUDSMAN',
+            'center' => 'CENTER LABLE',
+            'center_name' => 'NAME OF THE CENTER',
+            'area' => 'AREA LABLE',
+            'area_name' => 'NAME OF THE AREA',
+            'address' => 'ADDRESS LABLE',
+            'full_address' => 'COMPLETE ADDRESS',
+            'tel' => 'TELEPHONE LABLE',
+            'tel_number' => 'TELEPHONE NUMBER',
+            'fax' => 'FAX LABLE',
+            'fax_number' => 'FAX NUMBER',
+            'email' => 'E-MAIL LABLE',
+            'email_id' => 'E-MAIL ADDRESS',
+            'toll_free' => 'TOLL-FREE LABLE',
+            'toll_free_number' => 'TOLL-FREE NUMBER',
+            
+            // Add all your columns here
+        ];
+
+
+        $info_columns = [];
+        foreach ($filteredColumns as $column) {
+          if (isset($readableNames[$column])) {
+              $info_columns[$column] = $readableNames[$column];
+          } else {
+              $info_columns[$column] = $column; // Use the original name if no readable name is found
+          }
+         }
+        
+         return view('notice/ckeditor/custom_notice_n9',compact('regions','branch','languages','selected_languages','selected_lang_code','notice_type' ,'dropdown_lang','info_columns'));
+        }
+       }
+
     
       else{
        // print_r($request->Input()); die();
@@ -2681,7 +2790,7 @@ class NoticeController extends Controller
          $notice->branch_code = $branchcodes ;
          $notice->status = 'Draft';
          $notice->available_languages =$request->selected_lang_code ;
-         $notice->template_id = '3';
+         $notice->template_id = $request->template_id;
          $notice->creator = Auth::user()->id ;
          $notice->voiceover = 'Y';
          $notice->lang_code = $langaugedata->code;
@@ -2738,7 +2847,7 @@ class NoticeController extends Controller
            $noticecontent = 
            File::put(public_path().'/noticefiles/'.$local_filename,
               view('htmltemplates.custom_cktemp')
-                  ->with(["content" => $content ,  'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'name'=>$value['tittle'] ])
+                  ->with(["content" => $content ,  'version' => $version , 'published' => $published ,'qrcode_data'=> $qrcode_data , 'name'=>$value['tittle'] , 'desc'=>$value['description'] , 'n_id' => $request->document_id ])
                   ->render()
           );
 
@@ -2780,33 +2889,66 @@ class NoticeController extends Controller
          $data = Notice::where('notice_group' , $id)->first();
          $custom_noticeData = Notice::where('notice_group' , $id)->get();
          $custNoticeDetails = NoticeContent::where('notice_group' , $id)->first();
-         $info_cols = Schema::getColumnListing('emergency_contact_details');
-         $excludedColumns = ['id','lang_code','created_at', 'updated_at'];
-         $filteredColumns = array_diff($info_cols, $excludedColumns);
-         $readableNames = [
-            'branch_id' => 'Branch ID',
-            'police' => 'Police Station addres',
-            'police_contact' => 'Police Station Contact Number',
-            'medical' => 'Emergency Medical Support',
-            'medical_contact' => 'Medical Support Contact',
-            'ambulance' => 'Ambulance',
-            'ambulance_contact' => 'Ambulance Contact Number',
-            'fire' => 'Fire Station',
-            'fire_contact' => 'Fire Station Contact',
-            'manager' => 'Branch managerer Name',
-            'manager_contact' => 'Branch Manager Number',
-            'rno' => 'RNO',
-            'rno_contact' => 'RNO Contact',
-            'pno' => 'PNO',
-            'pno_contact' => 'PNO Contact',
-            'contact_center' => 'Contact Center',
-            'contact_center_number' => 'Contact Center Number',
-            'cyber_dost' => 'Cyber Dost',
-            'cyber_dost_number' => 'Cyber Dost Number',
 
-            // Add all your columns here
-        ];
+         if($notice->template_id == 3){
+           $info_cols = Schema::getColumnListing('emergency_contact_details');
+           $excludedColumns = ['id','lang_code','created_at', 'updated_at'];
+           $filteredColumns = array_diff($info_cols, $excludedColumns);
+           $readableNames = [
+              'branch_id' => 'Branch ID',
+              'police' => 'Police Station addres',
+              'police_contact' => 'Police Station Contact Number',
+              'medical' => 'Emergency Medical Support',
+              'medical_contact' => 'Medical Support Contact',
+              'ambulance' => 'Ambulance',
+              'ambulance_contact' => 'Ambulance Contact Number',
+              'fire' => 'Fire Station',
+              'fire_contact' => 'Fire Station Contact',
+              'manager' => 'Branch managerer Name',
+              'manager_contact' => 'Branch Manager Number',
+              'rno' => 'RNO',
+              'rno_contact' => 'RNO Contact',
+              'pno' => 'PNO',
+              'pno_contact' => 'PNO Contact',
+              'contact_center' => 'Contact Center',
+              'contact_center_number' => 'Contact Center Number',
+              'cyber_dost' => 'Cyber Dost',
+              'cyber_dost_number' => 'Cyber Dost Number',
 
+              // Add all your columns here
+          ];
+
+         }
+         else{
+
+           $info_cols = Schema::getColumnListing('banking_ombudsments');
+           $excludedColumns = ['id','lang_code','created_at', 'updated_at'];
+           $filteredColumns = array_diff($info_cols, $excludedColumns);
+           $readableNames = [
+              'state' => 'STATE',
+              'banking_ombudsment' => 'BANKING OMBUDSMAN LABLE',
+              'banking_ombudsment_name' => 'NAME OF THE BANKING OMBUDSMAN',
+              'center' => 'CENTER LABLE',
+              'center_name' => 'NAME OF THE CENTER',
+              'area' => 'AREA LABLE',
+              'area_name' => 'NAME OF THE AREA',
+              'address' => 'ADDRESS LABLE',
+              'full_address' => 'COMPLETE ADDRESS',
+              'tel' => 'TELEPHONE LABLE',
+              'tel_number' => 'TELEPHONE NUMBER',
+              'fax' => 'FAX LABLE',
+              'fax_number' => 'FAX NUMBER',
+              'email' => 'E-MAIL LABLE',
+              'email_id' => 'E-MAIL ADDRESS',
+              'toll_free' => 'TOLL-FREE LABLE',
+              'toll_free_number' => 'TOLL-FREE NUMBER',
+
+              // Add all your columns here
+          ];
+
+
+         }
+         
 
         $info_columns = [];
         foreach ($filteredColumns as $column) {

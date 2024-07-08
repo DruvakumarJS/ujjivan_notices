@@ -26,6 +26,7 @@
 }
 
 
+
 </style>
 
 <div class="container-body">
@@ -44,34 +45,29 @@
               </div>
 
               @php
-                $info = json_decode($content->c11);
+                $info = json_decode($data->c11);
+
               @endphp
               
 
-              <div class="card-body">
+              <div class="card-body" id="test">
                 <div class="text-center">
-                  <h4>{{$name}}</h4>
+                  <h4>{{ (isset($name))? $name:'' }}</h4>
 
-                </div>               
-                <table  class="table table-responsive py-4" id="dynamicAddRemove">
+                </div>
+                
+                <table  class="table table-responsive py-4 table-bordered" id="dynamicAddRemove">
+ 
+                <tbody>
                   @foreach($info as $key=>$value)
                   <tr>
-                    
-                      <td>
-                          <div class="row d-flex justify-content-center align-items-center">
-                             <div class="col-md-5">
-                              <input class="form-control text-end" type="text" value="{{$key}}" readonly> 
-                             </div>
 
-                             <div class="col-md-5">
-                              <input class="form-control" type="text" name="" readonly >
-                             </div>
-                            
-                          </div>    
-                      </td>
+                      <td width="50%"><span class="text-end">{{ (isset($branch_detail->$key))? $branch_detail->$key:'' }}</span></td>
+                      <td width="50%">{{ (isset($branch_detail->$value))? $branch_detail->$value:'' }}</td>
                     
                   </tr>
                    @endforeach
+                   </tbody>
                 </table>
               </div>
 

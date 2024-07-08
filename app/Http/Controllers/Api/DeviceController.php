@@ -11,6 +11,7 @@ use App\Models\Notice;
 use App\Models\NoticeContent;
 use App\Models\BranchInformation;
 use App\Models\EmergencyContactDetail;
+use App\Models\BankingOmbudsment;
 use App\Models\Language;
 use App\Models\NonIdleDevice;
 use File;
@@ -1049,7 +1050,7 @@ class DeviceController extends Controller
 
         $data = Notice::where(function($query)use($lastdate){
                   $query->where('is_pan_india','Yes');
-                  $query->where('template_id','!=','3');
+                  $query->whereNotIn('template_id',[3,4]);
                   $query->whereNull('deleted_at');
                   $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
@@ -1058,7 +1059,7 @@ class DeviceController extends Controller
                    })  
                  ->orWhere(function($query)use($region_id,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','!=','3');
+                    $query->whereNotIn('template_id',[3,4]);
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->where('branch_code','all');
@@ -1071,7 +1072,7 @@ class DeviceController extends Controller
                  })
                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','!=','3');
+                    $query->whereNotIn('template_id',[3,4]);
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
@@ -1083,7 +1084,7 @@ class DeviceController extends Controller
                  })
                    ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','!=','3');
+                    $query->whereNotIn('template_id',[3,4]);
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
@@ -1095,7 +1096,7 @@ class DeviceController extends Controller
                  })
                    ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','!=','3');
+                    $query->whereNotIn('template_id',[3,4]);
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->where('branch_code','all'); 
@@ -1112,7 +1113,7 @@ class DeviceController extends Controller
 
         $custom_notice = Notice::where(function($query)use($lastdate){
                   $query->where('is_pan_india','Yes');
-                  $query->where('template_id','3');
+                  $query->whereIn('template_id',[3,4]);
                   $query->whereNull('deleted_at');
                   $query->where(function($query2)use($lastdate){  
                      $query2->where('created_at' ,'>',$lastdate);
@@ -1121,7 +1122,7 @@ class DeviceController extends Controller
                    })  
                  ->orWhere(function($query)use($region_id,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','3');
+                    $query->whereIn('template_id',[3,4]);
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->where('branch_code','all');
@@ -1134,7 +1135,7 @@ class DeviceController extends Controller
                  })
                   ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','3');
+                    $query->whereIn('template_id',[3,4]);
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->where('states','all');
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
@@ -1146,7 +1147,7 @@ class DeviceController extends Controller
                  })
                    ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','3');
+                    $query->whereIn('template_id',[3,4]);
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->whereRaw("FIND_IN_SET(?, branch_code) > 0", [$branchid]);
@@ -1158,7 +1159,7 @@ class DeviceController extends Controller
                  })
                    ->orWhere(function($query)use($region_id,$state,$branchid,$lastdate){
                     $query->where('is_pan_india','No');
-                    $query->where('template_id','3');
+                    $query->whereIn('template_id',[3,4]);
                     $query->whereRaw("FIND_IN_SET(?, regions) > 0", [$region_id]);
                     $query->whereRaw("FIND_IN_SET(?, states) > 0", [$state]);
                     $query->where('branch_code','all'); 
@@ -1183,6 +1184,8 @@ class DeviceController extends Controller
                   // $branchDetail = BranchInformation::where('branch_id',$branchid)->first();
                    $branchDetail = EmergencyContactDetail::where('branch_id',$branchData->branch_code)->where('lang_code',$c_notice->lang_code)->first();
 
+                   $OmbudsmanDetail = BankingOmbudsment::where('state',$state)->where('lang_code',$c_notice->lang_code)->first();
+
                    //print_r($cust_data ); die();
 
                    if(!file_exists(public_path().'/custom_noticefiles')) {
@@ -1194,11 +1197,27 @@ class DeviceController extends Controller
                     
                     }
 
-                    File::put(public_path().'/custom_noticefiles/'.$local_filename,
-                      view('htmltemplates.custom_ckofflinetemp')
-                          ->with(['data' => $cust_data , 'version' => $c_notice->version , 'published' => $c_notice->published_date ,'branch_detail'=>$branchDetail ,'name' =>$c_notice->name  ])
+                    if($c_notice->template_id == '3'){
+                     // print_r($local_filename); die();
+                      File::put(public_path().'/custom_noticefiles/'.$local_filename,
+                      view('htmltemplates.custom_notice.emergency_contact')
+                          ->with(['data' => $cust_data , 'version' => $c_notice->version , 'published' => $c_notice->published_date ,'branch_detail'=>$branchDetail ,'name' =>$c_notice->name , 'description' => $c_notice->description , 'document_id'=> $c_notice->document_id ,  ])
                           ->render()
                     );
+
+                    }
+
+                    if($c_notice->template_id == '4'){
+
+                      File::put(public_path().'/custom_noticefiles/'.$local_filename,
+                      view('htmltemplates.custom_notice.ombudsman')
+                          ->with(['data' => $cust_data , 'version' => $c_notice->version , 'published' => $c_notice->published_date ,'OmbudsmanDetail'=>$OmbudsmanDetail ,'name' =>$c_notice->name , 'description' => $c_notice->description , 'document_id'=> $c_notice->document_id ,  ])
+                          ->render()
+                    );
+                      
+                    }
+
+                   
 
 
 
@@ -1278,7 +1297,7 @@ class DeviceController extends Controller
           $disclaimer2 = $branchInfo->disclaimer2 ;
 
 
-          $bank_info[] = ['branchcode'=>$branchCode ,'disclaimer_top' => $disclaimer1 , 'disclaimer_bottom' => $disclaimer2 ,'display_poster' => $branchInfo->announcement , 'start_time' => date('Y-m-d H:i:s',strtotime($branchInfo->start_time)) , 'end_time' => date('Y-m-d H:i:s',strtotime($branchInfo->end_time)) , 'filename' => ($branchInfo->filename != '')?url('/').'/announcement'.$branchInfo->filename:''];
+          $bank_info[] = ['branchcode'=>$branchCode ,'disclaimer_top' => $disclaimer1 , 'disclaimer_bottom' => $disclaimer2 ,'display_poster' => $branchInfo->announcement , 'start_time' => date('Y-m-d H:i:s',strtotime($branchInfo->start_time)) , 'end_time' => date('Y-m-d H:i:s',strtotime($branchInfo->end_time)) , 'filename' => ($branchInfo->filename != '')?url('/').'/announcement/'.$branchInfo->filename:''];
         }
 
        
