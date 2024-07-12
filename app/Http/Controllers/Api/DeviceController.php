@@ -1171,7 +1171,7 @@ class DeviceController extends Controller
                   // $branchDetail = BranchInformation::where('branch_id',$branchid)->first();
                    $branchDetail = EmergencyContactDetail::where('branch_id',$branchData->branch_code)->first();
 
-                   //print_r($cust_data ); die();
+                  
 
                    if(!file_exists(public_path().'/custom_noticefiles')) {
                          File::makeDirectory(public_path().'/custom_noticefiles', $mode = 0777, true, true);
@@ -1179,6 +1179,7 @@ class DeviceController extends Controller
 
 
                    if (!file_exists(public_path().'/custom_noticefiles/'.$local_filename)) {
+                    // print_r("not exists" ); die();
                      
                     File::put(public_path().'/custom_noticefiles/'.$local_filename,
                       view('htmltemplates.custom_ckofflinetemp')
@@ -1187,6 +1188,7 @@ class DeviceController extends Controller
                     );
 
                     }
+                    // print_r( $local_filename); die();
     
 
                 }

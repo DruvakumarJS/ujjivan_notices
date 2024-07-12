@@ -18,6 +18,7 @@ use App\Models\NonIdleDevice;
 use App\Imports\ImportBranches;
 use App\Imports\ImportEmergencyContacts;
 use App\Models\EmergencyContactDetail;
+use App\Models\BankingOmbudsment;
 use App\Imports\ImporteBankingOmbudsment;
 use DB;
 use Endroid\QrCode\QrCode;
@@ -37,6 +38,7 @@ class HomeController extends Controller
      *
      * @return void
      */
+   
     public function __construct()
     {
         $this->middleware('auth');
@@ -1214,7 +1216,83 @@ class HomeController extends Controller
 
     }
 
+    
+    public function ombudsman_contacts($lang){
+      $languages = Language::get();
+      $search = '';
+      if($lang == 'all'){
+        $data = BankingOmbudsment::paginate(50);
+      }else{
+        $data = BankingOmbudsment::where('lang_code',$lang)->paginate(50);
+      }
+      
 
+      return view('settings.ombudsman_contacts',compact('data','languages','search','lang'));
+       
+    }
+
+   public function update_ombudsman_contacts(Request $request){
+
+      $update = BankingOmbudsment::where('state',$request->state)->where('lang_code',$request->lang_code)->update([
+            'banking_ombudsment_name' => $request->banking_ombudsment_name,
+            'center_name' => $request->center_name,
+            'area_name' => $request->area_name,
+            'full_address' => $request->full_address,
+            'tel_number' => $request->tel_number,
+            'fax_number' => $request->fax_number,
+            'email_id' => $request->email_id,
+            'toll_free_number' => $request->toll_free_number,
+          ]);
+
+      if($update){
+        
+        $updateNotice = Notice::where('template_id','4')->update([]);
+
+      }
+
+      return redirect()->back();
+
+    }
+
+     public function search_ombudsman_conatcts(Request $request, $lang){
+      $languages = Language::get();
+      $search = $request->search;
+
+      if($search == ''){
+          return redirect()->route('ombudsman_contacts',$lang);
+      }
+
+      if($lang == 'all'){
+        $data = BankingOmbudsment::where(function($query)use($search){
+               $query->where('banking_ombudsment_name','LIKE',$search.'%');
+               $query->orWhere('center_name','LIKE',$search.'%');
+               $query->orWhere('area_name','LIKE',$search.'%');
+               $query->orWhere('full_address','LIKE',$search.'%');
+               $query->orWhere('tel_number','LIKE',$search.'%');
+               $query->orWhere('fax_number','LIKE',$search.'%');
+               $query->orWhere('email_id','LIKE',$search.'%');
+               $query->orWhere('toll_free_number','LIKE',$search.'%');
+        })
+        ->paginate(50);
+      }else{
+        $data = BankingOmbudsment::where('lang_code',$lang)
+        ->where(function($query)use($search){
+               $query->where('banking_ombudsment_name','LIKE',$search.'%');
+               $query->orWhere('center_name','LIKE',$search.'%');
+               $query->orWhere('area_name','LIKE',$search.'%');
+               $query->orWhere('full_address','LIKE',$search.'%');
+               $query->orWhere('tel_number','LIKE',$search.'%');
+               $query->orWhere('fax_number','LIKE',$search.'%');
+               $query->orWhere('email_id','LIKE',$search.'%');
+               $query->orWhere('toll_free_number','LIKE',$search.'%');
+        })
+        ->paginate(50);
+      }
+      
+
+      return view('settings.ombudsman_contacts',compact('data','languages','search','lang'));
+       
+    }
 
 
 

@@ -76,9 +76,10 @@
             </div>
           </div>
   
-      
+          <p>NOTE : To update Poster and Disclaimer to a particular branch , please visit Branch Master -> Edit -> update  . </p>
+          <p>Use this interface to update Poster and Disclaimer to all branches at single shot .</p>
          <div class="div-margin" >
-        
+            
             <button type="submit" class="btn btn-sm btn-outline-success">Submit </button>
             
           </div>

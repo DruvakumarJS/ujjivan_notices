@@ -142,7 +142,7 @@ Route::get('audit',[AuditController::class,'index'])->name('audit');
 Route::get('search_audit',[AuditController::class,'search_audit'])->name('search_audit');
 Route::get('notification',[HomeController::class,'notification'])->name('notification');
 
-
+//Emergency
 Route::get('download_html',[HomeController::class,'download_html'])->name('download_html');
 Route::get('emergency-contacts-details/{lang}',[HomeController::class,'emergency_contacts'])->name('emergency_contacts');
 Route::post('update-emergency-contacts-details',[HomeController::class,'update_emergency_contacts'])->name('update_emergency_contacts');
@@ -150,6 +150,10 @@ Route::get('search-emergency-contacts-details/{lang}',[HomeController::class,'se
 
 Route::post('import-banking-ombudsment',[HomeController::class,'import_banking_ombudsment'])->name('import_banking_ombudsment');
 
+//Ombudsman
+Route::get('Banking-Ombudsman-contacts-details/{lang}',[HomeController::class,'ombudsman_contacts'])->name('ombudsman_contacts');
+Route::post('update-ombudsman-contacts-details',[HomeController::class,'update_ombudsman_contacts'])->name('update_ombudsman_contacts');
+Route::get('search-ombudsman-contacts-details/{lang}',[HomeController::class,'search_ombudsman_conatcts'])->name('search_ombudsman_conatcts');
 
 
 });

@@ -1418,8 +1418,6 @@ class NoticeController extends Controller
              }
 
 
-
-
         }
 
        }
@@ -2573,6 +2571,8 @@ class NoticeController extends Controller
             'operation' => 'U'
           ]);
 
+      
+
       return redirect()->back();
     }
 
@@ -2611,11 +2611,14 @@ class NoticeController extends Controller
 
       $data = Notice::where('lang_code',$request->lang)
               ->where('status','Published')
-              ->whereIn('template_id',['1','2'])
+              ->whereIn('template_id',['0','1','2'])
+              ->where('is_pan_india','Yes')
               ->orderBy('id','DESC')->get();
       $lang = $request->lang;
       $languages = Language::get();
       $search = '';
+
+    //  print_r(json_encode($data) );die();
        
       return view('notice/allnotices', compact('data','languages','lang' ,'search'));
     }

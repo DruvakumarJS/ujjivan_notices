@@ -149,6 +149,10 @@
                           <li class="list-group-item d-flex justify-content-between align-items-center">
                             <a  href="{{route('emergency_contacts','en')}}"> <label>Emergency Contacts</label> </a>
                           </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a  href="{{route('ombudsman_contacts','en')}}"> <label>Banking Ombudsman Contacts Details </label> </a>
+                          </li>
                          
                       </ul>
                     @endif

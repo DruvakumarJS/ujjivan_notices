@@ -20,10 +20,6 @@
        <a href="{{ route('poster')}}"><button title="Use this button to create Poster & Disclaimer ,if you are planning for PAN India " class="btn btn-outline-dark">Poster & Disclaimer </button></a>
     </div>
 
-    <div id="div2" style="margin-right: 30px">
-      <a data-bs-toggle="modal" data-bs-target="#importOmbudsmentModal"  class="btn btn-light btn-outline-secondary" href=""><label id="modal">Import Ombudsment Details</label></a>
-    </div>
-
     <!-- <div id="div2" style="margin-right: 30px">
        <a href="{{ route('import_banking_ombudsment')}}"><button title="Use this button to create Poster & Disclaimer ,if you are planning for PAN India " class="btn btn-outline-dark">Import Banking Ombudsment </button></a>
     </div> -->
