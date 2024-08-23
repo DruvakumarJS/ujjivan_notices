@@ -30,7 +30,7 @@
    
     </div>
   @if(auth::user()->id == '3')
-    <div class="row justify-content-between">
+    <!-- <div class="row justify-content-between">
       <div class="col-md-6 col-sm-6">
         <div class="card shadow-sm border" >
              <label class="label-bold">Overall Devices Running Duration</label>
@@ -54,7 +54,7 @@
           </div>
       </div>
    
-    </div>
+    </div> -->
 @endif
     <div class="row justify-content-between">
       <div class="col-md-12">

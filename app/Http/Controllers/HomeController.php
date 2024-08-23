@@ -67,6 +67,10 @@ class HomeController extends Controller
         $offline_device=array();
         $dead_deivce=array();
 
+        $analytic_date=array();
+        $analytic_running=array();
+        $analytic_idle = array();
+
         $regions = Region::get();
 
         foreach ($regions as $key => $value) {
@@ -105,7 +109,7 @@ class HomeController extends Controller
         $last = strtotime($to);
 
        
-        while($now <= $last ) {
+        /*while($now <= $last ) {
             $running_minutes = 0;
             $idle_minutes = 0;
 
@@ -148,11 +152,8 @@ class HomeController extends Controller
              $analytic_idle[] = floor($idle_minutes/60).".".floor($idle_minutes%60);
              
              $now = strtotime('+1 day', $now);
-            }
+            }*/
 
-            /*print_r(json_encode($analytic_date));print_r("---");
-            print_r(json_encode($analytic_running));print_r("---");
-            print_r(json_encode($analytic_idle));print_r("---");*/
 
             $monthdata = ['date' => $analytic_date , 'running' => $analytic_running , 'idle' => $analytic_idle];
 
