@@ -83,7 +83,7 @@
                 </form>
 
                 <div id="div2">
-                       <a target="_blank" href="{{ URL::to('/') }}/Import_branches.xlsx" ><button class="btn btn-sm btn-light">Download Template</button></a>
+                       <a target="_blank" href="{{ URL::to('/') }}/templatefiles/Emergency_Contact_Details.xlsx" ><button class="btn btn-sm btn-light">Download Template</button></a>
                     </div>
               </div>
               
