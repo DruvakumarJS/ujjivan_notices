@@ -20,6 +20,8 @@ use App\Imports\ImportEmergencyContacts;
 use App\Models\EmergencyContactDetail;
 use App\Models\BankingOmbudsment;
 use App\Imports\ImporteBankingOmbudsment;
+use App\Exports\ExportEmergencyContacts;
+
 use DB;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -1121,6 +1123,49 @@ class HomeController extends Controller
 
     }
 
+    public function save_emergency_contacts(Request $request ,$lang){
+     // print_r($request->input());die();
+      if(EmergencyContactDetail::where('branch_id',$request->branchid)->where('lang_code',$lang)->exists()) {
+        return redirect()->back()->withMessage('Emergency contact details already exists for the branch -'.$request->branchid);
+      }
+       $save = EmergencyContactDetail::create([
+            'branch_id'=> $request->branchid,
+            'lang_code'=> $lang,
+            'police' => $request->police,
+            'police_contact' => $request->police_contact,
+            'medical' => $request->medical,
+            'medical_contact' => $request->medical_contact,
+            'ambulance' => $request->ambulance,
+            'ambulance_contact' => $request->ambulance_contact,
+            'fire' => $request->fire,
+            'fire_contact' => $request->fire_contact,
+            'manager' => 'BRANCH MANAGER/'.$request->manager,
+            'manager_contact' => $request->manager_contact,
+            'rno' => $request->rno,
+            'rno_contact' => $request->rno_contact,
+            'pno' => $request->pno,
+            'pno_contact' => $request->pno_contact,
+            'contact_center' => $request->contact_center,
+            'contact_center_number' => $request->contact_center_number,
+            'cyber_dost' => $request->cyber_dost,
+            'cyber_dost_number' => $request->cyber_dost_number
+          ]);
+      
+
+      if($save){
+         $Branch = Branch::where('branch_code',$request->branchid)->first();
+
+        $updateBranchInformation = BranchInformation::where('branch_id',$Branch->id)->update([
+            'bm_name' => $request->manager,
+            'bm_number' => $request->manager_contact
+          ]);
+
+        $updateNotice = Notice::where('template_id','3')->update([]);
+      }
+
+      return redirect()->back();
+    }
+
     public function emergency_contacts($lang){
       $languages = Language::get();
       $search = '';
@@ -1194,6 +1239,16 @@ class HomeController extends Controller
 
       return view('settings.emergency_contacts',compact('data','languages','search','lang'));
 
+    }
+
+    public function export_emergency_contacts(){
+      $file_name = 'Emergecy_contacts.csv';
+        if(EmergencyContactDetail::exists()){
+         return Excel::download(new ExportEmergencyContacts(), $file_name);
+        }
+        else {
+            return redirect()->back();
+        }
     }
 
      public function import_banking_ombudsment(Request $request){

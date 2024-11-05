@@ -149,6 +149,9 @@ Route::post('update-emergency-contacts-details',[HomeController::class,'update_e
 Route::get('search-emergency-contacts-details/{lang}',[HomeController::class,'search_emergency_conatcts'])->name('search_emergency_conatcts');
 
 Route::post('import-banking-ombudsment',[HomeController::class,'import_banking_ombudsment'])->name('import_banking_ombudsment');
+Route::post('save-emergency-contacts-details/{lang}',[HomeController::class,'save_emergency_contacts'])->name('save_emergency_contacts');
+Route::get('export-emergency-contacts-details',[HomeController::class,'export_emergency_contacts'])->name('export_emergency_contacts');
+
 
 //Ombudsman
 Route::get('Banking-Ombudsman-contacts-details/{lang}',[HomeController::class,'ombudsman_contacts'])->name('ombudsman_contacts');

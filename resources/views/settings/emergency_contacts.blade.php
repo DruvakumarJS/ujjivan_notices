@@ -26,8 +26,17 @@
     <div class="row justify-content-center">
         <div class="container-header">
 
+          <div id="div2" style="margin-right: 30px">
+            <a  class="btn btn-light btn-outline-secondary" href="{{route('export_emergency_contacts')}}"><label id="modal">Export</label></a>
+          </div>
+
+          
            <div id="div2" style="margin-right: 30px">
             <a data-bs-toggle="modal" data-bs-target="#emergencyModal"  class="btn btn-light btn-outline-secondary" href=""><label id="modal">Import Emergency Contact</label></a>
+          </div>
+
+          <div id="div2" style="margin-right: 30px">
+            <a data-bs-toggle="modal" data-bs-target="#addemergencyModal"  class="btn btn-light btn-outline-secondary" href=""><label id="modal">Add New</label></a>
           </div>
            
             <div id="div2" style="margin-right: 30px">
@@ -92,6 +101,171 @@
         </div>
 
 <!-- Emergency Model -->
+
+
+<!-- Add Modal -->
+
+      <div class="modal" id="addemergencyModal"  >
+        <div class="modal-dialog modal-xl" >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Emergency Contact Details</h5>
+             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               
+            </div>
+            <div class="modal-body">
+                 
+             <div class="form-build">
+
+              <form method="POST" action="{{ route('save_emergency_contacts','en')}}">
+              @csrf
+
+              <div class="row">
+                <div class="col">
+                  <label>Branch ID</label>
+                  <input type="input" class="form-control" name="branchid" required>
+                  
+                </div>
+                 <div class="col">
+                  
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Police Station address</label>
+                  <input type="input" class="form-control" name="police" >
+                  
+                </div>
+                 <div class="col">
+                  <label>Police Station Contact</label>
+                  <input type="input" class="form-control" name="police_contact" >
+                  
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Medical Support address</label>
+                  <input type="input" class="form-control" name="medical" >
+                  
+                </div>
+                 <div class="col">
+                  <label>Medical Support Contact</label>
+                  <input type="input" class="form-control" name="medical_contact" >
+                  
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Ambulance </label>
+                  <input type="input" class="form-control" name="ambulance" >
+                  
+                </div>
+                 <div class="col">
+                  <label>Ambulance Contact</label>
+                  <input type="input" class="form-control" name="ambulance_contact" >
+                  
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Fire Station address</label>
+                  <input type="input" class="form-control" name="fire" >
+                  
+                </div>
+                 <div class="col">
+                  <label>Fire Station Contact</label>
+                  <input type="input" class="form-control" name="fire_contact" >
+                  
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Branch Manager</label>
+                  <input type="input" class="form-control" name="manager"  required>
+                  
+                </div>
+                 <div class="col">
+                  <label>Branch Manager Contact</label>
+                  <input type="input" class="form-control" name="manager_contact" minlength="10" maxlength="10"  required>
+                  
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>RNO</label>
+                  <input type="input" class="form-control" name="rno" >
+                  
+                </div>
+                 <div class="col">
+                  <label>RNO Contact</label>
+                  <input type="input" class="form-control" name="rno_contact" >
+                  
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>PNO address</label>
+                  <input type="input" class="form-control" name="pno" >
+                  
+                </div>
+                 <div class="col">
+                  <label>PNO Contact</label>
+                  <input type="input" class="form-control" name="pno_contact" >
+                  
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Conatct  Center</label>
+                  <input type="input" class="form-control" name="contact_center" >
+                  
+                </div>
+                 <div class="col">
+                  <label>Conatct Center Contact</label>
+                  <input type="input" class="form-control" name="contact_center_number" >
+                  
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Cyber Dost</label>
+                  <input type="input" class="form-control" name="cyber_dost" >
+                  
+                </div>
+                 <div class="col">
+                  <label>Cyber Dost Contact</label>
+                  <input type="input" class="form-control" name="cyber_dost_number">
+                  
+                </div>
+              </div>
+              <input type="hidden" name="branch_id" value="{{$value->branch_id}}">
+              <input type="hidden" name="lang_code" value="{{$value->lang_code}}">
+
+              <div class="py-4">
+                <button class="btn btn-sm btn-success">Submit </button>
+              </div>
+
+              </form>
+               
+             </div>
+
+            </div>
+
+           
+          </div>
+        </div>
+      </div>
+
+<!-- Add Modal -->
         @if(Session::has('message'))
             <p id="mydiv" class="text-danger text-center">{{ Session::get('message') }}</p>
         @endif 
