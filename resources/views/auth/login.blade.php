@@ -5,7 +5,7 @@
     <div class="row justify-content-center" >
         <div class="col-md-6">
             <div class="card shadow-sm" style="background-color: #056262">
-                <div class="card-header" style="color: white"><img src="/uconnect-logo.png"><label style="font-size: 18px;font-weight: bolder;">Ujjivan Notices</label></div>
+                <div class="card-header" style="color: white"><label style="font-size: 18px;font-weight: bolder;">Admin Login</label></div>
 
                 @if(Session::has('message'))
                     

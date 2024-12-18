@@ -49,7 +49,7 @@
         <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    <img src="/uconnect-logo.png" alt=""><label style="color:#056262;font-size: 18px;font-weight: bolder;">{{ config('app.name', 'Laravel') }}</label>
+                    <label style="color:#056262;font-size: 18px;font-weight: bolder;color: #1B1833" >{{ config('app.name', 'Laravel') }}</label>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
