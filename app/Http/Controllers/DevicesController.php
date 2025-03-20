@@ -329,7 +329,7 @@ class DevicesController extends Controller
     }
 
     public function search(Request $request){
-
+        //  print_r("ll");die();
         $search = $request->search;
         $search_array = explode(' ', $search);
         $dvices = array();
@@ -341,13 +341,13 @@ class DevicesController extends Controller
            $search = $value;
             
            $dvices = $dvices->where(function($query)use($search){
-            $query->orWhere('branch' , 'LIKE', '%'.$search.'%');
-            $query->orWhere('city' , 'LIKE', '%'.$search.'%');
+            $query->orWhere('branch_id' , 'LIKE', '%'.$search.'%');
+            /*$query->orWhere('city' , 'LIKE', '%'.$search.'%');
             $query->orWhere('area' , 'LIKE', '%'.$search.'%');
             $query->orWhere('state' , 'LIKE', '%'.$search.'%');
             $query->orWhere('ifsc' , 'LIKE', '%'.$search.'%');
             $query->orWhere('status' , 'LIKE', '%'.$search.'%');
-            $query->orWhere('region' , 'LIKE', '%'.$search.'%');
+            $query->orWhere('region' , 'LIKE', '%'.$search.'%');*/
 
         });
         
@@ -357,13 +357,13 @@ class DevicesController extends Controller
           $search = $value;
 
            $dvices = $dvices->where(function($query)use($search){
-            $query->orWhere('branch' , 'LIKE', '%'.$search.'%');
-            $query->orWhere('city' , 'LIKE', '%'.$search.'%');
+            $query->orWhere('branch_id' , 'LIKE', '%'.$search.'%');
+            /*$query->orWhere('city' , 'LIKE', '%'.$search.'%');
             $query->orWhere('area' , 'LIKE', '%'.$search.'%');
             $query->orWhere('state' , 'LIKE', '%'.$search.'%');
             $query->orWhere('ifsc' , 'LIKE', '%'.$search.'%');
             $query->orWhere('status' , 'LIKE', '%'.$search.'%');
-            $query->orWhere('region' , 'LIKE', '%'.$search.'%');
+            $query->orWhere('region' , 'LIKE', '%'.$search.'%');*/
             });
            
           }
