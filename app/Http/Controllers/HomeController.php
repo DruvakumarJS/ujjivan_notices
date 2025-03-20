@@ -58,9 +58,9 @@ class HomeController extends Controller
         $active_time = date("Y-m-d H:i",strtotime("-120 minutes", strtotime($current_time)));
         $inactive_time = date("Y-m-d H:i",strtotime("-2880 minutes", strtotime($current_time)));
 
-        $online = Devices::where('last_updated_date' , '>=', $active_time)->where('last_updated_date','LIKE',$today.'%')->where('branch_id','!=','0000')->get();
-        $offiine = Devices::where('last_updated_date' , '<', $active_time)->where('last_updated_date','>=',$inactive_time)->where('branch_id','!=','0000')->get();
-        $dead = Devices::where('last_updated_date','<',$inactive_time)->where('branch_id','!=','0000')->get();
+        $online = Devices::where('last_updated_date' , '>=', $active_time)->where('last_updated_date','LIKE',$today.'%')->where('branch_id','!=','72')->get();
+        $offiine = Devices::where('last_updated_date' , '<', $active_time)->where('last_updated_date','>=',$inactive_time)->where('branch_id','!=','72')->get();
+        $dead = Devices::where('last_updated_date','<',$inactive_time)->where('branch_id','!=','72')->get();
 
        // print_r($inactive_time); die();
         $regionName= array();
