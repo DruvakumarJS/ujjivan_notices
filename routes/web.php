@@ -103,6 +103,13 @@ Route::post('update-custom-notice',[NoticeController::class,'update_custom_notic
 Route::post('add-custom-notice',[NoticeController::class,'add_custom_notice'])->name('add_custom_notice');
 
 
+//Archive
+Route::get('notices-archive/{lang}',[NoticeController::class,'notices_history'])->name('notices_history');
+Route::get('view-archive-notice-datails/{id}',[NoticeController::class,'view_archive_notice_datails'])->name('view_archive_notice_datails');
+
+Route::get('view-multilingual-archive-notice-datails/{id}/{lang}',[NoticeController::class,'view_multilingual_archive_notice_datails'])->name('view_multilingual_archive_notice_datails');
+
+
 Route::get('settings',[HomeController::class,'settings'])->name('settings');
 Route::get('regions',[HomeController::class,'region'])->name('regions');
 Route::post('save-region',[HomeController::class,'save_region'])->name('save_region');

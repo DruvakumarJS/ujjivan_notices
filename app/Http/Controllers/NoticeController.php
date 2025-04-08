@@ -12,6 +12,9 @@ use App\Models\Audit;
 use App\Exports\ExportNotice;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\NoticeHistory;
+use App\Models\NoticeContentHistory;
+
 use Auth;
 use File;
 use Excel;
@@ -1285,7 +1288,46 @@ class NoticeController extends Controller
 
      
 
-      $notice = Notice::where('notice_group',$request->notice_group)->first();
+    $notice = Notice::where('notice_group',$request->notice_group)->first();
+
+
+
+    $existingNoticeRows = Notice::where('notice_group', $request->notice_group)->get();
+
+    if ($existingNoticeRows->isNotEmpty()) {
+        // Generate a new group ID or reference if needed
+        $newNoticeGroup =  rand('000000','999999'); // or any logic you prefer
+
+        foreach ($existingNoticeRows as $existingNoticeRow) {
+            // Generate a new notice_id (can use UUID or auto-increment logic if needed)
+            $newNoticeId = rand('000000','999999');
+     // or just leave it and use DB's auto-increment if 'id' is auto
+
+            // Prepare data for NoticeHistory
+            $noticeData = $existingNoticeRow->toArray();
+            unset($noticeData['id']); // remove old ID so it doesn't conflict
+            $noticeData['notice_group'] = $newNoticeGroup; // assign new group
+           // $noticeData['original_notice_id'] = $noticeData['id'] ?? null; // optional tracking
+            //$noticeData['notice_id'] = $newNoticeId; // if custom, else omit this
+
+            // Save new NoticeHistory
+            $noticeHistory = NoticeHistory::create($noticeData);
+
+            // Get corresponding NoticeContent rows
+            $existingNoticeContentRows = NoticeContent::where('notice_id', $existingNoticeRow->id)->get();
+
+            foreach ($existingNoticeContentRows as $existingNoticeContentRow) {
+                $contentData = $existingNoticeContentRow->toArray();
+                unset($contentData['id']); // remove old ID
+                $contentData['notice_group'] = $newNoticeGroup;
+                $contentData['notice_id'] = $noticeHistory->id; // assign new notice_id
+
+                NoticeContentHistory::create($contentData);
+            }
+        }
+    }
+
+     
      
      $update = Notice::where('notice_group',$request->notice_group)->update([
            'is_pan_india'=> $request->is_pan_india ,
@@ -1504,7 +1546,26 @@ class NoticeController extends Controller
       $filename = 'notice'.$request->template_id.'_'.$current.'.html';*/
 
       $notice = Notice::where('id',$request->id)->first();
+
       $filepath = public_path().'/noticefiles/'.$request->lang.'_'.$notice->filename;
+
+      
+      $existingNoticeRow = Notice::find($request->id);
+      $existingNoticeContentRow = NoticeContent::where('notice_id',$request->id)->first();
+
+      if ($existingNoticeRow) {
+         $newNoticeGroup =  rand('000000','999999');
+         $noticeData = $existingNoticeRow->toArray();
+         $noticeData['notice_group'] = $newNoticeGroup;
+         $noticeHistory = NoticeHistory::create($noticeData);
+
+         $noticeContentData = $existingNoticeContentRow->toArray();
+         $noticeContentData['notice_id'] = $noticeHistory->id; // Assign the new ID
+         $noticeContentData['notice_group'] = $newNoticeGroup;
+
+         // Step 3: Create NoticeContentHistory with the updated notice_id
+         NoticeContentHistory::create($noticeContentData);
+      }
 
        $update = Notice::where('id',$request->id)->update([
            'name' => $request->tittle ,
@@ -3218,4 +3279,79 @@ class NoticeController extends Controller
      
       return redirect()->route('notices',$request->dropdown_lang);
 }
+
+
+//Archives
+
+public function notices_history(Request $request){
+  $lang = $request->lang;
+   if($lang == 'all'){
+    $data = NoticeHistory::orderBy('id','DESC')->paginate(25);            
+   }
+   else{
+    $data = NoticeHistory::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);
+    
+   }
+   
+   $search = '';
+   
+   $languages = Language::get();
+   $branches = Branch::get();
+    
+   return view('notice/archive/index', compact('data','search','languages','lang', 'branches'));
+
+}
+
+
+public function view_archive_notice_datails($id){
+    $data = NoticeHistory::where('id',$id)->first();
+    $regions = Region::all();
+
+    $template = Template::select('details')->where('id',$data->template_id)->first();
+
+    $content = NoticeContentHistory::where('template_id',$data->template_id)->where('notice_id',$data->id)->first();
+
+    $data2 = $template->details ;
+
+    $arr = json_decode($data2);
+
+    return view('notice/archive/view',compact('data','id','template','arr' ,'content','regions'));
+}
+
+public function view_multilingual_archive_notice_datails($id,$lang){
+      $notice = NoticeHistory::where('notice_group' , $id)->first();
+      $langarray=$notice->available_languages ;
+      $selected_lang_code = explode(',', $langarray);
+    //  print_r($langarray); die();
+      $template_id = $notice->template_id;
+      $regions = Region::all();
+      $branch = Branch::select('state')->groupBy('state')->get();
+
+      $data = NoticeHistory::where('notice_group',$id)->first();
+      $template = Template::select('details')->where('id',$data->template_id)->first();
+
+      $languages = Language::get();
+      $selected_languages = Language::whereIn('code',$selected_lang_code)->get();
+
+      $data2 = $template->details ;
+      $arr = json_decode($data2);
+     
+      $noticeDetails = array();
+      $multinotice = NoticeHistory::where('notice_group' , $id)->get();
+      foreach ($multinotice as $key => $value) {
+          $noticename = $value->name;
+          $noticedesc = $value->description;
+          $notice_content = NoticeContentHistory::where('notice_group',$value->notice_group)->where('lang_code',$value->lang_code)->first();
+          $eng_lang = Language::where('code',$value->lang_code)->first();
+
+          $noticeDetails[]=['name' => $noticename , 'desc' =>$noticedesc ,'language' =>$eng_lang->lang.' - '.$value->lang_name , 'notice_content' => $notice_content ];
+
+      }
+
+    
+      return view('notice/archive/view_multilingual',compact('regions','branch','data','id','template','arr' ,'noticeDetails','languages','selected_languages','langarray','lang'));
+
+}
+
+
 }
