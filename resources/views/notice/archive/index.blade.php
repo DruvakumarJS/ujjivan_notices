@@ -27,7 +27,7 @@
 	<div class="container-header">
 		
         <div id="div2" style="margin-right: 30px">
-           <form method="GET" action="{{route('search_notice')}}">
+           <form method="GET" action="">
             @csrf
              <div class="input-group mb-3">
                 <input class="form-control" type="text" name="search" placeholder="Search by Notice ID" value="{{$search}}">

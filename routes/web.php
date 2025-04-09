@@ -108,6 +108,7 @@ Route::get('notices-archive/{lang}',[NoticeController::class,'notices_history'])
 Route::get('view-archive-notice-datails/{id}',[NoticeController::class,'view_archive_notice_datails'])->name('view_archive_notice_datails');
 
 Route::get('view-multilingual-archive-notice-datails/{id}/{lang}',[NoticeController::class,'view_multilingual_archive_notice_datails'])->name('view_multilingual_archive_notice_datails');
+Route::get('search_archive_notice/{lang}/{id}',[NoticeController::class,'search_archive_notice'])->name('search_archive_notice');
 
 
 Route::get('settings',[HomeController::class,'settings'])->name('settings');
