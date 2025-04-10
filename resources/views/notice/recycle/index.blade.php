@@ -107,7 +107,7 @@
 						@if($lang == 'all')
 						<th>Notice Language</th>
 						@endif
-						
+						<th>Available Languages</th>
 						<th>PAN India</th>
 						<th>Notice Type</th>
 			            <th>Deleted Date</th>
@@ -153,7 +153,7 @@
 		             @if($lang == 'all')
 						<td>{{$value->langauge->lang}}</td>
 					 @endif
-		            
+		             <td style="max-width: 150px;" class="scrollable-cell"  data-toggle="tooltip" data-placement="top" title="{{$langlist}}">{{$langlist}}</td>
 		            <!--  <td style="max-height: 200px">
 		             	<table>
 		             	@foreach($langarray as $val)
