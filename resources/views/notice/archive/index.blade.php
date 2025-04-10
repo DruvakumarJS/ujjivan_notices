@@ -22,12 +22,12 @@
 
 </style>
 
-<div class="container-body">
+<div class="container">
   
 	<div class="container-header">
 		
         <div id="div2" style="margin-right: 30px">
-           <form method="GET" action="">
+           <form method="GET" action="{{route('search_archive_notice')}}">
             @csrf
              <div class="input-group mb-3">
                 <input class="form-control" type="text" name="search" placeholder="Search by Notice ID" value="{{$search}}">
@@ -83,23 +83,24 @@
 
         @endphp
 
-         <div id="div3" style="margin-right: 30px">
+       <!--   <div id="div3" style="margin-right: 30px">
              <a href="{{route('export_notices',[$lang,$filter])}}"><button class="btn btn-light btn-outline-secondary" > Download CSV</button></a>
           </div>	
 
-       
+        -->
 
 	<div id="div1">
-      <label class="label-bold">Notices Archive</label>
+      <label class="label-bold">Ujjivan Notices Archive</label>
     </div>
 
 	</div> 
 
 	<div class="page-container div-margin">
 		<div class="card">
-			<table class="table table-responsive table-stripped">
-				<thead>
+			<table class="table table-responsive table-striped table-bordered border-dark">
+				<thead class="table-dark border-warning">
 					<tr>
+						<th>#</th>
 						<th>N ID</th>
 
 						<th>Name</th>
@@ -120,6 +121,7 @@
 				<tbody>
 		          @foreach($data as $key=>$value)
 		          <tr>
+		          	<td class="border-warning">{{$key+1}}.</td>
 		          	<td>{{$value->document_id}}</td>
 		             <td style="max-width: 200px;" class="scrollable-cell"  data-toggle="tooltip" data-placement="top" title="{{$value->name}}">{{$value->name}}</td>
 		             @php

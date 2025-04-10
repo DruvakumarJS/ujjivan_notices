@@ -1743,7 +1743,7 @@ class NoticeController extends Controller
             'operation' => 'D'
           ]);
 
-          $delete_content = NoticeContent::where('notice_id',$id)->delete();
+         /* $delete_content = NoticeContent::where('notice_id',$id)->delete();
           $group_notices=Notice::where('notice_group',$groupID)->get();
 
           foreach ($group_notices as $key => $value) {
@@ -1755,7 +1755,7 @@ class NoticeController extends Controller
              $new_languages = implode(',', $updatedArray);
 
              $update = Notice::where('notice_group',$groupID)->update(['available_languages' => $new_languages ]);
-          }
+          }*/
             return redirect()->route('notices',$lang);
         }
     }
@@ -3286,7 +3286,7 @@ class NoticeController extends Controller
 public function notices_history(Request $request){
   $lang = $request->lang;
    if($lang == 'all'){
-    $data = NoticeHistory::orderBy('id','DESC')->paginate(25);            
+    $data = NoticeHistory::orderBy('id','DESC')->withTrashed()->paginate(25);            
    }
    else{
     $data = NoticeHistory::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);
@@ -3350,6 +3350,111 @@ public function view_multilingual_archive_notice_datails($id,$lang){
 
     
       return view('notice/archive/view_multilingual',compact('regions','branch','data','id','template','arr' ,'noticeDetails','languages','selected_languages','langarray','lang'));
+
+}
+
+public function search_archive_notice(Request $request){
+
+   $search = $request->search;
+   if($request->lang == 'all'){
+      $data = NoticeHistory::
+     where(function($query)use($search){
+     /*$query->where('name','LIKE','%'.$search.'%');*/
+     $query->orWhere('document_id','LIKE','%'.$search.'%');
+     /*$query->orWhere('notice_type','LIKE','%'.$search.'%');*/
+   })
+   ->orderBy('id', 'DESC')
+   ->paginate(25)->withQueryString();
+   }
+   else{
+     $data = NoticeHistory::where('lang_code',$request->lang)
+     ->where(function($query)use($search){
+       /*$query->where('name','LIKE','%'.$search.'%');*/
+       $query->orWhere('document_id','LIKE','%'.$search.'%');
+       /*$query->orWhere('notice_type','LIKE','%'.$search.'%');*/
+     })
+     ->orderBy('id', 'DESC')
+     ->paginate(25)->withQueryString();
+   }
+   
+    $lang = $request->lang;
+    $languages = Language::get();
+
+   return view('notice/archive/index', compact('data','search','languages','lang'));
+
+}
+
+
+//reycle Bin
+
+public function notices_recycle(Request $request){
+  $lang = $request->lang;
+   if($lang == 'all'){
+    $data = Notice::orderBy('id','DESC')->onlyTrashed()->paginate(25);            
+   }
+   else{
+    $data = Notice::where('lang_code',$request->lang)->onlyTrashed()->orderBy('id','DESC')->paginate(25);
+    
+   }
+   
+   $search = '';
+   
+   $languages = Language::get();
+   $branches = Branch::get();
+    
+   return view('notice/recycle/index', compact('data','search','languages','lang', 'branches'));
+
+}
+
+public function view_recycle_notice_datails($id){
+    $data = Notice::where('id',$id)->withTrashed()->first();
+   // print_r($data);die();
+  
+    $regions = Region::all();
+
+    $template = Template::select('details')->where('id',$data->template_id)->first();
+
+    $content = NoticeContent::where('template_id',$data->template_id)->where('notice_id',$data->id)->first();
+
+    $data2 = $template->details ;
+
+    $arr = json_decode($data2);
+
+    return view('notice/recycle/view',compact('data','id','template','arr' ,'content','regions'));
+}
+
+public function view_multilingual_recycle_notice_datails($id,$lang){
+      $notice = Notice::where('notice_group' , $id)->withTrashed()->first();
+      $langarray=$notice->available_languages ;
+      $selected_lang_code = explode(',', $langarray);
+    //  print_r($langarray); die();
+      $template_id = $notice->template_id;
+      $regions = Region::all();
+      $branch = Branch::select('state')->groupBy('state')->get();
+
+      $data = Notice::where('notice_group',$id)->withTrashed()->first();
+      $template = Template::select('details')->where('id',$data->template_id)->first();
+
+      $languages = Language::get();
+      $selected_languages = Language::whereIn('code',$selected_lang_code)->get();
+
+      $data2 = $template->details ;
+      $arr = json_decode($data2);
+     
+      $noticeDetails = array();
+      $multinotice = Notice::where('notice_group' , $id)->withTrashed()->get();
+      foreach ($multinotice as $key => $value) {
+          $noticename = $value->name;
+          $noticedesc = $value->description;
+          $notice_content = NoticeContent::where('notice_group',$value->notice_group)->where('lang_code',$value->lang_code)->first();
+          $eng_lang = Language::where('code',$value->lang_code)->first();
+
+          $noticeDetails[]=['name' => $noticename , 'desc' =>$noticedesc ,'language' =>$eng_lang->lang.' - '.$value->lang_name , 'notice_content' => $notice_content ];
+
+      }
+
+    
+      return view('notice/recycle/view_multilingual',compact('regions','branch','data','id','template','arr' ,'noticeDetails','languages','selected_languages','langarray','lang'));
 
 }
 

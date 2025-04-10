@@ -98,238 +98,240 @@
         <div>
         	 <label class="label-bold" style="margin-left: 20px" >Banking Ombudsman</label>
 
-        	<div class="card border-white scroll tableFixHead " style="height: 600px; padding: 0px 5px 20px 20px">
+        	<div class="card" style="height: 600px; padding: 0px 5px 20px 20px">
 
-                        <table class="table">
-                            <thead>
-                            <tr>
-                              <th class="col">View</th>
-                              <th class="col">State</th>
-                              <th class="col">Ombudsman Name</th>
-                              <th class="col">Center</th>
-                              <th class="col">Area</th>
-                              <th class="col">Addrees</th>
-                              <th class="col">Telephone</th>
-                              <th class="col">Fax</th>
-                              <th class="col">Email</th>
-                              <th class="col">Toll-Free Number</th>
-                              
-                            </tr>
-                         </thead>
-                          <tbody>
-                            @foreach($data as $key=>$value)
-                            
-                            <tr>
-                             <td>
-                              <a id="MyviewModal_{{$key}}"><button class="btn btn-sm btn-outline-secondary">View</button></a>
-                              <a id="MyeditModal_{{$key}}"><button class="btn btn-sm btn-outline-success">Edit</button></a>
-                            </td>
-                              <td title="{{$value->state}}">{{$value->state}}</td>
-                              <td title="{{$value->banking_ombudsment_name}}">{{$value->banking_ombudsment_name}}</td>
-                              <td title="{{$value->center_name}} ">{{$value->center_name}} </td>
-                              <td title="{{$value->area_name}}">{{$value->area_name}} </td>
-                              <td title="{{$value->full_address}}">{{$value->full_address}} 
-                              <td title="{{$value->tel_number}}">{{$value->tel_number}} </td>
-                              <td title="{{$value->fax_number}}">{{$value->fax_number}} </td>
-                              <td title="{{$value->email_id}}">{{$value->email_id}} </td>
-                              <td title="{{$value->toll_free_number}}">{{$value->toll_free_number}} </td>
-                              
-                            </tr>
+            <table class="table table-responsive table-striped table-bordered border-dark">
+                <thead class="table-dark border-warning">
+                <tr>
+                  <th>#</th>
+                  <th class="col">View</th>
+                  <th class="col">State</th>
+                  <th class="col">Ombudsman Name</th>
+                  <th class="col">Center</th>
+                  <th class="col">Area</th>
+                  <th class="col">Addrees</th>
+                  <th class="col">Telephone</th>
+                  <th class="col">Fax</th>
+                  <th class="col">Email</th>
+                  <th class="col">Toll-Free Number</th>
+                  
+                </tr>
+             </thead>
+              <tbody>
+                @foreach($data as $key=>$value)
+                
+                <tr>
+                 <td class="border-warning">{{$key+1}}.</td> 
+                 <td>
+                  <a id="MyviewModal_{{$key}}"><button class="btn btn-sm btn-outline-secondary">View</button></a>
+                  <a id="MyeditModal_{{$key}}"><button class="btn btn-sm btn-outline-success">Edit</button></a>
+                </td>
+                  <td title="{{$value->state}}">{{$value->state}}</td>
+                  <td title="{{$value->banking_ombudsment_name}}">{{$value->banking_ombudsment_name}}</td>
+                  <td title="{{$value->center_name}} ">{{$value->center_name}} </td>
+                  <td title="{{$value->area_name}}">{{$value->area_name}} </td>
+                  <td title="{{$value->full_address}}">{{$value->full_address}} 
+                  <td title="{{$value->tel_number}}">{{$value->tel_number}} </td>
+                  <td title="{{$value->fax_number}}">{{$value->fax_number}} </td>
+                  <td title="{{$value->email_id}}">{{$value->email_id}} </td>
+                  <td title="{{$value->toll_free_number}}">{{$value->toll_free_number}} </td>
+                  
+                </tr>
 
-                            <div class="modal" id="view_modal{{$key}}"  >
-                              <div class="modal-dialog modal-xl" >
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title"> Banking Ombudsman Details - {{$value->state}}</h5>
-                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                     
-                                  </div>
-                                   <div class="modal-body">
-                                       
-                                   <div class="form-build">
-                                    
-                                    <div class="row">
-                                      <div class="col">
-                                        <label>Ombudsman Name</label>
-                                        <input type="input" class="form-control" name="" value="{{$value->banking_ombudsment_name }}" readonly>
-                                        
-                                      </div>
-                                       <div class="col">
-                                        <label>Center</label>
-                                        <input type="input" class="form-control" name="" value="{{$value->center_name}}" readonly>
-                                        
-                                      </div>
-                                    </div>
-
-                                    <div class="row">
-                                      <div class="col">
-                                        <label>Area</label>
-                                        <input type="input" class="form-control" name="" value="{{$value->area_name}}" readonly>
-                                        
-                                      </div>
-                                       <div class="col">
-                                        <label>Addrees</label>
-                                        <input type="input" class="form-control" name="" value="{{$value->full_address}}" readonly>
-                                        
-                                      </div>
-                                    </div>
-
-                                    <div class="row">
-                                      <div class="col">
-                                        <label>Telephone </label>
-                                        <input type="input" class="form-control" name="" value="{{$value->tel_number}}" readonly>
-                                        
-                                      </div>
-                                       <div class="col">
-                                        <label>Fax</label>
-                                        <input type="input" class="form-control" name="" value="{{$value->fax_number}}" readonly>
-                                        
-                                      </div>
-                                    </div>
-
-                                    <div class="row">
-                                      <div class="col">
-                                        <label>Email</label>
-                                        <input type="input" class="form-control" name="" value="{{$value->email_id}}" readonly>
-                                        
-                                      </div>
-                                       <div class="col">
-                                        <label>Toll-Free Number</label>
-                                        <input type="input" class="form-control" name="" value="{{$value->toll_free_number}}" readonly>
-                                        
-                                      </div>
-                                    </div>
-
-                                    
-                                     
-                                   </div>
-
-                                  </div>
-                                 
-                                </div>
-                              </div>
-                            </div>
-                                            
-
-                             <script>
-                              $(document).ready(function(){
-                                $('#MyviewModal_{{$key}}').click(function(){
-                                  $('#view_modal{{$key}}').modal('show');
-                                
-                                });
-                              });  
-                              </script>
-
-
-                              <div class="modal" id="edit_modal{{$key}}"  >
-                              <div class="modal-dialog modal-xl" >
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title"> Edit Banking Ombudsman Details - {{$value->state}} </h5>
-                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                     
-                                  </div>
-                                  
-                                  <div class="modal-body">
-                                       
-                                   <div class="form-build">
-
-                                    <form method="POST" action="{{ route('update_ombudsman_contacts')}}">
-                                    @csrf
-                                    <div class="form-build">
-                                    
-                                    <div class="row">
-                                      <div class="col">
-                                        <label>Ombudsman Name</label>
-                                        <input type="input" class="form-control" name="banking_ombudsment_name" value="{{$value->banking_ombudsment_name }}" >
-                                        
-                                      </div>
-                                       <div class="col">
-                                        <label>Center</label>
-                                        <input type="input" class="form-control" name="center_name" value="{{$value->center_name}}" >
-                                        
-                                      </div>
-                                    </div>
-
-                                    <div class="row">
-                                      <div class="col">
-                                        <label>Area</label>
-                                        <input type="input" class="form-control" name="area_name" value="{{$value->area_name}}" >
-                                        
-                                      </div>
-                                       <div class="col">
-                                        <label>Addrees</label>
-                                        <input type="input" class="form-control" name="full_address" value="{{$value->full_address}}" >
-                                        
-                                      </div>
-                                    </div>
-
-                                    <div class="row">
-                                      <div class="col">
-                                        <label>Telephone </label>
-                                        <input type="input" class="form-control" name="tel_number" value="{{$value->tel_number}}" >
-                                        
-                                      </div>
-                                       <div class="col">
-                                        <label>Fax</label>
-                                        <input type="input" class="form-control" name="fax_number" value="{{$value->fax_number}}" >
-                                        
-                                      </div>
-                                    </div>
-
-                                    <div class="row">
-                                      <div class="col">
-                                        <label>Email</label>
-                                        <input type="input" class="form-control" name="email_id" value="{{$value->email_id}}" >
-                                        
-                                      </div>
-                                       <div class="col">
-                                        <label>Toll-Free Number</label>
-                                        <input type="input" class="form-control" name="toll_free_number" value="{{$value->toll_free_number}}" >
-                                        
-                                      </div>
-                                    </div>
-
-                                     
-                                   </div>
-                                    <input type="hidden" name="state" value="{{$value->state}}">
-                                    <input type="hidden" name="lang_code" value="{{$value->lang_code}}">
-
-                                    <div class="py-4">
-                                      <button class="btn btn-sm btn-success">Update</button>
-                                    </div>
-
-                                    </form>
-                                     
-                                   </div>
-
-                                  </div>
-
-                                 
-                                </div>
-                              </div>
-                            </div>
-
-                              <script>
-                              $(document).ready(function(){
-                                $('#MyeditModal_{{$key}}').click(function(){
-                                  $('#edit_modal{{$key}}').modal('show');
-                                
-                                });
-                              });  
-                              </script>
- 
-                            @endforeach
-                          
-                          </tbody>
-                        </table>
-
-                         <label>Showing {{ $data->firstItem() }} to {{ $data->lastItem() }}
-                                    of {{$data->total()}} results</label>
-
-                                {!! $data->links('pagination::bootstrap-4') !!}
+                <div class="modal" id="view_modal{{$key}}"  >
+                  <div class="modal-dialog modal-xl" >
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title"> Banking Ombudsman Details - {{$value->state}}</h5>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                         
+                      </div>
+                       <div class="modal-body">
+                           
+                       <div class="form-build">
                         
+                        <div class="row">
+                          <div class="col">
+                            <label>Ombudsman Name</label>
+                            <input type="input" class="form-control" name="" value="{{$value->banking_ombudsment_name }}" readonly>
+                            
+                          </div>
+                           <div class="col">
+                            <label>Center</label>
+                            <input type="input" class="form-control" name="" value="{{$value->center_name}}" readonly>
+                            
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <label>Area</label>
+                            <input type="input" class="form-control" name="" value="{{$value->area_name}}" readonly>
+                            
+                          </div>
+                           <div class="col">
+                            <label>Addrees</label>
+                            <input type="input" class="form-control" name="" value="{{$value->full_address}}" readonly>
+                            
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <label>Telephone </label>
+                            <input type="input" class="form-control" name="" value="{{$value->tel_number}}" readonly>
+                            
+                          </div>
+                           <div class="col">
+                            <label>Fax</label>
+                            <input type="input" class="form-control" name="" value="{{$value->fax_number}}" readonly>
+                            
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <label>Email</label>
+                            <input type="input" class="form-control" name="" value="{{$value->email_id}}" readonly>
+                            
+                          </div>
+                           <div class="col">
+                            <label>Toll-Free Number</label>
+                            <input type="input" class="form-control" name="" value="{{$value->toll_free_number}}" readonly>
+                            
+                          </div>
+                        </div>
+
+                        
+                         
+                       </div>
+
+                      </div>
+                     
                     </div>
+                  </div>
+                </div>
+                                
+
+                 <script>
+                  $(document).ready(function(){
+                    $('#MyviewModal_{{$key}}').click(function(){
+                      $('#view_modal{{$key}}').modal('show');
+                    
+                    });
+                  });  
+                  </script>
+
+
+                  <div class="modal" id="edit_modal{{$key}}"  >
+                  <div class="modal-dialog modal-xl" >
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title"> Edit Banking Ombudsman Details - {{$value->state}} </h5>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                         
+                      </div>
+                      
+                      <div class="modal-body">
+                           
+                       <div class="form-build">
+
+                        <form method="POST" action="{{ route('update_ombudsman_contacts')}}">
+                        @csrf
+                        <div class="form-build">
+                        
+                        <div class="row">
+                          <div class="col">
+                            <label>Ombudsman Name</label>
+                            <input type="input" class="form-control" name="banking_ombudsment_name" value="{{$value->banking_ombudsment_name }}" >
+                            
+                          </div>
+                           <div class="col">
+                            <label>Center</label>
+                            <input type="input" class="form-control" name="center_name" value="{{$value->center_name}}" >
+                            
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <label>Area</label>
+                            <input type="input" class="form-control" name="area_name" value="{{$value->area_name}}" >
+                            
+                          </div>
+                           <div class="col">
+                            <label>Addrees</label>
+                            <input type="input" class="form-control" name="full_address" value="{{$value->full_address}}" >
+                            
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <label>Telephone </label>
+                            <input type="input" class="form-control" name="tel_number" value="{{$value->tel_number}}" >
+                            
+                          </div>
+                           <div class="col">
+                            <label>Fax</label>
+                            <input type="input" class="form-control" name="fax_number" value="{{$value->fax_number}}" >
+                            
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <label>Email</label>
+                            <input type="input" class="form-control" name="email_id" value="{{$value->email_id}}" >
+                            
+                          </div>
+                           <div class="col">
+                            <label>Toll-Free Number</label>
+                            <input type="input" class="form-control" name="toll_free_number" value="{{$value->toll_free_number}}" >
+                            
+                          </div>
+                        </div>
+
+                         
+                       </div>
+                        <input type="hidden" name="state" value="{{$value->state}}">
+                        <input type="hidden" name="lang_code" value="{{$value->lang_code}}">
+
+                        <div class="py-4">
+                          <button class="btn btn-sm btn-success">Update</button>
+                        </div>
+
+                        </form>
+                         
+                       </div>
+
+                      </div>
+
+                     
+                    </div>
+                  </div>
+                </div>
+
+                  <script>
+                  $(document).ready(function(){
+                    $('#MyeditModal_{{$key}}').click(function(){
+                      $('#edit_modal{{$key}}').modal('show');
+                    
+                    });
+                  });  
+                  </script>
+
+                @endforeach
+              
+              </tbody>
+            </table>
+
+             <label>Showing {{ $data->firstItem() }} to {{ $data->lastItem() }}
+                        of {{$data->total()}} results</label>
+
+                    {!! $data->links('pagination::bootstrap-4') !!}
+            
+        </div>
                     
                 
         </div>	

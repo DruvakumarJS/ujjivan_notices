@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container-body">
+<div class="container">
  
 	<div class="container-header">
 		
@@ -28,9 +28,10 @@
 
 	<div class="page-container div-margin">
 		<div class="card">
-			<table class="table table-responsive table-stripped">
-				<thead>
-					<tr>
+			<table class="table table-responsive table-striped table-bordered border-dark">
+			<thead class="table-dark border-warning">
+			<tr>
+            <th>#</th>
             <th>Serial Number</th>
             <th>Region Name</th>
             <th>Branch Code</th>
@@ -41,12 +42,13 @@
             <th>Last updated</th>
             <th>Action</th>
             
-					</tr>
-				</thead>
+    		</tr>
+    		</thead>
 
-				<tbody>
+    		<tbody>
           @foreach($data as $key=>$value)
-					<tr>
+			<tr>
+            <th class="border-warning">{{$key+1}}.</th>
             <td id="valueToCopy{{$key}}">{{$value->deviceID}}</td>
             <td>{{$value->branch->region->name}}</td>
             <td>{{$value->branch->branch_code}}</td>

@@ -38,9 +38,10 @@
 
   <div class="page-container div-margin">
     <div class="card">
-      <table class="table table-responsive table-stripped">
-        <thead>
+      <table class="table table-responsive table-stripped table-bordered border-dark">
+        <thead class="table-dark border-warning">
           <tr>
+            <th>#</th>
             <th>Branch Code</th>
             <th>Branch Name</th>
             <th>Region Name</th>
@@ -54,6 +55,7 @@
         <tbody>
           @foreach($data as $key=>$value)
           <tr>
+            <td class="border-warning">{{$key+1}}.</td>
             <td>{{$value->branch_code}}</td>
             <td>{{$value->name}}</td>
             <td>{{$value->region->name}}</td>

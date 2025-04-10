@@ -7,6 +7,7 @@
 }
 </style>
 
+<div class="container">
 <div class="container-header">
     <div id="div2">
       <a data-bs-toggle="modal" data-bs-target="#importModal"  class="btn btn-light btn-outline-secondary" href=""><label id="modal">Import Branch Details</label></a>
@@ -132,8 +133,8 @@
      <div class="row">
         <div class="card border-white">
 
-            <table class="table">
-                <thead>
+            <table class="table table-responsive table-striped table-bordered border-dark">
+                <thead class="table-dark border-warning">
                  <tr>
                     <th >Branch Code</th>
                     <th >Branch Name</th>
@@ -342,6 +343,7 @@
     <!--  Add Branch -->
 
     
+</div>
 </div>
 
 <script type="text/javascript">

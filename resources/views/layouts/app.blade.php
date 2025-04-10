@@ -115,21 +115,21 @@
                   <div class="col-2 left-menu border-right h-100" >
                   @if(Auth::check())
                       <ul class="list-group">
-                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                              <a  href="{{ route('home')}}" > <label>Dashboard</label> </a>
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('home') ? 'bg-warning text-danger' : '' }}" >
+                              <a  href="{{ route('home')}}" > <label class="label-bold">Dashboard</label> </a>
                           </li>
                           <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a href="{{ route('templates')}}"><label>Templates</label> </a> 
                           </li> -->
-                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                              <a  href="{{ route('notices','en')}}" ><label>Notices</label></a>
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('notices','en') ? 'bg-warning text-danger' : '' }}">
+                              <a  href="{{ route('notices','en')}}" ><label class="label-bold">Notices</label></a>
                           </li>
 
                           @if(auth::user()->id == '3')
                          
-                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('devices') ? 'bg-warning text-danger' : '' }}">
                               <a href="{{ route('devices')}}">
-                                  <label>Devices</label>
+                                  <label class="label-bold">Devices</label>
                               </a>
                               <!-- <a onclick="requestpassword()" href="#">
                                   <label>Devices</label>
@@ -138,25 +138,31 @@
 
                           @endif
 
-                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="{{route('audit')}}"> <label>Audit Trail</label> </a>
+                          
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('settings') ? 'bg-warning text-danger' : '' }}">
+                            <a  href="{{route('settings')}}"> <label class="label-bold">Branch Master</label> </a>
+                          </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('emergency_contacts','en') ? 'bg-warning text-danger' : '' }}">
+                            <a  href="{{route('emergency_contacts','en')}}"> <label class="label-bold">Emergency Contacts</label> </a>
+                          </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('ombudsman_contacts') ? 'bg-warning text-danger' : '' }}">
+                            <a  href="{{route('ombudsman_contacts','en')}}"> <label class="label-bold">Banking Ombudsman Contacts Details </label> </a>
+                          </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('notices_history','en') ? 'bg-warning text-danger' : '' }}">
+                            <a  href="{{route('notices_history','en')}}"> <label class="label-bold">Notices Archive </label> </a>
+                          </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('notices_recycle','en') ? 'bg-warning text-danger' : '' }}">
+                            <a href="{{route('notices_recycle','en')}}"> <label class="label-bold">Recycle Bin</label> </a>
+                          </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('audit') ? 'bg-warning text-danger' : '' }}">
+                            <a href="{{route('audit')}}"> <label class="label-bold">Audit Trail</label> </a>
                           </li>
                           
-                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a  href="{{route('settings')}}"> <label>Branch Master</label> </a>
-                          </li>
-
-                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a  href="{{route('emergency_contacts','en')}}"> <label>Emergency Contacts</label> </a>
-                          </li>
-
-                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a  href="{{route('ombudsman_contacts','en')}}"> <label>Banking Ombudsman Contacts Details </label> </a>
-                          </li>
-
-                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a  href="{{route('notices_history','en')}}"> <label>Notices Archive </label> </a>
-                          </li>
                          
                       </ul>
                     @endif

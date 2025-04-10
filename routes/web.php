@@ -106,9 +106,19 @@ Route::post('add-custom-notice',[NoticeController::class,'add_custom_notice'])->
 //Archive
 Route::get('notices-archive/{lang}',[NoticeController::class,'notices_history'])->name('notices_history');
 Route::get('view-archive-notice-datails/{id}',[NoticeController::class,'view_archive_notice_datails'])->name('view_archive_notice_datails');
-
 Route::get('view-multilingual-archive-notice-datails/{id}/{lang}',[NoticeController::class,'view_multilingual_archive_notice_datails'])->name('view_multilingual_archive_notice_datails');
-Route::get('search_archive_notice/{lang}/{id}',[NoticeController::class,'search_archive_notice'])->name('search_archive_notice');
+Route::get('search_archive_notice',[NoticeController::class,'search_archive_notice'])->name('search_archive_notice');
+
+//recycle
+Route::get('notices-recycle/{lang}',[NoticeController::class,'notices_recycle'])->name('notices_recycle');
+Route::get('view-recycle-notice-datails/{id}',[NoticeController::class,'view_recycle_notice_datails'])->name('view_recycle_notice_datails');
+Route::get('view-multilingual-recycle-notice-datails/{id}/{lang}',[NoticeController::class,'view_multilingual_recycle_notice_datails'])->name('view_multilingual_recycle_notice_datails');
+Route::get('search_recycle_notice',[NoticeController::class,'search_recycle_notice'])->name('search_recycle_notice');
+
+
+
+
+
 
 
 Route::get('settings',[HomeController::class,'settings'])->name('settings');

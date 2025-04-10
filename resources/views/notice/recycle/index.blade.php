@@ -26,12 +26,8 @@
   
 	<div class="container-header">
 		
-		<div id="div2">
-			<a href="{{ route('choose_template',$lang)}}"><button class="btn btn-outline-primary">Create New Notice</button></a>
-		</div> 
-
-        <div id="div2" style="margin-right: 30px">
-           <form method="GET" action="{{route('search_notice')}}">
+       <!--  <div id="div2" style="margin-right: 30px">
+           <form method="GET" action="{{route('search_archive_notice')}}">
             @csrf
              <div class="input-group mb-3">
                 <input class="form-control" type="text" name="search" placeholder="Search by Notice ID" value="{{$search}}">
@@ -42,7 +38,7 @@
                 </div>
               </div>
            </form>
-        </div>
+        </div> -->
 
         <!-- <div id="div2" style="margin-right: 30px">
            <form method="GET" action="{{route('notices',$lang)}}">
@@ -87,14 +83,14 @@
 
         @endphp
 
-         <div id="div3" style="margin-right: 30px">
+       <!--   <div id="div3" style="margin-right: 30px">
              <a href="{{route('export_notices',[$lang,$filter])}}"><button class="btn btn-light btn-outline-secondary" > Download CSV</button></a>
           </div>	
 
-       
+        -->
 
 	<div id="div1">
-      <label class="label-bold">Notices</label>
+      <label class="label-bold">Ujjivan Notices Recycle Bin</label>
     </div>
 
 	</div> 
@@ -106,6 +102,7 @@
 					<tr>
 						<th>#</th>
 						<th>N ID</th>
+
 						<th>Name</th>
 						@if($lang == 'all')
 						<th>Notice Language</th>
@@ -113,12 +110,11 @@
 						<th>Available Languages</th>
 						<th>PAN India</th>
 						<th>Notice Type</th>
-			            <th>Created Date</th>
+			            <th>Deleted Date</th>
 			            <th>Version</th>
 			            <th>Status</th>
 			            <th></th>
-			            
-            
+			           
 					</tr>
 				</thead>
 
@@ -171,10 +167,10 @@
 		             </td> -->
 		             <td>{{$value->is_pan_india}}</td>
 		             <td>{{$value->notice_type}}</td>
-		             <td>{{date('d M Y',strtotime($value->created_at)) }}</td>
+		             <td>{{date('d M Y H:i:s',strtotime($value->created_at)) }}</td>
 		             <td>{{$value->version}}</td> 
 		             <td>{{$value->status}}<!-- {{ ($value->status=='Published') ? 'Published' : 'UnPublished'}} --></td> 
-		             <td><a  id="MybtnModal_{{$key}}"><button class="btn btn-sm btn-warning">Action</button></a></td>
+		             <td><a  id="MybtnModal_{{$key}}"><button class="btn btn-sm btn-outline-secondary">Action</button></a></td>
 		             <!-- <td>{{$value->status}}</td> -->
 		             <!-- <td>
 		             	 <a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$lang}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>	
@@ -240,26 +236,7 @@
                                 	<div class="card-header bg-primary text-white">Action on {{$value->document_id}} - {{$value->lang_name}} Notice</div>
                                 	<div class="card-body">
                                 		
-                                		<a target="_blank" href="{{ URL::to('/') }}/noticefiles/{{$langs}}_{{$value->filename}}"><button class="btn btn-sm btn-outline-primary">View</button></a>
-                                		@if($value->template_id != '3' && $value->template_id != '4')
-                                		
-
-                                		@if($value->notice_type == 'ujjivan')
-							            <a href="{{ route('edit_notice_datails',[$value->id])}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
-							             @else
-							             <a href="{{ route('edit_rbi_notice',[$value->id])}}" ><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
-							             @endif
-                                        @endif 
-                                		@if($value->status == 'Draft' OR $value->status == 'UnPublished')
-						             	<a onclick="return confirm('You are Publishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-dark">Publish</button></a>
-						             	@else
-						             	<a  onclick="return confirm('You are UnPublishing the Notice - {{$value->document_id}}')"  href="{{route('modify_notice_status',$value->id)}}"><button class="btn btn-sm btn-outline-warning" >UnPublish</button></a>
-						             	@endif
-
-						             	 
-
-                                		<a onclick="return confirm('You are deleting a N{{$value->document_id}} Notice')" href="{{ route('delete_notice_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>   
-
+                                		<a href="{{ route('view_recycle_notice_datails',[$value->id])}}"><button class="btn btn-sm btn-outline-secondary">View</button></a>
                                 		                          		
                                 	</div>
                                 </div>
@@ -269,28 +246,8 @@
                                 <div class="card">
                                 	<div class="card-header bg-primary text-white">Action on {{$value->document_id}} - Multilingual(All language) Notice</div>
                                 	<div class="card-body">
-                                		<a href="{{route('view_notices',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-primary">View All</button></a>
-                                        
-
-                                		@if($value->notice_type == 'ujjivan')
-							             <a href="{{ route('edit_multi_notice_datails',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
-
-							             @elseif($value->notice_type == 'custom_ujjivan')
-							             <a href="{{ route('edit_multi_custom_notices',[$value->notice_group,$lang])}}" ><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
-							             
-							             @else
-							             <a href="{{ route('edit_multi_rbi_notice_datails',[$value->notice_group,$lang])}}" ><button class="btn btn-sm btn-outline-secondary">Edit All</button></a>
-							             @endif
-
-							            
-
-                                		
-						             	<a onclick="return confirm('You are Publishing all N{{$value->document_id}} notices')"  href="{{route('modify_all_notice_status',[$value->notice_group,'Publish'])}}"><button class="btn btn-sm btn-outline-dark">Publish All</button></a>
-						             
-						             	<a  onclick="return confirm('You are UnPublishing all N{{$value->document_id}} notices')"  href="{{route('modify_all_notice_status',[$value->notice_group,'UnPublish'])}}"><button class="btn btn-sm btn-outline-warning" >UnPublish All</button></a>
-						             	
-		             	
-                                		<a onclick="return confirm('You are deleting all N{{$value->document_id}} notices')" href="{{ route('delete_all_notice_datails',$value->notice_group)}}"><button class="btn btn-sm btn-outline-danger">Delete All</button></a>                                		
+                                		<a href="{{ route('view_multilingual_recycle_notice_datails',[$value->notice_group,$lang])}}"><button class="btn btn-sm btn-outline-secondary">View All</button></a>
+                                                                     		
                                 	</div>
                                 </div>
 
@@ -362,7 +319,7 @@
 		//alert( window.location.origin);
      let edit_id = $(this).val();
     
-     var href = window.location.origin + '/notices/' + edit_id ;
+     var href = window.location.origin + '/notices-archive/' + edit_id ;
     // alert(href);
 
      window.location=href;
