@@ -1723,13 +1723,48 @@ class NoticeController extends Controller
         $lang = $notice->lang_code;
         $groupID = $notice->notice_group;
         $langaugedata = Language::where('code',$notice->lang_code)->first();
-
+        
       //  print_r($lang); die();
         $filepath = public_path().'/noticefiles/'.$notice->filename;
 
         if (File::exists($filepath)) {
               unlink($filepath);
            }
+
+        $avail_langs = explode(',', $notice->available_languages) ;
+
+       /* $record = Notice::find($id);
+
+      if ($record) {
+          $languages = explode(',', $record->available_languages);
+          $deledetablelang = $record->lang_code;
+          // Filter out 'en'
+          $filtered = array_filter($languages, function($lang)use ($deledetablelang) {
+              return trim($lang) !== $deledetablelang;
+          });
+
+          // Update the column
+          $record->available_languages = implode(',', $filtered);
+          $record->save();
+      } */
+
+
+        $records = Notice::where('notice_group', $groupID)->get();
+
+        $deledetablelang = $notice->lang_code;
+
+        foreach ($records as $record) {
+            $languages = explode(',', $record->available_languages);
+
+            // Remove 'en' and clean up spaces
+            $filtered = array_filter($languages, function ($lang)use($deledetablelang) {
+                return trim($lang) !== $deledetablelang;
+            });
+
+            // Rebuild the string
+            $record->available_languages = implode(',', array_map('trim', $filtered));
+            $record->save();
+        }
 
         $delete = Notice::where('id', $id)->delete();
 
