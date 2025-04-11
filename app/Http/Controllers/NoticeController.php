@@ -1311,7 +1311,11 @@ class NoticeController extends Controller
             //$noticeData['notice_id'] = $newNoticeId; // if custom, else omit this
 
             // Save new NoticeHistory
-            $noticeHistory = NoticeHistory::create($noticeData);
+            //$noticeHistory = NoticeHistory::create($noticeData);
+            $noticeHistory = new NoticeHistory($noticeData);
+
+            $noticeHistory->created_at = $existingNoticeRow->created_at;
+            $noticeHistory->save();
 
             // Get corresponding NoticeContent rows
             $existingNoticeContentRows = NoticeContent::where('notice_id', $existingNoticeRow->id)->get();
@@ -1557,7 +1561,11 @@ class NoticeController extends Controller
          $newNoticeGroup =  rand('000000','999999');
          $noticeData = $existingNoticeRow->toArray();
          $noticeData['notice_group'] = $newNoticeGroup;
-         $noticeHistory = NoticeHistory::create($noticeData);
+         //$noticeHistory = NoticeHistory::create($noticeData);
+         $noticeHistory = new NoticeHistory($noticeData);
+
+         $noticeHistory->created_at = $existingNoticeRow->created_at;
+         $noticeHistory->save();
 
          $noticeContentData = $existingNoticeContentRow->toArray();
          $noticeContentData['notice_id'] = $noticeHistory->id; // Assign the new ID
@@ -3321,7 +3329,7 @@ class NoticeController extends Controller
 public function notices_history(Request $request){
   $lang = $request->lang;
    if($lang == 'all'){
-    $data = NoticeHistory::orderBy('id','DESC')->withTrashed()->paginate(25);            
+    $data = NoticeHistory::orderBy('id','DESC')->paginate(25);            
    }
    else{
     $data = NoticeHistory::where('lang_code',$request->lang)->orderBy('id','DESC')->paginate(25);
