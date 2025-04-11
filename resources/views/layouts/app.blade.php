@@ -121,13 +121,13 @@
                           <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a href="{{ route('templates')}}"><label>Templates</label> </a> 
                           </li> -->
-                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('notices','en') ? 'bg-warning text-danger' : '' }}">
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ (request()->routeIs('notices','en') || request()->routeIs('choose_template') || request()->routeIs('create_notice')|| request()->routeIs('select_language')|| request()->routeIs('edit_notice_datails')|| request()->routeIs('edit_multi_notice_datails')|| request()->routeIs('notices','en')|| request()->routeIs('notices','en')|| request()->routeIs('notices','en')|| request()->routeIs('notices','en') || request()->routeIs('search_notice') || request()->routeIs('edit_rbi_notice') || request()->routeIs('edit_multi_rbi_notice_datails') )? 'bg-warning text-danger' : '' }}">
                               <a  href="{{ route('notices','en')}}" ><label class="label-bold">Notices</label></a>
                           </li>
 
                           @if(auth::user()->id == '3')
                          
-                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('devices') ? 'bg-warning text-danger' : '' }}">
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ (request()->routeIs('devices') || request()->routeIs('add_device') || request()->routeIs('view_device_datails') || request()->routeIs('edit_device_datails') || request()->routeIs('analytics') || request()->routeIs('search_device') )? 'bg-warning text-danger' : '' }}">
                               <a href="{{ route('devices')}}">
                                   <label class="label-bold">Devices</label>
                               </a>
@@ -151,11 +151,11 @@
                             <a  href="{{route('ombudsman_contacts','en')}}"> <label class="label-bold">Banking Ombudsman Contacts Details </label> </a>
                           </li>
 
-                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('notices_history','en') ? 'bg-warning text-danger' : '' }}">
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ (request()->routeIs('notices_history','en') || request()->routeIs('view_archive_notice_datails') ||request()->routeIs('view_multilingual_archive_notice_datails') ||request()->routeIs('search_archive_notice'))? 'bg-warning text-danger' : '' }}">
                             <a  href="{{route('notices_history','en')}}"> <label class="label-bold">Notices Archive </label> </a>
                           </li>
 
-                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('notices_recycle','en') ? 'bg-warning text-danger' : '' }}">
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ (request()->routeIs('notices_recycle','en') || request()->routeIs('view_recycle_notice_datails') || request()->routeIs('view_multilingual_recycle_notice_datails'))? 'bg-warning text-danger' : '' }}">
                             <a href="{{route('notices_recycle','en')}}"> <label class="label-bold">Recycle Bin</label> </a>
                           </li>
 

@@ -174,7 +174,7 @@
 		             <!-- <td>{{$value->status}}</td>  -->
 		             <td>
 		             	@if($value->notice_type == 'ujjivan')
-		             	<a  id="MybtnModal_{{$key}}"><button class="btn btn-sm btn-outline-secondary">Action</button></a>
+		             	<a id="MybtnModal_{{$key}}"><button class="btn btn-sm btn-outline-secondary">Action</button></a>
 		             	@endif
 		             </td>
 		             <!-- <td>{{$value->status}}</td> -->
