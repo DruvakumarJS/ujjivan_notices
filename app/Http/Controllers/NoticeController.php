@@ -3425,10 +3425,10 @@ public function search_archive_notice(Request $request){
 public function notices_recycle(Request $request){
   $lang = $request->lang;
    if($lang == 'all'){
-    $data = Notice::orderBy('id','DESC')->onlyTrashed()->paginate(25);            
+    $data = Notice::orderBy('deleted_at','DESC')->onlyTrashed()->paginate(25);            
    }
    else{
-    $data = Notice::where('lang_code',$request->lang)->onlyTrashed()->orderBy('id','DESC')->paginate(25);
+    $data = Notice::where('lang_code',$request->lang)->onlyTrashed()->orderBy('deleted_at','DESC')->paginate(25);
     
    }
    

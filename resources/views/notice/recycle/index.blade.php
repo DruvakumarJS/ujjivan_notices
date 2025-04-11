@@ -110,6 +110,7 @@
 						<th>Available Languages</th>
 						<th>PAN India</th>
 						<th>Notice Type</th>
+						<th>Creation Date</th>
 			            <th>Deleted Date</th>
 			            <th>Version</th>
 			            <th>Status</th>
@@ -168,6 +169,7 @@
 		             <td>{{$value->is_pan_india}}</td>
 		             <td>{{$value->notice_type}}</td>
 		             <td>{{date('d M Y H:i:s',strtotime($value->created_at)) }}</td>
+		             <td>{{date('d M Y H:i:s',strtotime($value->deleted_at)) }}</td>
 		             <td>{{$value->version}}</td> 
 		             <td>{{$value->status}}<!-- {{ ($value->status=='Published') ? 'Published' : 'UnPublished'}} --></td> 
 		             <td><a  id="MybtnModal_{{$key}}"><button class="btn btn-sm btn-outline-secondary">Action</button></a></td>
