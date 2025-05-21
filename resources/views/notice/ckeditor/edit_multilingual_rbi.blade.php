@@ -16,7 +16,7 @@
 </style>
 
 <div class="container-body">
-   <label class="label-bold">Create New Notice</label>
+   <label class="label-bold">Edit Notice</label>
    <div class="page-container">
      @if ($errors->any())
       <div class="alert alert-danger">

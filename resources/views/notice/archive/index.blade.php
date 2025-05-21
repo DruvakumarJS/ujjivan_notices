@@ -167,7 +167,7 @@
 		             	</table>
 		             </td> -->
 		             <td>{{$value->is_pan_india}}</td>
-		             <td>{{$value->notice_type}}</td>
+		             <td>{{ ($value->notice_type == 'rbi')?'PDF/Image':$value->notice_type}}</td>
 		             <td>{{date('d M Y H:i:s',strtotime($value->created_at)) }}</td>
 		             <td>{{date('d M Y H:i:s',strtotime($value->updated_at)) }}</td>
 		             <td>{{$value->version}}</td> 

@@ -40,13 +40,15 @@ body {
            <label for="html">Statndard Ujjivan Notice</label>
 
            <input type="radio" id="rbi" name="notice_type" value="rbi" style="margin-left: 30px;" onchange="handleChange(this);">
-           <label for="html">RBI Notice</label><notice_type>
+           <label for="html">PDF/Image</label><notice_type>
 
            <input type="radio" id="custom_ujjivan" name="notice_type" value="custom_ujjivan" style="margin-left: 30px;" onchange="handleChange(this);">
            <label for="html">Emergency Contact Number</label><notice_type>
-
+          
+          @if(Auth::user()->id == 3)
            <input type="radio" id="custom_ujjivan_n9" name="notice_type" value="custom_ujjivan_n9" style="margin-left: 30px;" onchange="handleChange(this);">
            <label for="html">Escalation to Banking Ombudsman  </label><notice_type>
+          @endif 
         </div>
 
         <div class="text-sm-start div-margin" >

@@ -114,7 +114,7 @@
 						<th>PAN India</th>
 						<th>Notice Type</th>
 			            <th>Created Date</th>
-			            <th>Modified Date</th>
+			            <th>Version Date</th>
 			            <th>Version</th>
 			            <th>Status</th>
 			            <th></th>
@@ -171,9 +171,9 @@
 		             	</table>
 		             </td> -->
 		             <td>{{$value->is_pan_india}}</td>
-		             <td>{{$value->notice_type}}</td>
+		             <td>{{ ($value->notice_type == 'rbi')?'PDF/Image':$value->notice_type}}</td>
 		             <td>{{date('d M Y H:i',strtotime($value->created_at)) }}</td>
-		             <td>{{date('d M Y H:i',strtotime($value->updated_at)) }}</td>
+		             <td>{{date('d M Y',strtotime($value->published_date)) }}</td>
 		             <td>{{$value->version}}</td> 
 		             <td>{{$value->status}}<!-- {{ ($value->status=='Published') ? 'Published' : 'UnPublished'}} --></td> 
 		             <td><a  id="MybtnModal_{{$key}}"><button class="btn btn-sm btn-warning">Action</button></a></td>

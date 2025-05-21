@@ -37,7 +37,7 @@ body {
            <input type="radio" id="ujjivan" name="notice_type" value="ujjivan" onchange="handleChange(this);" <?php echo($notice_type == 'ujjivan')? 'checked' : 'disabled'  ?> >
            <label for="html">Ujjivan Notice</label>
            <input type="radio" id="rbi" name="notice_type" value="rbi" style="margin-left: 30px;" onchange="handleChange(this);" <?php echo($notice_type == 'rbi')? 'checked' : 'disabled'  ?> >
-           <label for="html">RBI Notice</label><notice_type>
+           <label for="html">PDF/Image</label><notice_type>
            <input type="radio" id="custom_ujjivan" name="notice_type" value="custom_ujjivan" style="margin-left: 30px;" onchange="handleChange(this);" <?php echo($notice_type == 'custom_ujjivan' && $template_id == '3')? 'checked' : 'disabled'  ?> >
            <label for="html">Emergency Contact Number</label><notice_type>
 

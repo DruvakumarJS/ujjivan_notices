@@ -20,7 +20,7 @@
  -->
 
 <div class="container-body">
-  <label class="label-bold">Edit RBI Notice</label>
+  <label class="label-bold">Edit Notice</label>
     <div class="container-header">
         
     </div>
