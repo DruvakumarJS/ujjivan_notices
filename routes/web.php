@@ -176,6 +176,8 @@ Route::get('Banking-Ombudsman-contacts-details/{lang}',[HomeController::class,'o
 Route::post('update-ombudsman-contacts-details',[HomeController::class,'update_ombudsman_contacts'])->name('update_ombudsman_contacts');
 Route::get('search-ombudsman-contacts-details/{lang}',[HomeController::class,'search_ombudsman_conatcts'])->name('search_ombudsman_conatcts');
 
+Route::get('export-audit-logs',[HomeController::class,'export_audit'])->name('export_audits');
+
 
 });
 

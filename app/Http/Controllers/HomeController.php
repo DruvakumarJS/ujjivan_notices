@@ -21,6 +21,7 @@ use App\Models\EmergencyContactDetail;
 use App\Models\BankingOmbudsment;
 use App\Imports\ImporteBankingOmbudsment;
 use App\Exports\ExportEmergencyContacts;
+use App\Exports\ExportAudit;
 
 use DB;
 use Endroid\QrCode\QrCode;
@@ -1350,7 +1351,10 @@ class HomeController extends Controller
        
     }
 
-
+   public function export_audit(){
+      $file_name = 'Audit_logs.csv';
+      return Excel::download(new ExportAudit(), $file_name);
+   }
 
 
 }

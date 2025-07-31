@@ -27,16 +27,20 @@
         <div class="container-header">
            
             <div id="div2" style="margin-right: 30px">
-           <form method="GET" action="{{route('search_audit')}}">
-            @csrf
-            <input type="hidden" name="search" value="{{$search}}">
-             <div class="input-group mb-3">
-                <input class="form-control" type="text" name="search" placeholder="Search here" value="{{$search}}">
-                <div class="input-group-prepend">
-                   <button class="btn btn-outline-secondary rounded-0" type="submit" >Search</button>
+             <form method="GET" action="{{route('search_audit')}}">
+              @csrf
+              <input type="hidden" name="search" value="{{$search}}">
+               <div class="input-group mb-3">
+                  <input class="form-control" type="text" name="search" placeholder="Search here" value="{{$search}}">
+                  <div class="input-group-prepend">
+                     <button class="btn btn-outline-secondary rounded-0" type="submit" >Search</button>
+                  </div>
                 </div>
-              </div>
-           </form>
+             </form>
+          </div>
+
+          <div id="div3" style="margin-right: 30px">
+             <a href="{{route('export_audits')}}"><button class="btn btn-light btn-outline-secondary" > Download CSV</button></a>
           </div>
 
        
