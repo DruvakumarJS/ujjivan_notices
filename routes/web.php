@@ -178,6 +178,8 @@ Route::get('search-ombudsman-contacts-details/{lang}',[HomeController::class,'se
 
 Route::get('export-audit-logs',[HomeController::class,'export_audit'])->name('export_audits');
 
+Route::get('export-analytics',[HomeController::class,'export_analytics'])->name('export_analytics');
+
 
 });
 

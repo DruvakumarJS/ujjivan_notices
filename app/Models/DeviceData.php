@@ -15,4 +15,8 @@ class DeviceData extends Model
     	'apk_version',
     	'last_updated_date',
     	'last_updated_time'];
+
+    public function deviceinfo(){
+    	return $this->belongsTo(Devices::class, 'mac_id','mac_id');
+    }  	
 }

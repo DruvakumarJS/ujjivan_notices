@@ -503,8 +503,6 @@ class DevicesController extends Controller
               $data = array();
               $now = strtotime($request->from_date);
               $last = strtotime($request->to_date);
-             // $data= array();
-              //$data = "123";
              
               while($now <= $last ) {
 
@@ -532,12 +530,7 @@ class DevicesController extends Controller
                             else{
                                 $idle_minutes = intval($idle_minutes)+intval($minutes);
                             }
-                             /*print_r(" from time: ".$d1." to time: ".$d2); 
-                             print_r(" time diff: ".$minutes); 
-                             print_r(" running: ".$running_minutes); 
-                             print_r(" --idle: ".$idle_minutes);
-                             print_r("<br>");*/
-                            
+                             
                             $d1 = date('Y-m-d' , $now).' '.$value->last_updated_time;
 
                         }
@@ -623,7 +616,7 @@ class DevicesController extends Controller
           {
            $data = 'mnm';
           }
-         // echo json_encode($data);
+         
           echo json_encode($data);
          }
 
