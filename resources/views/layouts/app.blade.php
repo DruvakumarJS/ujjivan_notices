@@ -42,6 +42,8 @@
     <script rel="stylesheet" src="{{ env('APP_URL') }}/datepicker/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ env('APP_URL') }}/datepicker/daterangepicker.css"/>
 
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
    
 </head>
 <body>
@@ -157,6 +159,14 @@
 
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ (request()->routeIs('notices_recycle','en') || request()->routeIs('view_recycle_notice_datails') || request()->routeIs('view_multilingual_recycle_notice_datails'))? 'bg-warning text-danger' : '' }}">
                             <a href="{{route('notices_recycle','en')}}"> <label class="label-bold">Recycle Bin</label> </a>
+                          </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('audit') ? 'bg-warning text-danger' : '' }}">
+                            <a target="_blank" href="{{route('manage_users')}}"> <label class="label-bold">User Management</label> </a>
+                          </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('audit') ? 'bg-warning text-danger' : '' }}">
+                            <a href="{{route('translatation')}}"> <label class="label-bold">Translator</label> </a>
                           </li>
 
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('audit') ? 'bg-warning text-danger' : '' }}">

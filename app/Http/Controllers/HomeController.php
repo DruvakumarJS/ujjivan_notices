@@ -1456,5 +1456,49 @@ $last = strtotime($to);
       return Excel::download(new ExportAnalytics(), $file_name);
    }
 
+   public function showusers(){
+     $data = User::get();
+
+     return view('user.list',compact('data'));
+   }
+
+   public function save_user(Request $request){
+
+    if( $request->password != '' && $request->password != $request->confirm_password){
+       return redirect()->back()->withMessage('Password and Confirm Password does not match');
+    }
+  
+      $user = User::where('id',$request->userid)->first();
+
+      if(!$user){
+          $user = new User;
+      }
+      $user->name =  $request->name;
+      $user->email = $request->email;
+      $user->role = $request->role;
+
+    //  print_r($request->Input());die();
+      if(isset($request->userid)){
+         if($request->password != '' ){
+          $user->password = Hash::make($request->password);
+         }
+        
+      }else{
+        $user->password = Hash::make($request->password);
+      }
+      
+      $user->save();
+
+      if($user->id !='0'  && $user!=''){
+         return redirect()->back()->withMessage('Added Successfully');
+      }else{
+         return redirect()->back()->withMessage('Error While submitting');
+      }
+
+      
+
+
+   }
+
 
 }

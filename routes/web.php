@@ -5,6 +5,7 @@ use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuditController;
+use App\Http\Controllers\TranslateController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -179,6 +180,16 @@ Route::get('search-ombudsman-contacts-details/{lang}',[HomeController::class,'se
 Route::get('export-audit-logs',[HomeController::class,'export_audit'])->name('export_audits');
 
 Route::get('export-analytics',[HomeController::class,'export_analytics'])->name('export_analytics');
+
+Route::get('/translatations', [TranslateController::class, 'dashboard'])->name('translatation');
+Route::get('/traslate-form', [TranslateController::class, 'showForm'])->name('translate.form');
+Route::post('/translate-ckdata', [TranslateController::class, 'translateCKData'])->name('translate.ckdata');
+Route::post('/download-single', [TranslateController::class, 'downloadSingle'])->name('download.single');
+Route::post('/download-all', [TranslateController::class, 'downloadAll'])->name('download.all');
+
+
+Route::get('/manage_users', [HomeController::class, 'showusers'])->name('manage_users');
+Route::post('/save_user', [HomeController::class, 'save_user'])->name('save_user');
 
 
 });
