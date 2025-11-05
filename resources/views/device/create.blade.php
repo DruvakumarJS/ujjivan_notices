@@ -135,6 +135,25 @@
        <hr/>
        <h4>Device Details</h4>
 
+       <div class="row">
+            <div class="col-2">
+                  <div class="text-sm-end" >
+                    <span class="" id="basic-addon3">Default Notice Language * </span>
+                  </div>
+            </div> 
+            <div class="col-6">
+                <div class="input-group mb-3">
+
+                  <select class="form-control form-select" name="lang" required>
+                    <option>Select Language</option>
+                    @foreach($langauge as $key=>$val)
+                      <option value="{{ $val->code}}">{{$val->lang}}</option>
+                    @endforeach
+                  </select>
+                </div>
+            </div>   
+       </div>
+
         <div class="row">
             <div class="col-2">
                   <div class="text-sm-end" >

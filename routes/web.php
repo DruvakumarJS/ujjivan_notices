@@ -186,6 +186,8 @@ Route::get('/traslate-form', [TranslateController::class, 'showForm'])->name('tr
 Route::post('/translate-ckdata', [TranslateController::class, 'translateCKData'])->name('translate.ckdata');
 Route::post('/download-single', [TranslateController::class, 'downloadSingle'])->name('download.single');
 Route::post('/download-all', [TranslateController::class, 'downloadAll'])->name('download.all');
+Route::post('/download-docx', [TranslateController::class, 'downloadDocx'])->name('download.docx');
+
 
 
 Route::get('/manage_users', [HomeController::class, 'showusers'])->name('manage_users');

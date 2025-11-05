@@ -61,10 +61,18 @@
               </thead>
               <tbody>
                 @foreach($data as $key=>$value)
+
+                @php
+                 $role = $value->role;
+                 if($role == 'superadmin') $role='Super Admin';
+                 if($role == 'content_admin') $role='Content Admin';
+                 if($role == 'device_admin') $role='Device Admin';
+                 if($role == 'readonly') $role='Read-Only User';
+                @endphp
                 <tr>
                   <td>{{$value->name}}</td>
                   <td>{{$value->email}}</td>
-                  <td>{{$value->role}}</td>
+                  <td>{{$role}}</td>
                   <td>
                     <a id="MyapprovalModal_{{$key}}"><button class="btn btn-sm btn-secondary">Edit</button></td></a>
                   </td>
@@ -96,19 +104,19 @@
                           <select class="form-control form-select" name="role">
                             <option value="">Select Role</option>
                             <option {{ ($value->role == 'superadmin')? 'selected':''}}  value="superadmin">Super Admin</option>
-                            <option {{ ($value->role == 'ujjivan')? 'selected':''}}  value="ujjivan">Content Admin</option>
-                            <option {{ ($value->role == 'admin')? 'selected':''}}  value="admin">Device Admin</option>
+                            <option {{ ($value->role == 'content_admin')? 'selected':''}}  value="content_admin">Content Admin</option>
+                            <option {{ ($value->role == 'device_admin')? 'selected':''}}  value="device_admin">Device Admin</option>
                             <option {{ ($value->role == 'readonly')?'selected':''}}  value="readonly">ReadOnly User</option>
                           </select>
                         </div>
                         <div class="form-group">
                           <label for="message-text" class="col-form-label">Password</label>
-                          <input type="text" class="form-control" name="password" value="{{ old('name')}}" >
+                          <input type="password" class="form-control" name="password" value="{{ old('name')}}" >
                         </div>
 
                         <div class="form-group">
                           <label for="message-text" class="col-form-label">Confirm Password</label>
-                          <input type="text" class="form-control" name="confirm_password" >
+                          <input type="password" class="form-control" name="confirm_password" >
                         </div>
                       </div>
                       <input type="hidden" name="userid" value="{{$value->id}}">
@@ -176,8 +184,8 @@
             <select class="form-control form-select" name="role">
               <option value="">Select Role</option>
               <option  value="superadmin">Super Admin</option>
-              <option value="ujjivan">Ujjivan Admin</option>
-              <option  value="admin">Netiapps Admin</option>
+              <option value="content_admin">Content Admin</option>
+              <option  value="device_admin">Device Admin</option>
               <option  value="readonly">ReadOnly User</option>
             </select>
           </div>

@@ -25,7 +25,8 @@ class Devices extends Model
             'deviceID',
             'tv_serial_no',
             'router_serial_number',
-            'sim_card_number'
+            'sim_card_number',
+            'default_lang'
         ];
 
     public function bank(){

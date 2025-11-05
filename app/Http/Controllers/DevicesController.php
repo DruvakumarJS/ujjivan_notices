@@ -11,6 +11,7 @@ use DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Audit;
 use Auth;
+use App\Models\Language;
 
 class DevicesController extends Controller
 {
@@ -35,8 +36,8 @@ class DevicesController extends Controller
      */
     public function create()
     {
-       
-        return view('device/create');
+       $langauge = Language::get();
+        return view('device/create',compact('langauge'));
     }
 
     /**
@@ -144,7 +145,8 @@ class DevicesController extends Controller
             'sim_connection_number' => $request->sim_connection,
             'status' => 'Offline',
             'date_of_install' => $request->date_of_installation,
-            'remote_id' => $request->serial_no
+            'remote_id' => $request->serial_no,
+            'default_lang' => $request->lang,
 
         ]);
 
@@ -172,7 +174,8 @@ class DevicesController extends Controller
     public function show($id)
     {
         $data = Devices::where('id', $id)->first();
-        return view('device/view_more',compact('data', 'id'));
+        $langauge = Language::get();
+        return view('device/view_more',compact('data', 'id','langauge'));
     }
 
     /**
@@ -184,7 +187,8 @@ class DevicesController extends Controller
     public function edit($id)
     {
         $data = Devices::where('id', $id)->first();
-        return view('device/edit',compact('data', 'id'));
+        $langauge = Language::get();
+        return view('device/edit',compact('data', 'id','langauge'));
     }
 
     /**
@@ -283,7 +287,8 @@ class DevicesController extends Controller
             'router_serial_number' => $request->router,
             'sim_card_number' => $request->sim,
             'sim_connection_number' => $request->sim_connection,
-            'date_of_install' => $request->date_of_installation
+            'date_of_install' => $request->date_of_installation,
+            'default_lang' => $request->lang,
         ]);
 
         if($update){

@@ -5,10 +5,11 @@
 <div class="container">
  
 	<div class="container-header">
-		
+		@if(Auth::user()->role == 'device_admin' || Auth::user()->role == 'superadmin' )
 		<div id="div2">
 			<a href="{{ route('add_device')}}"><button class="btn btn-outline-primary">Register New Device</button></a>
 		</div> 
+        @endif
 
     <div id="div2" style="margin-right: 30px">
            <form method="POST" action="{{route('search_device')}}">
@@ -84,10 +85,13 @@
             <td>{{($value->last_updated_date != '')?date(date('d-m-Y H:i',strtotime($value->last_updated_date))):''}}</td>
             <td width="250px">
               <a href="{{ route('view_device_datails',$value->id)}}"><button class="btn btn-sm btn-outline-primary">Details</button></a>
+              @if(Auth::user()->role == 'device_admin' || Auth::user()->role == 'superadmin' )
               <a href="{{ route('edit_device_datails',$value->id)}}"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
               <a onclick="return confirm('You are deleting a Device?')" href="{{ route('delete_device_datails',$value->id)}}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
+              <button class="btn btn-sm btn-warning text-white" onclick="copyAndRedirect('{{$value->deviceID}}')" >Remote</button>
+              @endif
               <a href="{{ route('analytics',$value->id)}}"><button class="btn btn-sm btn-dark text-white">Analytics</button></a><div style="height: 2px"></div>
-                <button class="btn btn-sm btn-warning text-white" onclick="copyAndRedirect('{{$value->deviceID}}')" >Remote</button>
+                
 
             </td>
             

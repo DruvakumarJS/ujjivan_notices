@@ -43,6 +43,8 @@
     <link rel="stylesheet" type="text/css" href="{{ env('APP_URL') }}/datepicker/daterangepicker.css"/>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
    
 </head>
@@ -123,11 +125,14 @@
                           <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a href="{{ route('templates')}}"><label>Templates</label> </a> 
                           </li> -->
+
+                          @if(Auth::user()->role == 'superadmin' || Auth::user()->role == 'content_admin')
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ (request()->routeIs('notices','en') || request()->routeIs('choose_template') || request()->routeIs('create_notice')|| request()->routeIs('select_language')|| request()->routeIs('edit_notice_datails')|| request()->routeIs('edit_multi_notice_datails')|| request()->routeIs('notices','en')|| request()->routeIs('notices','en')|| request()->routeIs('notices','en')|| request()->routeIs('notices','en') || request()->routeIs('search_notice') || request()->routeIs('edit_rbi_notice') || request()->routeIs('edit_multi_rbi_notice_datails') )? 'bg-warning text-danger' : '' }}">
                               <a  href="{{ route('notices','en')}}" ><label class="label-bold">Notices</label></a>
                           </li>
+                          @endif
 
-                          @if(auth::user()->id == '3')
+                          @if(Auth::user()->role == 'device_admin' || Auth::user()->role == 'superadmin' || Auth::user()->role == 'readonly')
                          
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ (request()->routeIs('devices') || request()->routeIs('add_device') || request()->routeIs('view_device_datails') || request()->routeIs('edit_device_datails') || request()->routeIs('analytics') || request()->routeIs('search_device') )? 'bg-warning text-danger' : '' }}">
                               <a href="{{ route('devices')}}">
@@ -140,18 +145,24 @@
 
                           @endif
 
-                          
+                          @if(Auth::user()->role == 'superadmin' || Auth::user()->role == 'content_admin' || Auth::user()->role == 'device_admin')
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('settings') ? 'bg-warning text-danger' : '' }}">
                             <a  href="{{route('settings')}}"> <label class="label-bold">Branch Master</label> </a>
                           </li>
+                          
 
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('emergency_contacts','en') ? 'bg-warning text-danger' : '' }}">
                             <a  href="{{route('emergency_contacts','en')}}"> <label class="label-bold">Emergency Contacts</label> </a>
                           </li>
-
+                          
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('ombudsman_contacts') ? 'bg-warning text-danger' : '' }}">
                             <a  href="{{route('ombudsman_contacts','en')}}"> <label class="label-bold">Banking Ombudsman Contacts Details </label> </a>
                           </li>
+                          @endif
+
+                        
+
+                          @if(Auth::user()->role == 'superadmin' || Auth::user()->role == 'content_admin')
 
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ (request()->routeIs('notices_history','en') || request()->routeIs('view_archive_notice_datails') ||request()->routeIs('view_multilingual_archive_notice_datails') ||request()->routeIs('search_archive_notice'))? 'bg-warning text-danger' : '' }}">
                             <a  href="{{route('notices_history','en')}}"> <label class="label-bold">Notices Archive </label> </a>
@@ -161,11 +172,7 @@
                             <a href="{{route('notices_recycle','en')}}"> <label class="label-bold">Recycle Bin</label> </a>
                           </li>
 
-                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('audit') ? 'bg-warning text-danger' : '' }}">
-                            <a target="_blank" href="{{route('manage_users')}}"> <label class="label-bold">User Management</label> </a>
-                          </li>
-
-                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('audit') ? 'bg-warning text-danger' : '' }}">
+                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('translatation') || request()->routeIs('translate.form') ? 'bg-warning text-danger' : '' }}">
                             <a href="{{route('translatation')}}"> <label class="label-bold">Translator</label> </a>
                           </li>
 
@@ -173,6 +180,18 @@
                             <a href="{{route('audit')}}"> <label class="label-bold">Audit Trail</label> </a>
                           </li>
                           
+
+                          @endif
+
+                          @if(Auth::user()->role == 'superadmin')
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('manage_users') ? 'bg-warning text-danger' : '' }}">
+                            <a target="_blank" href="{{route('manage_users')}}"> <label class="label-bold">User Management</label> </a>
+                          </li>
+
+                          @endif
+
+                         
                          
                       </ul>
                     @endif

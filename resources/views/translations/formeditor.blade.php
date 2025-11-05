@@ -23,12 +23,16 @@
 <div class="container">
     <h3 class="mb-3 text-center">🌐 Content Translator</h3>
 
-     @if(Session::has('message'))
-            <p id="mydiv" class="text-danger text-center">{{ Session::get('message') }}</p>
-            <script type="text/javascript">
-                alert('{{ Session::get('message') }}');
-            </script>
-        @endif 
+    @if(Session::has('message'))
+    <p id="mydiv" class="text-danger text-center">{{ Session::get('message') }}</p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            alert("{{ Session::get('message') }}");
+        });
+    </script>
+@endif
+
 
     <form id="translateForm">
         <div class="mb-3">
@@ -64,23 +68,24 @@
 
 <script>
     document.getElementById('translateBtn').addEventListener('click', async function() {
-        const text = editorInstance.getData();
-        const selectedOptions = Array.from(document.getElementById('language').selectedOptions);
-        const languages = selectedOptions.map(option => option.value);
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const text = editorInstance.getData();
+    const selectedOptions = Array.from(document.getElementById('language').selectedOptions);
+    const languages = selectedOptions.map(option => option.value);
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-        if (!text.trim()) {
-            alert('Please enter some text!');
-            return;
-        }
-        if (languages.length === 0) {
-            alert('Please select at least one language!');
-            return;
-        }
+    if (!text.trim()) {
+        alert('Please enter some text!');
+        return;
+    }
+    if (languages.length === 0) {
+        alert('Please select at least one language!');
+        return;
+    }
 
-        document.getElementById('output').innerHTML =
-            '<div class="alert alert-info">⏳ Translating... Please wait...</div>';
+    document.getElementById('output').innerHTML =
+        '<div class="alert alert-info">⏳ Translating... Please wait...</div>';
 
+    try {
         const response = await fetch("{{ route('translate.ckdata') }}", {
             method: "POST",
             headers: {
@@ -90,9 +95,33 @@
             body: JSON.stringify({ text, languages })
         });
 
+        const contentType = response.headers.get("content-type");
+
+        // 🔹 If it's JSON, show alert (quota or error message)
+        if (contentType && contentType.includes("application/json")) {
+            const json = await response.json();
+            if (json.status === "error") {
+                Swal.fire({
+                  title: "Translation Quota",
+                  text: json.message,
+                  icon: "info"
+                });
+                document.getElementById('output').innerHTML = "";
+                return;
+            }
+        }
+
+        // 🔹 Otherwise treat as HTML (translation result)
         const html = await response.text();
         document.getElementById('output').innerHTML = html;
-    });
+
+    } catch (error) {
+        console.error(error);
+        document.getElementById('output').innerHTML =
+            '<div class="alert alert-danger">❌ Something went wrong. Please try again later.</div>';
+    }
+});
+
 
  
 
@@ -100,8 +129,7 @@
 </script>
 
 <script>
-           
-           let editorInstance; // ✅ define globally
+let editorInstance; // ✅ define globally
 
 CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
     toolbar: {

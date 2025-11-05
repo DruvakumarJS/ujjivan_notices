@@ -30,6 +30,11 @@ class TranslateController extends Controller
 
       }
 
+      $overall_translation = TranslationLog::sum('character_count');
+      $overall_instance = TranslationLog::select('id','token')->distinct('token')->count();
+      $overall_langs = TranslationLog::select('id','language_code')->distinct('language_code')->count();
+
+
       $total_translation = TranslationLog::whereBetween('created_at',[$start, $end])->sum('character_count');
       $total_instance = TranslationLog::select('id','token')->whereBetween('created_at',[$start, $end])->distinct('token')->count();
       $total_langs = TranslationLog::select('id','language_code')->whereBetween('created_at',[$start, $end])->distinct('language_code')->count();
@@ -38,18 +43,18 @@ class TranslateController extends Controller
 
       foreach ($Languages as $key => $value) {
           $characters=TranslationLog::whereBetween('created_at',[$start, $end])->where('language_code',$value->code)->sum('character_count');
-          $langNamesArray[]=$value->name;
+          $langNamesArray[]=$value->lang;
           $langCountArray[]=$characters;
       }
 
       $chartData=['name' => $langNamesArray , 'count' => $langCountArray ];
 
-      return view('translations.dashboard',compact('total_translation','total_instance','total_instance','total_langs','langNamesArray','langCountArray','chartData'));
+      return view('translations.dashboard',compact('total_translation','total_instance','total_instance','total_langs','langNamesArray','langCountArray','chartData' ,'overall_translation','overall_instance','overall_langs'));
     }
 
     public function showForm()
     {
-        $languages = Language::get();
+        $languages = Language::whereNotIn('code',['en','kh'])->get();
         return view('translations.formeditor',compact('languages'));
     }
 
@@ -126,10 +131,12 @@ class TranslateController extends Controller
 
             $totalCount = intval($charCount)+intval($total_translation);
 
-            if($totalCount >=  '900' ){
-              return redirect()->route('translate.form')->withMessage('You dont have enough quota to translate this content.');
+            if($totalCount >=  '2000' ){
+               return response()->json([
+                    'status' => 'error',
+                    'message' => 'You don’t have enough quota to translate this content.'
+                ]);
             }
-
              TranslationLog::create([
                 'language_code' => $lang,
                // 'translated_content' => $translatedHtml,
@@ -175,10 +182,12 @@ class TranslateController extends Controller
                 <input type='hidden' name='translations' value='{$encodedAll}'>
                 <button type='submit' class='btn btn-success mt-3'>⬇️ Download All (HTML)</button>
             </form>
+
         ";
         $output .= "</div>";
 
         return $output;
+      
     }
 
     // ✅ Download single language
@@ -269,6 +278,29 @@ class TranslateController extends Controller
         }
 
         return response()->download($zipFile)->deleteFileAfterSend(true);
+    }
+
+    public function downloadDocx(Request $request)
+    {
+        $lang = $request->input('lang');
+        $content = html_entity_decode($request->input('content'), ENT_QUOTES, 'UTF-8');
+
+        $phpWord = new PhpWord();
+        $section = $phpWord->addSection();
+
+        // Remove unwanted HTML tags and decode
+        $plainText = strip_tags($content);
+        $section->addText("Language: " . strtoupper($lang), ['bold' => true, 'size' => 14]);
+        $section->addTextBreak(1);
+        $section->addText($plainText);
+
+        $fileName = 'translation_' . $lang . '_' . now()->format('Ymd_His') . '.docx';
+
+        // Save to temp and return as download
+        $tempFile = tempnam(sys_get_temp_dir(), 'docx');
+        $phpWord->save($tempFile, 'Word2007');
+
+        return response()->download($tempFile, $fileName)->deleteFileAfterSend(true);
     }
 
 

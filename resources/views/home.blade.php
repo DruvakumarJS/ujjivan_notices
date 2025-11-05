@@ -112,7 +112,7 @@ var myPieChart = new Chart(ctx, {
           var rule = '';
 
           if (label === 'Dead') {
-            rule = "Devices that have not sent data over 48 hours" ;
+            rule = "Devices that have not sent data over 4 days" ;
           } else if (label === 'Online') {
             rule = 'Devices that are active and sending data to server every 15 minutes' ;
           } else if (label === 'Offline') {
@@ -178,6 +178,9 @@ var lineColors = [
   "#3887BE",
   "#38419D",
   "#200E3A",
+  '#703B3B',
+  "#693382"
+
  
 ];
 

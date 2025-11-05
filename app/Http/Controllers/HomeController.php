@@ -59,7 +59,7 @@ class HomeController extends Controller
         $today = date('Y-m-d');
         $current_time = date('Y-m-d H:i');
         $active_time = date("Y-m-d H:i",strtotime("-120 minutes", strtotime($current_time)));
-        $inactive_time = date("Y-m-d H:i",strtotime("-2880 minutes", strtotime($current_time)));
+        $inactive_time = date("Y-m-d H:i",strtotime("-5760 minutes", strtotime($current_time)));
 
         $online = Devices::where('last_updated_date' , '>=', $active_time)->where('last_updated_date','LIKE',$today.'%')->where('branch_id','!=','72')->get();
         $offiine = Devices::where('last_updated_date' , '<', $active_time)->where('last_updated_date','>=',$inactive_time)->where('branch_id','!=','72')->get();
@@ -1163,6 +1163,18 @@ class HomeController extends Controller
             'bm_number' => $request->manager_contact
           ]);
 
+        $audit = Audit::create([
+            'action' => 'Branch Emergency Contact Detail Added ',
+            'track_id' => $request->branchid,
+            'user_id' => Auth::user()->id,
+            'module' => 'Emergency Contact Detail',
+            'operation' => 'U',
+            'pan_india' => '-',
+            'regions' => $Branch->region->region_code,
+            'states' => $Branch->state,
+            'branch' => $Branch->branch_code
+          ]);
+
         $updateNotice = Notice::where('template_id','3')->update([]);
       }
 
@@ -1212,6 +1224,18 @@ class HomeController extends Controller
         $updateBranchInformation = BranchInformation::where('branch_id',$Branch->id)->update([
             'bm_name' => $BranchManager[1],
             'bm_number' => $request->manager_contact
+          ]);
+
+        $audit = Audit::create([
+            'action' => 'Branch Emergency Contact Detail modified ',
+            'track_id' => $request->branch_id,
+            'user_id' => Auth::user()->id,
+            'module' => 'Emergency Contact Detail',
+            'operation' => 'U',
+            'pan_india' => '-',
+            'regions' => $Branch->region->region_code,
+            'states' => $Branch->state,
+            'branch' => $Branch->branch_code
           ]);
 
         $updateNotice = Notice::where('template_id','3')->update([]);

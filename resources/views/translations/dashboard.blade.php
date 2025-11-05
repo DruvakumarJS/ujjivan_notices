@@ -5,14 +5,44 @@
 <div class="container">
 	<div class="d-flex">
 		<div class="ms-auto">
-			<a href="{{ route('translate.form')}}"><button class="btn btn-sm btn-primary">Transalate</button></a>
+			<a href="{{ route('translate.form')}}"><button class="btn btn-danger text-white">Transalate</button></a>
 		</div>
 	</div>
 	
 
 	<div class="container">
-    <div class="row pt-5 m-auto">
-      <div class="col-md-6 col-lg-3 pb-3">
+
+  <div class="row">
+    <div class="col-md-4 col-lg-4 pb-2">
+      <div class="card border border-dark ">
+        <div class="card-header bg-primary text-white fw-bold text-center">OverAll Translations</div>
+        <div class="card-body text-center">
+          <span class="transalte-text ">{{ $overall_translation }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-lg-4 pb-2">
+      <div class="card border border-dark ">
+        <div class="card-header bg-primary text-white fw-bold text-center">OverAll Instnces</div>
+        <div class="card-body text-center">
+          <span class="transalte-text ">{{ $overall_instance }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-lg-4 pb-2">
+      <div class="card border border-dark ">
+        <div class="card-header bg-primary text-white fw-bold text-center">OverAll Translated Languages</div>
+        <div class="card-body text-center">
+          <span class="transalte-text ">{{ $overall_langs }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="row pt-2 m-auto">
+      <div class="col-md-6 col-lg-3 pb-2">
 
         <!-- Copy the content below until next comment -->
         <div class="card card-custom bg-white border-white border-0 justify-content-center">
@@ -21,10 +51,10 @@
           </div>
           <div class="card-custom-avatar">
             <img class="img-fluid" src="images/gt.png" alt="Avatar" />
-            <h1 class="text-center text-danger">{{ $total_translation }}</h1>
+            <h1 class="text-center text-success transalte-text">{{ $total_translation }}</h1>
           </div>
           <div class="card-body" style="overflow-y: auto">
-            <h4 class="card-title">Total Transalation</h4>
+            <h4 class="card-title fw-bold">Total Transalation</h4>
             <p class="card-text">Number of Characters transalated this month </p>
           </div>
           
@@ -36,7 +66,7 @@
         $rem = 500000 - intval($total_translation);
       @endphp
 
-      <div class="col-md-6 col-lg-3 pb-3">
+      <div class="col-md-6 col-lg-3 pb-2">
 
         <!-- Copy the content below until next comment -->
         <div class="card card-custom bg-white border-white border-0 justify-content-center">
@@ -45,28 +75,28 @@
           </div>
           <div class="card-custom-avatar">
             <img class="img-fluid" src="images/gt.png" alt="Avatar" />
-            <h1 class="text-center text-success">{{ $rem }}</h1>
+            <h1 class="text-center text-warning transalte-text">{{ $rem }}</h1>
           </div>
           <div class="card-body" style="overflow-y: auto">
-            <h4 class="card-title">Remaining Quota</h4>
-            <p class="card-text">Number of Characters remaining quota for transalation for this month</p>
+            <h4 class="card-title fw-bold">Remaining Quota</h4>
+            <p class="card-text">Number of Characters remaining for transalation for this month</p>
           </div>
           
         </div>
       
       </div>
 
-      <div class="col-md-6 col-lg-3 pb-3">
+      <div class="col-md-6 col-lg-3 pb-2">
 
         <!-- Add a style="height: XYZpx" to div.card to limit the card height and display scrollbar instead -->
-        <div class="card card-custom bg-white border-white border-0" style="height: 450px">
+        <div class="card card-custom bg-white border-white border-0" >
           <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);"></div>
           <div class="card-custom-avatar">
             <img class="img-fluid" src="images/gt.png" alt="Avatar" />
-             <h1 class="text-center ">{{ $total_instance }}</h1>
+             <h1 class="text-center transalte-text">{{ $total_instance }}</h1>
           </div>
           <div class="card-body" style="overflow-y: auto">
-            <h4 class="card-title">Total Instances</h4>
+            <h4 class="card-titl fw-bold">Total Instances</h4>
             <p class="card-text">Number attempted to transalte content</p>
             
           </div>
@@ -75,17 +105,17 @@
 
       </div>
      
-     <div class="col-md-6 col-lg-3 pb-3">
+     <div class="col-md-6 col-lg-3 pb-2">
 
         <!-- Add a style="height: XYZpx" to div.card to limit the card height and display scrollbar instead -->
-        <div class="card card-custom bg-white border-white border-0" style="height: 450px">
+        <div class="card card-custom bg-white border-white border-0" >
           <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);"></div>
           <div class="card-custom-avatar">
             <img class="img-fluid" src="images/gt.png" alt="Avatar" />
-             <h1 class="text-center">{{ $total_langs }}</h1>
+             <h1 class="text-center text-warning transalte-text">{{ $total_langs }}</h1>
           </div>
           <div class="card-body" style="overflow-y: auto">
-            <h4 class="card-title">Total Languages</h4>
+            <h4 class="card-title fw-bold">Total Languages</h4>
             <p class="card-text">Total number of languages translated </p>
           </div>
          
@@ -142,6 +172,12 @@
         chart: {
           height: 350,
           type: 'bar',
+           zoom: {
+              enabled: false // 🔹 disables zooming
+            },
+            toolbar: {
+              show: false // optional: hides zoom/reset buttons
+            }
          
         },
         plotOptions: {
@@ -170,7 +206,7 @@
         },
         yaxis: {
           title: {
-            text: 'Servings',
+            text: 'translated Characters',
           },
         },
         fill: {
