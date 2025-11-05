@@ -15,6 +15,8 @@ use PhpOffice\PhpWord\Shared\Html;
 use ZipArchive;
 use App\Models\TranslationLog;
 use Auth;
+use Google\Cloud\Translate\V3\TranslationServiceClient;
+
 
 
 
@@ -84,7 +86,7 @@ class TranslateController extends Controller
         }
     }
 
-    public function translateCKData(Request $request)
+    public function translateCKData2(Request $request)
     {
 
         $start = date('Y-m').'-01 00:00:01';
@@ -188,6 +190,127 @@ class TranslateController extends Controller
 
         return $output;
       
+    }
+
+    public function translateCKData(Request $request)
+    {
+        $text = $request->input('text');
+        $languages = $request->input('languages');
+        $token='RAN'.rand('1111','9999').date('His');
+        
+        $start = date('Y-m').'-01 00:00:01';
+        $end =date('Y-m-d H:i:s');
+
+        if (empty($text) || empty($languages)) {
+            return "<div class='alert alert-danger'>❌ Please provide text and select at least one language.</div>";
+        }
+
+        $total_translation = TranslationLog::whereBetween('created_at',[$start, $end])->sum('character_count');
+
+        // Prepare DOM to preserve HTML structure
+        libxml_use_internal_errors(true);
+        $dom = new \DOMDocument();
+        $dom->loadHTML('<?xml encoding="utf-8" ?>' . $text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_clear_errors();
+        $xpath = new \DOMXPath($dom);
+        $textNodes = $xpath->query('//text()[normalize-space()]');
+
+        // Initialize Translation Service (v3)
+        $translationClient = new TranslationServiceClient([
+            'credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
+        ]);
+        $projectId = env('GOOGLE_PROJECT_ID');
+        $location = 'global';
+        $parent = $translationClient->locationName($projectId, $location);
+
+        $translatedData = [];
+        $totalCharacters = 0;
+
+        foreach ($languages as $lang) {
+            foreach ($textNodes as $node) {
+                $original = $node->nodeValue;
+                $response = $translationClient->translateText(
+                    [$original],
+                    $lang,
+                    $parent,
+                    ['mimeType' => 'text/plain'] // or 'text/html'
+                );
+
+                foreach ($response->getTranslations() as $translation) {
+                    $node->nodeValue = $translation->getTranslatedText();
+                }
+
+                $totalCharacters += mb_strlen($original);
+
+            
+            }
+
+            $translatedData[$lang] = $dom->saveHTML();
+
+            // Reset DOM for next iteration
+            $dom->loadHTML('<?xml encoding="utf-8" ?>' . $text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $xpath = new \DOMXPath($dom);
+            $textNodes = $xpath->query('//text()[normalize-space()]');
+
+            // Log usage
+            /*TranslationLog::create([
+                'language' => $lang,
+                'character_count' => $totalCharacters,
+                'created_at' => now(),  
+            ]);*/
+
+            $totalCount = intval($total_translation)+intval($totalCharacters);
+
+                if($totalCount >=  '3000' ){
+                   return response()->json([
+                        'status' => 'error',
+                        'message' => 'You don’t have enough quota to translate this content.'
+                    ]);
+                }
+
+
+
+            TranslationLog::create([
+                    'language_code' => $lang,
+                   // 'translated_content' => $translatedHtml,
+                    'userID' => Auth::user()->email,
+                    'token'=> $token,
+                    'character_count' => $totalCharacters,
+                ]);
+        }
+
+        $output = "<div class='card p-3'>";
+        $output .= "<h4 class='text-center mb-3'>🌍 Translation Result (Google v3 NMT)</h4>";
+        $output .= "<h5>Original Content:</h5><div class='content-block border p-2 mb-3'>{$text}</div><hr>";
+
+        foreach ($translatedData as $lang => $translatedHtml) {
+            $encodedTranslation = htmlspecialchars($translatedHtml, ENT_QUOTES, 'UTF-8');
+            $output .= "<div class='border p-2 mb-3'>
+                            <h5>Language: <b>" . strtoupper($lang) . "</b></h5>
+                            <div class='content-block'>{$translatedHtml}</div>
+                            <form method='POST' action='" . route('download.single') . "' target='_blank'>
+                                " . csrf_field() . "
+                                <input type='hidden' name='lang' value='{$lang}'>
+                                <input type='hidden' name='content' value='{$encodedTranslation}'>
+                                <button type='submit' class='btn btn-sm btn-primary mt-2'>⬇️ Download ({$lang})</button>
+                            </form>
+                        </div>";
+        }
+
+        $encodedAll = htmlspecialchars(json_encode($translatedData), ENT_QUOTES, 'UTF-8');
+        $output .= "
+            <form method='POST' action='" . route('download.all') . "' target='_blank'>
+                " . csrf_field() . "
+                <input type='hidden' name='original' value='" . e($text) . "'>
+                <input type='hidden' name='translations' value='{$encodedAll}'>
+                <button type='submit' class='btn btn-success mt-3'>⬇️ Download All (HTML)</button>
+            </form>
+        ";
+        $output .= "</div>";
+
+        $translationClient->close();
+
+        return $output;
     }
 
     // ✅ Download single language
