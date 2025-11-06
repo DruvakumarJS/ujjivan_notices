@@ -6,6 +6,9 @@
 	<div class="d-flex">
 		<div class="ms-auto">
 			<a href="{{ route('translate.form')}}"><button class="btn btn-danger text-white">Transalate</button></a>
+      @if(Auth::user()->role=='superadmin')
+      <a href="{{ route('translate.quota')}}"><button class="btn btn-success text-white">View Quota</button></a>
+      @endif
 		</div>
 	</div>
 	
@@ -24,7 +27,7 @@
 
     <div class="col-md-4 col-lg-4 pb-2">
       <div class="card border border-dark ">
-        <div class="card-header bg-primary text-white fw-bold text-center">OverAll Instnces</div>
+        <div class="card-header bg-primary text-white fw-bold text-center">OverAll Instances</div>
         <div class="card-body text-center">
           <span class="transalte-text ">{{ $overall_instance }}</span>
         </div>
@@ -63,7 +66,7 @@
       </div>
 
       @php
-        $rem = 500000 - intval($total_translation);
+        $rem = intval($quotadetails->quota) - intval($total_translation);
       @endphp
 
       <div class="col-md-6 col-lg-3 pb-2">
@@ -75,7 +78,7 @@
           </div>
           <div class="card-custom-avatar">
             <img class="img-fluid" src="images/gt.png" alt="Avatar" />
-            <h1 class="text-center text-warning transalte-text">{{ $rem }}</h1>
+            <h1 class="text-center text-danger transalte-text">{{ $rem }}</h1>
           </div>
           <div class="card-body" style="overflow-y: auto">
             <h4 class="card-title fw-bold">Remaining Quota</h4>

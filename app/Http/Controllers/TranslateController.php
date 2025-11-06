@@ -16,7 +16,7 @@ use ZipArchive;
 use App\Models\TranslationLog;
 use Auth;
 use Google\Cloud\Translate\V3\TranslationServiceClient;
-
+use App\Models\TransalatorQuota;
 
 
 
@@ -51,7 +51,9 @@ class TranslateController extends Controller
 
       $chartData=['name' => $langNamesArray , 'count' => $langCountArray ];
 
-      return view('translations.dashboard',compact('total_translation','total_instance','total_instance','total_langs','langNamesArray','langCountArray','chartData' ,'overall_translation','overall_instance','overall_langs'));
+      $quotadetails = TransalatorQuota::where('month',date('Y-m'))->first();
+     
+      return view('translations.dashboard',compact('total_translation','total_instance','total_instance','total_langs','langNamesArray','langCountArray','chartData' ,'overall_translation','overall_instance','overall_langs','quotadetails'));
     }
 
     public function showForm()
@@ -95,7 +97,20 @@ class TranslateController extends Controller
 
         $total_translation = TranslationLog::whereBetween('created_at',[$start, $end])->sum('character_count');
 
+        $quotaDetails = TransalatorQuota::where('month',date('Y-m-d'))->first();
 
+        if($quotaDetails){
+            $monthQuota = $quotaDetails->quota ;
+        }else{
+            $monthQuota = '500000';
+
+            TransalatorQuota::create([
+                'month' => date('Y-m-d'),
+                'quota' => $monthQuota,
+                'used' => '0',
+                'updated_by' => Auth::user()->id
+            ]);
+        }
 
         $text = $request->input('text');
         $languages = $request->input('languages');
@@ -133,7 +148,7 @@ class TranslateController extends Controller
 
             $totalCount = intval($charCount)+intval($total_translation);
 
-            if($totalCount >=  '2000' ){
+            if($totalCount >=  $monthQuota ){
                return response()->json([
                     'status' => 'error',
                     'message' => 'You don’t have enough quota to translate this content.'
@@ -207,6 +222,21 @@ class TranslateController extends Controller
 
         $total_translation = TranslationLog::whereBetween('created_at',[$start, $end])->sum('character_count');
 
+        $quotaDetails = TransalatorQuota::where('month',date('Y-m'))->first();
+
+        if($quotaDetails){
+            $monthQuota = $quotaDetails->quota ;
+        }else{
+            $monthQuota = '500000';
+
+            TransalatorQuota::create([
+                'month' => date('Y-m'),
+                'quota' => $monthQuota,
+                'used' => '0',
+                'updated_by' => Auth::user()->id
+            ]);
+        }
+
         // Prepare DOM to preserve HTML structure
         libxml_use_internal_errors(true);
         $dom = new \DOMDocument();
@@ -261,7 +291,7 @@ class TranslateController extends Controller
 
             $totalCount = intval($total_translation)+intval($totalCharacters);
 
-                if($totalCount >=  '3000' ){
+                if($totalCount >=  $monthQuota ){
                    return response()->json([
                         'status' => 'error',
                         'message' => 'You don’t have enough quota to translate this content.'
@@ -269,14 +299,19 @@ class TranslateController extends Controller
                 }
 
 
-
-            TranslationLog::create([
+                TranslationLog::create([
                     'language_code' => $lang,
                    // 'translated_content' => $translatedHtml,
                     'userID' => Auth::user()->email,
                     'token'=> $token,
                     'character_count' => $totalCharacters,
                 ]);
+
+                 $update = TransalatorQuota::where('month',date('Y-m'))->update([
+                      'used' => $totalCount ,
+                    ]);
+
+
         }
 
         $output = "<div class='card p-3'>";

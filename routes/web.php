@@ -188,6 +188,9 @@ Route::post('/download-single', [TranslateController::class, 'downloadSingle'])-
 Route::post('/download-all', [TranslateController::class, 'downloadAll'])->name('download.all');
 Route::post('/download-docx', [TranslateController::class, 'downloadDocx'])->name('download.docx');
 
+Route::get('/translate-quota', [HomeController::class, 'quotalist'])->name('translate.quota');
+Route::post('/update-translation-quota', [HomeController::class, 'quotaupdate'])->name('update_quota_details');
+
 
 
 Route::get('/manage_users', [HomeController::class, 'showusers'])->name('manage_users');

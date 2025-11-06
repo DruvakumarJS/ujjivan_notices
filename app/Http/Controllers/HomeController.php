@@ -23,7 +23,7 @@ use App\Imports\ImporteBankingOmbudsment;
 use App\Exports\ExportEmergencyContacts;
 use App\Exports\ExportAudit;
 use App\Exports\ExportAnalytics;
-
+use App\Models\TransalatorQuota;
 
 use DB;
 use Endroid\QrCode\QrCode;
@@ -1522,6 +1522,28 @@ $last = strtotime($to);
       
 
 
+   }
+
+
+   public function quotalist(){
+     $data = TransalatorQuota::get();
+
+     return view('translations.quota',compact('data'));
+   }
+
+   public function quotaupdate(Request $request){
+    $id = $request->quotaid;
+
+    $update = TransalatorQuota::where('id',$id)->update([
+      'quota' => $request->quota_value ,
+      'updated_by' => Auth::user()->id
+    ]);
+
+    if($update){
+      return redirect()->back()->withMessage('Quota details updated successfully');
+    }else{
+      return redirect()->back()->withMessage('Error while updating Quota details');
+    }
    }
 
 
