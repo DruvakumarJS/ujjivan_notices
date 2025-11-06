@@ -66,7 +66,11 @@
       </div>
 
       @php
-        $rem = intval($quotadetails->quota) - intval($total_translation);
+       $rem = 0;
+       if($quotadetails){
+           $rem = intval($quotadetails->quota) - intval($total_translation);
+       }
+        
       @endphp
 
       <div class="col-md-6 col-lg-3 pb-2">

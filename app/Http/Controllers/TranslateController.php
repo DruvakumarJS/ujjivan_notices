@@ -254,9 +254,10 @@ class TranslateController extends Controller
         $parent = $translationClient->locationName($projectId, $location);
 
         $translatedData = [];
-        $totalCharacters = 0;
+        $totalCharactersSum = 0;
 
         foreach ($languages as $lang) {
+            $totalCharacters = 0;
             foreach ($textNodes as $node) {
                 $original = $node->nodeValue;
                 $response = $translationClient->translateText(
@@ -271,6 +272,7 @@ class TranslateController extends Controller
                 }
 
                 $totalCharacters += mb_strlen($original);
+                
 
             
             }
@@ -307,12 +309,15 @@ class TranslateController extends Controller
                     'character_count' => $totalCharacters,
                 ]);
 
-                 $update = TransalatorQuota::where('month',date('Y-m'))->update([
-                      'used' => $totalCount ,
-                    ]);
-
+                $totalCharactersSum += $totalCharacters;
 
         }
+
+
+
+        $update = TransalatorQuota::where('month',date('Y-m'))->update([
+                      'used' => intval($quotaDetails->used)+ intval($totalCharactersSum) ,
+                    ]);
 
         $output = "<div class='card p-3'>";
         $output .= "<h4 class='text-center mb-3'>🌍 Translation Result (Google v3 NMT)</h4>";
