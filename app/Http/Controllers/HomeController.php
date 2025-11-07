@@ -1526,7 +1526,7 @@ $last = strtotime($to);
 
 
    public function quotalist(){
-     $data = TransalatorQuota::get();
+     $data = TransalatorQuota::orderBy('id','DESC')->get();
 
      return view('translations.quota',compact('data'));
    }
