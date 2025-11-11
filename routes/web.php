@@ -191,13 +191,20 @@ Route::post('/download-docx', [TranslateController::class, 'downloadDocx'])->nam
 Route::get('/translate-quota', [HomeController::class, 'quotalist'])->name('translate.quota');
 Route::post('/update-translation-quota', [HomeController::class, 'quotaupdate'])->name('update_quota_details');
 
+Route::post('/translation/send-mail', [TranslateController::class, 'sendMail'])->name('translation.sendMail');
 
 
 Route::get('/manage_users', [HomeController::class, 'showusers'])->name('manage_users');
 Route::post('/save_user', [HomeController::class, 'save_user'])->name('save_user');
 
 
+Route::get('/view-translated', [TranslateController::class, 'view_translated'])->name('view_translated');
+Route::post('/update-translated-content', [TranslateController::class, 'update_translated'])->name('update_translated_content');
+
 });
+
+
+
 
 
 

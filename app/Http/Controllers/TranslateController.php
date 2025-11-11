@@ -18,13 +18,15 @@ use Auth;
 use Google\Cloud\Translate\V3\TranslationServiceClient;
 use App\Models\TransalatorQuota;
 use App\Models\GoogleTranslatedContent;
+use App\Mail\TranslatedContentMail;
+use Mail;
 
 
 
 class TranslateController extends Controller
 {
     public function dashboard(Request $request){
-      
+     // print_r($request->input());die();
       if($request->start == ''){
            $start = date('Y-m').'-01 00:00:01';
            $end =date('Y-m-d H:i:s');
@@ -467,165 +469,274 @@ class TranslateController extends Controller
     }
 
     public function translateCKData(Request $request)
-{
-    $text = $request->input('text');
-    $languages = $request->input('languages');
-    $token = 'RAN' . rand(1111, 9999) . date('His');
+    {
+        $text = $request->input('text');
+        $languages = $request->input('languages');
+        $token = 'RAN' . rand(1111, 9999) . date('His');
 
-    $start = date('Y-m') . '-01 00:00:01';
-    $end = date('Y-m-d H:i:s');
+        $start = date('Y-m') . '-01 00:00:01';
+        $end = date('Y-m-d H:i:s');
 
-    if (empty($text) || empty($languages)) {
-        return "<div class='alert alert-danger'>❌ Please provide text and select at least one language.</div>";
-    }
-
-    $total_translation = TranslationLog::whereBetween('created_at', [$start, $end])->sum('character_count');
-
-    $quotaDetails = TransalatorQuota::where('month', date('Y-m'))->first();
-
-    if ($quotaDetails) {
-        $monthQuota = $quotaDetails->quota;
-    } else {
-        $monthQuota = 500000;
-
-        TransalatorQuota::create([
-            'month' => date('Y-m'),
-            'quota' => $monthQuota,
-            'used' => 0,
-            'updated_by' => Auth::user()->id
-        ]);
-    }
-
-    // ✅ Parse HTML properly (CKEditor sends HTML)
-    libxml_use_internal_errors(true);
-    $dom = new \DOMDocument('1.0', 'UTF-8');
-    $dom->loadHTML(mb_convert_encoding($text, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-    libxml_clear_errors();
-
-    $xpath = new \DOMXPath($dom);
-    $textNodes = $xpath->query('//text()[normalize-space()]');
-
-    // ✅ Google Translation Client (v3)
-    $translationClient = new TranslationServiceClient([
-        'credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
-    ]);
-    $projectId = env('GOOGLE_PROJECT_ID');
-    $location = 'global';
-    $parent = $translationClient->locationName($projectId, $location);
-
-    $translatedData = [];
-    $totalCharactersSum = 0;
-
-    foreach ($languages as $lang) {
-        $totalCharacters = 0;
-
-        foreach ($textNodes as $node) {
-            $original = $node->nodeValue;
-            $response = $translationClient->translateText(
-                [$original],
-                $lang,
-                $parent,
-                ['mimeType' => 'text/plain']
-            );
-
-            foreach ($response->getTranslations() as $translation) {
-                $node->nodeValue = $translation->getTranslatedText();
-            }
-
-            $totalCharacters += mb_strlen($original);
+        if (empty($text) || empty($languages)) {
+            return "<div class='alert alert-danger'>❌ Please provide text and select at least one language.</div>";
         }
 
-        // ✅ Get translated HTML and clean it up
-        $translatedHtml = $dom->saveHTML();
+        $total_translation = TranslationLog::whereBetween('created_at', [$start, $end])->sum('character_count');
 
-        $cleanedHtml = preg_replace('/<\?xml.*?\?>/i', '', $translatedHtml);
-        $cleanedHtml = preg_replace('/\s*data-[^=]+="[^"]*"/i', '', $cleanedHtml);
-        $cleanedHtml = preg_replace('/\s*style="[^"]*"/i', '', $cleanedHtml);
-        $cleanedHtml = html_entity_decode(trim($cleanedHtml), ENT_QUOTES, 'UTF-8');
+        $quotaDetails = TransalatorQuota::where('month', date('Y-m'))->first();
 
-        $translatedData[$lang] = $cleanedHtml;
+        if ($quotaDetails) {
+            $monthQuota = $quotaDetails->quota;
+        } else {
+            $monthQuota = 500000;
 
-        // Reset DOM for next language
-        $dom->loadHTML(mb_convert_encoding($text, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $xpath = new \DOMXPath($dom);
-        $textNodes = $xpath->query('//text()[normalize-space()]');
-
-        // ✅ Quota check
-        $totalCount = intval($total_translation) + intval($totalCharacters);
-        if ($totalCount >= $monthQuota) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'You don’t have enough quota to translate this content.'
+            TransalatorQuota::create([
+                'month' => date('Y-m'),
+                'quota' => $monthQuota,
+                'used' => 0,
+                'updated_by' => Auth::user()->id
             ]);
         }
 
-        // ✅ Log Translation
-        TranslationLog::create([
-            'language_code' => $lang,
-            'userID' => Auth::user()->email,
-            'token' => $token,
-            'character_count' => $totalCharacters,
+        // ✅ Parse HTML properly (CKEditor sends HTML)
+        libxml_use_internal_errors(true);
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->loadHTML(mb_convert_encoding($text, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_clear_errors();
+
+        $xpath = new \DOMXPath($dom);
+        $textNodes = $xpath->query('//text()[normalize-space()]');
+
+        // ✅ Google Translation Client (v3)
+        $translationClient = new TranslationServiceClient([
+            'credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
+        ]);
+        $projectId = env('GOOGLE_PROJECT_ID');
+        $location = 'global';
+        $parent = $translationClient->locationName($projectId, $location);
+
+        $translatedData = [];
+        $totalCharactersSum = 0;
+
+        foreach ($languages as $lang) {
+            $totalCharacters = 0;
+
+            foreach ($textNodes as $node) {
+                $original = $node->nodeValue;
+                $response = $translationClient->translateText(
+                    [$original],
+                    $lang,
+                    $parent,
+                    ['mimeType' => 'text/plain']
+                );
+
+                foreach ($response->getTranslations() as $translation) {
+                    $node->nodeValue = $translation->getTranslatedText();
+                }
+
+                $totalCharacters += mb_strlen($original);
+            }
+
+            // ✅ Get translated HTML and clean it up
+            $translatedHtml = $dom->saveHTML();
+
+            $cleanedHtml = preg_replace('/<\?xml.*?\?>/i', '', $translatedHtml);
+            //$cleanedHtml = preg_replace('/\s*data-[^=]+="[^"]*"/i', '', $cleanedHtml);
+            //$cleanedHtml = preg_replace('/\s*style="[^"]*"/i', '', $cleanedHtml);
+            $cleanedHtml = html_entity_decode(trim($cleanedHtml), ENT_QUOTES, 'UTF-8');
+
+            $translatedData[$lang] = $cleanedHtml;
+
+            // Reset DOM for next language
+            $dom->loadHTML(mb_convert_encoding($text, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $xpath = new \DOMXPath($dom);
+            $textNodes = $xpath->query('//text()[normalize-space()]');
+
+            // ✅ Quota check
+            $totalCount = intval($total_translation) + intval($totalCharacters);
+            if ($totalCount >= $monthQuota) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'You don’t have enough quota to translate this content.'
+                ]);
+            }
+
+            // ✅ Log Translation
+            TranslationLog::create([
+                'language_code' => $lang,
+                'userID' => Auth::user()->email,
+                'token' => $token,
+                'character_count' => $totalCharacters,
+            ]);
+
+            $lange = Language::where('code', $lang)->first();
+
+           
+
+            $html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Translation - ' . strtoupper($lang) . '</title>
+                <style>
+                    body { font-family: Calibri, sans-serif; padding: 20px; background:#f8f9fa; color:#333; }
+                    h2 { color:#007bff; }
+                    div.content-block { border:1px solid #ccc; padding:10px; background:#fff; margin-top:20px; }
+                    table { border-collapse: collapse; width: 100%; }
+                    table, th, td { border: 1px solid #aaa; padding: 5px; }
+                </style></head><body>';
+
+                $html .= "<h2>🌐 Translated Content (" . strtoupper($lang) . ")</h2>
+                          <p><small>Generated on: " . now()->format('d M Y, h:i A') . "</small></p>
+                          <div class='content-block'>{$translatedHtml}</div></body></html>";
+
+
+
+            // ✅ Save in DB (clean UTF-8)
+            $lange = Language::where('code', $lang)->first();
+           
+            $fileName = 'translated_' . $lang . '_' . time() . '.html';
+            $filePath = storage_path('app/public/translated' . $fileName);
+            file_put_contents($filePath, $html);
+            
+           // sendMail($lang , $filePath);
+
+            
+
+            GoogleTranslatedContent::create([
+                'language' => $lange ? $lange->name : strtoupper($lang),
+                'lang_code' => $lang,
+                'original_content' => $text,
+                'temp_conetnt' => $cleanedHtml,
+                'final_content' => $cleanedHtml,
+                'character_count' => $totalCharacters,
+                'translated_by' => Auth::user()->id,
+                'reviewer_email' => 'druva@netiapps.com',
+                'user_email' => Auth::user()->email,
+                'status' => 'Translated'
+            ]);
+
+            $totalCharactersSum += $totalCharacters;
+        }
+
+        // ✅ Update Monthly Quota
+        TransalatorQuota::where('month', date('Y-m'))->update([
+            'used' => intval($quotaDetails->used) + intval($totalCharactersSum),
         ]);
 
-        // ✅ Save in DB (clean UTF-8)
-        $lange = Language::where('code', $lang)->first();
+        // ✅ Build HTML Output
+        $output = "<div class='card p-3'>";
+        $output .= "<h4 class='text-center mb-3'>🌍 Translation Result (Google v3 NMT)</h4>";
+        $output .= "<h5>Original Content:</h5><div class='content-block border p-2 mb-3'>{$text}</div><hr>";
 
-        GoogleTranslatedContent::create([
-            'language' => $lange ? $lange->name : strtoupper($lang),
-            'lang_code' => $lang,
-            'original_content' => $text,
-            'temp_conetnt' => $cleanedHtml,
-            'final_content' => $cleanedHtml,
-            'character_count' => $totalCharacters,
-            'translated_by' => Auth::user()->id,
-            'reviewer_email' => 'druva@netiapps.com',
-            'user_email' => Auth::user()->email,
-            'status' => 'Translated'
-        ]);
+        foreach ($translatedData as $lang => $translatedHtml) {
+            $encodedTranslation = htmlspecialchars($translatedHtml, ENT_QUOTES, 'UTF-8');
+            $output .= "<div class='border p-2 mb-3'>
+                            <h5>Language: <b>" . strtoupper($lang) . "</b></h5>
+                            <div class='content-block'>{$translatedHtml}</div>
+                            <form method='POST' action='" . route('download.single') . "' target='_blank'>
+                                " . csrf_field() . "
+                                <input type='hidden' name='lang' value='{$lang}'>
+                                <input type='hidden' name='content' value='{$encodedTranslation}'>
+                                <button type='submit' class='btn btn-sm btn-primary mt-2'>⬇️ Download ({$lang})</button>
+                            </form>
 
-        $totalCharactersSum += $totalCharacters;
+                            <form method='POST' action='" . route('translation.sendMail') . "' class='mt-2'>
+                                " . csrf_field() . "
+                                <input type='hidden' name='lang' value='{$lang}'>
+                                <input type='hidden' name='content' value='{$encodedTranslation}'>
+                                <button type='submit' class='btn btn-sm btn-warning'>📧 Send Mail ({$lang})</button>
+                            </form>
+                        </div>";
+        }
+
+        $encodedAll = htmlspecialchars(json_encode($translatedData), ENT_QUOTES, 'UTF-8');
+        $output .= "
+            <form method='POST' action='" . route('download.all') . "' target='_blank'>
+                " . csrf_field() . "
+                <input type='hidden' name='original' value='" . e($text) . "'>
+                <input type='hidden' name='translations' value='{$encodedAll}'>
+                <button type='submit' class='btn btn-success mt-3'>⬇️ Download All (HTML)</button>
+            </form>
+        ";
+        $output .= "</div>";
+
+        $translationClient->close();
+
+        return $output;
     }
 
-    // ✅ Update Monthly Quota
-    TransalatorQuota::where('month', date('Y-m'))->update([
-        'used' => intval($quotaDetails->used) + intval($totalCharactersSum),
-    ]);
+public function sendMail(Request $request)
+{
+   
+   
+    $lang = $request->input('lang');
+    $content = html_entity_decode($request->input('content'));
 
-    // ✅ Build HTML Output
-    $output = "<div class='card p-3'>";
-    $output .= "<h4 class='text-center mb-3'>🌍 Translation Result (Google v3 NMT)</h4>";
-    $output .= "<h5>Original Content:</h5><div class='content-block border p-2 mb-3'>{$text}</div><hr>";
+    $mailRecipients = [
+        'en' => 'english@example.com',
+        'hi' => 'hindi@example.com',
+        'kn' => 'druva@netiapps.com',
+        'ta' => 'tamil@example.com',
+        'te' => 'telugu@example.com',
+    ];
 
-    foreach ($translatedData as $lang => $translatedHtml) {
-        $encodedTranslation = htmlspecialchars($translatedHtml, ENT_QUOTES, 'UTF-8');
-        $output .= "<div class='border p-2 mb-3'>
-                        <h5>Language: <b>" . strtoupper($lang) . "</b></h5>
-                        <div class='content-block'>{$translatedHtml}</div>
-                        <form method='POST' action='" . route('download.single') . "' target='_blank'>
-                            " . csrf_field() . "
-                            <input type='hidden' name='lang' value='{$lang}'>
-                            <input type='hidden' name='content' value='{$encodedTranslation}'>
-                            <button type='submit' class='btn btn-sm btn-primary mt-2'>⬇️ Download ({$lang})</button>
-                        </form>
-                    </div>";
+    if (!isset($mailRecipients[$lang])) {
+        return back()->with('error', "No recipient configured for language: {$lang}");
     }
 
-    $encodedAll = htmlspecialchars(json_encode($translatedData), ENT_QUOTES, 'UTF-8');
-    $output .= "
-        <form method='POST' action='" . route('download.all') . "' target='_blank'>
-            " . csrf_field() . "
-            <input type='hidden' name='original' value='" . e($text) . "'>
-            <input type='hidden' name='translations' value='{$encodedAll}'>
-            <button type='submit' class='btn btn-success mt-3'>⬇️ Download All (HTML)</button>
-        </form>
-    ";
-    $output .= "</div>";
+    $to = $mailRecipients[$lang];
 
-    $translationClient->close();
+    // ✅ Create a temporary HTML file for attachment
+    $fileName = 'translated_' . $lang . '_' . time() . '.html';
+    $filePath = storage_path('app/public/' . $fileName);
 
-    return $output;
+    $fullHtml = "
+    <!DOCTYPE html>
+    <html lang='{$lang}'>
+    <head>
+        <meta charset='UTF-8'>
+        <title>Translated Content - {$lang}</title>
+        <style>
+            body { font-family: 'Arial', sans-serif; padding: 20px; background: #fff; color: #333; }
+            h1,h2,h3,h4 { text-align: center; color: #004085; }
+            .content-block { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 15px; }
+            p { line-height: 1.6; }
+        </style>
+    </head>
+    <body>
+        <h3>Translated Content (" . strtoupper($lang) . ")</h3>
+        <div class='content-block'>{$content}</div>
+    </body>
+    </html>";
+
+    file_put_contents($filePath, $fullHtml);
+    
+    // ✅ Send Mail with attachment
+    Mail::to($to)->send(new TranslatedContentMail($lang, $filePath));
+
+    // ✅ Delete file after sending
+    if (file_exists($filePath)) {
+        unlink($filePath);
+    }
+
+    return back()->with('success', "Mail sent successfully to {$to} with {$lang} translation attached.");
 }
 
+public function view_translated(){
+    $data = GoogleTranslatedContent::where('id','4')->first();
+    return view ('translations.view_translated',compact('data'));
+}
+
+public function update_translated(Request $request){
+
+//print_r($request->input());die();
+    $update= GoogleTranslatedContent::where('id',$request->translate_id)->update(
+        ['final_content' => $request->translated_final_content,
+         'status' => ($request->btntype=='Draft')?'Drafted':'Finished'
+        ]
+    );
+
+    if($update){
+        return redirect()->back()->withMessage('Suceesfully Updated');
+    }
+}
 
 
 }
