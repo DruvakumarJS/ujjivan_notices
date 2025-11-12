@@ -1547,4 +1547,9 @@ $last = strtotime($to);
    }
 
 
+   public function dsEditor(){
+    return view('dsEditor');
+   }
+
+
 }

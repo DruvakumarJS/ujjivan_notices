@@ -25,6 +25,12 @@ use Mail;
 
 class TranslateController extends Controller
 {
+    public function index(){
+       $data = GoogleTranslatedContent::orderBy('id','DESC')->get();
+
+       return view('translations.list',compact('data'));
+    }
+
     public function dashboard(Request $request){
      // print_r($request->input());die();
       if($request->start == ''){
@@ -336,6 +342,12 @@ class TranslateController extends Controller
                                 <input type='hidden' name='content' value='{$encodedTranslation}'>
                                 <button type='submit' class='btn btn-sm btn-primary mt-2'>⬇️ Download ({$lang})</button>
                             </form>
+                            <form method='POST' action='" . route('translation.sendMail') . "' class='mt-2'>
+                                " . csrf_field() . "
+                                <input type='hidden' name='lang' value='{$lang}'>
+                                <input type='hidden' name='content' value='{$encodedTranslation}'>
+                                <button type='submit' class='btn btn-sm btn-warning'>📧 Send Mail ({$lang})</button>
+                            </form>
                         </div>";
         }
 
@@ -520,7 +532,7 @@ class TranslateController extends Controller
 
         foreach ($languages as $lang) {
             $totalCharacters = 0;
-
+            $totalTranslatedCharacters = 0;
             foreach ($textNodes as $node) {
                 $original = $node->nodeValue;
                 $response = $translationClient->translateText(
@@ -531,7 +543,10 @@ class TranslateController extends Controller
                 );
 
                 foreach ($response->getTranslations() as $translation) {
-                    $node->nodeValue = $translation->getTranslatedText();
+                    $translatedText = $translation->getTranslatedText();
+                    $node->nodeValue = $translatedText;
+
+                    $totalTranslatedCharacters += grapheme_strlen($translatedText);
                 }
 
                 $totalCharacters += mb_strlen($original);
@@ -541,8 +556,7 @@ class TranslateController extends Controller
             $translatedHtml = $dom->saveHTML();
 
             $cleanedHtml = preg_replace('/<\?xml.*?\?>/i', '', $translatedHtml);
-            //$cleanedHtml = preg_replace('/\s*data-[^=]+="[^"]*"/i', '', $cleanedHtml);
-            //$cleanedHtml = preg_replace('/\s*style="[^"]*"/i', '', $cleanedHtml);
+           
             $cleanedHtml = html_entity_decode(trim($cleanedHtml), ENT_QUOTES, 'UTF-8');
 
             $translatedData[$lang] = $cleanedHtml;
@@ -552,7 +566,7 @@ class TranslateController extends Controller
             $xpath = new \DOMXPath($dom);
             $textNodes = $xpath->query('//text()[normalize-space()]');
 
-            // ✅ Quota check
+            //  Quota check
             $totalCount = intval($total_translation) + intval($totalCharacters);
             if ($totalCount >= $monthQuota) {
                 return response()->json([
@@ -567,6 +581,7 @@ class TranslateController extends Controller
                 'userID' => Auth::user()->email,
                 'token' => $token,
                 'character_count' => $totalCharacters,
+                'initial_characters' => $totalTranslatedCharacters
             ]);
 
             $lange = Language::where('code', $lang)->first();
@@ -643,6 +658,8 @@ class TranslateController extends Controller
                                 <input type='hidden' name='content' value='{$encodedTranslation}'>
                                 <button type='submit' class='btn btn-sm btn-warning'>📧 Send Mail ({$lang})</button>
                             </form>
+
+                            
                         </div>";
         }
 
@@ -671,7 +688,7 @@ public function sendMail(Request $request)
 
     $mailRecipients = [
         'en' => 'english@example.com',
-        'hi' => 'hindi@example.com',
+        'hi' => 'manoj.p@netiapps.com',
         'kn' => 'druva@netiapps.com',
         'ta' => 'tamil@example.com',
         'te' => 'telugu@example.com',
@@ -719,24 +736,42 @@ public function sendMail(Request $request)
     return back()->with('success', "Mail sent successfully to {$to} with {$lang} translation attached.");
 }
 
-public function view_translated(){
-    $data = GoogleTranslatedContent::where('id','4')->first();
+public function view_translated($id){
+    $data = GoogleTranslatedContent::where('id',decrypt($id))->first();
     return view ('translations.view_translated',compact('data'));
+}
+
+public function edit_translated($id){
+    $data = GoogleTranslatedContent::where('id',decrypt($id))->first();
+    return view ('translations.edit_translated',compact('data'));
 }
 
 public function update_translated(Request $request){
 
 //print_r($request->input());die();
+    $content = $request->input('translated_final_content');
+    $decoded = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+    $plainText = strip_tags($decoded);
+
+    $plainText = preg_replace('/\xC2\xA0|&nbsp;/', ' ', $plainText);
+    $plainText = preg_replace('/\s+/u', ' ', $plainText);
+
+    $plainText = trim($plainText);
+
+    $totalCharacters = mb_strlen($plainText, 'UTF-8');
+
     $update= GoogleTranslatedContent::where('id',$request->translate_id)->update(
         ['final_content' => $request->translated_final_content,
-         'status' => ($request->btntype=='Draft')?'Drafted':'Finished'
+         'status' => ($request->btntype=='Draft')?'Drafted':'Finished',
+         'final_characters' => $totalCharacters
         ]
     );
 
     if($update){
         return redirect()->back()->withMessage('Suceesfully Updated');
     }
-}
+ }
 
 
 }

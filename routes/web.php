@@ -197,9 +197,12 @@ Route::post('/translation/send-mail', [TranslateController::class, 'sendMail'])-
 Route::get('/manage_users', [HomeController::class, 'showusers'])->name('manage_users');
 Route::post('/save_user', [HomeController::class, 'save_user'])->name('save_user');
 
-
-Route::get('/view-translated', [TranslateController::class, 'view_translated'])->name('view_translated');
+Route::get('/google-translated-list', [TranslateController::class, 'index'])->name('translate.list');
+Route::get('/edit-translation/{id}', [TranslateController::class, 'edit_translated'])->name('edit_translated');
 Route::post('/update-translated-content', [TranslateController::class, 'update_translated'])->name('update_translated_content');
+Route::get('/view-translation/{id}', [TranslateController::class, 'view_translated'])->name('view_translated');
+
+Route::get('/ds-editor', [HomeController::class, 'dsEditor'])->name('ds_editor');
 
 });
 

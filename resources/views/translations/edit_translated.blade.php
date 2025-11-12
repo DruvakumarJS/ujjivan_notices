@@ -36,27 +36,38 @@
     <p id="mydiv" class="text-danger text-center">{{ Session::get('message') }}</p>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            alert("{{ Session::get('message') }}");
-        });
-    </script>
+document.addEventListener('DOMContentLoaded', function () {
+    var message = "{{ Session::get('message') }}";
+    if (message) {
+        alert(message);
+        // Redirect after user clicks OK
+        window.location.href = "{{ url('/google-translated-list') }}";
+    }
+});
+</script>
+
     @endif
 
     <form method="POST" action="{{route('update_translated_content')}}">
         @csrf
         <div class="editor-wrapper">
             <div class="editor-container">
-                <label class="fw-bold text-center p-3 d-block">Google Translated Content</label>
-                <textarea id="editorEn" name="" >{!! $data->temp_conetnt !!}</textarea>
+                <label class="fw-bold text-center p-3 d-block">English [Original]</label>
+                <textarea id="editorEn" name="" disabled>{!! $data->original_content !!}</textarea>
             </div>
             <input type="hidden" name="translate_id" value="{{ $data->id}}">
             <div class="editor-container">
-                <label class="fw-bold text-center p-3 d-block">{{ $data->language }} [Edited]</label>
+                <label class="fw-bold text-center p-3 d-block">{{ $data->language }} [Translated]</label>
                 <textarea id="editor" name="translated_final_content">{!! $data->final_content !!}</textarea>
             </div>
         </div>
 
-       
+        @if($data->status != 'Finished')
+         <div class="d-flex mt-4">
+          <button class="btn btn-danger text-white ms-2" name="btntype" type="submit" value="submit">Update Translated Content</button>
+          <button class="btn btn-success text-white ms-auto " name="btntype" type="submit" value="Draft">Update as Draft</button>
+         </div>
+         @endif
     </form>
 
    

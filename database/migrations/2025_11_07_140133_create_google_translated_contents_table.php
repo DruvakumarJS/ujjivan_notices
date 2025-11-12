@@ -21,6 +21,8 @@ class CreateGoogleTranslatedContentsTable extends Migration
             $table->longText('temp_conetnt');
             $table->integer('character_count');
             $table->longText('final_content');
+            $table->integer('initial_characters')->nullable();
+            $table->integer('final_characters')->nullable();
             $table->string('translated_by');
             $table->string('reviewer_email');
             $table->string('status');

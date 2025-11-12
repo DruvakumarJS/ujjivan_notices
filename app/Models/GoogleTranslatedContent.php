@@ -17,6 +17,8 @@ class GoogleTranslatedContent extends Model
     	'final_content',
     	'character_count',
     	'translated_by',
+        'initial_characters',
+        'final_characters',
     	'reviewer_email',
     	'status'];
 }

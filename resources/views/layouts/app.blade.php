@@ -44,6 +44,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- DS editor -->
+    <script src="https://trial.dsserver.io/documenteditor/JS/ds-server-document-editor.js"></script>
+
 
 
    
@@ -173,7 +177,7 @@
                           </li>
 
                            <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('translatation') || request()->routeIs('translate.form') ? 'bg-warning text-danger' : '' }}">
-                            <a href="{{route('translatation')}}"> <label class="label-bold">Translator</label> </a>
+                            <a target="_blank" href="{{route('translatation')}}"> <label class="label-bold">Translator</label> </a>
                           </li>
 
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('audit') ? 'bg-warning text-danger' : '' }}">
@@ -187,6 +191,10 @@
 
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('manage_users') ? 'bg-warning text-danger' : '' }}">
                             <a target="_blank" href="{{route('manage_users')}}"> <label class="label-bold">User Management</label> </a>
+                          </li>
+
+                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('ds_editor') ? 'bg-warning text-danger' : '' }}">
+                            <a target="_blank" href="{{route('ds_editor')}}"> <label class="label-bold">DS Editor</label> </a>
                           </li>
 
                           @endif
