@@ -19,6 +19,7 @@ use Google\Cloud\Translate\V3\TranslationServiceClient;
 use App\Models\TransalatorQuota;
 use App\Models\GoogleTranslatedContent;
 use App\Mail\TranslatedContentMail;
+use App\Models\ContentUser;
 use Mail;
 
 
@@ -26,9 +27,20 @@ use Mail;
 class TranslateController extends Controller
 {
     public function index(){
-       $data = GoogleTranslatedContent::orderBy('id','DESC')->get();
+        if(Auth::user()->role != 'Editor'){
+            $data = GoogleTranslatedContent::orderBy('id','DESC')->get();
+        }else{
+            $data = GoogleTranslatedContent::where('reviewer_email',Auth::user()->email)->orderBy('id','DESC')->get();
+        }
+       
 
        return view('translations.list',compact('data'));
+    }
+
+    public function mylist(){
+       $data = GoogleTranslatedContent::where('reviewer_email',Auth::user()->email)->orderBy('id','DESC')->get();
+
+       return view('translations.editor_list',compact('data'));
     }
 
     public function dashboard(Request $request){
@@ -612,7 +624,8 @@ class TranslateController extends Controller
             
            // sendMail($lang , $filePath);
 
-            
+           
+            $userEmails = ContentUser::where('lang', $lang)->pluck('email')->first();
 
             GoogleTranslatedContent::create([
                 'language' => $lange ? $lange->name : strtoupper($lang),
@@ -622,7 +635,7 @@ class TranslateController extends Controller
                 'final_content' => $cleanedHtml,
                 'character_count' => $totalCharacters,
                 'translated_by' => Auth::user()->id,
-                'reviewer_email' => 'druva@netiapps.com',
+                'reviewer_email' => $userEmails,
                 'user_email' => Auth::user()->email,
                 'status' => 'Translated'
             ]);
@@ -652,7 +665,7 @@ class TranslateController extends Controller
                                 <button type='submit' class='btn btn-sm btn-primary mt-2'>⬇️ Download ({$lang})</button>
                             </form>
 
-                            <form method='POST' action='" . route('translation.sendMail') . "' class='mt-2'>
+                            <form method='POST' action='" . route('translation.sendMail') . "' target='_blank' class='mt-2'>
                                 " . csrf_field() . "
                                 <input type='hidden' name='lang' value='{$lang}'>
                                 <input type='hidden' name='content' value='{$encodedTranslation}'>
@@ -680,27 +693,21 @@ class TranslateController extends Controller
     }
 
 public function sendMail(Request $request)
-{
-   
-   
+{   
     $lang = $request->input('lang');
-    $content = html_entity_decode($request->input('content'));
 
-    $mailRecipients = [
-        'en' => 'english@example.com',
-        'hi' => 'manoj.p@netiapps.com',
-        'kn' => 'druva@netiapps.com',
-        'ta' => 'tamil@example.com',
-        'te' => 'telugu@example.com',
-    ];
+    // Fetch recipients
+    $userEmails = ContentUser::where('lang', $lang)->pluck('email')->toArray();
 
-    if (!isset($mailRecipients[$lang])) {
+    // Validate
+    if (empty($userEmails)) {
         return back()->with('error', "No recipient configured for language: {$lang}");
     }
 
-    $to = $mailRecipients[$lang];
+    // Decode translated content
+    $content = html_entity_decode($request->input('content'));
 
-    // ✅ Create a temporary HTML file for attachment
+    // Create temp HTML file
     $fileName = 'translated_' . $lang . '_' . time() . '.html';
     $filePath = storage_path('app/public/' . $fileName);
 
@@ -711,7 +718,7 @@ public function sendMail(Request $request)
         <meta charset='UTF-8'>
         <title>Translated Content - {$lang}</title>
         <style>
-            body { font-family: 'Arial', sans-serif; padding: 20px; background: #fff; color: #333; }
+            body { font-family: Arial, sans-serif; padding: 20px; background: #fff; color: #333; }
             h1,h2,h3,h4 { text-align: center; color: #004085; }
             .content-block { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 15px; }
             p { line-height: 1.6; }
@@ -724,17 +731,23 @@ public function sendMail(Request $request)
     </html>";
 
     file_put_contents($filePath, $fullHtml);
-    
-    // ✅ Send Mail with attachment
-    Mail::to($to)->send(new TranslatedContentMail($lang, $filePath));
 
-    // ✅ Delete file after sending
+    // Send the mail
+    Mail::to($userEmails)->send(new TranslatedContentMail($lang, $filePath));
+
+    // Delete file after sending
     if (file_exists($filePath)) {
         unlink($filePath);
     }
 
-    return back()->with('success', "Mail sent successfully to {$to} with {$lang} translation attached.");
+    return response("
+        <script>
+            alert('Mail sent successfully for Editor: {$lang}');
+            window.close();
+        </script>
+    ");
 }
+
 
 public function view_translated($id){
     $data = GoogleTranslatedContent::where('id',decrypt($id))->first();

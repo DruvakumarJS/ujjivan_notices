@@ -45,9 +45,6 @@
                   	<td>{{ $val->status}}</td>
                   	<td>
                   		<a href="{{route('edit_translated',encrypt($val->id))}}"><button class="btn btn-sm btn-danger text-white">EDIT</button></a>
-                      @if(Auth::user()->role != 'Editor')
-                      <a href="{{route('view_translated',encrypt($val->id))}}"><button class="btn btn-sm btn-secondary">View</button></a>
-                      @endif
 
                   	</td>
                   </tr>

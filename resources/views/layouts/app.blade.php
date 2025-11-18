@@ -176,7 +176,7 @@
                             <a href="{{route('notices_recycle','en')}}"> <label class="label-bold">Recycle Bin</label> </a>
                           </li>
 
-                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('translatation') || request()->routeIs('translate.form') ? 'bg-warning text-danger' : '' }}">
+                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('translatation') || request()->routeIs('translate.form') || request()->routeIs('translate.list') || request()->routeIs('edit_translated') | request()->routeIs('view_translated') ? 'bg-warning text-danger' : '' }}">
                             <a target="_blank" href="{{route('translatation')}}"> <label class="label-bold">Translator</label> </a>
                           </li>
 
@@ -187,7 +187,13 @@
 
                           @endif
 
-                          @if(Auth::user()->role == 'superadmin')
+                          @if(Auth::user()->role == 'Editor' )
+                              <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('translate.list') ? 'bg-warning text-danger' : '' }}">
+                            <a href="{{route('translate.list')}}"> <label class="label-bold">My Notice</label> </a>
+                          </li>
+                          @endif
+
+                          @if(Auth::user()->role == 'superadmin' || Auth::user()->role == 'content_admin')
 
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('manage_users') ? 'bg-warning text-danger' : '' }}">
                             <a target="_blank" href="{{route('manage_users')}}"> <label class="label-bold">User Management</label> </a>

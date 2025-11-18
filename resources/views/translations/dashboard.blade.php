@@ -7,10 +7,10 @@
 		<div class="ms-auto">
 			<a href="{{ route('translate.form')}}"><button class="btn btn-danger text-white">Transalate</button></a>
 
-      <a href="{{ route('translate.list')}}"><button class="btn btn-warning text-white">View List</button></a>
+      <a href="{{ route('translate.list')}}"><button class="btn btn-warning text-white ms-2">View List</button></a>
 
       @if(Auth::user()->role=='superadmin')
-      <a href="{{ route('translate.quota')}}"><button class="btn btn-success text-white">View Quota</button></a>
+      <a href="{{ route('translate.quota')}}"><button class="btn btn-success text-white ms-2">View Quota</button></a>
       @endif
 		</div>
 	</div>

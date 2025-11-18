@@ -24,6 +24,8 @@ use App\Exports\ExportEmergencyContacts;
 use App\Exports\ExportAudit;
 use App\Exports\ExportAnalytics;
 use App\Models\TransalatorQuota;
+use App\Models\ContentUser;
+
 
 use DB;
 use Endroid\QrCode\QrCode;
@@ -1481,9 +1483,11 @@ $last = strtotime($to);
    }
 
    public function showusers(){
-     $data = User::get();
+     $data = User::where('role','!=','Editor')->get();
+     $contentEditors = ContentUser::get();
 
-     return view('user.list',compact('data'));
+     $languages = Language::get();
+     return view('user.list',compact('data','languages','contentEditors'));
    }
 
    public function save_user(Request $request){
@@ -1514,6 +1518,69 @@ $last = strtotime($to);
       $user->save();
 
       if($user->id !='0'  && $user!=''){
+         return redirect()->back()->withMessage('Added Successfully');
+      }else{
+         return redirect()->back()->withMessage('Error While submitting');
+      }
+
+   
+   }
+
+   public function save_content_editor(Request $request){
+
+    if( $request->password != '' && $request->password != $request->confirm_password){
+       return redirect()->back()->withMessage('Password and Confirm Password does not match');
+    }
+  
+      $cuser = ContentUser::where('id',$request->userid)->first();
+
+      if(!$cuser && ContentUser::where('email',$request->email)->exists()){
+        return redirect()->back()->withMessage('Email ID already exists');
+      }
+
+      if(!$cuser){
+          $user = new ContentUser;
+      }
+      $user->name =  $request->name;
+      $user->email = $request->email;
+      $user->lang =  $request->lang;
+      $user->role = 'Editor';
+
+    //  print_r($request->Input());die();
+      if(isset($request->userid)){
+         if($request->password != '' ){
+          $user->password = Hash::make($request->password);
+         }
+        
+      }else{
+        $user->password = Hash::make($request->password);
+      }
+      
+      $user->save();
+
+      if($user->id !='0'  && $user!=''){
+
+         $user = User::where('email',$request->email)->first();
+
+          if(!$user){
+              $user = new User;
+          }
+          $user->name =  $request->name;
+          $user->email = $request->email;
+          $user->role = 'Editor';
+
+        //  print_r($request->Input());die();
+          if(isset($request->userid)){
+             if($request->password != '' ){
+              $user->password = Hash::make($request->password);
+             }
+            
+          }else{
+            $user->password = Hash::make($request->password);
+          }
+          
+          $user->save();
+
          return redirect()->back()->withMessage('Added Successfully');
       }else{
          return redirect()->back()->withMessage('Error While submitting');

@@ -27,12 +27,14 @@
         <div class="container-header d-flex">
           <div class="ms-auto">
             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">
-           Add User</button>
+           Add Administrator User</button>
+
+            <button type="button" class="btn btn-dark ms-2" data-toggle="modal" data-target="#contentEdior">
+           Add Content Editor</button>
           </div>
         </div>
         <div>
-        	 <label class="label-bold" style="margin-left: 20px" >Users</label>
-
+        	 
            @if(Session::has('message'))
             <p id="mydiv" class="text-danger text-center label-bold">{{ Session::get('message') }}</p>
               @endif 
@@ -47,8 +49,9 @@
                     </ul>
                 </div>
               @endif   
-
+        @if(Auth::user()->role == 'superadmin')
         	<div class="card" >
+               <label class="label-bold m-3" style="margin-left: 20px" >Administrator Users</label>
 
             <table class="table table-responsive table-striped table-bordered border-dark">
               <thead class="table-dark border-warning">
@@ -74,7 +77,7 @@
                   <td>{{$value->email}}</td>
                   <td>{{$role}}</td>
                   <td>
-                    <a id="MyapprovalModal_{{$key}}"><button class="btn btn-sm btn-secondary">Edit</button></td></a>
+                    <a id="MyapprovalModal_{{$key}}"><button class="btn btn-sm btn-secondary">Edit</button></a>
                   </td>
                                                 
                 </tr>
@@ -148,7 +151,110 @@
             
             
         </div>
-        <!--</div>-->
+       @endif
+
+     </div>
+
+
+     <!-- COntent users -->
+    
+     
+     <div class="card" >
+          <label class="label-bold m-3" style="margin-left: 20px" >Content Editors</label>
+            <table class="table table-responsive table-striped table-bordered border-dark">
+              <thead class="table-dark border-warning">
+                <tr>
+                  <th>User Name</th>
+                  <th>Email Id</th>
+                  <th>Language </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($contentEditors as $keys=>$value)
+
+                
+                <tr>
+                  <td>{{$value->name}}</td>
+                  <td>{{$value->email}}</td>
+                  <td>{{$value->lang}}</td>
+                  <td>
+                    <a id="MyapprovalModal2_{{$keys}}"><button class="btn btn-sm btn-secondary">Edit</button></a>
+                  </td>
+                                                
+                </tr>
+
+
+                <div class="modal fade" id="approvalstatusModal2_{{$keys}}" tabindex="-1" aria-labelledby="MyapprovalModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="MyapprovalModalLabel">Edit Content Editor</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <form method="POST" action="{{ route('save_content_editor')}}">
+                      @csrf
+                      <div class="modal-body">
+                         <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">User Name</label>
+                          <input type="text" class="form-control" name="name" value="{{ $value->name}}" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="message-text" class="col-form-label">Email Id</label>
+                          <input type="text" class="form-control"name="email" value="{{ $value->email}}" required> 
+                        </div>
+
+                        <div class="form-group">
+                          <label for="message-text" class="col-form-label">Language</label>
+                          <select class="form-control form-select" name="lang" required>
+                            <option>Select Language</option>
+                            @foreach($languages as $key=>$val)
+                                <option {{ ($value->lang == $val->code) ?'selected':''}}  value="{{ $val->code}}">{{ $val->lang}}</option>  
+                            @endforeach
+                          </select>
+                        </div>
+                        
+                        <div class="form-group">
+                          <label for="message-text" class="col-form-label">Password</label>
+                          <input type="password" class="form-control" name="password" value="{{ old('name')}}" >
+                        </div>
+
+                        <div class="form-group">
+                          <label for="message-text" class="col-form-label">Confirm Password</label>
+                          <input type="password" class="form-control" name="confirm_password" >
+                        </div>
+                      </div>
+                      <input type="hidden" name="userid" value="{{$value->id}}">
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </form>
+                   </div> 
+                    
+                  </div>
+                </div>    
+              </div>
+
+             <script type="text/javascript" nonce="wUDPhZ1Z60CsrpnMCukimCi">
+               $(document).ready(function(){
+                          $('#MyapprovalModal2_{{$keys}}').click(function(){
+
+                            $('#approvalstatusModal2_{{$keys}}').modal('show');
+                          });
+                        });
+             </script>
+
+                @endforeach
+              
+              </tbody>
+            </table>
+
+            
+            
+        </div>
+       
      </div>
     </div>	
     </div>
@@ -196,7 +302,58 @@
 
           <div class="form-group">
             <label for="message-text" class="col-form-label">Confirm Password</label>
-            <input type="text" class="form-control" name="confirm_password" required>
+            <input type="password" class="form-control" name="confirm_password" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="contentEdior" tabindex="-1" role="dialog" aria-labelledby="contentEdiorLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="label-bold" id="contentEdiorLabel">Add New COntent Editor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{ route('save_content_editor')}}">
+        @csrf
+        <div class="modal-body">
+           <div class="form-group">
+            <label for="recipient-name" class="col-form-label">User Name</label>
+            <input type="text" class="form-control" name="name"  required>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Email Id</label>
+            <input type="text" class="form-control"name="email"  required> 
+          </div>
+
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Language</label>
+            <select class="form-control form-select" name="lang" required>
+              <option>Select Language</option>
+              @foreach($languages as $key=>$val)
+                  <option value="{{ $val->code}}">{{ $val->lang}}</option>  
+              @endforeach
+            </select>
+          </div>
+         
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Password</label>
+            <input type="text" class="form-control" name="password"  required>
+          </div>
+
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Confirm Password</label>
+            <input type="password" class="form-control" name="confirm_password" required>
           </div>
         </div>
         <div class="modal-footer">
