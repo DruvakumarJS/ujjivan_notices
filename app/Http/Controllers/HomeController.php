@@ -58,6 +58,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+      if(Auth::user()->role == 'Editor'){
+        return redirect()->route('translate.list');
+      }
         $today = date('Y-m-d');
         $current_time = date('Y-m-d H:i');
         $active_time = date("Y-m-d H:i",strtotime("-120 minutes", strtotime($current_time)));

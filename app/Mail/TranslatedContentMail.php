@@ -12,11 +12,13 @@ class TranslatedContentMail extends Mailable
 
     public $lang;
     public $filePath;
+    public $path;
 
-    public function __construct($lang, $filePath)
+    public function __construct($lang, $filePath,$path)
     {
         $this->lang = $lang;
         $this->filePath = $filePath;
+        $this->path=$path;
     }
 
     public function build()

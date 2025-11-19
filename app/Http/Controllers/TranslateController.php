@@ -49,7 +49,8 @@ class TranslateController extends Controller
            $start = date('Y-m').'-01 00:00:01';
            $end =date('Y-m-d H:i:s');
       }else{
-
+           $start = $request->start.' 00:00:01';
+           $end = $request->end .' '.date('H:i:s');
       }
 
       $overall_translation = TranslationLog::sum('character_count');
@@ -72,8 +73,16 @@ class TranslateController extends Controller
       $chartData=['name' => $langNamesArray , 'count' => $langCountArray ];
 
       $quotadetails = TransalatorQuota::where('month',date('Y-m'))->first();
+
+      if($request->start == ''){
+           $start = date('Y-m').'-01';
+           $end =date('Y-m-d');
+      }else{
+           $start = $request->start;
+           $end = $request->end ;
+      }
      
-      return view('translations.dashboard',compact('total_translation','total_instance','total_instance','total_langs','langNamesArray','langCountArray','chartData' ,'overall_translation','overall_instance','overall_langs','quotadetails'));
+      return view('translations.dashboard',compact('total_translation','total_instance','total_instance','total_langs','langNamesArray','langCountArray','chartData' ,'overall_translation','overall_instance','overall_langs','quotadetails','start','end'));
     }
 
     public function showForm()
@@ -494,6 +503,7 @@ class TranslateController extends Controller
 
     public function translateCKData(Request $request)
     {
+       // print_r($request->input());die();
         $text = $request->input('text');
         $languages = $request->input('languages');
         $token = 'RAN' . rand(1111, 9999) . date('His');
@@ -588,14 +598,7 @@ class TranslateController extends Controller
             }
 
             // ✅ Log Translation
-            TranslationLog::create([
-                'language_code' => $lang,
-                'userID' => Auth::user()->email,
-                'token' => $token,
-                'character_count' => $totalCharacters,
-                'initial_characters' => $totalTranslatedCharacters
-            ]);
-
+           
             $lange = Language::where('code', $lang)->first();
 
            
@@ -609,7 +612,7 @@ class TranslateController extends Controller
                     table, th, td { border: 1px solid #aaa; padding: 5px; }
                 </style></head><body>';
 
-                $html .= "<h2>🌐 Translated Content (" . strtoupper($lang) . ")</h2>
+                $html .= "<h2>🌐 Translated Content (" . strtoupper($lange->lang) . ")</h2>
                           <p><small>Generated on: " . now()->format('d M Y, h:i A') . "</small></p>
                           <div class='content-block'>{$translatedHtml}</div></body></html>";
 
@@ -627,14 +630,24 @@ class TranslateController extends Controller
            
             $userEmails = ContentUser::where('lang', $lang)->pluck('email')->first();
 
+             TranslationLog::create([
+                'language_code' => $lang,
+                'userID' => Auth::user()->email,
+                'token' => $token,
+                'character_count' => $totalCharacters,
+               // 'initial_characters' => $totalTranslatedCharacters
+            ]);
+
+
             GoogleTranslatedContent::create([
+                'name' => $request->noticename,
                 'language' => $lange ? $lange->name : strtoupper($lang),
                 'lang_code' => $lang,
                 'original_content' => $text,
                 'temp_conetnt' => $cleanedHtml,
                 'final_content' => $cleanedHtml,
                 'character_count' => $totalCharacters,
-                'translated_by' => Auth::user()->id,
+                'translated_by' => Auth::user()->email,
                 'reviewer_email' => $userEmails,
                 'user_email' => Auth::user()->email,
                 'status' => 'Translated'
@@ -731,9 +744,12 @@ public function sendMail(Request $request)
     </html>";
 
     file_put_contents($filePath, $fullHtml);
-
+    
+    $path = $link=url('/');
     // Send the mail
-    Mail::to($userEmails)->send(new TranslatedContentMail($lang, $filePath));
+    $lange = Language::where('code', $lang)->first();
+
+    Mail::to($userEmails)->send(new TranslatedContentMail($lange->lang, $filePath,$path));
 
     // Delete file after sending
     if (file_exists($filePath)) {
@@ -782,6 +798,7 @@ public function update_translated(Request $request){
     );
 
     if($update){
+
         return redirect()->back()->withMessage('Suceesfully Updated');
     }
  }

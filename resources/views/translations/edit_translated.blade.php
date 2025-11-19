@@ -30,7 +30,10 @@
 </style>
 
 <div class="container-fluid">
+    <div class="d-flex mt-5">
     <h3 class="mb-3 text-center">Translated Content</h3>
+    <a class="ms-auto" href="{{ route('translate.list')}}"><button class="btn btn-dark ">Back</button></a>
+  </div>
 
     @if(Session::has('message'))
     <p id="mydiv" class="text-danger text-center">{{ Session::get('message') }}</p>

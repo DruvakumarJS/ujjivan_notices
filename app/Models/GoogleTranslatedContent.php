@@ -10,6 +10,7 @@ class GoogleTranslatedContent extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
     	'language',
     	'lang_code',
     	'original_content',

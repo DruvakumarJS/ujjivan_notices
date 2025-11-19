@@ -21,7 +21,11 @@
 </style>
 
 <div class="container">
-    <h3 class="mb-3 text-center">🌐 Content Translator</h3>
+    
+    <div class="d-flex justify-content-center">
+        <h3 class="mb-3 text-center">🌐 Content Translator</h3>
+    <a class="ms-auto" href="{{ route('translatation')}}"><button class="btn btn-dark ">Back</button></a>
+  </div>
 
     @if(Session::has('message'))
     <p id="mydiv" class="text-danger text-center">{{ Session::get('message') }}</p>
@@ -37,16 +41,21 @@
     <form id="translateForm">
         <div class="mb-3">
             <label for="editor" class="form-label fw-bold">Enter or Paste your HTML Text:</label>
-           
-            <textarea class="form-control" name="text" id="editor"></textarea>
+            
+          <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Name of the Notice</label>
+              <input type="text" class="form-control" name="name" id="name" required style="border: 1px #000 solid">
+            </div>
+            
         </div>
+        <textarea class="form-control" name="text" id="editor" style="border: 1px #000 solid"></textarea>
 
-       <div class="row" id="state_dropdown_list" >
+       <div class="row mt-2 " id="state_dropdown_list" >
           <div class="col-10">
              <label>Select Languages</label>
              <div class="input-group mb-3">
              
-              <select class="selectpicker"  multiple search="true" id="language" name="language[]" required="" style="width: 100% !important;">
+              <select class="selectpicker"  multiple search="true" id="language" name="language[]" required="" style="width: 100% !important;border: 1px #000 solid">
                 @foreach($languages as $key=>$value)
                 <option value="{{$value->code}}">{{$value->lang}} - {{$value->name}}</option>
 
@@ -72,6 +81,12 @@
     const selectedOptions = Array.from(document.getElementById('language').selectedOptions);
     const languages = selectedOptions.map(option => option.value);
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const noticename = $('#name').val();
+    
+    if (!noticename.trim()) {
+        alert('Please enter notice name or NID...');
+        return;
+    }
 
     if (!text.trim()) {
         alert('Please enter some text!');
@@ -92,7 +107,7 @@
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": csrfToken
             },
-            body: JSON.stringify({ text, languages })
+            body: JSON.stringify({ text, languages , noticename})
         });
 
         const contentType = response.headers.get("content-type");

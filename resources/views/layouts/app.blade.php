@@ -123,9 +123,11 @@
                   <div class="col-2 left-menu border-right h-100" >
                   @if(Auth::check())
                       <ul class="list-group">
+                        @if(Auth::user()->role != 'Editor') 
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('home') ? 'bg-warning text-danger' : '' }}" >
                               <a  href="{{ route('home')}}" > <label class="label-bold">Dashboard</label> </a>
                           </li>
+                          @endif
                           <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
                               <a href="{{ route('templates')}}"><label>Templates</label> </a> 
                           </li> -->
@@ -196,12 +198,12 @@
                           @if(Auth::user()->role == 'superadmin' || Auth::user()->role == 'content_admin')
 
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('manage_users') ? 'bg-warning text-danger' : '' }}">
-                            <a target="_blank" href="{{route('manage_users')}}"> <label class="label-bold">User Management</label> </a>
+                            <a href="{{route('manage_users')}}"> <label class="label-bold">User Management</label> </a>
                           </li>
 
-                          <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('ds_editor') ? 'bg-warning text-danger' : '' }}">
+                          <!-- <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('ds_editor') ? 'bg-warning text-danger' : '' }}">
                             <a target="_blank" href="{{route('ds_editor')}}"> <label class="label-bold">DS Editor</label> </a>
-                          </li>
+                          </li> -->
 
                           @endif
 

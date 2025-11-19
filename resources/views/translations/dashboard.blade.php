@@ -13,10 +13,29 @@
       <a href="{{ route('translate.quota')}}"><button class="btn btn-success text-white ms-2">View Quota</button></a>
       @endif
 		</div>
-	</div>
-	
 
-	<div class="container">
+    <div class="d-flex ms-3" >
+      <div class="mb-3 ms-auto">
+        <form method="GET" action="{{ route('translatation')}}">
+          <div id="reportrange" class="pull-right" style="background: #000;color: white; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+              <i class="glyphicon glyphicon-calendar fa fa-calendar" max="<?php echo date('Y-m-d');  ?>"></i>&nbsp;
+              <span></span> <b class="caret"></b>
+              <input type="hidden" name="start" id="start" value="{{ $start}}">
+              <input type="hidden" name="end" id="end" value="{{ $end}}">
+              
+          </div>
+          <button id="btnSubmit" class="d-none"></button>
+          </form>
+
+      
+      </div>
+    </div>
+
+	</div>
+
+	</div>
+
+	<div class="container mt-4">
 
   <div class="row">
     <div class="col-md-4 col-lg-4 pb-2">
@@ -57,7 +76,7 @@
           </div>
           <div class="card-custom-avatar">
             <img class="img-fluid" src="images/gt.png" alt="Avatar" />
-            <h1 class="text-center text-success transalte-text">{{ $total_translation }}</h1>
+            <h1 class="text-center text-success transalte-text">{{ $total_translation }}/{{ $quotadetails->quota }}</h1>
           </div>
           <div class="card-body" style="overflow-y: auto">
             <h4 class="card-title fw-bold">Total Transalation</h4>
@@ -236,6 +255,72 @@
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
+
+$(function () {
+
+    var today = <?php echo date('d'); ?>;
+    var dd = today - 1;
+    
+    var phpStart = "{{ $start }}";
+    var phpEnd = "{{ $end }}";
+
+    // If controller provided values, use them; otherwise use defaults
+    var start = phpStart ? moment(phpStart) : moment().subtract(dd, 'days');
+    var end   = phpEnd   ? moment(phpEnd)   : moment();
+
+    var firstLoad = true;   // NEW FLAG
+
+    // Values from URL (if page reloaded from form)
+    var lastFrom = $('#start').val() || null;
+    var lastTo = $('#end').val() || null;
+
+    function cb(start, end) {
+
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+
+        var from_date = start.format('YYYY-MM-DD');
+        var to_date = end.format('YYYY-MM-DD');
+
+        // FIRST LOAD: Only display — no submit
+        if (firstLoad) {
+            firstLoad = false;
+            return;  // Stop here
+        }
+
+        // On user change → submit only if different
+        if (from_date !== lastFrom || to_date !== lastTo) {
+
+            $('#start').val(from_date);
+            $('#end').val(to_date);
+
+            lastFrom = from_date;
+            lastTo = to_date;
+
+            $('#btnSubmit').click(); // Actual submit
+        }
+    }
+
+    // Initialize picker
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    // Show initial date in span but DO NOT submit
+    cb(start, end);
+
+});
+
+
+      
 
 </script>
 @endsection

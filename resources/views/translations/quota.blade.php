@@ -3,8 +3,11 @@
 @section('content')
 
 <div class="container">
-	<label class="label-header">Google Translate Quota usage Details</label>
-    
+   <div class="d-flex">
+    <label class="label-header">Google Translate Quota usage Details</label>
+    <a class="ms-auto" href="{{ route('translatation')}}"><button class="btn btn-dark ">Back</button></a>
+  </div>
+
     @if(Session::has('message'))
             <p id="mydiv" class="text-danger text-center label-bold">{{ Session::get('message') }}</p>
               @endif 

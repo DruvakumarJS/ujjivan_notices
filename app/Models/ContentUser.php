@@ -16,4 +16,8 @@ class ContentUser extends Model
     	'role',
     	'lang'
     ];
+
+    public function language(){
+    	return $this->belongsTo(Language::class , 'lang','code');
+    }
 }

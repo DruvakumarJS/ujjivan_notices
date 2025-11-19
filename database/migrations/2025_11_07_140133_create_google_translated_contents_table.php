@@ -15,6 +15,7 @@ class CreateGoogleTranslatedContentsTable extends Migration
     {
         Schema::create('google_translated_contents', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('language');
             $table->string('lang_code');
             $table->longText('original_content');

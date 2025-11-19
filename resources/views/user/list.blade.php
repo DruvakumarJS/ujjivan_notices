@@ -26,9 +26,10 @@
     <div class="row justify-content-center">
         <div class="container-header d-flex">
           <div class="ms-auto">
+            @if(Auth::user()->role == 'superadmin')
             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">
            Add Administrator User</button>
-
+            @endif
             <button type="button" class="btn btn-dark ms-2" data-toggle="modal" data-target="#contentEdior">
            Add Content Editor</button>
           </div>
@@ -177,7 +178,7 @@
                 <tr>
                   <td>{{$value->name}}</td>
                   <td>{{$value->email}}</td>
-                  <td>{{$value->lang}}</td>
+                  <td>{{$value->language->name}} - {{$value->language->lang }}</td>
                   <td>
                     <a id="MyapprovalModal2_{{$keys}}"><button class="btn btn-sm btn-secondary">Edit</button></a>
                   </td>
