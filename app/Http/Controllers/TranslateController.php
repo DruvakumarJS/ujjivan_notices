@@ -7,6 +7,7 @@ use App\Services\GoogleTranslateService;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Response;
 use App\Models\Language;
+use App\Models\User;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
@@ -21,6 +22,7 @@ use App\Models\GoogleTranslatedContent;
 use App\Mail\TranslatedContentMail;
 use App\Models\ContentUser;
 use Mail;
+use App\Mail\RespondToContentAdmin;
 
 
 
@@ -681,6 +683,7 @@ class TranslateController extends Controller
                             <form method='POST' action='" . route('translation.sendMail') . "' target='_blank' class='mt-2'>
                                 " . csrf_field() . "
                                 <input type='hidden' name='lang' value='{$lang}'>
+                                <input type='hidden' name='name' value='{$request->noticename}'>
                                 <input type='hidden' name='content' value='{$encodedTranslation}'>
                                 <button type='submit' class='btn btn-sm btn-warning'>📧 Send Mail ({$lang})</button>
                             </form>
@@ -708,6 +711,7 @@ class TranslateController extends Controller
 public function sendMail(Request $request)
 {   
     $lang = $request->input('lang');
+    $name = $request->input('name');
 
     // Fetch recipients
     $userEmails = ContentUser::where('lang', $lang)->pluck('email')->toArray();
@@ -748,8 +752,10 @@ public function sendMail(Request $request)
     $path = $link=url('/');
     // Send the mail
     $lange = Language::where('code', $lang)->first();
+    $mode = 'Review';
+    
 
-    Mail::to($userEmails)->send(new TranslatedContentMail($lange->lang, $filePath,$path));
+    Mail::to($userEmails)->send(new TranslatedContentMail($lange->lang, $filePath,$path ,$name,$mode ));
 
     // Delete file after sending
     if (file_exists($filePath)) {
@@ -758,7 +764,7 @@ public function sendMail(Request $request)
 
     return response("
         <script>
-            alert('Mail sent successfully for Editor: {$lang}');
+            alert('Mail sent successfully for Editor: {$lange->lang}');
             window.close();
         </script>
     ");
@@ -797,9 +803,52 @@ public function update_translated(Request $request){
         ]
     );
 
+    $admin = User::where('role','content_admin')->first();
+
     if($update){
 
+        $update = GoogleTranslatedContent::where('id',$request->translate_id)->first();
+
+        if($request->btntype!='Draft'){
+            $path = $link=url('/');
+           
+            $lange = Language::where('code', $update->lang_code)->first();
+
+            $data=[
+                'lang' => $lange->lang,
+                'content_id' =>  encrypt($update->id),
+                'name' => $update->name,
+                'editor' => $update->reviewer_email,
+                'link' => $path 
+            ];
+
+           // Mail::to($admin->email)->send(new RespondToContentAdmin($lange->lang,$data));
+            Mail::to('druva@netiapps.com')->send(new RespondToContentAdmin($lange->lang,$data));
+        }
+
         return redirect()->back()->withMessage('Suceesfully Updated');
+    }
+ }
+
+ public function send_for_rework($id){
+
+    $update = GoogleTranslatedContent::where('id',$id)->update(['status'=>'Rework']);
+
+    if($update){
+        
+    $path = $link=url('/');
+    // Send the mail
+    
+
+    $data = GoogleTranslatedContent::where('id',$id)->first();
+    $name = $data->name;
+    $lange = Language::where('code', $data->lang_code)->first();
+    $filePath='';
+    $mode = 'Rework';
+
+    Mail::to($data->reviewer_email)->send(new TranslatedContentMail($lange->lang, $filePath,$path ,$name ,$mode));
+
+    return redirect()->back()->withMessage("Mail sent to the Editor...");
     }
  }
 

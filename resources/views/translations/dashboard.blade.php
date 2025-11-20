@@ -80,7 +80,7 @@
           </div>
           <div class="card-body" style="overflow-y: auto">
             <h4 class="card-title fw-bold">Total Transalation</h4>
-            <p class="card-text">Number of Characters transalated this month </p>
+            <p class="card-text">Number of Characters transalated this month (Used/Quota limit)</p>
           </div>
           
         </div>

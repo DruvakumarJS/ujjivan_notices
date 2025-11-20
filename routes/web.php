@@ -206,6 +206,8 @@ Route::get('/view-translation/{id}', [TranslateController::class, 'view_translat
 
 Route::get('/google-translated-editor-list', [TranslateController::class, 'mylist'])->name('mylist');
 
+Route::get('/send-for-rework/{id}', [TranslateController::class, 'send_for_rework'])->name('send_for_rework');
+
 
 
 Route::get('/ds-editor', [HomeController::class, 'dsEditor'])->name('ds_editor');

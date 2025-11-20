@@ -61,6 +61,12 @@
 
        
     </form>
+    
+    @if($data->status == 'Finished')
+        <div class="d-flex mt-4">
+          <a class="ms-auto" href="{{route('send_for_rework',$data->id)}}"><button class="btn btn-danger text-white">Send for Rework</button></a>
+        </div>
+    @endif
 
    
 </div>
