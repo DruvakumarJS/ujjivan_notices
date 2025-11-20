@@ -822,8 +822,8 @@ public function update_translated(Request $request){
                 'link' => $path 
             ];
 
-           // Mail::to($admin->email)->send(new RespondToContentAdmin($lange->lang,$data));
-            Mail::to('druva@netiapps.com')->send(new RespondToContentAdmin($lange->lang,$data));
+            Mail::to($admin->email)->send(new RespondToContentAdmin($lange->lang,$data));
+          //  Mail::to('druva@netiapps.com')->send(new RespondToContentAdmin($lange->lang,$data));
         }
 
         return redirect()->back()->withMessage('Suceesfully Updated');
