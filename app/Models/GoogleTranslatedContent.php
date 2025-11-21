@@ -22,4 +22,8 @@ class GoogleTranslatedContent extends Model
         'final_characters',
     	'reviewer_email',
     	'status'];
+
+    public function langue(){
+        return $this->belongsTo(Language::class,'lang_code','code');
+    }    
 }

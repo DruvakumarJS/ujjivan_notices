@@ -66,28 +66,7 @@
     </div>
   </div>
 
-    <div class="row pt-2 m-auto">
-      <div class="col-md-6 col-lg-3 pb-2">
-
-        <!-- Copy the content below until next comment -->
-        <div class="card card-custom bg-white border-white border-0 justify-content-center">
-          <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);">
-          	
-          </div>
-          <div class="card-custom-avatar">
-            <img class="img-fluid" src="images/gt.png" alt="Avatar" />
-            <h1 class="text-center text-success transalte-text">{{ $total_translation }}/{{ $quotadetails->quota }}</h1>
-          </div>
-          <div class="card-body" style="overflow-y: auto">
-            <h4 class="card-title fw-bold">Total Transalation</h4>
-            <p class="card-text">Number of Characters transalated this month (Used/Quota limit)</p>
-          </div>
-          
-        </div>
-      
-      </div>
-
-      @php
+  @php
        $rem = 0;
        if($quotadetails){
            $rem = intval($quotadetails->quota) - intval($total_translation);
@@ -95,20 +74,46 @@
         
       @endphp
 
+    <div class="row pt-2 m-auto">
       <div class="col-md-6 col-lg-3 pb-2">
 
         <!-- Copy the content below until next comment -->
         <div class="card card-custom bg-white border-white border-0 justify-content-center">
           <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);">
-          	
+          	<h4 class="text-center mt-4">FREE TAB</h4>
           </div>
           <div class="card-custom-avatar">
             <img class="img-fluid" src="images/gt.png" alt="Avatar" />
-            <h1 class="text-center text-danger transalte-text">{{ $rem }}</h1>
+            <h1 class="text-center text-success transalte-text">{{ $total_translation }}/{{ $quotadetails->quota }}</h1>
           </div>
           <div class="card-body" style="overflow-y: auto">
-            <h4 class="card-title fw-bold">Remaining Quota</h4>
-            <p class="card-text">Number of Characters remaining for transalation for this month</p>
+            <h3>Remaining : {{ $rem }}</h3>
+            <h4 class="card-title fw-bold text-dark">Total Translation</h4>
+            <p class="card-text">Number of Characters transalated this month (Used/Quota limit)</p>
+          </div>
+          
+        </div>
+      
+      </div>
+
+      
+
+      <div class="col-md-6 col-lg-3 pb-2">
+
+        <!-- Copy the content below until next comment -->
+        <div class="card card-custom bg-white border-white border-0 justify-content-center">
+          <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);">
+          	<h4 class="text-center mt-4">BILLABLE TAB</h4>
+          </div>
+          <div class="card-custom-avatar">
+            <img class="img-fluid" src="images/gt.png" alt="Avatar" />
+            <h1 class="text-center text-danger transalte-text">0</h1>
+          </div>
+          <div class="card-body" style="overflow-y: auto">
+            <h4 class="card-title fw-bold">Billable Characters</h4>
+            <p class="card-text">Every 1L characters will be charged INR.500 </p>
+            <p class="card-text">3L-4L = INR.500 </p>
+            <p class="card-text">4L-5L = INR.500 </p>
           </div>
           
         </div>

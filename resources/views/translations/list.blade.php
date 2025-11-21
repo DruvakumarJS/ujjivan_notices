@@ -44,7 +44,7 @@
                   <tr class="text-center">
                   	<td>{{ date('d-m-Y',strtotime($val->created_at))}}</td>
                     <td>{{ $val->name}}</td>
-                    <td>{{ $val->language}}</td>
+                    <td>{{ $val->language}} / {{ $val->langue->lang}}</td>
                   	<td>{{ $val->character_count}}</td>
                   	<td>{{ $val->translated_by}}</td>
                     @if(Auth::user()->role !='Editor')

@@ -179,7 +179,7 @@
                           </li>
 
                            <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('translatation') || request()->routeIs('translate.form') || request()->routeIs('translate.list') || request()->routeIs('edit_translated') | request()->routeIs('view_translated') ? 'bg-warning text-danger' : '' }}">
-                            <a target="_blank" href="{{route('translatation')}}"> <label class="label-bold">Translator</label> </a>
+                            <a target="_blank" href="{{route('translatation')}}"> <label class="label-bold">Content Translation</label> </a>
                           </li>
 
                           <li class="list-group-item d-flex justify-content-between align-items-center {{ request()->routeIs('audit') ? 'bg-warning text-danger' : '' }}">
