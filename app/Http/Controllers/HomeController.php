@@ -1541,15 +1541,20 @@ $last = strtotime($to);
         return redirect()->back()->withMessage('Email ID already exists');
       }
 
+     // print_r($request->Input());die();
+
       if(!$cuser){
           $user = new ContentUser;
+      }
+      else{
+         $user = ContentUser::where('id',$request->userid)->first();
       }
       $user->name =  $request->name;
       $user->email = $request->email;
       $user->lang =  $request->lang;
       $user->role = 'Editor';
 
-    //  print_r($request->Input());die();
+      
       if(isset($request->userid)){
          if($request->password != '' ){
           $user->password = Hash::make($request->password);

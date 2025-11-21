@@ -87,7 +87,7 @@
             <h1 class="text-center text-success transalte-text">{{ $total_translation }}/{{ $quotadetails->quota }}</h1>
           </div>
           <div class="card-body" style="overflow-y: auto">
-            <h3>Remaining : {{ $rem }}</h3>
+            <h3>Remaining : <label class="text-success">{{ $rem }}</label></h3>
             <h4 class="card-title fw-bold text-dark">Total Translation</h4>
             <p class="card-text">Number of Characters transalated this month (Used/Quota limit)</p>
           </div>
